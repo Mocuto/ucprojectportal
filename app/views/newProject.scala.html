@@ -1,0 +1,39 @@
+@(user : model.User)(implicit form: Form[model.Project])
+
+@main("Student Government Project Portal")(Some(user)) {
+
+    <div class="main-container">
+      <div class="huge-header">create a new project</div>
+     	<div class="roundbox">
+     	@helper.form(action = routes.Application.submitProject) {
+      @*** TODO - ERROR MESSAGES HERE **@
+      <input type="text" placeholder="project name" name="name" class="roundbox-textinput" style="width:100%"/><br>
+      <textarea name="description" class="roundbox-textinput textarea-description" placeholder="enter a description" style="width:100%"></textarea>
+      
+      <div>choose categories</div>
+      <br>
+      <select name="categories[]" class="project-category-select chosen" multiple>
+        @for(category <- model.ProjectCategory.all) {
+          <option value="@category.name.toLowerCase()">@category.name.toLowerCase()</option>
+        }
+      </select>
+      <br>
+      <div style="margin-top:32px">who's your team?</div>
+      <br>
+      <select name="team-members[]" id="project-team-members-select" class="chosen" multiple>
+        @for(otherUser <- model.User.all) {
+          @if(user.username == otherUser.username) {
+            <option value="@otherUser.username" selected="true">@otherUser.fullName</option>
+          } else {
+            <option value="@otherUser.username">@otherUser.fullName</option>
+          }
+          
+        }
+      </select>
+      <br>
+      <div class="blue-button submit-button" style="margin-top:16px; font-size:16pt">create project</div>
+  		
+     	}
+      </div>
+    </div>
+}

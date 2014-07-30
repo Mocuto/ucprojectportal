@@ -1,0 +1,41 @@
+@(user : model.User, loggedInUser : model.User)(isAuthenticatedUser : Boolean)
+@import java.lang.Boolean; var isLastCell = false
+
+@main("Student Government Project Portal")(Some(loggedInUser)) {
+	<div class="main-container">
+
+		<div class="huge-header project-name-container">
+			@if(isAuthenticatedUser == true) {
+				my projects
+			} else {
+				@(model.User.getFullName(user.username).toLowerCase() + "'s projects")
+			}
+	      	@if(isAuthenticatedUser == true) {
+	   	  		<a href="project/new" style="float:right; text-decoration:none">
+	   	  			<span class="blue-button">create project</span>
+	   	  		</a>
+
+	   	  		<!--<div  class="blue-button" id="manage-projects-button" style="float:right; text-decoration:none; margin-right:32px">manage projects</div>-->
+	   	  		
+	      	}
+
+		</div>
+
+    	<span class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else model.User.getFullName(user.username) + " owns"}</span>
+
+	   	<div class="projectbox-container">
+	   		<div class="grid-sizer"></div>
+		   	@for(project <- user.primaryProjects) {
+		   		@projectView(project, loggedInUser.username)
+		   	}
+	   	</div>
+
+	   	<span class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else model.User.getFullName(user.username) + " works"} on</span>
+	   	<div class="projectbox-container">
+	   		<div class="grid-sizer"></div>
+		   	@for(project <- user.projects) {
+		   		@projectView(project, loggedInUser.username)
+		   	}
+	   	</div>
+   	</div>
+}

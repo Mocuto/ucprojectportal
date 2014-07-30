@@ -1,0 +1,58 @@
+@(project : model.Project, username : String)
+@import java.lang.String; val filterStr = project.categories.map(x => s"category-${x.replace(' ', '-')}").mkString(" ") + " state-" + project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
+
+@if(project.isNew == true) {
+<div class="isotope-item @filterStr category-new">
+} else {
+<div class="isotope-item @filterStr">
+}
+<table class="projectbox" expanded="false" id="projectbox-@project.id" >
+	<tr>
+		<td>
+			<img src="/assets/images/project-icon.png" class="projectbox-icon"/>
+		</td>
+		<td class="projectbox-title">
+			@project.name.toLowerCase()
+			@if(project.state == model.ProjectState.IN_PROGRESS_NEEDS_HELP) {
+				<br />
+				<span style="font-weight:bold">@project.stateMessage</span>
+			}
+		</td>
+			<span class="leave-project-button" for="@project.id">x</span>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div  class="projectbox-description">
+				<p class="hint">
+					@project.description
+				</p>
+				<br/>
+				<div>
+					<a href="/project/@project.id" style="text-decoration: none">
+						<span class="button">
+							continue to project profile
+						</span>
+					</a>
+					<span style="font-size:8pt; float:right;">
+		              @project match {
+		              	case project if project.primaryContact == username => {
+		              		you own this project
+		              	}
+		              	case project if project.teamMembers.contains(username) => {
+		              		you are on this project team
+		              	}
+		              	case project if model.ProjectRequest.get(project.id, project.primaryContact, username).isDefined == true => {
+							<div class="hint">request sent</div>
+		              	}
+		              	case _ => {
+							<span type="button" id="request-join" project-id="@project.id" class="button">join</span> 
+		              	}
+
+		              }
+					</span>
+				</div>
+			</div>
+		</td>
+		</tr>
+</table>
+</div>

@@ -1,0 +1,50 @@
+@(user : model.User, filterStr : String)
+
+@main("Student Government Project Portal")( Some(user)) {
+	<script>
+		var categoryItems = [@Html( model.ProjectCategory.all.map(x => s"'${x.name}'").mkString(",") )]
+		var stateItems = [@Html( model.ProjectState.all.map(x => s"'${x.name.replace(' ', '-').replace( '(' ,'-').replace( ')', '-')}'").mkString(",") )]
+		var filterItems = categoryItems.concat(stateItems).concat(['new']);
+		@if(filterStr.length == 0) {
+			var activeFilters = [];			
+		} else {
+			var activeFilters = [@Html( filterStr.split(",").map(x => s"'$x'").mkString(",") )];
+		}
+
+	</script>
+	<div class="main-container">
+		<div class="instruction">select a filter to browse its projects</div>
+		<div class="filter-button-container">
+			@for(category <- model.ProjectCategory.all) {
+
+				@if(filterStr.split(",").map(x => s"$x").contains("category-" + category.name.toLowerCase().replace(' ', '-').replace('(', '-').replace(')', '-'))) {
+				<div activated="true" style="background-color:#aedefc" class="filter-button" for="category-@category.name.toLowerCase().replace(' ', '-')">@category.name.toLowerCase()</div>
+				} else {
+				<div class="filter-button" for="category-@category.name.toLowerCase().replace(' ', '-')">@category.name.toLowerCase()</div>
+				}
+
+			}
+			@for(state <- model.ProjectState.all) {
+				@if(filterStr.split(",").map(x => s"$x").contains("state-" + state.name.toLowerCase().replace(' ', '-').replace('(', '-').replace(')', '-'))) {
+					<div class="filter-button" for="state-@state.name.toLowerCase().replace(' ', '-').replace('(', '-').replace(')', '-')" activated="true" style="background-color:#aedefc">@state.name.toLowerCase()</div>
+				} else {
+					<div class="filter-button" for="state-@state.name.toLowerCase().replace(' ', '-').replace('(', '-').replace(')', '-')">@state.name.toLowerCase()</div>
+				}
+				
+			}
+			@if(filterStr.split(",").map(x => s"$x").contains("category-new")) {
+				<div activated="true" style="background-color:#aedefc" class="filter-button" for="category-new">new</div>
+			} else {
+				<div class="filter-button" for="category-new">new</div>
+			}
+
+		</div>
+		<div class="instruction">click a project to view more details</div>
+	   	<div class="projectbox-container">
+	   		<div class="grid-sizer"></div>
+		   	@for(project <- model.Project.allSorted) {
+		   		@projectView(project, user.username)
+		   	}
+	   	</div>
+   	</div>
+}

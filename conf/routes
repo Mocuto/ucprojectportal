@@ -1,0 +1,37 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Javascript routes
+GET /javascriptRoutes    controllers.Application.javascriptRoutes
+
+# Home page
+GET     /                           			controllers.Application.index
+GET 	/filter									controllers.Application.filter(filterStr :String = "")
+GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)				
+#GET	/projects								controllers.Application.projects
+GET		/project/new							controllers.Application.newProject
+GET		/project/:id 							controllers.Application.project(id : Int)
+POST	/submitUpdate							controllers.Application.submitUpdate
+POST	/submitProject							controllers.Application.submitProject
+POST	/editProject/:id						controllers.Application.editProject(id : Int)
+POST	/leaveProject/:id 						controllers.Application.leaveProject(id : Int)
+GET		/login 									controllers.Application.login
+POST	/tryLogin								controllers.Application.tryLogin
+GET		/signout								controllers.Application.signout
+GET		/uploads/:file							controllers.Application.uploads(file : String)
+POST 	/createUser 							controllers.Application.createUser
+GET 	/admin									controllers.Application.admin
+GET		/:username								controllers.Application.user(username)
+
+
+#TODO : Change requestProject to requestJoin everywhere
+POST	/requestJoin/:projectId 				controllers.Application.requestJoin(projectId : Int)
+POST	/acceptRequest/:projectId/:requester 	controllers.Application.acceptRequest(projectId : Int, requester : String)
+POST	/ignoreRequest/:projectId/:requester 	controllers.Application.ignoreRequest(projectId : Int, requester : String)
+POST	/resetUnreadNotifications				controllers.Application.resetUnreadNotifications
+POST	/getUnreadNotificationCount				controllers.Application.getUnreadNotificationCount
+POST	/ignoreNotification/:timeCreated		controllers.Application.ignoreNotification(timeCreated : String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               			controllers.Assets.at(path="/public", file)

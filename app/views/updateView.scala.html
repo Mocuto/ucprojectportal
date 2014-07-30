@@ -1,0 +1,19 @@
+@(update : model.ProjectUpdate)
+
+<div class="roundbox update">
+	<span class="content-header">@model.User.getFullName(update.author).toLowerCase()</span>
+	@if(update.files.length > 0) {
+		<span class="hint">uploaded a file</span>
+	}
+	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
+
+	<p class="content">@Html(update.content.replace("\r\n", "<br>"))</p>
+	@if(update.files.length > 0) {
+		<span class="hint">attachments:
+			@for(filename <- update.files) {
+				@filelink(filename)
+			}
+		</span>
+	}
+
+</div>

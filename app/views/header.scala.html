@@ -1,0 +1,37 @@
+@(user: model.User)
+<script>
+	user = @Html(user.toJson.toString)
+	DEFAULT_MESSAGE = 'hi @(user.firstName.toLowerCase() +"!")'
+</script>
+<div class="title-nav">
+	<span class="title-project-portal"><a href="/">project portal</a></span> | university of cincinnati undergraduate student government 
+	<span class="title-nav-item">
+		<a href="/signout">
+			sign out
+		</a>
+	</span>
+	<span class="title-nav-item">
+		<a href="/filter">
+			all projects
+		</a>
+	</span>
+	<span class="title-nav-item">
+		<a href="/@user.username">my projects</a>
+	</span>
+	<span class="title-nav-item" id="notification-text">
+		@if(user.unreadNotifications > 0) {
+			@(user.firstName.toLowerCase()), you have @user.unreadNotifications new @("notification" + (if(user.unreadNotifications > 1) "s" else ""))!
+		} else {
+			hi @(user.firstName.toLowerCase() +"!")
+		}
+		
+	</span>
+
+	<div class="popane" id="notifications-window">
+		<span class="close-button">close</span>
+		<div class="content-header">notifications</div>
+		<br>
+		@notificationsListView(user)
+	</div>
+
+</div>
