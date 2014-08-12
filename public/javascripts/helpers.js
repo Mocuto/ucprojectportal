@@ -1,6 +1,6 @@
 
 
-var PULSE_INTERVAL = 1000;
+var PULSE_INTERVAL = 3000;
 
 function onProjectSubmitSuccess(data) {
 	alert("Success");

@@ -1,13 +1,15 @@
 package model
 
-import com.datastax.driver.core.Cluster
-import com.datastax.driver.core.Row
+import com.datastax.driver.core.{Cluster, ResultSet, ResultSetFuture, Row}
+import com.datastax.driver.core.exceptions._
 
 import java.util.Date
 
 import scala.collection.JavaConversions._
 
 import utils.Conversions
+
+import play.api.Logger
 
 //TODO: Prepare all statements
 
@@ -16,14 +18,14 @@ object CassieCommunicator {
 	private val keyspace = "projectsg"
 
 	private val USERS = "users"
-  private val USER_INSERT_FIELDS = "username, first_name, last_name, password"
+	private val USER_INSERT_FIELDS = "username, first_name, last_name, password"
 
-  private val USER_GROUPS = "user_groups"
+	private val USER_GROUPS = "user_groups"
 
 	private val PROJECTS = "projects";
 	private val PROJECTS_KEY = "id"
 	private val PROJECT_INSERT_FIELDS = "id, description, team_members, name, primary_contact, state, categories, time_started"
-  private val PROJECT_UPDATE_FIELDS = "id, description, state, categories, state_message, primary_contact"
+	private val PROJECT_UPDATE_FIELDS = "id, description, state, categories, state_message, primary_contact"
 
 	private val PROJECT_UPDATES = "project_updates";
 	private val PROJECT_UPDATES_INSERT_FIELDS = "project_id, author, content, time_submitted, files"
@@ -31,54 +33,119 @@ object CassieCommunicator {
 	private val FILES = "files";
 	private val FILES_INSERT_FIELDS = "project_id, time_submitted, filename, original_filename, author"
 
-  private val CATEGORIES = "categories";
+	private val CATEGORIES = "categories";
 
-  private val STATES = "states";
+	private val STATES = "states";
 
-  private val NOTIFICATIONS = "notifications"
-  private val NOTIFICATIONS_INSERT_FIELDS = "username, time_created, content, type";
+	private val NOTIFICATIONS = "notifications"
+	private val NOTIFICATIONS_INSERT_FIELDS = "username, time_created, content, type";
 
-  private val REQUESTS = "requests"
-  private val REQUESTS_INSERT_FIELDS = "project_id, owner, requester, time_created";
+	private val REQUESTS = "requests"
+	private val REQUESTS_INSERT_FIELDS = "project_id, owner, requester, time_created";
 
-  private val TAGS = "tags";
+	private val TAGS = "tags";
 
 	private val cluster = Cluster.builder().addContactPoint(serverIp).build();
 	private val session = cluster.connect(keyspace);
 
+	private val logger = Logger(this.getClass())
+
   //TODO: Add exception catching and error handling system
+
+  def defaultOnException(e : java.lang.RuntimeException,  executeString : String) {
+    println("Exception with setUserUnreadNotifications");
+    logger.error(s"Exception with setUserUnreadNotifications: $executeString", e);
+  }
+
+  def execute(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException) : Option[ResultSet] = {
+    logger.debug(executeString);
+    try {
+      val statement = session.prepare(executeString);
+      return Some(session.execute(statement.bind()));
+    }
+    catch {
+      case e: java.lang.RuntimeException => {
+        onException(e, executeString);
+        return None;
+      }
+    }
+  }
+
+  def executeAsync(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException) : Option[ResultSetFuture] = {
+    logger.debug(executeString);
+    try {
+      val statement = session.prepare(executeString);
+      return Some(session.executeAsync(statement.bind()));
+    }
+    catch {
+      case e: java.lang.RuntimeException => {
+        onException(e, executeString);
+        return None;
+      }
+    }
+  }
 
   /*                  SETTERS                 */
   def setUserUnreadNotifications(user : User, num : Int) {
     val executeString = s"update $USERS set unread_notifications = $num where username = '${user.username}'"
-    session.execute(executeString);
+    execute(executeString);
+    /*logger.debug(executeString);
+    try {
+    	val statement = session.prepare(executeString);
+	    session.execute(statement.bind());
+    }
+    catch {
+    	case e: QueryExecutionException => {
+    		println("QueryExcecutionException with setUserUnreadNotifications");
+    		logger.error(s"QueryExcecutionException exception with setUserUnreadNotifications: $executeString", e);
+    	}
+    	case e: NoHostAvailableException => {
+    		println("NoHostAvailableException with setUserUnreadNotifications");
+    		logger.error(s"NoHostAvailableException exception with setUserUnreadNotifications: $executeString", e);
+    	}
+    	case e: QueryValidationException => {
+     		println("QueryValidationException with setUserUnreadNotifications");
+    		logger.error(s"NoHostAvailableException exception with setUserUnreadNotifications: $executeString", e);   		
+    	}
+    }*/
   }
 
   /*                  GETTERS                 */
 
 	def getProjects : Seq[Project] = {
-    	val columnName = "name";
+		val columnName = "name";
     	val executeString = s"select * from $PROJECTS"
-
-      val rows = session.executeAsync(executeString).getUninterruptibly().all();
-
-    	return rows.map(row => Project.fromRow(row));
+      val result = executeAsync(executeString);
+      result match {
+        case None => return List[Project]();
+        case Some(r: ResultSetFuture) => return r.getUninterruptibly().all().map(x => Project.fromRow(x));
+      }
   }
 
   def getProjectsForUsername(username : String, projectColumnName : String = "projects") : Seq[Project] = {
     val nameColumnName = "name";
     var executeString = s"select $projectColumnName from $USERS where username='$username'";
-    val projectIds : List[java.lang.Integer] = session.executeAsync(executeString).getUninterruptibly().one().getSet(s"$projectColumnName", classOf[java.lang.Integer]).toList;
-    println(projectIds);
-    println (projectColumnName);
-    
+
+  	//val projectIds : List[java.lang.Integer] = session.executeAsync(executeString).getUninterruptibly().one().getSet(s"$projectColumnName", classOf[java.lang.Integer]).toList;
+    val projectIds = executeAsync(executeString) match {
+      case None => List[java.lang.Integer]();
+      case Some(r : ResultSetFuture) => r.getUninterruptibly().one().getSet(s"$projectColumnName", classOf[java.lang.Integer]).toList
+    }
+
     return projectIds.map(id => {
         executeString = s"select * from $PROJECTS where $PROJECTS_KEY=$id";
-
-        val row = session.executeAsync(executeString).getUninterruptibly().one();
-
-        Project.fromRow(row);
+        executeAsync(executeString) match {
+          case None => {
+            logger.error(s"Undefined project: $id queried for user: $username ");
+            Project.undefined
+          }
+          case Some(r : ResultSetFuture) => {
+            val row = r.getUninterruptibly().one();
+            Project.fromRow(row);
+          }
+        }
     })
+
   }
 
   def getPrimaryProjectsForUsername(username : String) : Seq [Project] = {
@@ -88,27 +155,37 @@ object CassieCommunicator {
 
 	def getProject(projectId : Int) : Project = {
     val executeString = s"select * from $PROJECTS where $PROJECTS_KEY=$projectId";
+    executeAsync(executeString) match {
+      case None => return Project.undefined
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+        return Project.fromRow(row);
+      }
+    }
 
-    val row = session.executeAsync(executeString).getUninterruptibly().one();
-    return Project.fromRow(row);
 	}
 
 	def getLatestStatusForProject(projectId: Int) : ProjectUpdate = {
 		val executeString = s"select * from $PROJECT_UPDATES WHERE project_id=$projectId";
-
-    val row = session.execute(executeString).one();
-
-		return ProjectUpdate.fromRow(row);
+    execute(executeString) match {
+      case None => return ProjectUpdate.undefined
+      case Some(r : ResultSet) => {
+        val row = r.one();
+        return ProjectUpdate.fromRow(row);
+      }
+    }
 	}
 
 	def getStatusesForProject(projectId: Int) : Seq[ProjectUpdate] = {
   	val executeString = s"select * from $PROJECT_UPDATES WHERE project_id=$projectId";
 
-    val rows = session.execute(executeString).all();
-    rows.map( { row =>
-            //ProjectUpdate(content = row.getString("content"), timeSubmitted = new LocalDate(row.getDate("time_submitted")))
-            ProjectUpdate.fromRow(row);
-	     }).sortWith((a, b) => a.timeSubmitted.after(b.timeSubmitted));
+    execute(executeString) match {
+      case None => return List[ProjectUpdate]();
+      case Some(r : ResultSet) => {
+        val rows = r.all()
+        return rows.map(row => ProjectUpdate.fromRow(row)).sortWith((a,b) => a.timeSubmitted.after(b.timeSubmitted));
+      }
+    }
 	}
 
 	def getNumberOfStatusesForProject(projectId: Int) : Long = {
@@ -125,93 +202,141 @@ object CassieCommunicator {
 
   def getFilesForProject(project : Project) : Seq[ProjectFile] = {
     val executeString = s"select * from $FILES where project_id = ${project.id}";
-
-    val rows = session.executeAsync(executeString).getUninterruptibly().all();
-
-    return rows.map(row => ProjectFile.fromRow(row)).sortWith((a, b) => a.timeSubmitted.after(b.timeSubmitted))
+    executeAsync(executeString) match {
+      case None => return List[ProjectFile]();
+      case Some(r : ResultSetFuture) => {
+        val rows = r.getUninterruptibly().all();
+        return rows.map(row => ProjectFile.fromRow(row)).sortWith((a, b) => a.timeSubmitted.after(b.timeSubmitted))
+      }
+    }
   }
 
   def getUserWithUsernameAndPassword(username : String, password : String) : User = {
     val executeString = s"select * from $USERS where username='$username'";
-    val row = session.executeAsync(executeString).getUninterruptibly().one();
+    executeAsync(executeString) match {
+      case None => return User.undefined
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+
+        val user = User.fromRow(row);
+
+        if (user.password.equals(password) == false) {
+          return User.undefined;
+        }
+        else {
+          return user;
+        }
+      }
+    }
     
     //TODO: Password hashing and salting here
 
-    val user = User.fromRow(row);
-    if (user.password.equals(password) == false) {
-      println(s"wrong pass $password ${user.password}");
-      return User.undefined;
-    }
-    return user;
+
   }
 
   def getUserWithUsername(username : String) : User = {
     val executeString = s"select * from $USERS where username='$username'";
-    val result = session.executeAsync(executeString).getUninterruptibly().one();
+    executeAsync(executeString) match {
+      case None => return User.undefined;
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
 
-    User.fromRow(result);
+        User.fromRow(row);        
+      }
+    }
   }
 
   def getUsers : Seq[User] = {
     val executeString = s"select * from $USERS";
-    val rows = session.executeAsync(executeString).getUninterruptibly().all();
-
-    return rows.map(row => User.fromRow(row));
+    executeAsync(executeString) match {
+      case None => return List[User]();
+      case Some(r : ResultSetFuture) => {
+        val rows = r.getUninterruptibly().all();
+        return rows.map(row => User.fromRow(row));
+      }
+    }
   }
 
   def getUserGroup(name : String) : UserGroup = {
     val executeString = s"select * from $USER_GROUPS where name = '$name'"
-    val row = session.executeAsync(executeString).getUninterruptibly().one();
-
-    return UserGroup.fromRow(row);
+    executeAsync(executeString) match {
+      case None => UserGroup.undefined;
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+        return UserGroup.fromRow(row);
+      }
+    }
   }
 
   def getCategories : Seq[ProjectCategory] = {
     val executeString = s"select * from $CATEGORIES";
-    val rows = session.executeAsync(executeString).getUninterruptibly().all();
+    executeAsync(executeString) match {
+      case None => return List[ProjectCategory]()
+      case Some(r : ResultSetFuture) => {
+        val rows = r.getUninterruptibly().all();
+        return rows.map(row => ProjectCategory.fromRow(row));
+      }
+    }
 
-    return rows.map(row => ProjectCategory.fromRow(row));
   }
 
   def getStates : Seq[ProjectState] = {
     val executeString = s"select * from $STATES";
-    val rows = session.executeAsync(executeString).getUninterruptibly.all();
+    executeAsync(executeString) match {
+      case None => return List[ProjectState]()
+      case Some(r : ResultSetFuture) => {
+        val rows = r.getUninterruptibly.all();
 
-    return rows.map(row => ProjectState.fromRow(row));
+        return rows.map(row => ProjectState.fromRow(row));        
+      }
+    }
+
   }
 
   def getTagsWithType (tagType : String) : Option[Seq[String]] = {
     val executeString = s"select * from $TAGS where type='$tagType'";
-    val result = session.executeAsync(executeString).getUninterruptibly().one();
-
-    if(result == null) {
-      return None
+    executeAsync(executeString) match {
+      case None => return None;
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+        return Some(row.getSet("value", classOf[String]).toList)
+      }
     }
-
-    return Some(result.getSet("value", classOf[String]).toList);
   }
 
   def getNotificationsForUser (user : User) : Seq[Notification] = {
     val executeString = s"select * from $NOTIFICATIONS where username = '${user.username}' order by time_created desc"
-    val rows = session.executeAsync(executeString).getUninterruptibly().all();
+    executeAsync(executeString) match {
+      case None => return List[Notification]();
+      case Some(r : ResultSetFuture) => {
+        val rows = r.getUninterruptibly().all();
 
-    return rows.map(row => Notification.fromRow(row));
+        return rows.map(row => Notification.fromRow(row));
+      }
+    }
   }
 
   def getRequest (projectId : Int, owner : String, requester : String) : ProjectRequest = {
     val executeString = s"select * from $REQUESTS where project_id = $projectId and owner = '$owner' and requester = '$requester'";
-
-    val row = session.executeAsync(executeString).getUninterruptibly().one();
-
-    return ProjectRequest.fromRow(row);
+    executeAsync(executeString) match {
+      case None => return ProjectRequest.undefined
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+        return ProjectRequest.fromRow(row);
+      }
+    }
   }
 
-  def getRequest (projectId : Int, owner : String) : Seq[ProjectRequest] = {
+  def getRequests (projectId : Int, owner : String) : Seq[ProjectRequest] = {
     val executeString = s"select * from $REQUESTS where project_id = $projectId and owner = '$owner'";
+    executeAsync(executeString) match {
+      case None => return List[ProjectRequest]()
+      case Some(r : ResultSetFuture) => {
+        val rows = r.getUninterruptibly().all();
 
-    val rows = session.executeAsync(executeString).getUninterruptibly().all();
-
-    return rows.map(row => ProjectRequest.fromRow(row));
+        return rows.map(row => ProjectRequest.fromRow(row));
+      }
+    }
   }
 
 	def addUpdateForProject(update: ProjectUpdate) : ProjectUpdate = {
@@ -221,9 +346,7 @@ object CassieCommunicator {
 		val values = s"${update.projectId} ,'${update.author}', '$content', '$timestamp', $files"
 
 		val executeString = s"insert into $PROJECT_UPDATES($PROJECT_UPDATES_INSERT_FIELDS) values($values)";
-		println(executeString);
-
-		session.execute(executeString);
+    execute(executeString)
 
     return update
 	}
@@ -237,32 +360,33 @@ object CassieCommunicator {
     val teamMembersStr = teamMembers.map(member => s"'$member'").mkString(",")
 
     var executeString = s"insert into $PROJECTS($PROJECT_INSERT_FIELDS) VALUES($id, '${project.description.replace("'", "''")}', { $teamMembersStr}, '${project.name.replace("'", "''")}', '$primaryContact', 'in progress', { $categoriesStr } , dateOf(now()))";
-    session.execute(executeString);
+    execute(executeString);
 
     executeString = s"update $USERS set primary_contact_projects = primary_contact_projects + { $id } where username='$primaryContact'";
-    session.execute(executeString);
+    execute(executeString);
 
     executeString = s"update $USERS set projects = projects + { $id } where username='$primaryContact'";
-    session.execute(executeString);
+    execute(executeString);
+    
     return Project(id, project.name, project.description);
   }
 
   def addUserToProject(user : User, project : Project) {
     val userString = s"update $USERS set projects = projects + {${project.id}} where username = '${user.username}'";
-    session.execute(userString);
+    execute(userString);
 
     val projectString = s"update $PROJECTS set team_members = team_members + {'${user.username}'} where id = ${project.id}";
-    session.execute(projectString);
+    execute(projectString);
   }
 
   def addUserToGroup(user : User, userGroup : UserGroup) {
     val executeString = s"update $USER_GROUPS set users = users + {'${user.username}'} where name = '${userGroup.name}'"
-    session.executeAsync(executeString);
+    executeAsync(executeString);
   }
 
   def addUser(user : User) {
     val executeString = s"insert into $USERS($USER_INSERT_FIELDS) VALUES('${user.username}', '${user.firstName}', '${user.lastName}', '${user.password}')"
-    session.executeAsync(executeString);
+    executeAsync(executeString);
   }
 
   def addFile(projectFile : ProjectFile) : ProjectFile = {
@@ -270,7 +394,7 @@ object CassieCommunicator {
     val timestamp = Conversions.dateToStr(projectFile.timeSubmitted);
     val values = s"${projectFile.projectId}, '$timestamp', '${projectFile.filename}', '${projectFile.originalName}', '${projectFile.author}'"
   	val executeString = s"insert into $FILES($FILES_INSERT_FIELDS) VALUES($values)";
-  	session.execute(executeString);
+  	execute(executeString);
 
     return projectFile
   }
@@ -284,7 +408,7 @@ object CassieCommunicator {
       val newTagList = (existingTags.get ++ tags).distinct;
       val tagsStr = newTagList.map(_ => s"'_'").mkString(",");
       val executeString = s"update $TAGS set value= {$tagsStr} where type='$tagType'";
-      session.execute(executeString);
+      execute(executeString);
     }
   }
 
@@ -294,8 +418,7 @@ object CassieCommunicator {
     val typeStr = NotificationType.toStr(notification.notificationType);
     val executeString = s"insert into $NOTIFICATIONS ($NOTIFICATIONS_INSERT_FIELDS) values ('${notification.username}', '$timestamp', $contentStr, '$typeStr')";
 
-    println(executeString);
-    session.execute(executeString);
+    execute(executeString);
 
     return notification;
   }
@@ -304,7 +427,7 @@ object CassieCommunicator {
     val timestamp = utils.Conversions.dateToStr(projectRequest.timeCreated);
     val executeString = s"insert into $REQUESTS ($REQUESTS_INSERT_FIELDS) values (${projectRequest.projectId} ,'${projectRequest.owner}', '${projectRequest.requester}', '$timestamp')";
 
-    session.execute(executeString);
+    execute(executeString);
 
     return projectRequest;
   }
@@ -319,16 +442,16 @@ object CassieCommunicator {
       case _  => project.stateMessage.replace("'", "''");
     }
     var executeString = s"insert into $PROJECTS($PROJECT_UPDATE_FIELDS) VALUES(${project.id}, '${project.description.replace("'", "''")}', '${project.state}', { $categoriesStr }, '$stateMessage', '${project.primaryContact}')";
-    println(executeString)
-    session.execute(executeString);
+
+    execute(executeString);
   }
 
   def removeUserFromProject(user : User, project : Project) {
     val userString = s"update $USERS set projects = projects - {${project.id}} where username = '${user.username}'";
-    session.execute(userString);
+    execute(userString);
 
     val projectString = s"update $PROJECTS set team_members = team_members - {'${user.username}'} where id = ${project.id}";
-    session.execute(projectString);
+    execute(projectString);
   }
 
   def changePrimaryContactForProject(oldUser : User, newUser : User, project : Project) {
@@ -336,17 +459,16 @@ object CassieCommunicator {
     val newUserString = s"update $USERS set primary_contact_projects = primary_contact_projects + {${project.id}} where username= '${newUser.username}'";
     val projectString = s"update $PROJECTS set primary_contact = '${newUser.username}' where id = ${project.id}";
 
-    session.execute(oldUserString);
-    session.execute(newUserString);
-    session.execute(projectString);
+    execute(oldUserString);
+    execute(newUserString);
+    execute(projectString);
   }
 
   def removeNotification(notification : Notification) {
     val timestamp = utils.Conversions.dateToStr(notification.timeCreated);
     val executeString = s"delete from $NOTIFICATIONS where username='${notification.username}' and time_created='$timestamp'"
 
-    println(executeString);
-    session.execute(executeString);
+    execute(executeString);
   }
 
   def removeRequest(projectRequest : ProjectRequest) {
@@ -356,7 +478,7 @@ object CassieCommunicator {
 
     val executeString = s"delete from $REQUESTS where project_id = ${projectRequest.projectId} and owner = '${projectRequest.owner}' and requester = '${projectRequest.requester}'";
 
-    session.execute(executeString);
+    execute(executeString);
   }
 
 

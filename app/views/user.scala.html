@@ -21,7 +21,7 @@
 
 		</div>
 
-    	<span class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else model.User.getFullName(user.username) + " owns"}</span>
+    	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else model.User.getFullName(user.username) + " owns"}</div>
 
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
@@ -30,7 +30,7 @@
 		   	}
 	   	</div>
 
-	   	<span class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else model.User.getFullName(user.username) + " works"} on</span>
+	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else model.User.getFullName(user.username) + " works"} on</div>
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- user.projects) {

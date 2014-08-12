@@ -18,7 +18,7 @@ object ProjectRequest {
 		if (owner.length == 0) {
 			return List[ProjectRequest]();
 		}
-		return CassieCommunicator.getRequest(projectId, owner);
+		return CassieCommunicator.getRequests(projectId, owner);
 	}
 
 	def get(projectId : Int, owner : String, requester : String) : ProjectRequest = {
