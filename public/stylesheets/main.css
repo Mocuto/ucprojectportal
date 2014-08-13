@@ -93,7 +93,7 @@ body {
 	text-align:center;
 	vertical-align: middle;
 	cursor:pointer;
-	margin-bottom: 12px;
+	margin-bottom: 16px;
 	display: inline-block;
 	margin-right: 32px;
 }
@@ -135,7 +135,6 @@ body {
 	font-size:64pt;
 	color:white;
 	text-align:center;
-	margin-top:64px;
 	margin-bottom:64px;
 }
 
@@ -152,7 +151,7 @@ body {
 
 .dashboard-item {
 	text-align:center;
-	max-width:320px;
+	width:240px;
 	display:inline-block;
 	margin-right:64px;
 	margin-left:64px;
@@ -242,6 +241,7 @@ body {
 	width:80%;
 	margin:0px auto;
 	text-align: center;
+	margin-bottom:16px;
 }
 
  * {
@@ -290,6 +290,15 @@ body {
 
 .project-name-container {
 	margin-bottom:32px;
+}
+
+.project-name-container img {
+	width: 200px;
+	display: inline;
+	margin-right:24px;
+	vertical-align: middle;
+	float:left;
+	margin-bottom:24px;
 }
 
 .content-header {

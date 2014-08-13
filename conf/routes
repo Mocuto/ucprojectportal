@@ -18,8 +18,8 @@ POST	/editProject/:id						controllers.Application.editProject(id : Int)
 POST	/leaveProject/:id 						controllers.Application.leaveProject(id : Int)
 GET		/login 									controllers.Application.login(path : String = "")
 GET		/login/*path 							controllers.Application.login(path : String)
+POST	/tryLogin								controllers.Application.tryLogin(path : String = "")
 POST	/tryLogin/*path							controllers.Application.tryLogin(path : String)
-POST	/tryLogin/								controllers.Application.tryLogin(path : String = "")
 GET		/signout								controllers.Application.signout
 GET		/uploads/:file							controllers.Application.uploads(file : String)
 POST 	/createUser 							controllers.Application.createUser

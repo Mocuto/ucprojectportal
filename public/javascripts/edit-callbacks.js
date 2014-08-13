@@ -44,6 +44,12 @@ function onEditButtonClicked() {
 			if(state === STATE_IN_PROGRESS_NEEDS_HELP) {
 				$("#project-state-message").show();
 			}
+
+			editProject(formData, function() {
+					location.reload(true)
+			})
+			
+			return;
 		}
 
 		else if (column === "description") {

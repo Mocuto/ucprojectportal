@@ -1,5 +1,6 @@
 @(project : model.Project, username : String)
 @import java.lang.String; val filterStr = project.categories.map(x => s"category-${x.replace(' ', '-')}").mkString(" ") + " state-" + project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
+@import java.lang.String; val stateStr = project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
 
 @if(project.isNew == true) {
 <div class="isotope-item @filterStr category-new">
@@ -9,7 +10,12 @@
 <table class="projectbox" expanded="false" id="projectbox-@project.id" >
 	<tr>
 		<td>
-			<img src="/assets/images/project-icon.png" class="projectbox-icon"/>
+			@if(model.ProjectCategory.get(project.categories(0)).icon == null) {
+				<img src="/assets/images/icons/project-@stateStr-student-experience.png" class="projectbox-icon"/>
+			} else {
+				<img src="/assets/images/icons/project-@stateStr-@{model.ProjectCategory.get(project.categories(0)).icon}.png" class="projectbox-icon"/>
+			}
+			
 		</td>
 		<td class="projectbox-title">
 			@project.name.toLowerCase()

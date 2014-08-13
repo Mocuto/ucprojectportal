@@ -9,7 +9,14 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
 </script>
 
       <div class="main-container">
-      	<div class="project-name-container"><span class="huge-header">@project.name.toLowerCase()</span></div>
+      	<div class="project-name-container">
+        @if(model.ProjectCategory.get(project.categories(0)).icon == null) {
+          <img src="/assets/images/logos/dashboard-student-experience.png"/>
+        } else {
+          <img src="/assets/images/logos/dashboard-@{model.ProjectCategory.get(project.categories(0)).icon}.png" />
+        } 
+        <span class="huge-header">@project.name.toLowerCase()</span></div>
+
          <table class="project-table">
             <tr>
                <td>
@@ -226,7 +233,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           <tr>
             <td style="width:100%">
             <div id="project-update-log">
-               @if(project.teamMembers.contains(authenticatedUser.username) == true) {
+               @if(project.teamMembers.contains(authenticatedUser.username) == true && project.state != model.ProjectState.COMPLETED && project.state != model.ProjectState.CLOSED) {
                 @helper.form(action = routes.Application.submitUpdate) {
                 
                   <div class="roundbox update">

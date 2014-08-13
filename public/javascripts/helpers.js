@@ -45,5 +45,7 @@ $(document).ready(function() {
 
 	setupEditCallbacks();
 
+	setupFormCallbacks();
+
 	pulse();
 })

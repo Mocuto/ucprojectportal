@@ -72,4 +72,19 @@ function setupLayout() {
 			"backgroundColor" : "#fa544f"
 		}, 300)
 	})
+
+	function onWindowResize() {
+		var width = $(this).width();
+		if(width < 1105) {
+			$("#uc-sg").hide()
+		}
+		else {
+			$("#uc-sg").show()
+		}
+
+	}
+
+	onWindowResize.call($(window));
+
+	$(window).resize(onWindowResize);
 }

@@ -1,5 +1,9 @@
 package controllers
 
+import com.typesafe.plugin._
+
+import java.util.Date
+
 import model._
 
 import play.api._
@@ -9,7 +13,8 @@ import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
 
-import java.util.Date
+import utils._
+
 
 object Application extends Controller {
 
@@ -266,14 +271,16 @@ def editProject(id : Int) = Action { implicit request =>
 			{
 				val dataParts = request.body.asMultipartFormData.get.dataParts
 
-				val isFinished = (dataParts.get("state") == ProjectState.COMPLETED || dataParts.get("state") == ProjectState.CLOSED);
+				val state = dataParts.getOrElse("state", List(project.state))(0)
+
+				val isFinished = (state == ProjectState.COMPLETED || state == ProjectState.CLOSED);
 
 				val updatedProject = Project(
 					id = project.id,
 					name = project.name,
 					description = dataParts.getOrElse("description", List(project.description))(0),
 					categories = dataParts.getOrElse("categories", project.categories),
-					state = dataParts.getOrElse("state", List(project.state))(0),
+					state = state,
 					stateMessage = dataParts.getOrElse("state-message", List(project.stateMessage))(0),
 					teamMembers = dataParts.getOrElse("team-members", project.teamMembers),
 					primaryContact = dataParts.getOrElse("primary-contact", List(project.primaryContact))(0),
@@ -525,6 +532,7 @@ def admin = Action { implicit request =>
 				NotFound(views.html.notFound("this page does not exist"));
 			}
 			else {
+				SMTPCommunicator.sendEmail();
 				Ok(views.html.admin(authenticatedUser));
 			}
 		}

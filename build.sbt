@@ -13,7 +13,13 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
 	"com.datastax.cassandra" % "cassandra-driver-core" % "2.0.0-rc2",
-	"com.github.nscala-time" %% "nscala-time" % "1.0.0"
+	"com.github.nscala-time" %% "nscala-time" % "1.0.0",
+	"com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.0"
 )
 
+
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
+scalacOptions += "-feature"
+
+scalacOptions += "-language:implicitConversions"

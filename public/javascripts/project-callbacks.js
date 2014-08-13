@@ -37,6 +37,9 @@ function setupProjectCallbacks() {
 		if($(this).val() === STATE_IN_PROGRESS_NEEDS_HELP) {
 			$("#project-state-message-input").show();
 		}
+		else {
+			$("#project-state-message-input").hide();
+		}
 	})
 
 	$("#project-update-log-button").click(function() {
@@ -64,6 +67,7 @@ function setupProjectCallbacks() {
 			itemSelector : '.isotope-item',
 			packery: {
 				columnWidth : ".grid-sizer",
+				rowHeight: 96,
 				gutter : 32
 			}
 		})

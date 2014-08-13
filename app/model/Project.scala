@@ -59,10 +59,10 @@ object Project {
 				Random.nextBoolean()
 			}
 			else if(xInProgress && !yInProgress) {
-				 false;
+				 true;
 			}
 			else if(yInProgress && !xInProgress) {
-				 true;
+				 false;
 			}
 			else {
 				val now = DateTime.now;
@@ -74,10 +74,10 @@ object Project {
 					 Random.nextBoolean()
 				}
 				else if(sinceX < 1 && sinceY >= 1) {
-					 false;
+					 true;
 				}
 				else {
-					 true;
+					 false;
 				}
 			}
 		} )

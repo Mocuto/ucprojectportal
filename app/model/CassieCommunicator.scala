@@ -11,8 +11,6 @@ import utils.Conversions
 
 import play.api.Logger
 
-//TODO: Prepare all statements
-
 object CassieCommunicator {
 	private val serverIp = "localhost"
 	private val keyspace = "projectsg"
@@ -286,6 +284,17 @@ object CassieCommunicator {
       }
     }
 
+  }
+
+  def getCategory(name : String) : ProjectCategory = {
+    val executeString = s"select * from $CATEGORIES where name = '$name'"
+    executeAsync(executeString) match {
+      case None => return ProjectCategory.undefined
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+        return ProjectCategory.fromRow(row);
+      }
+    }
   }
 
   def getStates : Seq[ProjectState] = {
