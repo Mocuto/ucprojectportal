@@ -1,0 +1,166 @@
+
+function onProjectSubmitSuccess(data) {
+	alert("Success");
+}
+
+function onProjectSubmitError(xmlhttprequest, textstatus, message) {
+	console.error(xmlhttprequest.responseText);
+	console.error(textstatus);
+	console.error(message);
+}
+
+function ajaxSendFormData(formData, route, onSuccess, onError) {
+$.ajax({
+	type: route.type,
+	url: route.url,
+	data:formData,
+	processData: false,
+	contentType: false,
+	dataType: "json",
+	success: function (data)
+	{
+		onSuccess.call(this, data);
+	},
+	error: function(error, textstatus, message){
+		//alert("ERROR" + error.responseText);
+		onError.call(this, error, textstatus, message);
+	}
+});				
+}
+
+function editProject(formData, optionalCallback) {
+	if (typeof optionalCallback === "undefined") {
+		optionalCallback = function() {
+
+		}
+	}
+
+	var route = jsRoutes.controllers.Application.editProject(PROJECT_ID);
+	ajaxSendFormData(formData, route, optionalCallback, function() {
+
+	})
+}
+
+function leaveProject(projectId) {
+	var route = jsRoutes.controllers.Application.leaveProject(projectId);
+	ajaxSendFormData(new FormData(), route, function() {
+		$("#projectbox-" + projectId).parents("td").animate({width : "0px"}, 400, "swing", function() {
+			$(this).hide();
+		})
+	}, function() {
+
+	})
+}
+
+function submitUpdate() {
+	var content = $("#update-input").val();
+	var files = $("#update-files").get(0).files;
+	var formData = new FormData();
+	formData.append("content", content);
+	for(var i = 0; i < files.length; i++) {
+		formData.append("file" + i, files[i]);
+	}
+	var ajax = {
+		sucess: onProjectSubmitSuccess,
+		error: onProjectSubmitError
+	}
+	var route = jsRoutes.controllers.Application.submitUpdate();
+	ajaxSendFormData(formData, route, function(data) {
+
+		var updateHtml = $($.parseHTML(data["html"])[1]);
+		updateHtml.hide();
+
+		$("#update-input").val("");
+
+		$(".update-group").prepend(updateHtml).slideDown();
+		updateHtml.slideDown();
+
+		var fileInputs = $(".file-inputs")
+		$(".file-inputs").parents("form").trigger("reset");
+	});
+}
+
+function requestJoin(projectId) {
+	var route = jsRoutes.controllers.Application.requestJoin(projectId);
+
+	ajaxSendFormData(new FormData(), route, function() {
+
+		$("#popane-overlay").css("backgroundColor", "white");
+
+		var notificationBox = $(document.createElement("div"))
+			.addClass("roundbox")
+			.addClass("popane")
+			.addClass("notification-popup")
+			.appendTo("body");
+
+		$(document.createElement("span"))
+			.addClass("close-button")
+			.text("close")
+			.appendTo(notificationBox);
+		$(document.createElement("div"))
+			.html("<span style='font-weight:500'>thank you!</span> your request to join has been sent to the project's author.")
+			.appendTo(notificationBox)
+
+		notificationBox.popane({show : "true"});
+
+		//alert("Request sent");
+	}, function(xmlhttprequest, textstatus, message) {
+		//TODO: Handle this error
+	});
+}
+
+function acceptRequest(projectId, requester) {
+	var route = jsRoutes.controllers.Application.acceptRequest(projectId, requester);
+
+	ajaxSendFormData(new FormData(), route, function() {
+
+	}, function() {
+
+	});
+}
+
+function ignoreRequest(projectId, requester) {
+	var route = jsRoutes.controllers.Application.ignoreRequest(projectId, requester);
+
+	ajaxSendFormData(new FormData(), route, function() {
+		//Success
+	}, function() {
+		//Error
+	});
+}
+
+function resetUnreadNotifications() {
+
+	var route = jsRoutes.controllers.Application.resetUnreadNotifications();
+	ajaxSendFormData(new FormData(), route, function() {
+		$("#notification-text").text(user.defaultMessage)
+		user.unreadNotifications = 0;
+	},
+	function(xmlhttprequest, textstatus, message) {
+		if (textstatus === "timeout") {
+			//TODO: Have the website change to reflect that the user is offline
+		}
+		else {
+			//TODO: Have case by case error handling
+			console.error(xmlhttprequest.responseText);
+			console.error(textstatus);
+			console.error(message);
+		}
+	})
+}
+
+function getUnreadNotificationCount(onSuccess, onError) {
+	var route = jsRoutes.controllers.Application.getUnreadNotificationCount();
+	ajaxSendFormData(new FormData(), route, onSuccess, onError)
+}
+
+function ignoreNotification(timeCreated, href) {
+	var route = jsRoutes.controllers.Application.ignoreNotification(timeCreated);
+	ajaxSendFormData(new FormData(), route, function() {
+		if(typeof href !== "undefined") {
+			window.location = href
+		}
+	}, function() {
+		//Error
+	});
+}

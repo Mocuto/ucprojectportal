@@ -55,7 +55,7 @@ def checkAuthenticated (request : Request[play.api.mvc.AnyContent])(success : (S
 	request.session.get("authenticated").map {
 		authenticatedUser => success(authenticatedUser)
 	}.getOrElse {
-		Redirect(routes.Application.login);
+		Redirect(routes.Application.login(request.path));
 	}
 }
 
@@ -78,7 +78,7 @@ def javascriptRoutes = Action { implicit request =>
 }
 
 def index = Action { implicit request => {
-	request.session.get("authenticated").map {
+/*	request.session.get("authenticated").map {
 		authenticatedUser => {
 			authenticatedUser match {
 				case null => Redirect(routes.Application.login)
@@ -92,9 +92,12 @@ def index = Action { implicit request => {
 	}.getOrElse {
 		Redirect(routes.Application.login);
 	}
-}
+}*/
+	val authenticatedUser = request.session.get("authenticated").get;
+	val user = User.get(authenticatedUser);
+	Ok(views.html.index(user));
 
-}
+}}
 
 
 def filter(filterStr : String) = Action { implicit request => {
@@ -155,14 +158,16 @@ def user(username : String) = Action { implicit request => {
 			}
 		}
 	}.getOrElse {
-		Redirect(routes.Application.login)
+		Redirect(routes.Application.login(request.path))
 	}
 }
 }
 
-def login = Action {
-	Ok(views.html.login()(loginForm));
+def login(path : String) = Action {
+	Ok(views.html.login(path)(loginForm));
 }
+
+def login : Action[play.api.mvc.AnyContent] = login("");
 
 def uploads(filename : String) = Action {
 	val file : java.io.File = new java.io.File(s"uploads/$filename");
@@ -261,6 +266,8 @@ def editProject(id : Int) = Action { implicit request =>
 			{
 				val dataParts = request.body.asMultipartFormData.get.dataParts
 
+				val isFinished = (dataParts.get("state") == ProjectState.COMPLETED || dataParts.get("state") == ProjectState.CLOSED);
+
 				val updatedProject = Project(
 					id = project.id,
 					name = project.name,
@@ -269,9 +276,9 @@ def editProject(id : Int) = Action { implicit request =>
 					state = dataParts.getOrElse("state", List(project.state))(0),
 					stateMessage = dataParts.getOrElse("state-message", List(project.stateMessage))(0),
 					teamMembers = dataParts.getOrElse("team-members", project.teamMembers),
-					primaryContact = dataParts.getOrElse("primary-contact", List(project.primaryContact))(0)
+					primaryContact = dataParts.getOrElse("primary-contact", List(project.primaryContact))(0),
+					timeFinished = if(isFinished) new Date() else null
 				)
-
 
 				updatedProject.update();
 
@@ -346,15 +353,22 @@ def leaveProject(id : Int) = Action { implicit request =>
 
 }
 
-def tryLogin = Action { implicit request =>
+def tryLogin(path : String) = Action { implicit request =>
 	loginForm.bindFromRequest.fold(
 		formWithErrors => {
 			BadRequest(views.html.login()(formWithErrors))
 		},
 		loginData => {
 			println(loginData._1)
-			Redirect(routes.Application.index).withSession(
-				"authenticated" -> loginData._1			)
+			if(path == "") {
+				Redirect(routes.Application.index).withSession(
+					"authenticated" -> loginData._1			)
+			}
+			else {
+				Redirect(path).withSession(
+					"authenticated" -> loginData._1			)
+			}
+
 		}
 	)
 }
@@ -559,7 +573,7 @@ def createUser = Action { implicit request =>
 }
 
 def signout = Action { implicit request =>
-	Redirect(routes.Application.login).withSession(
+	Redirect(routes.Application.login("")).withSession(
 		request.session - "authenticated"
 	)
 

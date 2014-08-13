@@ -1,17 +1,17 @@
-@()(implicit form: Form[(String, String)])
+@(path : String = "")(implicit form: Form[(String, String)])
 
 @main("Student Government Project Portal")(None) {
 
    	<style>
       BODY {
-        background-image:url("assets/images/login-bg.jpg");
+        background-image:url("/assets/images/login-bg.jpg");
         background-position:center; 
       }
     </style>
       <div class="login-container">
         <div class="huge-header" style="color: #fa544f; font-weight:800">project portal</div>
         <div class="large-header" style="color: black; font-weight:200; margin-bottom:20px">university of cincinnati undergraduate student government</div>
-   	    @helper.form(action = routes.Application.tryLogin) {
+   	    @helper.form(action = routes.Application.tryLogin(path)) {
         @if(form.errors.length > 0) {
             @for(error <- form.errors) {
               @*************************

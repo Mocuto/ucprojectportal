@@ -5,21 +5,52 @@
 
 @main("Student Government Project Portal")(Some(user)) {
     <div class="main-container">
-        <span class="welcome">welcome.</span>
-        <table>
-        	<tr>
-        		<td>
-    			</td>
-        	</tr>
-        	<tr>
-        		<td>
-        		</td>
-        	</tr>
-        	<tr>
-        		<td>
-        		</td>
-        	</tr>
-        </table>
+        <div class="welcome">welcome. <img src="/assets/images/select-a-category.png"/> </div>
+        <div id="dashboard-item-container">
+        	<!-- Academics -->
+            <div class="dashboard-item">
+            	<a href="/filter/category-academics">
+	                <img src="/assets/images/logos/dashboard-academics.png" />
+	                <span class="dashboard-item-text">academics</span>
+                </a>
+            </div>
+            <!-- Safety -->
+            <div class="dashboard-item">
+            	<a href="/filter/category-safety">
+	                <img src="/assets/images/logos/dashboard-safety.png" />
+	                <span class="dashboard-item-text">safety</span>
+                </a>
+            </div>
+            <!-- Athletics and Spirit -->
+            <div class="dashboard-item">
+            	<a href="/filter/category-athletics-and-spirit">
+	                <img src="/assets/images/logos/dashboard-athletics-and-spirit.png" />
+	                <span class="dashboard-item-text">athletics and spirit</span>
+                </a>
+            </div>
+            <!-- Community Affairs -->
+            <div class="dashboard-item">
+            	<a href="/filter/category-community-affairs">
+	                <img src="/assets/images/logos/dashboard-community-affairs.png" />
+	                <span class="dashboard-item-text">community affairs</span>
+                </a>
+            </div>
+            <!-- Diversity -->
+            <div class="dashboard-item">
+            	<a href="/filter/category-diversity">
+	                <img src="/assets/images/logos/dashboard-diversity.png" />
+	                <span class="dashboard-item-text">diversity</span>
+                </a>
+            </div>
+            <!-- Student Experience -->
+            <div class="dashboard-item">
+            	<a href="/filter/category-academics">
+	                <img src="/assets/images/logos/dashboard-student-experience.jpg" />
+	                <span class="dashboard-item-text">student-experience</span>
+                </a>
+            </div>
+
+        </div>
    	</div>
 
 }

@@ -148,7 +148,12 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                <td>
                   <div class="roundbox" style="margin-right:64px">
                      <span class="content-header">project dates</span>
-                     <p class="content">@utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase() - present</p>
+                     <p class="content">@utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase() - 
+                     @if(project.timeFinished == null) {
+                      present
+                     } else {
+                      @utils.Conversions.dateToDisplayedStr(project.timeFinished).toLowerCase()
+                     }</p>
                   </div>
                   <div class="roundbox" style="margin-right:64px">
                     <table>

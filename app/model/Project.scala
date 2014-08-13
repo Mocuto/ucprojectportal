@@ -110,7 +110,8 @@ object Project {
 		 			teamMembers = row.getSet("team_members", classOf[String]).toList,
 		 			state = row.getString("state"),
 		 			stateMessage = row.getString("state_message"),
-		 			timeStarted = row.getDate("time_started")
+		 			timeStarted = row.getDate("time_started"),
+		 			timeFinished = row.getDate("time_finished")
 				);
 			}
 		}
@@ -118,7 +119,8 @@ object Project {
 	 }
 }
 
-case class Project (id : Int, name: String, description : String, timeStarted : Date = new Date(),
+case class Project (id : Int, name: String, description : String,
+				 	timeStarted : Date = new Date(), timeFinished : Date = null,
 					categories : Seq[String] = List[String](), tags : Seq[String] = List[String](),
  					primaryContact : String = "", teamMembers : Seq[String] = List[String](), 
  					state : String = "", stateMessage : String = "",

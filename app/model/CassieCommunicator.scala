@@ -25,7 +25,7 @@ object CassieCommunicator {
 	private val PROJECTS = "projects";
 	private val PROJECTS_KEY = "id"
 	private val PROJECT_INSERT_FIELDS = "id, description, team_members, name, primary_contact, state, categories, time_started"
-	private val PROJECT_UPDATE_FIELDS = "id, description, state, categories, state_message, primary_contact"
+	private val PROJECT_UPDATE_FIELDS = "id, description, state, categories, state_message, primary_contact, time_finished"
 
 	private val PROJECT_UPDATES = "project_updates";
 	private val PROJECT_UPDATES_INSERT_FIELDS = "project_id, author, content, time_submitted, files"
@@ -57,8 +57,12 @@ object CassieCommunicator {
     logger.error(s"Exception with setUserUnreadNotifications: $executeString", e);
   }
 
-  def execute(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException) : Option[ResultSet] = {
-    logger.debug(executeString);
+  def execute(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException, doesDebug : Boolean = true) : Option[ResultSet] = {
+    
+    if(doesDebug){
+      logger.debug(executeString);
+    }
+
     try {
       val statement = session.prepare(executeString);
       return Some(session.execute(statement.bind()));
@@ -71,8 +75,12 @@ object CassieCommunicator {
     }
   }
 
-  def executeAsync(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException) : Option[ResultSetFuture] = {
-    logger.debug(executeString);
+  def executeAsync(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException, doesDebug : Boolean = true) : Option[ResultSetFuture] = {
+
+    if(doesDebug) {
+     logger.debug(executeString);     
+    }
+
     try {
       val statement = session.prepare(executeString);
       return Some(session.executeAsync(statement.bind()));
@@ -236,7 +244,7 @@ object CassieCommunicator {
 
   def getUserWithUsername(username : String) : User = {
     val executeString = s"select * from $USERS where username='$username'";
-    executeAsync(executeString) match {
+    executeAsync(executeString, doesDebug = false) match {
       case None => return User.undefined;
       case Some(r : ResultSetFuture) => {
         val row = r.getUninterruptibly().one();
@@ -306,7 +314,7 @@ object CassieCommunicator {
 
   def getNotificationsForUser (user : User) : Seq[Notification] = {
     val executeString = s"select * from $NOTIFICATIONS where username = '${user.username}' order by time_created desc"
-    executeAsync(executeString) match {
+    executeAsync(executeString, doesDebug = false) match {
       case None => return List[Notification]();
       case Some(r : ResultSetFuture) => {
         val rows = r.getUninterruptibly().all();
@@ -441,7 +449,10 @@ object CassieCommunicator {
       case null => null
       case _  => project.stateMessage.replace("'", "''");
     }
-    var executeString = s"insert into $PROJECTS($PROJECT_UPDATE_FIELDS) VALUES(${project.id}, '${project.description.replace("'", "''")}', '${project.state}', { $categoriesStr }, '$stateMessage', '${project.primaryContact}')";
+
+    val timestamp = if(project.timeFinished == null) null else s"'${utils.Conversions.dateToStr(project.timeFinished)}'";
+
+    val executeString = s"insert into $PROJECTS($PROJECT_UPDATE_FIELDS) VALUES(${project.id}, '${project.description.replace("'", "''")}', '${project.state}', { $categoriesStr }, '$stateMessage', '${project.primaryContact}', $timestamp)";
 
     execute(executeString);
   }

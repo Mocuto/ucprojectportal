@@ -31,7 +31,7 @@ object ProjectState {
 	def COMPLETED = "completed"
 	def IN_PROGRESS = "in progress"
 	def IN_PROGRESS_NEEDS_HELP = "in progress (needs help)"
-	def CLOSED = "closed"
+	def CLOSED = "frozen"
 }
 
 case class ProjectState(name : String, isDefined : Boolean = true)
