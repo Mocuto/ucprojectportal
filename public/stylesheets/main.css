@@ -27,13 +27,16 @@ body {
 
 .title-nav-item, .title-nav-item * {
 	float:right;
-	margin-right:35px;
 	text-align:right;
 	text-decoration: none;
 	color: black;
 	overflow: hidden;
 	max-width: 400px;
 	max-height: 20px;
+}
+
+.title-nav-item {
+	margin-right:35px;
 }
 
 .title-nav-item:hover, .title-nav-item *:hover {
@@ -499,4 +502,13 @@ body {
 	font-weight: 100;
 	width:100%;
 	text-align: center
+}
+
+.user-link {
+	color : inherit;
+	text-decoration: none;
+}
+
+.user-link:hover {
+	text-decoration: underline;
 }

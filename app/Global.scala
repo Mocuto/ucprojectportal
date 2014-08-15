@@ -40,6 +40,6 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 }
 
-object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "admin", "user")) {
+object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "admin", "user", "submitProject", "submitUpdate", "uploads")) {
 
 }

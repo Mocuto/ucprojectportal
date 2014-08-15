@@ -1,14 +1,16 @@
-@(title : String)(content : Html)
+@(title : Html)(content : Html)
 
 @main("Student Government Project Portal")(None) {
-<table style="color:white;"><tr><td style="background-color:#fa544f;" >
-	    <div style="background-color: white; color:black; height: 24px;padding-left: 24px;margin-top: 12px;margin-bottom: 32px;padding-top: 5px;padding-right: 12px;">
-	        <span class="title-project-portal"><a href="/">project portal</a></span> | university of cincinnati undergraduate student government 
+<table style="color:white; border-spacing:0px; margin-bottom:32px; font-family:'Helvetica'"><tr><td style="background-color:#fa544f; padding:0px" >
+	    <div style="background-color: white; color:black; height: 24px;padding-left: 24px;margin-top: 12px;margin-bottom: 32px;padding-top: 5px;padding-right: 12px; width:100%">
+	        <span style="font-weight: 800;"><a href="@constants.ServerSettings.HOST_URL" style=" text-decoration: none; color: black;">project portal</a></span> | university of cincinnati undergraduate student government 
 	    </div>
 		<div style="margin-left:32px; margin-right:32px">
-			<div style="font-size:22pt">@title</div>
-			<div class="content" style="color : white; font-size: 48pt;">@content</div>
+			<div style="font-size:16pt">@title</div>
+			<div style="color : white;">@content</div>
 		</div>
+		<br>
+		<br>
 </td></tr>
 </table>
 }

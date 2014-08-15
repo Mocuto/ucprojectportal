@@ -75,7 +75,8 @@ function setupLayout() {
 
 	function onWindowResize() {
 		var width = $(this).width();
-		if(width < 1105) {
+		var notificationTextWidth = $("#notification-text").width();
+		if(width < 1024 + notificationTextWidth) {
 			$("#uc-sg").hide()
 		}
 		else {

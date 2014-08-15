@@ -1,0 +1,3 @@
+@(username : String, content : String = null)
+
+<a href="/@username" class="user-link">@if(content == null) { @model.User.get(username).fullName.toLowerCase()}else {@content}</a>

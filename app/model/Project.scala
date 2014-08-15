@@ -128,8 +128,8 @@ case class Project (id : Int, name: String, description : String,
 	def this (name : String, description : String, categories : Seq[String], teamMembers : Seq[String]) = this(-1, name, description, categories=categories, teamMembers=teamMembers)
 	def this (name : String) = this(name, description = "", categories = List[String](), teamMembers = List[String]());
 
-	def notifyMembersExcluding(excludingUsername : String) {
-		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this));
+	def notifyMembersExcluding(excludingUsername : String, updateContent : String) {
+		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent));
 	}
 
 	def update() {

@@ -1,7 +1,7 @@
 @(update : model.ProjectUpdate)
 
 <div class="roundbox update">
-	<span class="content-header">@model.User.getFullName(update.author).toLowerCase()</span>
+	<span class="content-header">@userLink(update.author)</span>
 	@if(update.files.length > 0) {
 		<span class="hint">uploaded a file</span>
 	}

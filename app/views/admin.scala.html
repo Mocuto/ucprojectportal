@@ -3,19 +3,34 @@
 @main("Student Government Project Portal")(Some(adminUser)) {
 	<div class="main-container">
 		<div class="huge-header">administration</div>
-	</div>
+		<!-- Users -->
+		<div class="large-header">users</div>
+		<div class="roundbox">
+			@for(user <- model.User.all) {
+				<div>@userLink(user.username, s"${user.username} - ${user.fullName}")</div><br>
+			}
+			<div class="content-header">
+			new user
+			</div>
+			@helper.form(action = routes.Application.createUser) {
+				<input type="text" name="username" class="roundbox-textinput" placeholder="username" />
+				<input type="text" name="first_name" class="roundbox-textinput" placeholder="first name" />
+				<input type="text" name="last_name" class="roundbox-textinput" placeholder="last name" />
+				<input name="password" type="password" class="roundbox-textinput" placeholder="password" />
 
-	<div class="roundbox">
-		<div class="content-header">
-		new user
+				<div class="blue-button submit-button" style="margin-top:16px;">create user</div>
+			}
 		</div>
-		@helper.form(action = routes.Application.createUser) {
-			<input type="text" name="username" class="roundbox-input" />
-			<input type="text" name="first_name" class="roundbox-input" />
-			<input type="text" name="last_name" class="roundbox-input" />
-			<input name="password" type="password" class="roundbox-input" />
 
-			<div class="blue-button submit-button" style="margin-top:16px; font-size:16pt">create user</div>
-		}
+		<!-- Projects -->
+		<div class="large-header">projects</div>
+
+		<!-- Categories -->
+		<div class="large-header">categories</div>
+
+		<!-- Send a message -->
+		<div class="large-header">send a message</div>
+		<div class="roundbox">
+		</div>
 	</div>
 }

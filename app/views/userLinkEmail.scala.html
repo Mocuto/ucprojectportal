@@ -1,0 +1,3 @@
+@(username : String, content : String = null)
+
+<a href="@constants.ServerSettings.HOST_URL/@username" style="color : #aedefc">@if(content == null) { @model.User.get(username).fullName.toLowerCase()}else {@content}</a>

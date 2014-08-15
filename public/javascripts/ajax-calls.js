@@ -57,6 +57,7 @@ function submitUpdate() {
 	var files = $("#update-files").get(0).files;
 	var formData = new FormData();
 	formData.append("content", content);
+	formData.append("project_id", PROJECT_ID)
 	for(var i = 0; i < files.length; i++) {
 		formData.append("file" + i, files[i]);
 	}

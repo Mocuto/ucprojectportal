@@ -10,6 +10,8 @@ import play.api.mvc._
 
 import scala.collection.JavaConversions._
 
+import utils.SMTPCommunicator
+
 object Notification {
 
 	val SENDER = "sender"
@@ -34,8 +36,8 @@ object Notification {
 		return true;
 	}
 
-	def createUpdate(receiver : User, sender : User, project : Project) {
-		val content = Map("sender" -> sender.username, "project_id" -> project.id.toString);
+	def createUpdate(receiver : User, sender : User, project : Project, updateContent : String) {
+		val content = Map("sender" -> sender.username, "project_id" -> project.id.toString, "content" -> updateContent);
 
 		Notification.create(receiver, content, NotificationType.UPDATE);
 	}
@@ -51,6 +53,9 @@ object Notification {
 
 		CassieCommunicator.setUserUnreadNotifications(user, user.unreadNotifications + 1);
 		CassieCommunicator.addNotification(notification);
+
+		SMTPCommunicator.sendNotificationEmail(notification);
+		return notification;
 	}
 
 	def resetUnreadForUser(user : User) {

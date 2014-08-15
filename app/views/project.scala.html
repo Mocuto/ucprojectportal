@@ -176,7 +176,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                       </tr>
                     </table>
                       @if(isPrimaryContact) {
-                        <p class="content" id="project-primary-contact">@model.User.getFullName(project.primaryContact).toLowerCase()</p>
+                        <p class="content" id="project-primary-contact">@userLink(project.primaryContact)</p>
                         <span class="edit-field" for="project-primary-contact" field-name="primary-contact">
                           <select class="chosen" name="primary-contact" id="project-primary-contact-select">
                             @for(otherUser <- project.teamMembers.map(teamMember => model.User.get(teamMember))) {
@@ -189,7 +189,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                           </select>
                         </span>
                       } else {
-                        <p class="content">@model.User.getFullName(project.primaryContact).toLowerCase()</p>
+                        <p class="content">@userLink(project.primaryContact)</p>
                       }
                      
                      <table>
@@ -206,7 +206,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  		</tr>
                  	</table>
                  	@if(isPrimaryContact) {
-                    <p class="content" id="project-team-members">@project.teamMembers.map(username => model.User.getFullName(username)).mkString(",").toLowerCase()</p>
+                    <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => userLink(username)).mkString(", "))</p>
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
                         @for(otherUser <- model.User.all) {
@@ -220,7 +220,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                       </select>
                     </span>
                  	} else {
-                 		<p class="content" id="project-team-members">@project.teamMembers.map(username => model.User.getFullName(username)).mkString(",").toLowerCase()</p>
+                 		<p class="content" id="project-team-members">@Html(project.teamMembers.map(username => userLink(username)).mkString(","))</p>
                  	}
                   </div>
                </td>
@@ -229,7 +229,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
          <div class="select-group huge-header" style="margin-left:16px">
             <span class="select-item selected" id="project-update-log-button">update log</span>  |  <span class="select-item unselected" id="project-all-files-button">all files</span>
          </div>
-         <table>
+         <table style="min-width:1306px">
           <tr>
             <td style="width:100%">
             <div id="project-update-log">

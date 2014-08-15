@@ -15,9 +15,13 @@ import utils.Conversions
 
 object ProjectUpdate {
 
-	def applyIncomplete(content : String, author : String, projectId :  Int, timeSubmitted : Date) : ProjectUpdate = return ProjectUpdate(content, author, projectId, timeSubmitted)
+	def applyIncomplete(content : String, projectId :  Int, timeSubmitted : Date) : ProjectUpdate = return ProjectUpdate(
+		content, 
+		projectId =  projectId, 
+		timeSubmitted = timeSubmitted
+	)
 
-	def unapplyIncomplete(update : ProjectUpdate) : Option[(String, String, Int, Date)] = return Some(update.content, update.author, update.projectId, update.timeSubmitted)
+	def unapplyIncomplete(update : ProjectUpdate) : Option[(String, Int, Date)] = return Some(update.content, update.projectId, update.timeSubmitted)
 
 	def undefined : ProjectUpdate = {
 		return ProjectUpdate(

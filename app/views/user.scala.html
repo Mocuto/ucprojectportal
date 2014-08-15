@@ -8,7 +8,7 @@
 			@if(isAuthenticatedUser == true) {
 				my projects
 			} else {
-				@(model.User.getFullName(user.username).toLowerCase() + "'s projects")
+				@Html(userLink(user.username) + "'s projects")
 			}
 	      	@if(isAuthenticatedUser == true) {
 	   	  		<a href="project/new" style="float:right; text-decoration:none">
@@ -21,7 +21,7 @@
 
 		</div>
 
-    	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else model.User.getFullName(user.username) + " owns"}</div>
+    	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else Html(userLink(user.username, user.firstName.toLowerCase()) + " owns")}</div>
 
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
@@ -30,7 +30,7 @@
 		   	}
 	   	</div>
 
-	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else model.User.getFullName(user.username) + " works"} on</div>
+	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else Html(userLink(user.username, user.firstName.toLowerCase()) + " works")} on</div>
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- user.projects) {

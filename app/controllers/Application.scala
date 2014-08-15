@@ -13,16 +13,17 @@ import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
 
-import utils._
+import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
 
+import utils._
 
 object Application extends Controller {
 
-implicit var projectUpdateForm = Form(
+implicit val projectUpdateForm = Form(
 	mapping(
 		"content" -> nonEmptyText,
-		"author" -> ignored(""),
-		"project_id" -> ignored(-1),
+		"project_id" -> number,
 		"date" -> ignored(new Date())
 	) (ProjectUpdate.applyIncomplete)(ProjectUpdate.unapplyIncomplete)
 )
@@ -122,16 +123,6 @@ def project(id : Int) = Action { request => {
 				NotFound(views.html.notFound("This project does not exist"));
 			}
 			else {
-				projectUpdateForm = Form(
-					mapping(
-						"content" -> nonEmptyText,
-						"author" -> ignored(authenticatedUser),
-						"project_id" -> ignored(project.id),
-						"date" -> ignored(new Date())
-					) (ProjectUpdate.applyIncomplete)(ProjectUpdate.unapplyIncomplete)
-				)
-
-
 				val updates = CassieCommunicator.getStatusesForProject(id);
 				val user = User.get(authenticatedUser);
 				user.projects.foreach{project : Project => println(project)}
@@ -209,13 +200,18 @@ def submitUpdate = Action { implicit request =>
 			    if(project.teamMembers.contains(authenticatedUser) == false) {
 			    	Status(462)("You are not a member of this project");
 			    }
+			    else if(project.isDefined == false) {
+			    	Status(404)("This project does not exist")
+			    }
 			    else {
 				    val multipartFormData = request.body.asMultipartFormData.get
 				    val files = multipartFormData.files.map(filepart => (filepart.filename, filepart.ref));
 
 				    val completeUpdate = ProjectUpdate.create(update.content, authenticatedUser, update.projectId, files = files);
 
-				    project.notifyMembersExcluding(authenticatedUser);
+				    Future {
+				    	project.notifyMembersExcluding(authenticatedUser, completeUpdate.content);
+					}
 
 				    val response = JsObject(
 				    	Seq(
@@ -532,8 +528,8 @@ def admin = Action { implicit request =>
 				NotFound(views.html.notFound("this page does not exist"));
 			}
 			else {
-				SMTPCommunicator.sendEmail();
 				Ok(views.html.admin(authenticatedUser));
+				//Ok(views.html.emailMessage("This is a test message too!"))
 			}
 		}
 	}
@@ -566,7 +562,7 @@ def createUser = Action { implicit request =>
 
 								User.create(newUser);
 
-								Ok(views.html.admin(authenticatedUser));
+								Redirect(routes.Application.admin);
 							}
 							case _ => {
 								//TODO: Put in error message here

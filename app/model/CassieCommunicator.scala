@@ -206,6 +206,16 @@ object CassieCommunicator {
     return session.execute(executeString).one().getLong("COUNT").toInt;
   }
 
+  def getNextProjectId() : Int = {
+    var id = getNumberOfProjects();
+
+    while(Project.get(id) != Project.undefined) {
+      id += 1;
+    }
+    return id;
+
+  }
+
   def getFilesForProject(project : Project) : Seq[ProjectFile] = {
     val executeString = s"select * from $FILES where project_id = ${project.id}";
     executeAsync(executeString) match {
@@ -370,7 +380,7 @@ object CassieCommunicator {
 
 
   def addProject(project : Project, primaryContact : String, categories : Seq[String], teamMembers : Seq[String]) : Project = {
-    val id = CassieCommunicator.getNumberOfProjects();
+    var id = CassieCommunicator.getNextProjectId();
 
     val categoriesStr = categories.map(category => s"'${category.replace("'", "''")}'").mkString(",");
 

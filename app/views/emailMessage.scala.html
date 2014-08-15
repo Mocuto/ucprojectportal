@@ -1,5 +1,20 @@
-@(message : String)
+@(title : Html, message : String)
 
-@email("You have a notification!") {
-	<span class="large-header">@message</span>
+@email(title) {
+	<span>@message</span>
+	<br>
+	<br>
+	<div style="border-radius: 30px;
+	background-color:#ddd;
+	padding:4px 12px 4px 12px;
+	width:200px;
+	height:32px;
+	font-size:12pt;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	vertical-align: middle;
+	cursor:pointer;
+	margin-left:auto;
+	margin-right:auto;"><a href="@constants.ServerSettings.HOST_URL" style="text-decoration:none; color:black">visit the project portal</a></div>
 }
