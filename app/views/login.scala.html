@@ -17,15 +17,13 @@
         <div class="huge-header" style="color: #fa544f; font-weight:800">project portal</div>
         <div class="large-header" style="color: black; font-weight:200; margin-bottom:20px">university of cincinnati undergraduate student government</div>
    	    @helper.form(action = routes.Application.tryLogin(path)) {
-        @if(form.errors.length > 0) {
-            @for(error <- form.errors) {
-              @*************************
-               *<li>@error.message</li>*
-               *************************@
-
-                
-            }
-        }
+          @for(error <- form.errors) {
+            @if(error.message == "user account not yet confirmed") {
+             <div class="form-error-login">*your user account has not been confirmed. <a href="/resendActivation">click here to resend the confirmation email</a>.</div>
+            } else {
+              <div class="form-error-login">*@error.message</div>
+            } 
+          }
         <input type="text" placeholder="username" name="username" class="login-input" /><br>
         <input type="password" placeholder="password" name="password" class="login-input" /><br>
         <span class="hint" style="color:black; margin-bottom:8px; display:block; text-align:right">forgot password?</span>

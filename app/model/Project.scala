@@ -42,7 +42,7 @@ object Project {
 
 		for (username <- teamMembers) {
 			if(username != primaryContact) {
-				User.get(username).addToProject(newProject);
+				Project.addUser(newProject.id, User.get(username))
 			}
 		}
 
@@ -95,7 +95,79 @@ object Project {
 		return CassieCommunicator.getPrimaryProjectsForUsername(username);
 	}
 
+	def update(project : Project) {
+		CassieCommunicator.updateProject(project);
+	}
+
+
+	def delete(id : Int) {
+		CassieCommunicator.removeProject(Project.get(id));
+	}
+
+	def close(project : Project) {
+		if(project.isNew) {
+			delete(project.id);
+		}
+		else {
+			Project.update(Project(
+					id = project.id,
+					name = project.name,
+					description = project.description,
+					categories = project.categories,
+					state = ProjectState.CLOSED,
+					stateMessage = project.stateMessage,
+					teamMembers = project.teamMembers,
+					primaryContact = null,
+					timeFinished = project.timeFinished
+			))
+		}
+	}
+
 	def allTags : Seq[String] = return CassieCommunicator.getTagsWithType("project").getOrElse { return List[String]() };
+
+
+	def addUser(id : Int, user : User) : Project = {
+		val project = Project.get(id);
+		CassieCommunicator.addUserToProject(user, project);
+		Notification.createAddedToProject(user, project);
+		return Project.get(id);
+	}
+
+	def removeUser(id : Int, user : User) : Project = {
+		val project = get(id);
+		if(project.primaryContact == user.username) {
+			Project.removePrimaryContact(id)
+		}
+
+		CassieCommunicator.removeUserFromProject(user, project);
+		return Project.get(id);
+	}
+
+	def removePrimaryContact(id : Int) : Project = {
+		val project = Project.get(id);
+		if(project.teamMembers.length == 1) {
+			Project.changePrimaryContact(id, User.get(project.primaryContact), User.undefined);
+			Project.close(project);
+			return Project.get(id);
+		}
+		else {
+			var otherUser : User = null;
+			project.teamMembers.toStream.takeWhile(_ => otherUser == null).foreach({ member =>
+				if(member != project.primaryContact) {
+					otherUser = User.get(member);
+				}
+			})
+			return Project.changePrimaryContact(id, User.get(project.primaryContact), otherUser)
+		}
+	}
+
+	def changePrimaryContact(id : Int, oldUser : User, newUser : User) : Project = {
+		val oldProject = Project.get(id);
+		CassieCommunicator.changePrimaryContactForProject(oldUser, newUser, oldProject);
+		ProjectRequest.swapOwner(id, oldUser.username, newUser.username)
+
+		return Project.get(id);
+	}
 
 	implicit def fromRow (row : Row) : Project =  { 
 		row match {
@@ -115,7 +187,6 @@ object Project {
 				);
 			}
 		}
-
 	 }
 }
 
@@ -130,15 +201,6 @@ case class Project (id : Int, name: String, description : String,
 
 	def notifyMembersExcluding(excludingUsername : String, updateContent : String) {
 		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent));
-	}
-
-	def update() {
-		CassieCommunicator.updateProject(this);
-	}
-
-	def changePrimaryContact(oldUser : User, newUser : User) {
-		CassieCommunicator.changePrimaryContactForProject(oldUser, newUser, this);
-		ProjectRequest.swapOwner(id, oldUser.username, newUser.username)
 	}
 
 	def isNew : Boolean = Weeks.weeksIn(new DateTime(timeStarted) to DateTime.now).getWeeks <= 1;

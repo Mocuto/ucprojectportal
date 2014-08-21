@@ -1,4 +1,4 @@
-@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, isPrimaryContact : Boolean)(implicit form: Form[model.ProjectUpdate])
+@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, isPrimaryContact : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
 @import model.User; val authenticatedUser = model.User.get(username)
 @main("Student Government Project Portal")( Some(authenticatedUser)) {
 <script>
@@ -6,6 +6,11 @@ var PROJECT_ID = @project.id;
 var PRIMARY_CONTACT = "@project.primaryContact"
 var STATE_IN_PROGRESS_NEEDS_HELP = "@model.ProjectState.IN_PROGRESS_NEEDS_HELP";
 var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
+
+@if(message != None) {
+  dialog("@Html(message.get)");
+}
+
 </script>
 
       <div class="main-container">
@@ -234,7 +239,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
             <td style="width:100%">
             <div id="project-update-log">
                @if(project.teamMembers.contains(authenticatedUser.username) == true && project.state != model.ProjectState.COMPLETED && project.state != model.ProjectState.CLOSED) {
-                @helper.form(action = routes.Application.submitUpdate) {
+                @helper.form(action = routes.ProjectController.submitUpdate) {
                 
                   <div class="roundbox update">
                      <textarea name="content" id="update-input" class="roundbox-textinput textarea-description" placeholder="write a status update"></textarea>

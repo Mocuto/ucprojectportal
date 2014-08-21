@@ -1,4 +1,4 @@
-@(title : Html, message : String)
+@(title : Html, message : String, buttonText : String = "visit the project portal", buttonLink : String = "")
 
 @email(title) {
 	<span>@message</span>
@@ -16,5 +16,5 @@
 	vertical-align: middle;
 	cursor:pointer;
 	margin-left:auto;
-	margin-right:auto;"><a href="@constants.ServerSettings.HOST_URL" style="text-decoration:none; color:black">visit the project portal</a></div>
+	margin-right:auto;"><a href="@{constants.ServerSettings.HOST_URL + buttonLink}" style="text-decoration:none; color:black">@buttonText</a></div>
 }

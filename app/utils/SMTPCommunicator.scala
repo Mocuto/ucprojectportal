@@ -46,6 +46,7 @@ object SMTPCommunicator {
 				case e : Exception => {
 					println(e)
 					logger.error(s"Exception with sendEmail", e);
+					Thread.sleep(1000)
 				}
 			}
 		}
@@ -56,8 +57,13 @@ object SMTPCommunicator {
 			println(subject)
 			println(content);
 		}
+	}
 
+	def sendActivationEmail(recipient : String, uuid : String) {
+		val subject = "Activate Your Project Portal Account";
+		val content = views.html.emailActivation(User.get(recipient), uuid).toString;
 
+		sendEmail(recipient, subject, content);
 	}
 
 	def sendNotificationUpdateEmail(recipient: String, updater : String, projectId : Int, updateContent : String) {
@@ -67,11 +73,47 @@ object SMTPCommunicator {
 		sendEmail(recipient, subject, content);
 	}
 
+	def sendNotificationMessageEmail(recipient : String, message : String) {
+		val subject = message;
+		val content = views.html.emailMessage(play.twirl.api.Html(message), "").toString
+
+		sendEmail(recipient, subject, content);
+	}
+
+	def sendNotificationRequestEmail(recipient : String, requester : String, projectId : Int) {
+		val requesterUser = User.get(requester);
+		val project = Project.get(projectId);
+		
+		val subject = s"${requesterUser.fullName} has requested to join the project ${project.name}"
+		val content = views.html.emailRequest(requesterUser, project).toString;
+
+		sendEmail(recipient, subject, content);
+	}
+
+	def sendNotificationAddedToProjectEmail(recipient : String, projectId : Int) {
+		val project = Project.get(projectId);
+		
+		val subject = s"you have been added to the project ${project.name}"
+		val content = views.html.emailMessage(play.twirl.api.Html(subject), "", "visit the project", s"/project/$projectId").toString;
+
+		sendEmail(recipient, subject, content);
+	}
+
 	def sendNotificationEmail(notification : Notification) {
 		val recipient = notification.username;
 		notification.notificationType match {
 			case NotificationType.UPDATE => {
 				sendNotificationUpdateEmail(notification.username, notification.content("sender"), notification.content("project_id").toInt, notification.content("content"))
+			}
+			case NotificationType.MESSAGE => {
+				sendNotificationMessageEmail(notification.username, notification.content("value"))
+			}
+			case NotificationType.REQUEST => {
+				sendNotificationRequestEmail(notification.username, notification.content("sender"), notification.content("project_id").toInt)
+			}
+
+			case NotificationType.ADDED_TO_PROJECT => {
+				sendNotificationAddedToProjectEmail(notification.username, notification.content("project_id").toInt)
 			}
 		}
 	}

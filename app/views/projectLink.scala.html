@@ -1,0 +1,3 @@
+@(id : Int, content : String = null)
+
+<a href="/project/@id" class="project-link">@if(content == null) { @model.Project.get(id).name.toLowerCase()}else {@content}</a>

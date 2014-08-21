@@ -64,7 +64,7 @@ case class ProjectRequest(projectId : Int, owner : String,  requester : String, 
 		val project = Project.get(projectId);
 
 		if(project.isDefined) {
-			user.addToProject(project);
+			Project.addUser(projectId, user);
 		}
 		
 		this.delete();

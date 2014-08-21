@@ -9,31 +9,37 @@ GET /javascriptRoutes    controllers.Application.javascriptRoutes
 GET     /                           			controllers.Application.index
 GET 	/filter									controllers.Application.filter(filterStr :String = "")
 GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)				
-#GET	/projects								controllers.Application.projects
-GET		/project/new							controllers.Application.newProject
-GET		/project/:id 							controllers.Application.project(id : Int)
-POST	/submitUpdate							controllers.Application.submitUpdate
-POST	/submitProject							controllers.Application.submitProject
-POST	/editProject/:id						controllers.Application.editProject(id : Int)
-POST	/leaveProject/:id 						controllers.Application.leaveProject(id : Int)
+#GET	/projects								controllers.ProjectController.projects
+GET		/project/new							controllers.ProjectController.newProject
+GET		/project/:id 							controllers.ProjectController.project(id : Int)
+POST	/submitUpdate							controllers.ProjectController.submitUpdate
+POST	/submitProject							controllers.ProjectController.submitProject
+POST	/editProject/:id						controllers.ProjectController.editProject(id : Int)
+POST	/leaveProject/:id 						controllers.ProjectController.leaveProject(id : Int)
 GET		/login 									controllers.Application.login(path : String = "")
 GET		/login/*path 							controllers.Application.login(path : String)
 POST	/tryLogin								controllers.Application.tryLogin(path : String = "")
 POST	/tryLogin/*path							controllers.Application.tryLogin(path : String)
+GET 	/activate/resend 						controllers.ActivationController.resendActivation
+POST	/tryResendActivation					controllers.ActivationController.tryResendActivation
+GET 	/activate/:username/:uuid				controllers.ActivationController.activate(username : String, uuid : String)
+POST	/tryActivate 							controllers.ActivationController.tryActivate
 GET		/signout								controllers.Application.signout
 GET		/uploads/:file							controllers.Application.uploads(file : String)
-POST 	/createUser 							controllers.Application.createUser
-GET 	/admin									controllers.Application.admin
-GET		/:username								controllers.Application.user(username)
+POST 	/createUser 							controllers.AdminController.createUser
+GET 	/admin									controllers.AdminController.admin
+GET		/:username								controllers.UserController.user(username)
 
+POST	/requestJoin/:projectId 				controllers.RequestController.requestJoin(projectId : Int)
+POST	/acceptRequest/:projectId/:requester 	controllers.RequestController.acceptRequest(projectId : Int, requester : String)
+POST	/ignoreRequest/:projectId/:requester 	controllers.RequestController.ignoreRequest(projectId : Int, requester : String)
+POST	/resetUnreadNotifications				controllers.NotificationController.resetUnreadNotifications
+POST	/getUnreadNotificationCount				controllers.NotificationController.getUnreadNotificationCount
+POST	/ignoreNotification/:timeCreated		controllers.NotificationController.ignoreNotification(timeCreated : String)
 
-#TODO : Change requestProject to requestJoin everywhere
-POST	/requestJoin/:projectId 				controllers.Application.requestJoin(projectId : Int)
-POST	/acceptRequest/:projectId/:requester 	controllers.Application.acceptRequest(projectId : Int, requester : String)
-POST	/ignoreRequest/:projectId/:requester 	controllers.Application.ignoreRequest(projectId : Int, requester : String)
-POST	/resetUnreadNotifications				controllers.Application.resetUnreadNotifications
-POST	/getUnreadNotificationCount				controllers.Application.getUnreadNotificationCount
-POST	/ignoreNotification/:timeCreated		controllers.Application.ignoreNotification(timeCreated : String)
+#Email commands
+GET 	/email/acceptRequest/:projectId/:requester 	controllers.RequestController.decideRequest(projectId : Int, requester : String, doesAccept : Boolean = true)
+GET 	/email/ignoreRequest/:projectId/:requester 	controllers.RequestController.decideRequest(projectId : Int, requester : String, doesAccept : Boolean = false)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               			controllers.Assets.at(path="/public", file)

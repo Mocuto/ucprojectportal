@@ -5,7 +5,7 @@
     <div class="main-container">
       <div class="huge-header">create a new project</div>
      	<div class="roundbox">
-     	@helper.form(action = routes.Application.submitProject) {
+     	@helper.form(action = routes.ProjectController.submitProject) {
       @*** TODO - ERROR MESSAGES HERE **@
       <input type="text" placeholder="project name" name="name" class="roundbox-textinput" style="width:100%"/><br>
       <textarea name="description" class="roundbox-textinput textarea-description" placeholder="enter a description" style="width:100%"></textarea>

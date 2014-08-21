@@ -17,6 +17,16 @@ libraryDependencies ++= Seq(
 	"com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.0"
 )
 
+resolvers ++= Seq(
+    "RoundEights" at "http://maven.spikemark.net/roundeights",
+    "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/"
+)
+
+libraryDependencies ++= Seq(
+    "com.roundeights" %% "hasher" % "1.0.0",
+    "org.mindrot" % "jbcrypt" % "0.3m"
+)
+
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 

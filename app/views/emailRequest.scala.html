@@ -1,0 +1,33 @@
+@(requester : model.User, project : model.Project)
+
+@email(Html(s"${userLinkEmail(requester.username)} requested to join the project ${project.name}")) {
+	<span></span>
+	<br>
+	<br>
+	<span style="border-radius: 30px;
+	background-color:#ddd;
+	padding:4px 12px 4px 12px;
+	height:32px;
+	font-size:12pt;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	vertical-align: middle;
+	cursor:pointer;
+	margin-left:120px;
+	margin-right:auto;
+	float:left;"><a href="@constants.ServerSettings.HOST_URL/email/acceptRequest/@project.id/@{requester.username}" style="text-decoration:none; color:black">accept</a></div>
+	<span style="border-radius: 30px;
+	background-color:#ddd;
+	padding:4px 12px 4px 12px;
+	height:32px;
+	font-size:12pt;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	vertical-align: middle;
+	cursor:pointer;
+	margin-left:auto;
+	margin-right:240px;
+	float:right;"><a href="@constants.ServerSettings.HOST_URL/email/ignoreRequest/@project.id/@{requester.username}" style="text-decoration:none; color:black">ignore</a></div>
+}

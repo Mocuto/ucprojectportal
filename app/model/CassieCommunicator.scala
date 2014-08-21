@@ -7,7 +7,7 @@ import java.util.Date
 
 import scala.collection.JavaConversions._
 
-import utils.Conversions
+import utils.{Conversions, PasswordHasher}
 
 import play.api.Logger
 
@@ -16,9 +16,15 @@ object CassieCommunicator {
 	private val keyspace = "projectsg"
 
 	private val USERS = "users"
-	private val USER_INSERT_FIELDS = "username, first_name, last_name, password"
+	private val USER_INSERT_FIELDS = "username"
 
 	private val USER_GROUPS = "user_groups"
+
+  private val USER_ACTIVATION = "user_activation"
+  private val USER_ACTIVATION_INSERT_FIELDS = "username, code"
+
+  private val USER_AUTHENTICATION = "user_authentication"
+  private val USER_AUTHENTICATION_INSERT_FIELDS = "username, password";
 
 	private val PROJECTS = "projects";
 	private val PROJECTS_KEY = "id"
@@ -51,8 +57,7 @@ object CassieCommunicator {
   //TODO: Add exception catching and error handling system
 
   def defaultOnException(e : java.lang.RuntimeException,  executeString : String) {
-    println("Exception with setUserUnreadNotifications");
-    logger.error(s"Exception with setUserUnreadNotifications: $executeString", e);
+    logger.error(s"Exception with $executeString", e);
   }
 
   def execute(executeString : String, onException : (java.lang.RuntimeException, String) => Unit = defaultOnException, doesDebug : Boolean = true) : Option[ResultSet] = {
@@ -95,25 +100,26 @@ object CassieCommunicator {
   def setUserUnreadNotifications(user : User, num : Int) {
     val executeString = s"update $USERS set unread_notifications = $num where username = '${user.username}'"
     execute(executeString);
-    /*logger.debug(executeString);
-    try {
-    	val statement = session.prepare(executeString);
-	    session.execute(statement.bind());
+  }
+
+  def setUserLastLogin(user : User, date : Date) {
+    val timestamp = utils.Conversions.dateToStr(date);
+    val executeString = s"update $USERS set last_login = $timestamp where username = '${user.username}'";
+
+    execute(executeString);
+  }
+
+  def setUserActivated(user : User, hashedPassword : String, firstName : String, lastName : String) {
+    val authenticationString = s"insert into $USER_AUTHENTICATION($USER_AUTHENTICATION_INSERT_FIELDS) values ('${user.username}', '$hashedPassword')";
+    execute(authenticationString) match {
+      case None => println(s"user account activation unsuccessful for user: ${user.username}")
+      case _ => {
+        val hasConfirmedString = s"update $USERS set has_confirmed = true, first_name = '$firstName', last_name = '$lastName' where username = '${user.username}'";
+        removeActivationCodeForUser(user);
+        execute(hasConfirmedString);
+      }
     }
-    catch {
-    	case e: QueryExecutionException => {
-    		println("QueryExcecutionException with setUserUnreadNotifications");
-    		logger.error(s"QueryExcecutionException exception with setUserUnreadNotifications: $executeString", e);
-    	}
-    	case e: NoHostAvailableException => {
-    		println("NoHostAvailableException with setUserUnreadNotifications");
-    		logger.error(s"NoHostAvailableException exception with setUserUnreadNotifications: $executeString", e);
-    	}
-    	case e: QueryValidationException => {
-     		println("QueryValidationException with setUserUnreadNotifications");
-    		logger.error(s"NoHostAvailableException exception with setUserUnreadNotifications: $executeString", e);   		
-    	}
-    }*/
+
   }
 
   /*                  GETTERS                 */
@@ -132,10 +138,12 @@ object CassieCommunicator {
     val nameColumnName = "name";
     var executeString = s"select $projectColumnName from $USERS where username='$username'";
 
-  	//val projectIds : List[java.lang.Integer] = session.executeAsync(executeString).getUninterruptibly().one().getSet(s"$projectColumnName", classOf[java.lang.Integer]).toList;
     val projectIds = executeAsync(executeString) match {
       case None => List[java.lang.Integer]();
-      case Some(r : ResultSetFuture) => r.getUninterruptibly().one().getSet(s"$projectColumnName", classOf[java.lang.Integer]).toList
+      case Some(r : ResultSetFuture) => r.getUninterruptibly().one() match {
+        case null => List[java.lang.Integer]();
+        case row : Row => row.getSet(s"$projectColumnName", classOf[java.lang.Integer]).toList
+      }
     }
 
     return projectIds.map(id => {
@@ -228,26 +236,27 @@ object CassieCommunicator {
   }
 
   def getUserWithUsernameAndPassword(username : String, password : String) : User = {
-    val executeString = s"select * from $USERS where username='$username'";
+    val executeString = s"select * from $USER_AUTHENTICATION where username='$username'";
     executeAsync(executeString) match {
       case None => return User.undefined
       case Some(r : ResultSetFuture) => {
         val row = r.getUninterruptibly().one();
 
-        val user = User.fromRow(row);
+        row match {
+          case null => return User.undefined
+          case row : Row => {
+            val storedPassword = row.getString("password");
 
-        if (user.password.equals(password) == false) {
-          return User.undefined;
-        }
-        else {
-          return user;
+            if(PasswordHasher.check(password, storedPassword) == true) {
+              return User.get(username);
+            }
+            else {
+              User.undefined
+            }
+          }
         }
       }
     }
-    
-    //TODO: Password hashing and salting here
-
-
   }
 
   def getUserWithUsername(username : String) : User = {
@@ -280,6 +289,22 @@ object CassieCommunicator {
       case Some(r : ResultSetFuture) => {
         val row = r.getUninterruptibly().one();
         return UserGroup.fromRow(row);
+      }
+    }
+  }
+
+  def getActivationCodeForUser(user : User) : Option[String] = {
+    val executeString = s"select code from $USER_ACTIVATION where username = '${user.username}'"
+    executeAsync(executeString) match {
+      case None => None;
+      case Some(r : ResultSetFuture) => {
+        val row = r.getUninterruptibly().one();
+        if (row == null) {
+          return None
+        } else {
+          return Some(row.getUUID("code").toString)         
+        }
+
       }
     }
   }
@@ -317,7 +342,6 @@ object CassieCommunicator {
         return rows.map(row => ProjectState.fromRow(row));        
       }
     }
-
   }
 
   def getTagsWithType (tagType : String) : Option[Seq[String]] = {
@@ -326,7 +350,10 @@ object CassieCommunicator {
       case None => return None;
       case Some(r : ResultSetFuture) => {
         val row = r.getUninterruptibly().one();
-        return Some(row.getSet("value", classOf[String]).toList)
+        row match {
+          case null => None;
+          case _ => return Some(row.getSet("value", classOf[String]).toList)
+        }  
       }
     }
   }
@@ -412,8 +439,13 @@ object CassieCommunicator {
   }
 
   def addUser(user : User) {
-    val executeString = s"insert into $USERS($USER_INSERT_FIELDS) VALUES('${user.username}', '${user.firstName}', '${user.lastName}', '${user.password}')"
+    val executeString = s"insert into $USERS($USER_INSERT_FIELDS) VALUES('${user.username}')"
     executeAsync(executeString);
+  }
+
+  def addActivationCodeForUser(user : User, uuid : String) {
+    val executeString = s"insert into $USER_ACTIVATION($USER_ACTIVATION_INSERT_FIELDS) values('${user.username}', $uuid)";
+    execute(executeString)
   }
 
   def addFile(projectFile : ProjectFile) : ProjectFile = {
@@ -489,9 +521,28 @@ object CassieCommunicator {
     val newUserString = s"update $USERS set primary_contact_projects = primary_contact_projects + {${project.id}} where username= '${newUser.username}'";
     val projectString = s"update $PROJECTS set primary_contact = '${newUser.username}' where id = ${project.id}";
 
-    execute(oldUserString);
-    execute(newUserString);
-    execute(projectString);
+    if(oldUser != User.undefined) {
+      execute(oldUserString);
+    }
+
+    if(newUser != User.undefined) {
+      execute(newUserString);
+      execute(projectString);
+    }
+    else {
+      execute(s"update $PROJECTS set primary_contact = null where id = ${project.id}")
+    }
+
+  }
+
+  def removeActivationCodeForUser(user : User) {
+    val executeString = s"delete from $USER_ACTIVATION where username = '${user.username}'"
+    executeAsync(executeString);
+  }
+
+  def removeProject(project : Project) {
+    val executeString = s"delete from $PROJECTS where id=${project.id}";
+    execute(executeString);
   }
 
   def removeNotification(notification : Notification) {

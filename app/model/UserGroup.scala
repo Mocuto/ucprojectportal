@@ -16,11 +16,17 @@ object UserGroup {
 	
 	def get (name : String) : UserGroup = CassieCommunicator.getUserGroup(name);
 
-	def isUserInGroup(user : User, name : String) : Boolean = {
+	def isUserInGroup(username : String, name : String) : Boolean = {
 		val userGroup = UserGroup.get(name);
 
-		return userGroup.users.contains(user.username);
+		return userGroup.users.contains(username);
 	}
+
+	def isUserInGroup(user : User, name : String) : Boolean =  isUserInGroup(user.username, name)
+
+	def isAdmin(username : String) : Boolean = isUserInGroup(username, "admin")
+
+	def isAdmin(user : User) : Boolean = isAdmin(user.username)
 
 	def addUserToGroup(user : User, name : String) {
 		val userGroup = UserGroup.get(name);

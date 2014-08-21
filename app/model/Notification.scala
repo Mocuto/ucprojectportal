@@ -27,6 +27,11 @@ object Notification {
 			return false;
 		}
 
+		if(receiver == User.undefined) {
+			Project.changePrimaryContact(project.id, receiver, sender);
+			return true;
+		}
+
 		val content = Map("sender" -> sender.username, "project_id" -> project.id.toString);
 		
 		val notification = Notification.create(receiver, content, NotificationType.REQUEST);
@@ -46,6 +51,12 @@ object Notification {
 		val content = Map("value" -> message);
 
 		Notification.create(receiver, content, NotificationType.MESSAGE);
+	}
+
+	def createAddedToProject(receiver : User, project : Project) {
+		val content = Map("project_id" -> project.id.toString)
+
+		Notification.create(receiver, content, NotificationType.ADDED_TO_PROJECT)
 	}
 
 	def create(user : User, content : Map[String, String], notificationType : NotificationType.Value) : Notification = {

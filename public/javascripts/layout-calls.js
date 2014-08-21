@@ -41,6 +41,27 @@ function dialogYesNo(message, yesText, noText, yesCallback, noCallback) {
 	notificationBox.popane({show : "true"});
 }
 
+function dialog(content) {
+	$("#popane-overlay").css("backgroundColor", "white");
+
+	var notificationBox = $(document.createElement("div"))
+		.addClass("roundbox")
+		.addClass("popane")
+		.addClass("notification-popup")
+		.appendTo("body");
+
+	$(document.createElement("span"))
+		.addClass("close-button")
+		.text("close")
+		.appendTo(notificationBox);
+	$(document.createElement("div"))
+		.html(content)
+		//.html("<span style='font-weight:500'>thank you!</span> your request to join has been sent to the project's author.")
+		.appendTo(notificationBox)
+
+	notificationBox.popane({show : "true"});
+}
+
 function setupLayout() {
 	$(".textarea-description").autosize()
 

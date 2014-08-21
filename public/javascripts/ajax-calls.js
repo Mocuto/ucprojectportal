@@ -35,14 +35,14 @@ function editProject(formData, optionalCallback) {
 		}
 	}
 
-	var route = jsRoutes.controllers.Application.editProject(PROJECT_ID);
+	var route = jsRoutes.controllers.ProjectController.editProject(PROJECT_ID);
 	ajaxSendFormData(formData, route, optionalCallback, function() {
 
 	})
 }
 
 function leaveProject(projectId) {
-	var route = jsRoutes.controllers.Application.leaveProject(projectId);
+	var route = jsRoutes.controllers.ProjectController.leaveProject(projectId);
 	ajaxSendFormData(new FormData(), route, function() {
 		$("#projectbox-" + projectId).parents("td").animate({width : "0px"}, 400, "swing", function() {
 			$(this).hide();
@@ -65,7 +65,7 @@ function submitUpdate() {
 		sucess: onProjectSubmitSuccess,
 		error: onProjectSubmitError
 	}
-	var route = jsRoutes.controllers.Application.submitUpdate();
+	var route = jsRoutes.controllers.ProjectController.submitUpdate();
 	ajaxSendFormData(formData, route, function(data) {
 
 		var updateHtml = $($.parseHTML(data["html"])[1]);
@@ -82,27 +82,11 @@ function submitUpdate() {
 }
 
 function requestJoin(projectId) {
-	var route = jsRoutes.controllers.Application.requestJoin(projectId);
+	var route = jsRoutes.controllers.RequestController.requestJoin(projectId);
 
 	ajaxSendFormData(new FormData(), route, function() {
 
-		$("#popane-overlay").css("backgroundColor", "white");
-
-		var notificationBox = $(document.createElement("div"))
-			.addClass("roundbox")
-			.addClass("popane")
-			.addClass("notification-popup")
-			.appendTo("body");
-
-		$(document.createElement("span"))
-			.addClass("close-button")
-			.text("close")
-			.appendTo(notificationBox);
-		$(document.createElement("div"))
-			.html("<span style='font-weight:500'>thank you!</span> your request to join has been sent to the project's author.")
-			.appendTo(notificationBox)
-
-		notificationBox.popane({show : "true"});
+		dialog("<span style='font-weight:500'>thank you!</span> your request to join has been sent to the project's author.");
 
 		//alert("Request sent");
 	}, function(xmlhttprequest, textstatus, message) {
@@ -111,7 +95,7 @@ function requestJoin(projectId) {
 }
 
 function acceptRequest(projectId, requester) {
-	var route = jsRoutes.controllers.Application.acceptRequest(projectId, requester);
+	var route = jsRoutes.controllers.RequestController.acceptRequest(projectId, requester);
 
 	ajaxSendFormData(new FormData(), route, function() {
 
@@ -121,7 +105,7 @@ function acceptRequest(projectId, requester) {
 }
 
 function ignoreRequest(projectId, requester) {
-	var route = jsRoutes.controllers.Application.ignoreRequest(projectId, requester);
+	var route = jsRoutes.controllers.RequestController.ignoreRequest(projectId, requester);
 
 	ajaxSendFormData(new FormData(), route, function() {
 		//Success
@@ -132,7 +116,7 @@ function ignoreRequest(projectId, requester) {
 
 function resetUnreadNotifications() {
 
-	var route = jsRoutes.controllers.Application.resetUnreadNotifications();
+	var route = jsRoutes.controllers.NotificationController.resetUnreadNotifications();
 	ajaxSendFormData(new FormData(), route, function() {
 		$("#notification-text").text(user.defaultMessage)
 		user.unreadNotifications = 0;
@@ -151,12 +135,12 @@ function resetUnreadNotifications() {
 }
 
 function getUnreadNotificationCount(onSuccess, onError) {
-	var route = jsRoutes.controllers.Application.getUnreadNotificationCount();
+	var route = jsRoutes.controllers.NotificationController.getUnreadNotificationCount();
 	ajaxSendFormData(new FormData(), route, onSuccess, onError)
 }
 
 function ignoreNotification(timeCreated, href) {
-	var route = jsRoutes.controllers.Application.ignoreNotification(timeCreated);
+	var route = jsRoutes.controllers.NotificationController.ignoreNotification(timeCreated);
 	ajaxSendFormData(new FormData(), route, function() {
 		if(typeof href !== "undefined") {
 			window.location = href

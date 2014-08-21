@@ -7,5 +7,8 @@ object ServerSettings {
 	val CHOSEN_HOST = DEBUG_URL;
 
 	val HOST_URL = "http://" + CHOSEN_HOST;
+
+	val ADMIN_EMAIL = "akomolot@mail.uc.edu"
+	val ADMIN_NAME = "Tobi Akomolede"
 }
 
