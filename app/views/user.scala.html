@@ -8,33 +8,33 @@
 			@if(isAuthenticatedUser == true) {
 				my projects
 			} else {
-				@Html(userLink(user.username) + "'s projects")
+				@Html(links.userLink(user.username) + "'s projects")
 			}
 	      	@if(isAuthenticatedUser == true) {
-	   	  		<a href="project/new" style="float:right; text-decoration:none">
-	   	  			<span class="blue-button">create project</span>
+	   	  		<a href="project/new" class="blue-button" style="float:right; text-decoration:none">
+	   	  			<span>create project</span>
 	   	  		</a>
 
-	   	  		<!--<div  class="blue-button" id="manage-projects-button" style="float:right; text-decoration:none; margin-right:32px">manage projects</div>-->
+	   	  		<span  class="blue-button" id="manage-projects-button" style="float:right; text-decoration:none; margin-right:32px">manage projects</span>
 	   	  		
 	      	}
 
 		</div>
 
-    	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else Html(userLink(user.username, user.firstName.toLowerCase()) + " owns")}</div>
+    	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else Html(links.userLink(user.username, user.firstName.toLowerCase()) + " owns")}</div>
 
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- user.primaryProjects) {
-		   		@projectView(project, loggedInUser.username)
+		   		@common.projectView(project, loggedInUser.username)
 		   	}
 	   	</div>
 
-	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else Html(userLink(user.username, user.firstName.toLowerCase()) + " works")} on</div>
+	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else Html(links.userLink(user.username, user.firstName.toLowerCase()) + " works")} on</div>
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- user.projects) {
-		   		@projectView(project, loggedInUser.username)
+		   		@common.projectView(project, loggedInUser.username)
 		   	}
 	   	</div>
    	</div>

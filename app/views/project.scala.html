@@ -34,6 +34,9 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                      case project if authenticatedUser.projects.contains(project) => {
                         you are on this project team
                      }
+                     case project if project.state == model.ProjectState.COMPLETED => {
+                        this project is completed and cannot be joined
+                     }
                      case _ => {
                         <table>
                            <tr>
@@ -181,7 +184,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                       </tr>
                     </table>
                       @if(isPrimaryContact) {
-                        <p class="content" id="project-primary-contact">@userLink(project.primaryContact)</p>
+                        <p class="content" id="project-primary-contact">@links.userLink(project.primaryContact)</p>
                         <span class="edit-field" for="project-primary-contact" field-name="primary-contact">
                           <select class="chosen" name="primary-contact" id="project-primary-contact-select">
                             @for(otherUser <- project.teamMembers.map(teamMember => model.User.get(teamMember))) {
@@ -194,8 +197,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                           </select>
                         </span>
                       } else {
-                        <p class="content">@userLink(project.primaryContact)</p>
+                        <p class="content">@links.userLink(project.primaryContact)</p>
                       }
+
+                     <!-- Team Members -->
                      
                      <table>
                      	<tr>
@@ -211,7 +216,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  		</tr>
                  	</table>
                  	@if(isPrimaryContact) {
-                    <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => userLink(username)).mkString(", "))</p>
+                    <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(", "))</p>
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
                         @for(otherUser <- model.User.all) {
@@ -225,12 +230,15 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                       </select>
                     </span>
                  	} else {
-                 		<p class="content" id="project-team-members">@Html(project.teamMembers.map(username => userLink(username)).mkString(","))</p>
+                 		<p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(","))</p>
                  	}
                   </div>
                </td>
             </tr>
          </table>
+
+         <!-- Update Log / Files -->
+         
          <div class="select-group huge-header" style="margin-left:16px">
             <span class="select-item selected" id="project-update-log-button">update log</span>  |  <span class="select-item unselected" id="project-all-files-button">all files</span>
          </div>
@@ -254,7 +262,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                }
                <div class="update-group">
                	@for(update <- updates) {
-                     @updateView(update)
+                     @common.updateView(update)
                	}
             	</div>
             </div>

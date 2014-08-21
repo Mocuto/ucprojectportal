@@ -30,7 +30,8 @@ object Project {
 			isDefined = false,
 			id = -1,
 			name = "",
-			description = ""
+			description = "",
+			categories = List[String]("null")
 		)
 	}
 
@@ -96,6 +97,9 @@ object Project {
 	}
 
 	def update(project : Project) {
+		if(!project.isDefined) {
+			return
+		}
 		CassieCommunicator.updateProject(project);
 	}
 
@@ -128,6 +132,11 @@ object Project {
 
 	def addUser(id : Int, user : User) : Project = {
 		val project = Project.get(id);
+
+		if(!project.isDefined) {
+			return Project.undefined
+		}
+
 		CassieCommunicator.addUserToProject(user, project);
 		Notification.createAddedToProject(user, project);
 		return Project.get(id);
@@ -135,23 +144,36 @@ object Project {
 
 	def removeUser(id : Int, user : User) : Project = {
 		val project = get(id);
+
+		if(!project.isDefined) {
+			return Project.undefined
+		}
+		
+		CassieCommunicator.removeUserFromProject(user, project);
+
 		if(project.primaryContact == user.username) {
 			Project.removePrimaryContact(id)
 		}
 
-		CassieCommunicator.removeUserFromProject(user, project);
 		return Project.get(id);
 	}
 
 	def removePrimaryContact(id : Int) : Project = {
 		val project = Project.get(id);
-		if(project.teamMembers.length == 1) {
+
+		if(!project.isDefined) {
+			return Project.undefined
+		}
+
+		println(s"Num of members = ${project.teamMembers.length}")
+
+		if(project.teamMembers.length <= 1) {
 			Project.changePrimaryContact(id, User.get(project.primaryContact), User.undefined);
 			Project.close(project);
 			return Project.get(id);
 		}
 		else {
-			var otherUser : User = null;
+			var otherUser : User = User.undefined;
 			project.teamMembers.toStream.takeWhile(_ => otherUser == null).foreach({ member =>
 				if(member != project.primaryContact) {
 					otherUser = User.get(member);
@@ -163,6 +185,11 @@ object Project {
 
 	def changePrimaryContact(id : Int, oldUser : User, newUser : User) : Project = {
 		val oldProject = Project.get(id);
+
+		if(!oldProject.isDefined) {
+			return Project.undefined
+		}
+
 		CassieCommunicator.changePrimaryContactForProject(oldUser, newUser, oldProject);
 		ProjectRequest.swapOwner(id, oldUser.username, newUser.username)
 

@@ -25,7 +25,7 @@ object UserController extends Controller with SessionHandler {
 			case Some(authenticatedUsername) => {
 				val user = User.get(username)
 				if (user.isDefined == false) {
-					NotFound(views.html.notFound("This user does not exist"));
+					NotFound(views.html.messages.notFound("This user does not exist"));
 				} else {
 					val loggedInUser = User.get(authenticatedUsername);
 					Ok(views.html.user(user, loggedInUser)(username == authenticatedUsername));

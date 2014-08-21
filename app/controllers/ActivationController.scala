@@ -78,7 +78,7 @@ object ActivationController extends Controller {
 				//Send confirmation email
 				val uuid = User.makeActivation(User.get(username))
 				SMTPCommunicator.sendActivationEmail(username, uuid.getOrElse(""));
-				Ok(views.html.prettyMessage(play.twirl.api.Html(ACTIVATION_EMAIL_HAS_BEEN_SENT)))
+				Ok(views.html.messages.prettyMessage(play.twirl.api.Html(ACTIVATION_EMAIL_HAS_BEEN_SENT)))
 			}
 		)
 
@@ -86,9 +86,9 @@ object ActivationController extends Controller {
 
 	def activate(username : String, uuid : String) = Action { implicit request => {
 		User.getActivationCode(username) match {
-			case None => BadRequest(views.html.notFound(PAGE_NOT_FOUND))
+			case None => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
 			case Some(correctUUID) if correctUUID == uuid => Ok(views.html.activate(username, uuid)(activateForm));
-			case _ => BadRequest(views.html.notFound(PAGE_NOT_FOUND))
+			case _ => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
 		}
 	}}
 
@@ -101,15 +101,15 @@ object ActivationController extends Controller {
 				User.getActivationCode(username) match {
 					case None => {
 						if(User.get(username) == User.undefined) {
-							BadRequest(views.html.prettyMessage(play.twirl.api.Html(USER_ACCOUNT_DOES_NOT_EXIST)))
+							BadRequest(views.html.messages.prettyMessage(play.twirl.api.Html(USER_ACCOUNT_DOES_NOT_EXIST)))
 						}
 						else {
-							BadRequest(views.html.prettyMessage(play.twirl.api.Html(USER_ACCOUNT_ALREADY_ACTIVATED)))
+							BadRequest(views.html.messages.prettyMessage(play.twirl.api.Html(USER_ACCOUNT_ALREADY_ACTIVATED)))
 						}
 					}
 					case Some(correctCode) => {
 						if(correctCode != code) {
-							BadRequest(views.html.prettyMessage(play.twirl.api.Html(ACTIVATION_CODE_INCORRECT)))
+							BadRequest(views.html.messages.prettyMessage(play.twirl.api.Html(ACTIVATION_CODE_INCORRECT)))
 						} else {
 							BadRequest(views.html.activate(username, code)(formWithErrors))
 						}

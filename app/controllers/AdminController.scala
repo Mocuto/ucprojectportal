@@ -41,7 +41,7 @@ object AdminController extends Controller with SessionHandler {
 			case Some(username) => {
 				newUserForm.bindFromRequest.fold(
 					formWithErrors => {
-						BadRequest(views.html.prettyMessage(play.twirl.api.Html("error adding users!")))
+						BadRequest(views.html.messages.prettyMessage(play.twirl.api.Html("error adding users!")))
 
 					}, newUserData => {
 						newUserData match {

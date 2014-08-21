@@ -44,9 +44,12 @@ function editProject(formData, optionalCallback) {
 function leaveProject(projectId) {
 	var route = jsRoutes.controllers.ProjectController.leaveProject(projectId);
 	ajaxSendFormData(new FormData(), route, function() {
-		$("#projectbox-" + projectId).parents("td").animate({width : "0px"}, 400, "swing", function() {
-			$(this).hide();
-		})
+		for(var i = 0; i < $(".projectbox-" + projectId).length; i++) {
+			var projectbox = $(".projectbox-" + projectId)[i]
+			var container = $(projectbox).parents(".projectbox-container").data('isotope');
+			container.remove($(projectbox).parents(".isotope-item"))
+			container.layout()
+		}
 	}, function() {
 
 	})

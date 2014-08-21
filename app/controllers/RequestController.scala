@@ -34,17 +34,15 @@ object RequestController extends Controller with SessionHandler {
 					case project if authenticatedUser.projects.contains(project) => { //Check if they're already in that project
 						Status(460)(s"already member of project with id = $projectId")
 					}
-					case project if project.state == "completed" => {
+					case project if project.state == ProjectState.COMPLETED => {
 						Status(460)(s"cannot join a completed project")
 					}
 					case _ => {
 
-						val success = Notification.createRequest(receiver, authenticatedUser, project);
+						if(User.get(project.primaryContact).isDefined == false) {
+							Project.addUser(projectId, authenticatedUser);
+							Project.changePrimaryContact(projectId, User.undefined, authenticatedUser);
 
-						if (success == false) {
-							Status(461)(s"project request already sent")
-						}
-						else {
 							val response = JsObject(
 								Seq(
 									"response" -> JsString("your request has been sent")
@@ -52,6 +50,22 @@ object RequestController extends Controller with SessionHandler {
 							)
 
 							Ok(response);
+						}
+						else {
+							val success = Notification.createRequest(receiver, authenticatedUser, project);
+
+							if (success == false) {
+								Status(461)(s"project request already sent")
+							}
+							else {
+								val response = JsObject(
+									Seq(
+										"response" -> JsString("your request has been sent")
+									)
+								)
+
+								Ok(response);
+							}
 						}
 						
 					}

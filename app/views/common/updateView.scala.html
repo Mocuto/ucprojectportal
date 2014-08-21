@@ -1,7 +1,7 @@
 @(update : model.ProjectUpdate)
 
 <div class="roundbox update">
-	<span class="content-header">@userLink(update.author)</span>
+	<span class="content-header">@links.userLink(update.author)</span>
 	@if(update.files.length > 0) {
 		<span class="hint">uploaded a file</span>
 	}
@@ -11,7 +11,7 @@
 	@if(update.files.length > 0) {
 		<span class="hint">attachments:
 			@for(filename <- update.files) {
-				@filelink(filename)
+				@links.filelink(filename)
 			}
 		</span>
 	}

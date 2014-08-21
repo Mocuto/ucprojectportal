@@ -7,7 +7,7 @@
 		<div class="large-header">users</div>
 		<div class="roundbox">
 			@for(user <- model.User.all) {
-				<div>@userLink(user.username, s"${user.username} - ${user.fullName}")</div><br>
+				<div>@links.userLink(user.username, s"${user.username} - ${user.fullName}")</div><br>
 			}
 			<div class="content-header">
 			new user

@@ -24,7 +24,7 @@ class AdminFilter(actionNames: Seq[String]) extends Filter {
 		  		Results.Redirect("/login/" + request.path)
 		  	}
 		  	case authenticatedUser if UserGroup.isUserInGroup(User.get(authenticatedUser.get), "admin") == false => Future {
-		  		Results.NotFound(views.html.notFound("this page does not exist"));
+		  		Results.NotFound(views.html.messages.notFound("this page does not exist"));
 		  	}
 		  	case _ => {
 			  next(request)

@@ -45,7 +45,7 @@ object ProjectController extends Controller with SessionHandler {
 
 				val project = Project.get(id);
 				if(project.isDefined == false) {
-					NotFound(views.html.notFound("This project does not exist"));
+					NotFound(views.html.messages.notFound("This project does not exist"));
 				}
 				else {
 					val updates = CassieCommunicator.getStatusesForProject(id);
@@ -101,7 +101,7 @@ object ProjectController extends Controller with SessionHandler {
 
 					    val response = JsObject(
 					    	Seq(
-				    			"html" -> JsString(views.html.updateView(completeUpdate).toString)
+				    			"html" -> JsString(views.html.common.updateView(completeUpdate).toString)
 					    	)
 					    )
 

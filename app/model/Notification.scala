@@ -9,6 +9,8 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.collection.JavaConversions._
+import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import utils.SMTPCommunicator
 
@@ -65,7 +67,9 @@ object Notification {
 		CassieCommunicator.setUserUnreadNotifications(user, user.unreadNotifications + 1);
 		CassieCommunicator.addNotification(notification);
 
-		SMTPCommunicator.sendNotificationEmail(notification);
+		Future {
+			SMTPCommunicator.sendNotificationEmail(notification);
+		}
 		return notification;
 	}
 

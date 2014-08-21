@@ -128,7 +128,6 @@ body {
 	border-radius: 30px;
 	background-color:#aedefc;
 	padding:4px 12px 4px 12px;
-	width:200px;
 	height:32px;
 	font-size:10pt;
 	text-decoration: none;
@@ -276,14 +275,17 @@ body {
 .leave-project-button{
 	cursor:	pointer;
 	float: right;
-	position: relative;
-	right: 32px;
-	top: 24px;
-	display: none;
+	position: absolute;
+	right: 0px;
+	top: -12px;
+	width:48px;
+	height:48px;
+	background-image : url("/assets/images/buttons/project-close-inactive.png");
+	background-size:cover;
 }
 
 .leave-project-button:hover {
-	text-decoration: underline;
+	background-image : url("/assets/images/buttons/project-close-active.png");
 }
 
 .huge-header {

@@ -43,7 +43,7 @@
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- model.Project.allSorted) {
-		   		@projectView(project, user.username)
+		   		@common.projectView(project, user.username)
 		   	}
 	   	</div>
    	</div>

@@ -44,7 +44,7 @@ object NotificationController extends Controller with SessionHandler {
 				val response = JsObject(
 					Seq(
 						"count" -> JsNumber(authenticatedUser.unreadNotifications),
-						"html" -> JsString(views.html.notificationsListView(authenticatedUser).toString)
+						"html" -> JsString(views.html.common.notificationsListView(authenticatedUser).toString)
 					)
 				)
 

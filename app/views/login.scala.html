@@ -19,7 +19,7 @@
    	    @helper.form(action = routes.Application.tryLogin(path)) {
           @for(error <- form.errors) {
             @if(error.message == "user account not yet confirmed") {
-             <div class="form-error-login">*your user account has not been confirmed. <a href="/resendActivation">click here to resend the confirmation email</a>.</div>
+             <div class="form-error-login">*your user account has not been confirmed. <a href="@routes.ActivationController.resendActivation()">click here to resend the confirmation email</a>.</div>
             } else {
               <div class="form-error-login">*@error.message</div>
             } 

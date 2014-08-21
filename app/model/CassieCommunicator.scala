@@ -521,11 +521,11 @@ object CassieCommunicator {
     val newUserString = s"update $USERS set primary_contact_projects = primary_contact_projects + {${project.id}} where username= '${newUser.username}'";
     val projectString = s"update $PROJECTS set primary_contact = '${newUser.username}' where id = ${project.id}";
 
-    if(oldUser != User.undefined) {
+    if(oldUser.isDefined) {
       execute(oldUserString);
     }
 
-    if(newUser != User.undefined) {
+    if(newUser.isDefined == true) {
       execute(newUserString);
       execute(projectString);
     }

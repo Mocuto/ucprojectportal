@@ -39,7 +39,7 @@
 
     		}
     		case user : Some[User] => {
-    			@header(user.get)
+    			@common.header(user.get)
     		}
     	}
         @content

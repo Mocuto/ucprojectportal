@@ -7,9 +7,10 @@
 } else {
 <div class="isotope-item @filterStr">
 }
-<table class="projectbox" expanded="false" id="projectbox-@project.id" >
+<table class="projectbox projectbox-@project.id" expanded="false" >
 	<tr>
 		<td>
+			<span class="leave-project-button" for="@project.id" style="display : none"></span>
 			@if(model.ProjectCategory.get(project.categories(0)).icon == null) {
 				<img src="/assets/images/icons/project-@stateStr-student-experience.png" class="projectbox-icon"/>
 			} else {
@@ -24,7 +25,7 @@
 				<span style="font-weight:bold">@project.stateMessage</span>
 			}
 		</td>
-			<span class="leave-project-button" for="@project.id">x</span>
+		
 	</tr>
 	<tr>
 		<td colspan="2">
@@ -49,6 +50,9 @@
 		              	}
 		              	case project if model.ProjectRequest.get(project.id, project.primaryContact, username).isDefined == true => {
 							<div class="hint">request sent</div>
+		              	}
+		              	case project if project.state == model.ProjectState.COMPLETED => {
+		              		this project is completed
 		              	}
 		              	case _ => {
 							<span type="button" id="request-join" project-id="@project.id" class="button">join</span> 

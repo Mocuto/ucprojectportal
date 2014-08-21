@@ -10,7 +10,7 @@
 			<td class="notification-td">
 				@{project = Project.get(notification.content("project_id").toInt)}
 				@{user = User.get(notification.content.getOrElse(model.Notification.SENDER, { "someone"} )  )}
-				<span class="hint">@user.firstName.toLowerCase() posted an update in the project @projectLink(project.id)!</span>
+				<span class="hint">@links.userLink(user.username, user.firstName.toLowerCase()) posted an update in the project @links.projectLink(project.id)!</span>
 			</td>
 			<td>
 				<span href="/project/@project.id" class="button ignore-notification" time-created="@utils.Conversions.dateToStr(notification.timeCreated)">visit</span>
@@ -25,7 +25,7 @@
 			<td class="notification-td">
 				@{project = Project.get(notification.content("project_id").toInt)}
 				@{user = User.get(notification.content.getOrElse(model.Notification.SENDER, { "someone"} )  )}
-				<span class="hint">@user.firstName.toLowerCase() requested to join the project @project.name.toLowerCase()!</span>
+				<span class="hint">@links.userLink(user.username, user.firstName.toLowerCase()) requested to join the project @project.name.toLowerCase()!</span>
 			</td>
 			<td>
 				<span class="button accept-join" project-id="@project.id" requester="@user.username">accept</span>
@@ -53,7 +53,7 @@
 		<tr>
 			<td class="notification-td">
 				@{project = Project.get(notification.content("project_id").toInt)}
-				<span class="hint">you have been added to the project @projectLink(project.id)!</span>
+				<span class="hint">you have been added to the project @links.projectLink(project.id)!</span>
 			</td>
 			<td>
 				<span class="button ignore-notification" time-created="@utils.Conversions.dateToStr(notification.timeCreated)">dismiss</span>

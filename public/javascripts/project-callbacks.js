@@ -56,6 +56,20 @@ function setupProjectCallbacks() {
 		$("#project-all-files").show().parent().css("width", "100%");
 	})
 
+	$("#manage-projects-button").click(function() {
+		var activated = $(this).attr("activated");
+		if(activated == "true") {
+			$(this).attr("activated", "false");
+			$(this).text("manage projects");
+			$(".leave-project-button").fadeOut();
+		}
+		else {
+			$(this).attr("activated", "true");
+			$(this).text("done managing")
+			$(".leave-project-button").fadeIn();
+		}
+	})
+
 	$(".leave-project-button").click(function() {
 		var projectId = $(this).attr("for");
 		leaveProject(projectId);

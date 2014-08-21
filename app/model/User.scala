@@ -16,7 +16,9 @@ object User {
 		return User(
 			isDefined = false,
 			username = "",
-			hasConfirmed = false
+			hasConfirmed = false,
+			firstName = "no",
+			lastName = "one"
 		)
 	}
 
@@ -60,6 +62,7 @@ object User {
 		UserGroup.NORMAL.addUser(user);
 		makeActivation(user) match {
 			case Some(code) => SMTPCommunicator.sendActivationEmail(user.username, code);
+			case None => Predef.assert(false, "makeActivation in model.User returned None")
 		}
 		return user;
 	}

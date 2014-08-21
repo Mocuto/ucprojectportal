@@ -61,21 +61,21 @@ object SMTPCommunicator {
 
 	def sendActivationEmail(recipient : String, uuid : String) {
 		val subject = "Activate Your Project Portal Account";
-		val content = views.html.emailActivation(User.get(recipient), uuid).toString;
+		val content = views.html.email.emailActivation(User.get(recipient), uuid).toString;
 
 		sendEmail(recipient, subject, content);
 	}
 
 	def sendNotificationUpdateEmail(recipient: String, updater : String, projectId : Int, updateContent : String) {
 		val subject = s"${model.User.getFullName(updater)} Posted an Update in the Project ${model.Project.get(projectId).name}!";
-		val content = views.html.emailUpdate(User.get(updater), Project.get(projectId), updateContent).toString
+		val content = views.html.email.emailUpdate(User.get(updater), Project.get(projectId), updateContent).toString
 		
 		sendEmail(recipient, subject, content);
 	}
 
 	def sendNotificationMessageEmail(recipient : String, message : String) {
 		val subject = message;
-		val content = views.html.emailMessage(play.twirl.api.Html(message), "").toString
+		val content = views.html.email.emailMessage(play.twirl.api.Html(message), "").toString
 
 		sendEmail(recipient, subject, content);
 	}
@@ -85,7 +85,7 @@ object SMTPCommunicator {
 		val project = Project.get(projectId);
 		
 		val subject = s"${requesterUser.fullName} has requested to join the project ${project.name}"
-		val content = views.html.emailRequest(requesterUser, project).toString;
+		val content = views.html.email.emailRequest(requesterUser, project).toString;
 
 		sendEmail(recipient, subject, content);
 	}
@@ -94,7 +94,7 @@ object SMTPCommunicator {
 		val project = Project.get(projectId);
 		
 		val subject = s"you have been added to the project ${project.name}"
-		val content = views.html.emailMessage(play.twirl.api.Html(subject), "", "visit the project", s"/project/$projectId").toString;
+		val content = views.html.email.emailMessage(play.twirl.api.Html(subject), "", "visit the project", s"/project/$projectId").toString;
 
 		sendEmail(recipient, subject, content);
 	}

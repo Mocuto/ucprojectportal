@@ -7,8 +7,8 @@ function setupFilterCallbacks() {
 					return "." + str
 				}).join("");
 
-				$(".projectbox-container").isotope({
-					filter : filterStr
+			$(".projectbox-container").isotope({
+				filter : filterStr
 			})
 		}		
 	}
