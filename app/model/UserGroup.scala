@@ -10,6 +10,9 @@ import play.api.mvc._
 
 import scala.collection.JavaConversions._
 
+import utils._
+import utils.nosql.CassieCommunicator
+
 object UserGroup {
 
 	def undefined : UserGroup = return UserGroup("", List[String](), false)

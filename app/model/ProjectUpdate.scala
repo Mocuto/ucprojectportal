@@ -11,7 +11,8 @@ import play.api.mvc._
 
 import scala.collection.JavaConversions._
 
-import utils.Conversions
+import utils._
+import utils.nosql.CassieCommunicator
 
 object ProjectUpdate {
 
@@ -43,6 +44,13 @@ object ProjectUpdate {
 		)
 
 		return CassieCommunicator.addUpdateForProject(update)
+	}
+
+	def delete(update : ProjectUpdate) {
+		update.files.foreach(file => {
+			ProjectFile.delete(update.projectId, update.timeSubmitted, file)
+		})
+		CassieCommunicator.removeUpdate(update);
 	}
 
 	implicit def fromRow (row : Row) : ProjectUpdate = {
@@ -79,4 +87,6 @@ case class ProjectUpdate (content: String, author : String = "", projectId : Int
 			)
 		)
 	}
+
+	def delete () { ProjectUpdate.delete(this) }
 }

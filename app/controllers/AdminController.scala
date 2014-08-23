@@ -22,7 +22,7 @@ object AdminController extends Controller with SessionHandler {
 
 	implicit val newUserForm = Form(
 		single(
-			"usernames" -> list(nonEmptyText)
+			"usernames" -> nonEmptyText
 		)
 	)
 
@@ -45,14 +45,31 @@ object AdminController extends Controller with SessionHandler {
 
 					}, newUserData => {
 						newUserData match {
-							case usernames : List[String] => {
-
-								usernames.foreach(username => User.create(User(username)))
+							case usernamesString : String => {
+								usernamesString.split(Array[Char](',', '\n')).map(username => username.trim.toLowerCase()).foreach(username => User.create(User(username)))
 								Redirect(routes.AdminController.admin);
 							}
 						}
 					}
 				)
+			}
+		}
+	}
+
+	def deleteUser(username : String) = Action { implicit request =>
+		authenticated match {
+			case Some(authenticatedUsername) => {
+				User.delete(username);
+				Redirect(routes.AdminController.admin);
+			}
+		}
+	}
+
+	def deleteProject(id : Int) = Action { implicit request =>
+		authenticated match {
+			case Some(username) => {
+				Project.delete(id);
+				Redirect(routes.AdminController.admin);
 			}
 		}
 	}

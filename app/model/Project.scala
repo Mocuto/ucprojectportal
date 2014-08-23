@@ -16,6 +16,9 @@ import play.api.mvc._
 import scala.collection.JavaConversions._
 import scala.util.Random
 
+import utils._
+import utils.nosql.CassieCommunicator
+
 object Project {
 
 	def apply (name : String) : Project = new Project(name);
@@ -105,11 +108,16 @@ object Project {
 
 
 	def delete(id : Int) {
+		Project.getUpdates(id).foreach(update => update.delete())
+		val project = Project.get(id);
+
+		project.teamMembers.foreach(username => project.removeUser(User.get(username)));
+		
 		CassieCommunicator.removeProject(Project.get(id));
 	}
 
 	def close(project : Project) {
-		if(project.isNew) {
+		if(project.isNew && Project.getUpdates(project.id).length == 0) {
 			delete(project.id);
 		}
 		else {
@@ -196,6 +204,8 @@ object Project {
 		return Project.get(id);
 	}
 
+	def getUpdates(id : Int) : Seq[ProjectUpdate] = CassieCommunicator.getUpdatesForProject(id);
+
 	implicit def fromRow (row : Row) : Project =  { 
 		row match {
 			case null => Project.undefined
@@ -231,4 +241,6 @@ case class Project (id : Int, name: String, description : String,
 	}
 
 	def isNew : Boolean = Weeks.weeksIn(new DateTime(timeStarted) to DateTime.now).getWeeks <= 1;
+
+	def removeUser(user : User) : Project = Project.removeUser(id, user);
 }

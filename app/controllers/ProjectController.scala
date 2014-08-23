@@ -33,8 +33,8 @@ object ProjectController extends Controller with SessionHandler {
 			"description" -> nonEmptyText,
 			"categories" -> list(nonEmptyText),
 			"team-members" -> list(nonEmptyText)
-		) (Project.apply)(Project.unapplyIncomplete).verifying("Insert invalid project categories message here", fields => fields match {
-			case project => { println("project.categories.length: " + project.categories.length);  project.categories.length > 0}
+		) (Project.apply)(Project.unapplyIncomplete).verifying("at least one category is needed", fields => fields match {
+			case project => {  project.categories.length > 0}
 		})
 	)
 
@@ -48,7 +48,7 @@ object ProjectController extends Controller with SessionHandler {
 					NotFound(views.html.messages.notFound("This project does not exist"));
 				}
 				else {
-					val updates = CassieCommunicator.getStatusesForProject(id);
+					val updates = Project.getUpdates(id);
 
 					val isPrimaryContact = project.primaryContact == username;
 
@@ -151,13 +151,15 @@ object ProjectController extends Controller with SessionHandler {
 				{
 					val dataParts = request.body.asMultipartFormData.get.dataParts
 
+					println(dataParts);
+
 					val state = dataParts.getOrElse("state", List(project.state))(0)
 
 					val isFinished = (state == ProjectState.COMPLETED || state == ProjectState.CLOSED);
 
 					val updatedProject = Project(
 						id = project.id,
-						name = project.name,
+						name = dataParts.getOrElse("name", List(project.name))(0),
 						description = dataParts.getOrElse("description", List(project.description))(0),
 						categories = dataParts.getOrElse("categories", project.categories),
 						state = state,
@@ -221,6 +223,5 @@ object ProjectController extends Controller with SessionHandler {
 				}
 			}
 		}
-
 	}
 }

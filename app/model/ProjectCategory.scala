@@ -2,6 +2,9 @@ package model;
 
 import com.datastax.driver.core.Row
 
+import utils._
+import utils.nosql.CassieCommunicator
+
 object ProjectCategory {
 	def all : Seq[ProjectCategory] = return CassieCommunicator.getCategories;
 

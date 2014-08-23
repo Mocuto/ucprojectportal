@@ -83,7 +83,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "user",
 													"submitProject", "submitUpdate", "uploads", "acceptRequest", "ignoreRequest",
 													"resetUnreadNotifications", "getUnreadNotificationCount", "ignoreNotification",
-													"decideRequest"),
+													"decideRequest", "signout"),
 								 AdminFilter("admin", "deleteProject", "deleteUser")) {
 
 }

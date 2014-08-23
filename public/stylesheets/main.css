@@ -227,9 +227,12 @@ body {
 	min-height:64px;
 	font-size:14pt;
 	font-weight:100;
+	border-spacing:0px;
+	overflow: hidden	
+}
 
-	overflow: hidden
-	
+.projectbox td {
+	padding:0px;
 }
 
 .isotope-item {
@@ -263,6 +266,10 @@ body {
 
 .projectbox-icon {
 	width: 75px;
+	position:relative;
+	margin-right:2px;
+	display:table-cell;
+	right:1px;
 }
 
 .projectbox-description {
@@ -276,10 +283,10 @@ body {
 	cursor:	pointer;
 	float: right;
 	position: absolute;
-	right: 0px;
-	top: -12px;
-	width:48px;
-	height:48px;
+	right: 40px;
+	top: 10px;
+	width:24px;
+	height:24px;
 	background-image : url("/assets/images/buttons/project-close-inactive.png");
 	background-size:cover;
 }
@@ -292,6 +299,7 @@ body {
 	color : white;
 	font-size: 48pt;
 	overflow-wrap:break-word;
+	word-break: break-all;
 	margin-bottom:32px;
 }
 
@@ -435,6 +443,16 @@ body {
 
 .edit-button {
 	cursor: pointer;
+	background-image:url("/assets/images/buttons/project-edit-inactive.png");
+	background-size:cover;
+	width:32px;
+	height:32px;
+	display:block;
+	position: absolute;
+}
+
+.edit-button:hover {
+background-image:url("/assets/images/buttons/project-edit-active.png");
 }
 
 .edit-field select {

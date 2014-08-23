@@ -4,7 +4,7 @@ function onEditButtonClicked() {
 	var editField = ".edit-field[for='" + field +"']";
 
 	if(activated !== "true") {
-		$(this).text("ok");
+		$(this).css("background-image", "url(/assets/images/buttons/project-edit-active.png)");
 		$(this).attr("activated", "true");
 
 		$("#" + field).hide();
@@ -24,15 +24,22 @@ function onEditButtonClicked() {
 		var column = field.replace("project-", "");
 
 		//Change elements back
-		$(this).text("edit");
+		$(this).css("background-image", "");
 		$(this).attr("activated", "false");
 
 		$("#" + field).show()
 		
 		$(editField).hide();
 
+		if(column === "name") {
+			var name = $("#project-name-input").val()
 
-		if(column === "state") {
+			formData.append("name", name);
+
+			$("#" + field).text(name.toLowerCase());
+		}
+
+		else if(column === "state") {
 			var stateMessage = $("#project-state-message-input").val();
 			var state = $("#project-state-select").val();
 

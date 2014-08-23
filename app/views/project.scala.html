@@ -19,10 +19,17 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           <img src="/assets/images/logos/dashboard-student-experience.png"/>
         } else {
           <img src="/assets/images/logos/dashboard-@{model.ProjectCategory.get(project.categories(0)).icon}.png" />
-        } 
-        <span class="huge-header">@project.name.toLowerCase()</span></div>
-
+        }
+        @if(isPrimaryContact) {
+          <span class="huge-header editable" id="project-name">@project.name.toLowerCase()</span>
+          <textarea id="project-name-input" class="roundbox-textinput edit-field textarea-description" for="project-name" placeholder="project name" name="name" style="font-size:48pt">@project.name.toLowerCase()</textarea>
+          <span class="edit-button" for="project-name" style="display:inline-block; position:relative; margin-left:16px;"></span>
+        } else {
+          <span class="huge-header">@project.name.toLowerCase()</span>
+        }
+        </div>
          <table class="project-table">
+
             <tr>
                <td>
                   <div class="roundbox" style="margin-right:64px">
@@ -67,7 +74,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                      		</td>
                      		<td>
                      		@if(isPrimaryContact) {
-                     			<span class="edit-button" for="project-description">edit</span>
+                     			<span class="edit-button" for="project-description"></span>
                      		}
                      		</td>
                  		</tr>
@@ -87,7 +94,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                            </td>
                            <td>
                            @if(isPrimaryContact) {
-                              <span class="edit-button" for="project-categories">edit</span>
+                              <span class="edit-button" for="project-categories"></span>
                            }
                            </td>
                         </tr>
@@ -121,7 +128,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                            </td>
                            <td>
                               @if(isPrimaryContact) {
-                                 <span class="edit-button" for="project-state">edit</span>
+                                 <span class="edit-button" for="project-state"></span>
                               }
                            </td>
                         </tr>
@@ -178,7 +185,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                        </td>
                        <td>
                        @if(isPrimaryContact) {
-                         <span class="edit-button" for="project-primary-contact">edit</span>
+                         <span class="edit-button" for="project-primary-contact"></span>
                         }
                        </td>
                       </tr>
@@ -209,14 +216,14 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  			</td>
                  			<td>
                  				@if(isPrimaryContact) {
-                 					<span class="edit-button" for="project-team-members">edit</span>
+                 					<span class="edit-button" for="project-team-members"></span>
 
                  				}
                  			</td>
                  		</tr>
                  	</table>
+                  <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(", "))</p>
                  	@if(isPrimaryContact) {
-                    <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(", "))</p>
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
                         @for(otherUser <- model.User.all) {
@@ -225,12 +232,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                           } else {
                             <option value="@otherUser.username">@otherUser.fullName</option>
                           }
-                          
                         }
                       </select>
                     </span>
                  	} else {
-                 		<p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(","))</p>
                  	}
                   </div>
                </td>

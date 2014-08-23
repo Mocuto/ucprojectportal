@@ -12,7 +12,8 @@ import scala.collection.JavaConversions._
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-import utils.SMTPCommunicator
+import utils._
+import utils.nosql.CassieCommunicator
 
 object Notification {
 

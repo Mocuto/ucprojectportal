@@ -7,16 +7,13 @@
 		<div class="large-header">users</div>
 		<div class="roundbox">
 			@for(user <- model.User.all) {
-				<div>@links.userLink(user.username, s"${user.username} - ${user.fullName}")</div><br>
+				<div>@links.userLink(user.username, s"${user.username} - ${user.fullName}") - <a href="@routes.AdminController.deleteUser(user.username)">delete</a></div><br>
 			}
 			<div class="content-header">
 			new user
 			</div>
 			@helper.form(action = routes.AdminController.createUser) {
-				<input type="text" name="username" class="roundbox-textinput" placeholder="username" />
-				<input type="text" name="first_name" class="roundbox-textinput" placeholder="first name" />
-				<input type="text" name="last_name" class="roundbox-textinput" placeholder="last name" />
-				<input name="password" type="password" class="roundbox-textinput" placeholder="password" />
+				<textarea name="usernames" style="width:100%" class="roundbox-textinput textarea-description" placeholder="enter the usernames separated by a comma" ></textarea>
 
 				<div class="blue-button submit-button" style="margin-top:16px;">create user</div>
 			}
@@ -24,9 +21,19 @@
 
 		<!-- Projects -->
 		<div class="large-header">projects</div>
+		<div class="roundbox">
+		@for(project <- model.Project.all) {
+			<div>@project.id - @project.name - <a href="@routes.AdminController.deleteProject(project.id)">delete</a></div>
+		}
+		</div>
 
 		<!-- Categories -->
 		<div class="large-header">categories</div>
+		<div class="roundbox">
+		@for(category <- model.ProjectCategory.all) {
+			<div><img src="/assets/images/icons/project-completed-@(category.icon).png" class="projectbox-icon"/>@category.name</div>
+		}
+		</div>
 
 		<!-- Send a message -->
 		<div class="large-header">send a message</div>

@@ -6,9 +6,17 @@
       <div class="huge-header">create a new project</div>
      	<div class="roundbox">
      	@helper.form(action = routes.ProjectController.submitProject) {
-      @*** TODO - ERROR MESSAGES HERE **@
-      <input type="text" placeholder="project name" name="name" class="roundbox-textinput" style="width:100%"/><br>
-      <textarea name="description" class="roundbox-textinput textarea-description" placeholder="enter a description" style="width:100%"></textarea>
+      @for(error <- form.errors) {
+        <div class="form-error">@error.key match {
+          case "" => { *@error.message }
+          case "team-members" => { *at least one team member is needed }
+          case _ => { *a project @error.key is required }
+        }
+        </div>
+      }
+
+      <input type="text" placeholder="project name" name="name" class="roundbox-textinput" style="width:100%" value='@form("name").value' /><br>
+      <textarea name="description" class="roundbox-textinput textarea-description" placeholder="enter a description" style="width:100%">@form("description").value</textarea>
       
       <div>choose categories</div>
       <br>
@@ -22,7 +30,7 @@
       <br>
       <select name="team-members[]" id="project-team-members-select" class="chosen" multiple>
         @for(otherUser <- model.User.all) {
-          @if(user.username == otherUser.username) {
+          @if(user.username == otherUser.username || form("team-members").value.contains(otherUser.username)) {
             <option value="@otherUser.username" selected="true">@otherUser.fullName</option>
           } else {
             <option value="@otherUser.username">@otherUser.fullName</option>

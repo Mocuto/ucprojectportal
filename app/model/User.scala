@@ -9,6 +9,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import utils._
+import utils.nosql.CassieCommunicator
 
 object User {
 
@@ -82,6 +83,14 @@ object User {
 	def getActivationCode(user : User) : Option[String] = CassieCommunicator.getActivationCodeForUser(user);
 
 	def getActivationCode(username : String) : Option[String] = CassieCommunicator.getActivationCodeForUser(User.get(username));
+
+	def delete(username : String ) {
+		val user = User.get(username);
+		user.projects.foreach(project => project.removeUser(user));
+		Notification.getForUser(user).foreach(notification => notification.delete())
+
+		CassieCommunicator.removeUser(user);
+	}
 
 	implicit def fromRow(row : Row) : User = {
 		row match {

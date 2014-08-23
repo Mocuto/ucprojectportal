@@ -52,7 +52,9 @@ object Application extends Controller with SessionHandler {
 			 routes.javascript.RequestController.ignoreRequest,
 			 routes.javascript.NotificationController.resetUnreadNotifications,
 			 routes.javascript.NotificationController.getUnreadNotificationCount,
-			 routes.javascript.NotificationController.ignoreNotification
+			 routes.javascript.NotificationController.ignoreNotification,
+			 routes.javascript.AdminController.deleteUser,
+			 routes.javascript.AdminController.deleteProject
 			 )
 		).as("text/javascript")
 	}
@@ -122,5 +124,9 @@ object Application extends Controller with SessionHandler {
 		)
 
 	}
+
+	def workshops = TODO
+
+	def feedback = TODO
 
 }

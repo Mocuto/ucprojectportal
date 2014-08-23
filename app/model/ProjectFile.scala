@@ -10,7 +10,8 @@ import play.api.libs.Files._
 
 import scala.collection.JavaConversions._
 
-import utils.Conversions
+import utils._
+import utils.nosql.CassieCommunicator
 
 object ProjectFile {
 	def undefined : ProjectFile = { 
@@ -25,6 +26,7 @@ object ProjectFile {
 
  	def get(project : Project) : Seq[ProjectFile] = return CassieCommunicator.getFilesForProject(project)
 
+ 	def get(projectId : Int, timeSubmitted : Date, filename : String) : ProjectFile = return CassieCommunicator.getFile(projectId, timeSubmitted, filename)
 
 	def saveFile (temporaryFile : (String, TemporaryFile), author : String, projectId : Int, timeSubmitted : Date) : ProjectFile = {
 		//First move file
@@ -44,6 +46,14 @@ object ProjectFile {
 	def createProjectFile(filename : String, originalName : String, author : String, projectId : Int, timeSubmitted : Date) : ProjectFile = {
 		val projectFile = ProjectFile(filename, originalName, author, projectId, timeSubmitted);
 		return CassieCommunicator.addFile(projectFile);
+	}
+
+	def delete(file : ProjectFile) {
+		CassieCommunicator.removeFile(file)
+	}
+
+	def delete(projectId : Int, timeSubmitted : Date, filename : String) {
+		ProjectFile.delete(ProjectFile.get(projectId, timeSubmitted, filename))
 	}
 
 	implicit def fromRow(row : Row) : ProjectFile = {
