@@ -1,0 +1,22 @@
+@(user : model.User)(form : Form[(String, String, String)])
+
+@main("Student Government Project Portal")(Some(user)) {
+	<div class="main-container">
+    	<div class="huge-header">feedback</div>
+    	<div class="roundbox">
+			@helper.form(action = routes.Application.submitFeedback) {
+				@for(error <- form.errors) {
+					*a feedback @error.key is required<br>
+				}
+				<div>
+					<input id="suggestion" type="radio" name="type" value="suggestion"><label class="feedback-label" for="suggestion">suggestion</label>
+					<input id="like" type="radio" name="type" value="like"><label class="feedback-label" for="like">like</label>
+					<input id="dislike" type="radio" name="type" value="dislike"><label class="feedback-label" for="dislike">dislike</label>
+				</div>
+				<input type="hidden" name="author" value="@user.username"><br>
+    			<textarea class="roundbox-textinput textarea-description" name="content" style="width:100%" placeholder="enter your feedback!">@form("content").value</textarea>
+    			<span class="blue-button submit-button" style="width:auto;">submit feedback</span>
+    		}
+    	</div>
+    </div>
+}
