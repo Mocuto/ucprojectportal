@@ -35,6 +35,14 @@
 		}
 		</div>
 
+		<!-- Feedback -->
+		<div class="large-header">feedback</div>
+		<div class="roundbox">
+		@for(feedback <- model.Feedback.all) {
+			<div class="header">@links.userLink(feedback.author) - @feedback.feedbackType</div>
+			<div class="description">@feedback.content</div>
+		}
+
 		<!-- Send a message -->
 		<div class="large-header">send a message</div>
 		<div class="roundbox">

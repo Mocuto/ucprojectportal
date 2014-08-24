@@ -1,5 +1,7 @@
 package controllers
 
+import com.codahale.metrics.{Counter, Meter}
+import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
 
 import java.util.Date
@@ -20,6 +22,9 @@ import utils._
 
 object Application extends Controller with SessionHandler {
 
+	val loginMeter = MetricsRegistry.default.meter("logins")
+	val feedbackCounter = MetricsRegistry.default.counter("feedback");
+
 	implicit val loginForm : Form[(String, String)] = Form(
 		tuple(
 			"username" -> nonEmptyText,
@@ -29,6 +34,14 @@ object Application extends Controller with SessionHandler {
 		}).verifying("user account not yet confirmed", fields => fields match {
 			case (username, password) => { User.get(username).hasConfirmed}
 		})
+	)
+
+	val feedbackForm = Form(
+		tuple(
+			"author" -> nonEmptyText,
+			"content" -> nonEmptyText,
+			"type" -> nonEmptyText
+		)
 	)
 
 	def checkAuthenticated (request : Request[play.api.mvc.AnyContent])(success : (String) => Result ) : Result = { 
@@ -47,12 +60,13 @@ object Application extends Controller with SessionHandler {
 			 routes.javascript.ProjectController.submitUpdate,
 			 routes.javascript.ProjectController.editProject,
 			 routes.javascript.ProjectController.leaveProject,
-			 routes.javascript.RequestController.requestJoin,
-			 routes.javascript.RequestController.acceptRequest,
-			 routes.javascript.RequestController.ignoreRequest,
-			 routes.javascript.NotificationController.resetUnreadNotifications,
-			 routes.javascript.NotificationController.getUnreadNotificationCount,
-			 routes.javascript.NotificationController.ignoreNotification,
+			 routes.javascript.RequestController.join,
+			 routes.javascript.RequestController.accept,
+			 routes.javascript.RequestController.ignore,
+			 routes.javascript.NotificationController.resetUnread,
+			 routes.javascript.NotificationController.getUnreadCount,
+			 routes.javascript.NotificationController.ignore,
+			 routes.javascript.NotificationController.clearAll,
 			 routes.javascript.AdminController.deleteUser,
 			 routes.javascript.AdminController.deleteProject
 			 )
@@ -102,7 +116,7 @@ object Application extends Controller with SessionHandler {
 				BadRequest(views.html.login()(formWithErrors))
 			},
 			loginData => {
-				println(loginData._1)
+				loginMeter.mark();
 				if(path == "") {
 					Redirect(routes.Application.index).withSession(
 						"authenticated" -> loginData._1			)
@@ -127,6 +141,33 @@ object Application extends Controller with SessionHandler {
 
 	def workshops = TODO
 
-	def feedback = TODO
+	def feedback = Action { implicit request =>
+		authenticated match {
+			case Some(username) => {
+				val user = User.get(username);
+
+				Ok(views.html.feedback(user)(feedbackForm))
+			}
+		}
+	}
+
+	def submitFeedback = Action { implicit request =>
+		authenticated match {
+			case Some(username) => {
+				val user = User.get(username);
+				feedbackForm.bindFromRequest.fold(
+					formWithErrors => {
+						BadRequest(views.html.feedback(user)(formWithErrors))
+					},
+					{ case (author : String, content : String, feedbackType : String) => {
+						Feedback.create(author, content, feedbackType);
+
+						feedbackCounter.inc();
+						Ok(views.html.messages.prettyMessage(play.twirl.api.Html("your feedback has been sent!")))
+					}}
+				)
+			}
+		}
+	}
 
 }

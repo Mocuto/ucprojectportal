@@ -1,5 +1,7 @@
 package controllers
 
+import com.codahale.metrics.Meter
+import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
 
 import java.util.Date
@@ -20,7 +22,11 @@ import utils._
 
 object RequestController extends Controller with SessionHandler {
 
-	def requestJoin(projectId : Int) = Action { implicit request =>
+	val joinMeter = MetricsRegistry.default.meter("request.join");
+	val acceptMeter = MetricsRegistry.default.meter("request.accept");
+	val ignoreMeter = MetricsRegistry.default.meter("request.ignore");
+
+	def join(projectId : Int) = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val project = Project.get(projectId);
@@ -38,7 +44,7 @@ object RequestController extends Controller with SessionHandler {
 						Status(460)(s"cannot join a completed project")
 					}
 					case _ => {
-
+						joinMeter.mark();
 						if(User.get(project.primaryContact).isDefined == false) {
 							Project.addUser(projectId, authenticatedUser);
 							Project.changePrimaryContact(projectId, User.undefined, authenticatedUser);
@@ -74,7 +80,7 @@ object RequestController extends Controller with SessionHandler {
 		}
 	}
 
-	def acceptRequest(projectId : Int, requester : String)  = Action{ implicit request =>
+	def accept(projectId : Int, requester : String)  = Action{ implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val projectRequest = ProjectRequest.get(projectId, username, requester);
@@ -99,8 +105,8 @@ object RequestController extends Controller with SessionHandler {
 						)
 
 						val user = User.get(requester);
-						print("Ok");
 
+						acceptMeter.mark();
 						Ok(response)				
 					}
 				}
@@ -108,7 +114,7 @@ object RequestController extends Controller with SessionHandler {
 		}
 	}
 
-	def ignoreRequest(projectId : Int, requester : String)  = Action{ implicit request =>
+	def ignore(projectId : Int, requester : String)  = Action{ implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val projectRequest = ProjectRequest.get(projectId, username, requester);
@@ -124,21 +130,21 @@ object RequestController extends Controller with SessionHandler {
 							"response" -> JsString("request ignored")
 						)
 					)
-
+					ignoreMeter.mark()
 					Ok(response)
 				}
 			}
 		}
 	}
 
-	def decideRequest(projectId : Int, requester : String, doesAccept : Boolean) = Action { implicit request => {
+	def decide(projectId : Int, requester : String, doesAccept : Boolean) = Action { implicit request => {
 		val requesterFirstName = User.get(requester).firstName;
 		if (doesAccept) {
-			acceptRequest(projectId, requester)(request);
+			accept(projectId, requester)(request);
 			Redirect(routes.ProjectController.project(projectId))
 		}
 		else {
-			ignoreRequest(projectId, requester)(request);
+			ignore(projectId, requester)(request);
 			Redirect(routes.ProjectController.project(projectId))
 		}
 	}}

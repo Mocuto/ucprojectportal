@@ -94,7 +94,8 @@ object SMTPCommunicator {
 		val project = Project.get(projectId);
 		
 		val subject = s"You Have Been Added to the Project ${project.name}"
-		val content = views.html.email.emailMessage(play.twirl.api.Html(subject), "", "visit the project", s"/project/$projectId").toString;
+		val content = views.html.email.emailMessage(play.twirl.api.Html(subject), "", "visit the project",
+		 				constants.ServerSettings.HOST_URL + controllers.routes.ProjectController.project(projectId)).toString;
 
 		sendEmail(recipient, subject, content);
 	}

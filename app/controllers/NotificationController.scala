@@ -19,7 +19,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import utils._
 
 object NotificationController extends Controller with SessionHandler {
-	def resetUnreadNotifications() = Action { implicit request =>
+
+	def resetUnread = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val authenticatedUser = User.get(username);
@@ -36,7 +37,7 @@ object NotificationController extends Controller with SessionHandler {
 		}
 	}
 
-	def getUnreadNotificationCount = Action { implicit request =>
+	def getUnreadCount = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val authenticatedUser = User.get(username);
@@ -53,7 +54,7 @@ object NotificationController extends Controller with SessionHandler {
 		}
 	}
 
-	def ignoreNotification (timeCreated : String) = Action { implicit request =>
+	def ignore (timeCreated : String) = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val notification = Notification(username, utils.Conversions.strToDate(timeCreated));
@@ -61,6 +62,21 @@ object NotificationController extends Controller with SessionHandler {
 				val response = JsObject(
 					Seq(
 						"response" -> JsString("notification has been ignored")
+					)
+				)
+
+				Ok(response);
+			}
+		}
+	}
+
+	def clearAll = Action { implicit request =>
+		authenticated match {
+			case Some(username) => {
+				Notification.clearAllForUser(User.get(username));
+				val response = JsObject(
+					Seq(
+						"response" -> JsString("notifications have been ignored")
 					)
 				)
 				Ok(response);

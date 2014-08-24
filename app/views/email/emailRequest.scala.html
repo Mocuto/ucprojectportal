@@ -1,6 +1,6 @@
 @(requester : model.User, project : model.Project)
 
-@defining(constants.ServerSettings.HOST_URL + routes.RequestController.acceptRequest(project.id, requester.username), constants.ServerSettings.HOST_URL + routes.RequestController.ignoreRequest(project.id, requester.username)) { case (acceptUrl, ignoreUrl) =>
+@defining(constants.ServerSettings.HOST_URL + routes.RequestController.decide(project.id, requester.username, true), constants.ServerSettings.HOST_URL + routes.RequestController.decide(project.id, requester.username, false)) { case (acceptUrl, ignoreUrl) =>
 
 @email(Html(s"${links.userLinkEmail(requester.username)} requested to join the project ${project.name}")) {
 	<span></span>
@@ -9,7 +9,6 @@
 	<span style="border-radius: 30px;
 	background-color:#ddd;
 	padding:4px 12px 4px 12px;
-	height:32px;
 	font-size:12pt;
 	text-decoration: none;
 	color:black;
@@ -18,11 +17,10 @@
 	cursor:pointer;
 	margin-left:120px;
 	margin-right:auto;
-	float:left;"><a href="@acceptUrl" style="text-decoration:none; color:black">accept</a></div>
+	float:left;"><a href="@acceptUrl" style="text-decoration:none; color:black">accept</a></span>
 	<span style="border-radius: 30px;
 	background-color:#ddd;
 	padding:4px 12px 4px 12px;
-	height:32px;
 	font-size:12pt;
 	text-decoration: none;
 	color:black;
@@ -31,5 +29,5 @@
 	cursor:pointer;
 	margin-left:auto;
 	margin-right:240px;
-	float:right;"><a href="@ignoreUrl" style="text-decoration:none; color:black">ignore</a></div>
+	float:right;"><a href="@ignoreUrl" style="text-decoration:none; color:black">ignore</a></span>
 }}

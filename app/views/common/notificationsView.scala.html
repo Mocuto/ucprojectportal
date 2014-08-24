@@ -13,7 +13,7 @@
 				<span class="hint">@links.userLink(user.username, user.firstName.toLowerCase()) posted an update in the project @links.projectLink(project.id)!</span>
 			</td>
 			<td>
-				<span href="/project/@project.id" class="button ignore-notification" time-created="@utils.Conversions.dateToStr(notification.timeCreated)">visit</span>
+				<span class="button ignore-notification" time-created="@utils.Conversions.dateToStr(notification.timeCreated)">dismiss</span>
 			</td>
 		</tr>
 	</table>

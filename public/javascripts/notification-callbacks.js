@@ -9,7 +9,7 @@ function setupNotificationCallbacks() {
 		})
 	})
 
-	$("#request-join").click(function() {
+	$("#request-join, .request-join").click(function() {
 		var projectId = Number($(this).attr("project-id"));
 		requestJoin(projectId);
 	})
@@ -37,5 +37,9 @@ function setupNotificationCallbacks() {
 
 		ignoreNotification(timeCreated, href);
 
+	})
+
+	$(".notification-clear-all").click(function() {
+		clearAllNotifications()
 	})
 }

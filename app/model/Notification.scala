@@ -1,7 +1,10 @@
 package model
 
+import com.codahale.metrics.Counter
 import com.datastax.driver.core.Row
 import com.github.nscala_time.time.Imports._
+import com.kenshoo.play.metrics.MetricsRegistry
+import com.typesafe.plugin._
 
 import java.util.Date
 
@@ -18,6 +21,12 @@ import utils.nosql.CassieCommunicator
 object Notification {
 
 	val SENDER = "sender"
+
+	val createdMeter = MetricsRegistry.default.meter("notifications.created")
+	val updateMeter = MetricsRegistry.default.meter("notifications.updates.created")
+	val requestMeter = MetricsRegistry.default.meter("notifications.requests.created");
+	val messageMeter = MetricsRegistry.default.meter("notifications.messages.created");
+	val addedToProjectMeter = MetricsRegistry.default.meter("notifications.added-to-project.created");
 
 	def getForUser(user : User) : Seq[Notification] = return CassieCommunicator.getNotificationsForUser(user);
 
@@ -47,18 +56,21 @@ object Notification {
 	def createUpdate(receiver : User, sender : User, project : Project, updateContent : String) {
 		val content = Map("sender" -> sender.username, "project_id" -> project.id.toString, "content" -> updateContent);
 
+		updateMeter.mark();
 		Notification.create(receiver, content, NotificationType.UPDATE);
 	}
 
 	def createMessage(receiver : User, message : String) {
 		val content = Map("value" -> message);
 
+		messageMeter.mark()
 		Notification.create(receiver, content, NotificationType.MESSAGE);
 	}
 
 	def createAddedToProject(receiver : User, project : Project) {
 		val content = Map("project_id" -> project.id.toString)
 
+		addedToProjectMeter.mark();
 		Notification.create(receiver, content, NotificationType.ADDED_TO_PROJECT)
 	}
 
@@ -71,11 +83,25 @@ object Notification {
 		Future {
 			SMTPCommunicator.sendNotificationEmail(notification);
 		}
+
+		createdMeter.mark();
 		return notification;
 	}
 
 	def resetUnreadForUser(user : User) {
 		CassieCommunicator.setUserUnreadNotifications(user, 0);
+	}
+
+	def clearAllForUser(user : User) {
+		Notification.getForUser(user).foreach(notification => {
+			if(notification.notificationType == NotificationType.REQUEST) {
+				val request = ProjectRequest.get(notification.content("project_id").toInt, notification.username, notification.content("sender"))
+				request.ignore();
+			}
+			else {
+				notification.delete();
+			}
+		})
 	}
 
 	implicit def fromRow(row : Row) : Notification = {
@@ -99,5 +125,6 @@ case class Notification(username : String, timeCreated : Date, content : Map[Str
 
 	def delete() {
 		CassieCommunicator.removeNotification(this);
+
 	}
 }

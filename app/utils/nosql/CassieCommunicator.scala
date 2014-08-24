@@ -16,7 +16,7 @@ import play.Play
 
 object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommunicator with ProjectCategorySqlCommunicator
     with ProjectFileSqlCommunicator with ProjectRequestSqlCommunicator with ProjectSqlCommunicator
-    with ProjectUpdateSqlCommunicator with UserSqlCommunicator {
+    with ProjectUpdateSqlCommunicator with UserSqlCommunicator with FeedbackSqlCommunicator {
 
   private val serverIp = Play.application.configuration.getString("cassandra.host");
   private val keyspace = Play.application.configuration.getString("cassandra.keyspace")
@@ -54,6 +54,9 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
 	private[nosql] val REQUESTS_INSERT_FIELDS = "project_id, owner, requester, time_created";
 
 	private[nosql] val TAGS = "tags";
+
+  private[nosql] val FEEDBACK = "feedback"
+  private[nosql] val FEEDBACK_INSERT_FIELDS = "author, content, type, time_submitted"
 
 	private[nosql] val cluster = Cluster.builder().addContactPoint(serverIp).build();
 	private[nosql] val session = cluster.connect(keyspace);

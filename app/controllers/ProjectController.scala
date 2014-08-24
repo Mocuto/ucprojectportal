@@ -1,5 +1,7 @@
 package controllers
 
+import com.codahale.metrics.Counter
+import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
 
 import java.util.Date
@@ -37,6 +39,9 @@ object ProjectController extends Controller with SessionHandler {
 			case project => {  project.categories.length > 0}
 		})
 	)
+
+	val projectsCreatedCounter = MetricsRegistry.default.counter("projects.created")
+	val updatesCreatedCounter = MetricsRegistry.default.counter("projects.created")
 
 
 	def project(id : Int) = Action { implicit request => {
@@ -105,6 +110,8 @@ object ProjectController extends Controller with SessionHandler {
 					    	)
 					    )
 
+					    updatesCreatedCounter.inc();
+
 					    Ok(response);
 				    }
 				  }
@@ -123,6 +130,7 @@ object ProjectController extends Controller with SessionHandler {
 					incompleteProject => {
 						var completeProject = Project.create(incompleteProject.name, incompleteProject.description, username,
 							incompleteProject.categories, incompleteProject.teamMembers);
+						projectsCreatedCounter.inc();
 						Redirect(routes.ProjectController.project(completeProject.id));
 					}
 				)

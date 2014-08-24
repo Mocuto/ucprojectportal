@@ -1,5 +1,7 @@
 import controllers._;
 
+import com.kenshoo.play.metrics.MetricsFilter
+
 import model._;
 
 import play.api._
@@ -52,7 +54,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		if(authorizationRequired(request)) {
 		  request.session.get("authenticated") match {
 		  	case None => Future {
-		  		Results.Redirect("/login/" + request.path)
+		  		Results.Redirect(routes.Application.login(request.path))
 		  	}
 		  	case Some(username) => {
 		  		val user = User.get(username);
@@ -61,7 +63,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		  		}
 		  		else {
 		  			Future {
-	  					Results.Redirect("/login/" + request.path)
+	  					Results.Redirect(routes.Application.login(request.path))
 		  			}
 		  		}
 		  	}
@@ -81,9 +83,12 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 }
 
 object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "user",
-													"submitProject", "submitUpdate", "uploads", "acceptRequest", "ignoreRequest",
-													"resetUnreadNotifications", "getUnreadNotificationCount", "ignoreNotification",
-													"decideRequest", "signout"),
-								 AdminFilter("admin", "deleteProject", "deleteUser")) {
+													"submitProject", "leaveProject", "editProject",
+													"feedback" , "submitUpdate", "uploads",
+													"resetUnread", "getUnreadCount", "ignore",
+													"clearAll",
+													"decide", "signout"),
+								 AdminFilter("admin", "deleteProject", "deleteUser", "metrics"),
+								 MetricsFilter) {
 
 }

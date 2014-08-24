@@ -11,8 +11,9 @@ body {
 	padding-left: 24px;
 	margin-top: 12px;
 	margin-bottom: 32px;
-	padding-top: 5px;
+	padding-top: 2px;
 	padding-right: 12px;
+	box-sizing:border-box;
 }
 
 .title-project-portal, .title-project-portal * {
@@ -98,7 +99,6 @@ body {
 	border-radius: 30px;
 	background-color:white;
 	padding:4px 24px 4px 24px;
-	height:32px;
 	font-size:12pt;
 	text-decoration: none;
 	color:black;
@@ -128,7 +128,6 @@ body {
 	border-radius: 30px;
 	background-color:#aedefc;
 	padding:4px 12px 4px 12px;
-	height:32px;
 	font-size:10pt;
 	text-decoration: none;
 	color:black;
@@ -228,7 +227,8 @@ body {
 	font-size:14pt;
 	font-weight:100;
 	border-spacing:0px;
-	overflow: hidden	
+	overflow: hidden;
+	cursor:pointer;
 }
 
 .projectbox td {
@@ -259,17 +259,14 @@ body {
 }
 
  * {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+
 }
 
 .projectbox-icon {
 	width: 75px;
 	position:relative;
 	margin-right:2px;
-	display:table-cell;
-	right:1px;
+	display:table;
 }
 
 .projectbox-description {
@@ -480,6 +477,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	font-size:8pt;
 	color:#999;
 	cursor: pointer;
+
 }
 
 .close-button:hover {
@@ -497,6 +495,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 .notification-item {
 	border-bottom:1px solid #aedefc;
 	margin-bottom:16px;
+	padding-bottom:8px;
 }
 
 .notification-item table {
@@ -548,4 +547,17 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 
 .user-link:hover {
 	text-decoration: underline;
+}
+
+.notification-clear-all {
+	margin-left:16px;
+	color:#999;
+	cursor:pointer;
+}
+
+.notification-clear-all:hover {
+	text-decoration: underline;	
+}
+.feedback-label {
+	margin-right:16px;
 }

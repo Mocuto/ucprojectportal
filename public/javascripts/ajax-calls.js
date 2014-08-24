@@ -85,7 +85,7 @@ function submitUpdate() {
 }
 
 function requestJoin(projectId) {
-	var route = jsRoutes.controllers.RequestController.requestJoin(projectId);
+	var route = jsRoutes.controllers.RequestController.join(projectId);
 
 	ajaxSendFormData(new FormData(), route, function() {
 
@@ -98,7 +98,7 @@ function requestJoin(projectId) {
 }
 
 function acceptRequest(projectId, requester) {
-	var route = jsRoutes.controllers.RequestController.acceptRequest(projectId, requester);
+	var route = jsRoutes.controllers.RequestController.accept(projectId, requester);
 
 	ajaxSendFormData(new FormData(), route, function() {
 
@@ -108,7 +108,7 @@ function acceptRequest(projectId, requester) {
 }
 
 function ignoreRequest(projectId, requester) {
-	var route = jsRoutes.controllers.RequestController.ignoreRequest(projectId, requester);
+	var route = jsRoutes.controllers.RequestController.ignore(projectId, requester);
 
 	ajaxSendFormData(new FormData(), route, function() {
 		//Success
@@ -119,7 +119,7 @@ function ignoreRequest(projectId, requester) {
 
 function resetUnreadNotifications() {
 
-	var route = jsRoutes.controllers.NotificationController.resetUnreadNotifications();
+	var route = jsRoutes.controllers.NotificationController.resetUnread();
 	ajaxSendFormData(new FormData(), route, function() {
 		$("#notification-text").text(user.defaultMessage)
 		user.unreadNotifications = 0;
@@ -138,12 +138,12 @@ function resetUnreadNotifications() {
 }
 
 function getUnreadNotificationCount(onSuccess, onError) {
-	var route = jsRoutes.controllers.NotificationController.getUnreadNotificationCount();
+	var route = jsRoutes.controllers.NotificationController.getUnreadCount();
 	ajaxSendFormData(new FormData(), route, onSuccess, onError)
 }
 
 function ignoreNotification(timeCreated, href) {
-	var route = jsRoutes.controllers.NotificationController.ignoreNotification(timeCreated);
+	var route = jsRoutes.controllers.NotificationController.ignore(timeCreated);
 	ajaxSendFormData(new FormData(), route, function() {
 		if(typeof href !== "undefined") {
 			window.location = href
@@ -151,4 +151,13 @@ function ignoreNotification(timeCreated, href) {
 	}, function() {
 		//Error
 	});
+}
+
+function clearAllNotifications() {
+	var route = jsRoutes.controllers.NotificationController.clearAll();
+	ajaxSendFormData(new FormData, route, function() {
+		$(".notification-item").slideUp();
+	}, function() {
+		//Error
+	})
 }

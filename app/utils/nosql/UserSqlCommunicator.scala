@@ -31,7 +31,7 @@ trait UserSqlCommunicator extends BaseSqlCommunicator {
 
 	  def setUserLastLogin(user : User, date : Date) {
 	    val timestamp = utils.Conversions.dateToStr(date);
-	    val executeString = s"update $USERS set last_login = $timestamp where username = '${user.username}'";
+	    val executeString = s"update $USERS set last_login = '$timestamp' where username = '${user.username}'";
 
 	    execute(executeString);
 	  }
@@ -62,6 +62,7 @@ trait UserSqlCommunicator extends BaseSqlCommunicator {
             val storedPassword = row.getString("password");
 
             if(PasswordHasher.check(password, storedPassword) == true) {
+              User.updateLastLogin(username);
               return User.get(username);
             }
             else {

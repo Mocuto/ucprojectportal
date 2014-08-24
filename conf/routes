@@ -27,37 +27,39 @@ POST	/tryLogin/*path							controllers.Application.tryLogin(path : String)
 
 #Activation routes
 GET 	/activate/resend 						controllers.ActivationController.resendActivation
-POST	/tryResendActivation					controllers.ActivationController.tryResendActivation
+POST	/activate/resend/try					controllers.ActivationController.tryResendActivation
 GET 	/activate/:username/:uuid				controllers.ActivationController.activate(username : String, uuid : String)
-POST	/tryActivate 							controllers.ActivationController.tryActivate
+POST	/activate/try 							controllers.ActivationController.tryActivate
 
 #Admin routes
 GET 	/admin									controllers.AdminController.admin
 POST 	/admin/user/create 						controllers.AdminController.createUser
 GET		/admin/user/delete/:username 			controllers.AdminController.deleteUser(username : String)
 GET 	/admin/project/delete/:id 				controllers.AdminController.deleteProject(id : Int)
+GET     /admin/metrics              			com.kenshoo.play.metrics.MetricsController.metrics
 
 #Request routes
-POST	/requestJoin/:projectId 				controllers.RequestController.requestJoin(projectId : Int)
-POST	/acceptRequest/:projectId/:requester 	controllers.RequestController.acceptRequest(projectId : Int, requester : String)
-POST	/ignoreRequest/:projectId/:requester 	controllers.RequestController.ignoreRequest(projectId : Int, requester : String)
+POST	/request/join/:projectId 				controllers.RequestController.join(projectId : Int)
+POST	/request/accept/:projectId/:requester 	controllers.RequestController.accept(projectId : Int, requester : String)
+POST	/request/ignore/:projectId/:requester 	controllers.RequestController.ignore(projectId : Int, requester : String)
 
 #Email routes
-GET 	/email/acceptRequest/:projectId/:requester 	controllers.RequestController.decideRequest(projectId : Int, requester : String, doesAccept : Boolean = true)
-GET 	/email/ignoreRequest/:projectId/:requester 	controllers.RequestController.decideRequest(projectId : Int, requester : String, doesAccept : Boolean = false)
+GET 	/email/acceptRequest/:projectId/:requester 	controllers.RequestController.decide(projectId : Int, requester : String, doesAccept : Boolean = true)
+GET 	/email/ignoreRequest/:projectId/:requester 	controllers.RequestController.decide(projectId : Int, requester : String, doesAccept : Boolean = false)
 
 
 #Notification routes
-POST	/resetUnreadNotifications				controllers.NotificationController.resetUnreadNotifications
-POST	/getUnreadNotificationCount				controllers.NotificationController.getUnreadNotificationCount
-POST	/ignoreNotification/:timeCreated		controllers.NotificationController.ignoreNotification(timeCreated : String)
+POST	/notification/resetUnread				controllers.NotificationController.resetUnread
+POST	/notification/countUnread				controllers.NotificationController.getUnreadCount
+POST	/notification/ignore/:timeCreated		controllers.NotificationController.ignore(timeCreated : String)
+POST	/notification/clearAll 					controllers.NotificationController.clearAll
 
 
 #Misc routes
 GET		/signout								controllers.Application.signout
 GET		/uploads/:file							controllers.Application.uploads(file : String)
-GET 	/workshops 								controllers.Application.workshops
 GET 	/feedback 								controllers.Application.feedback
+POST 	/feedback/submit 						controllers.Application.submitFeedback
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               			controllers.Assets.at(path="/public", file)
