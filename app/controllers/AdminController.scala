@@ -46,7 +46,8 @@ object AdminController extends Controller with SessionHandler {
 					}, newUserData => {
 						newUserData match {
 							case usernamesString : String => {
-								usernamesString.split(Array[Char](',', '\n')).map(username => username.trim.toLowerCase()).foreach(username => User.create(User(username)))
+								//usernamesString.split(Array[Char](',', '\n')).map(username => username.trim.toLowerCase()).foreach(username => User.create(User(username)))
+								usernamesString.split("\n").map(username => username.trim.toLowerCase()).foreach(username => User.create(User(username)))
 								Redirect(routes.AdminController.admin);
 							}
 						}
