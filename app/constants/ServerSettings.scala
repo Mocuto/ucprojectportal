@@ -4,7 +4,7 @@ object ServerSettings {
 	val DEBUG_URL = "65.31.51.202:9000"
 	val PRODUCTION_URL = "ucprojectportal.com"
 
-	val CHOSEN_HOST = DEBUG_URL;
+	val CHOSEN_HOST = PRODUCTION_URL;
 
 	val HOST_URL = "http://" + CHOSEN_HOST;
 
