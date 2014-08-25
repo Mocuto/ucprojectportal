@@ -58,7 +58,16 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
   private[nosql] val FEEDBACK = "feedback"
   private[nosql] val FEEDBACK_INSERT_FIELDS = "author, content, type, time_submitted"
 
-	private[nosql] val cluster = Cluster.builder().addContactPoint(serverIp).build();
+
+  private[nosql] val builder = if(Play.application.configuration.getBoolean("cassandra.authenticates") == true) {
+    val username = Play.application.configuration.getString("cassandra.username");
+    val password = Play.application.configuration.getString("cassandra.password");
+    Cluster.builder().withCredentials(username, password);
+  }  
+  else {
+    Cluster.builder();
+  }
+	private[nosql] val cluster = builder.addContactPoint(serverIp).build();
 	private[nosql] val session = cluster.connect(keyspace);
 
 	private[nosql] val logger = Logger(this.getClass())
