@@ -29,7 +29,8 @@ trait FeedbackSqlCommunicator extends BaseSqlCommunicator {
 
 	def addFeedback(author : String, content : String, feedbackType : String, timeSubmitted : Date) : Feedback = {
 		val timestamp = Conversions.dateToStr(timeSubmitted);
-		val executeString = s"insert into $FEEDBACK($FEEDBACK_INSERT_FIELDS) values ('$author', '$content', '$feedbackType', '$timestamp')";
+		val contentFixed = content.replace("'", "''")
+		val executeString = s"insert into $FEEDBACK($FEEDBACK_INSERT_FIELDS) values ('$author', '$contentFixed', '$feedbackType', '$timestamp')";
 		execute(executeString)
 
 		return Feedback(author, content, feedbackType, timeSubmitted);
