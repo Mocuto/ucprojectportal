@@ -30,7 +30,7 @@ trait NotificationSqlCommunicator extends BaseSqlCommunicator {
 
 	def addNotification(notification : Notification) : Notification = {
 	    val timestamp = utils.Conversions.dateToStr(notification.timeCreated)
-	    val contentStr = utils.Conversions.mapToStr(notification.content).replace("'", "''")
+	    val contentStr = utils.Conversions.mapToStr(notification.content)
 	    val typeStr = NotificationType.toStr(notification.notificationType);
 	    val executeString = s"insert into $NOTIFICATIONS ($NOTIFICATIONS_INSERT_FIELDS) values ('${notification.username}', '$timestamp', $contentStr, '$typeStr')";
 

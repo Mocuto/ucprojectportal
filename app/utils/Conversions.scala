@@ -19,5 +19,9 @@ object Conversions {
 
 	implicit def strToDate(str : String) : Date = return formatter.parse(str);
 
-	implicit def mapToStr(map : Map[String, String]) : String = return "{" + map.map(item => s"'${item._1}' : '${item._2}'").mkString(",") + "}";
+	implicit def mapToStr(map : Map[String, String]) : String = { 
+		val key = item._1;
+		val value = item._2.replace("'", "''");
+		return "{" + map.map(item => s"'$key' : '$value'").mkString(",") + "}"; 
+	}
 }
