@@ -29,7 +29,7 @@
       <div style="margin-top:32px">who's your team?</div>
       <br>
       <select name="team-members[]" id="project-team-members-select" class="chosen" multiple>
-        @for(otherUser <- model.User.all) {
+        @for(otherUser <- model.User.allConfirmed) {
           @if(user.username == otherUser.username || form("team-members").value.contains(otherUser.username)) {
             <option value="@otherUser.username" selected="true">@otherUser.fullName</option>
           } else {

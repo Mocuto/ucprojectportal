@@ -226,7 +226,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  	@if(isPrimaryContact) {
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
-                        @for(otherUser <- model.User.all) {
+                        @for(otherUser <- model.User.allConfirmed) {
                           @if(project.teamMembers.contains(otherUser.username)) {
                             <option value="@otherUser.username" selected>@otherUser.fullName</option>
                           } else {

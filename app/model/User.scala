@@ -49,6 +49,8 @@ object User {
 
 	def all : Seq[User] = CassieCommunicator.getUsers
 
+	def allConfirmed : Seq[User] = User.all.filter(user => user.hasConfirmed == true)
+
 	def get(username : String) : User = {
 		if (username.length == 0) {
 			return User.undefined
