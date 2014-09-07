@@ -31,7 +31,7 @@
 		<td colspan="2">
 			<div  class="projectbox-description">
 				<p class="hint">
-					@project.description
+					@Html(project.description.replace("\r\n", "<br>"))
 				</p>
 				<br/>
 				<div>
