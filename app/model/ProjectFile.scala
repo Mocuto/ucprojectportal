@@ -3,6 +3,7 @@ package model
 import com.datastax.driver.core.Row
 
 import java.io.File
+import java.nio.file.{Paths, Files}
 import java.util.Date
 
 import play.api.mvc.MultipartFormData._
@@ -36,6 +37,11 @@ object ProjectFile {
 
 		val originalName = temporaryFile._1
 		val filename = uuid + "--" + temporaryFile._1
+
+		if(Files.exists(Paths.get("uploads")) == false) {
+			val uploadsDir = new File("uploads");
+			uploadsDir.mkdir();
+		} 
 
 		val file = new File(s"uploads/$filename");
 	    temporaryFile._2.moveTo(file, true);

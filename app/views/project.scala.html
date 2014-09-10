@@ -258,8 +258,9 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                      <textarea name="content" id="update-input" class="roundbox-textinput textarea-description" placeholder="write a status update"></textarea>
                      
                      <div class="file-inputs">
+                        <span class ="button" id="update-files-mask">choose files</span>
                         <input type="file" id="update-files" multiple>
-                        <input type="button" id="post-update" value="Post Update">
+                        <span class="blue-button" id="post-update" value="Post Update">post update</span>
                      </div>
 
                   </div>

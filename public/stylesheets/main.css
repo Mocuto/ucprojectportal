@@ -95,6 +95,10 @@ body {
 	cursor:pointer;
 }
 
+.button:hover{
+	text-decoration: underline;
+}
+
 .filter-button {
 	border-radius: 30px;
 	background-color:white;
@@ -134,6 +138,10 @@ body {
 	font-weight:200;
 	cursor:pointer;
 	text-align:center;
+}
+
+.blue-button:hover {
+	text-decoration: underline;
 }
 
 
@@ -417,9 +425,16 @@ body {
 }
 
 #post-update {
-	margin-right:32px;
+	margin-top:6px;
 	float : right;
-	height : 32px;
+	font-size: 12pt;
+}
+
+#update-files-mask {
+	margin-top:6px;
+	display: inline-block;
+	width:auto;
+	height:auto;
 }
 
 .post-update-container {
