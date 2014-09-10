@@ -274,14 +274,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           </td>
           <td>
             <div class="roundbox" id="project-all-files" style="display:none">
-              <table style="width:100%">
+              <table style="width:100%" class="file-group">
 
               @for(file <- model.ProjectFile.get(project)) {
-                <tr>
-                  <td class="content-header" style="padding-bottom:16px">@file.originalName</td>
-                  <td class="hint">@model.User.getFullName(file.author).toLowerCase() | @utils.Conversions.dateToDisplayedStr(file.timeSubmitted).toLowerCase()</td>
-                  <td class="hint" style="text-align:right"><a class="file-download" href="@routes.Application.uploads(file.filename)">download</a></td>
-                </tr>
+                @common.fileUpdateView(file)
               }
               </table>
             </div>

@@ -19,10 +19,10 @@
 			
 		</td>
 		<td class="projectbox-title">
-			@project.name.toLowerCase()
+			@project.name
 			@if(project.state == model.ProjectState.IN_PROGRESS_NEEDS_HELP) {
 				<br />
-				<span style="font-weight:bold">@project.stateMessage</span>
+				<span class="projectbox-needshelp-description">@project.stateMessage</span>
 			}
 		</td>
 		

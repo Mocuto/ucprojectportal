@@ -240,7 +240,7 @@ case class Project (id : Int, name: String, description : String,
 		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent));
 	}
 
-	def isNew : Boolean = Weeks.weeksIn(new DateTime(timeStarted) to DateTime.now).getWeeks <= 1;
+	def isNew : Boolean = Weeks.weeksBetween(new DateTime(timeStarted), DateTime.now).getWeeks <= 1;
 
 	def removeUser(user : User) : Project = Project.removeUser(id, user);
 }

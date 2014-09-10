@@ -24,7 +24,7 @@ object UserController extends Controller with SessionHandler {
 		authenticated match {
 			case Some(authenticatedUsername) => {
 				val user = User.get(username)
-				if (user.isDefined == false) {
+				if (user.isDefined == false || user.hasConfirmed == false) {
 					NotFound(views.html.messages.notFound("This user does not exist"));
 				} else {
 					val loggedInUser = User.get(authenticatedUsername);

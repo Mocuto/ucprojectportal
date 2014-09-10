@@ -106,8 +106,11 @@ object ProjectController extends Controller with SessionHandler {
 
 					    val response = JsObject(
 					    	Seq(
-				    			"html" -> JsString(views.html.common.updateView(completeUpdate).toString)
-					    	)
+				    			"html" -> JsString(views.html.common.updateView(completeUpdate).toString),
+				    			"fileHtml" -> JsString(
+				    				completeUpdate.files.map(x => views.html.common.fileUpdateView(ProjectFile.get(completeUpdate.projectId, completeUpdate.timeSubmitted, x)).toString).mkString
+			    				)
+				    		)
 					    )
 
 					    updatesCreatedCounter.inc();

@@ -81,6 +81,14 @@ function submitUpdate() {
 
 		var fileInputs = $(".file-inputs")
 		$(".file-inputs").parents("form").trigger("reset");
+
+		var fileHtmlGroup = $.parseHTML(data["fileHtml"]); 
+		
+		for(var i = 1; i < fileHtmlGroup.length; i++) {
+			var fileHtml = $(fileHtmlGroup[i]);
+			$(".file-group").prepend(fileHtml)
+		}
+
 	});
 }
 

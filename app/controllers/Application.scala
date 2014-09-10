@@ -32,7 +32,7 @@ object Application extends Controller with SessionHandler {
 		).verifying("incorrect username or password", fields => fields match {
 			case (username, password) => { User.authenticate(username, password).isDefined}
 		}).verifying("user account not yet confirmed", fields => fields match {
-			case (username, password) => { User.get(username).hasConfirmed}
+			case (username, password) => { val user = User.get(username); user.hasConfirmed || !user.isDefined}
 		})
 	)
 
@@ -74,9 +74,13 @@ object Application extends Controller with SessionHandler {
 	}
 
 	def index = Action { implicit request => {
-		val authenticatedUser = request.session.get("authenticated").get;
-		val user = User.get(authenticatedUser);
-		Ok(views.html.index(user));
+		authenticated match {
+			case Some(authenticatedUsername) => {
+				val authenticatedUser = User.get(authenticatedUsername);
+				Ok(views.html.index(authenticatedUser));
+			}
+		}
+
 
 	}}
 
@@ -90,7 +94,11 @@ object Application extends Controller with SessionHandler {
 	}}
 
 	def login(path : String) = Action {
-		Ok(views.html.login(path)(loginForm));
+		path match {
+			case "/" => Redirect(routes.Application.login(""))
+			case _ => Ok(views.html.login(path)(loginForm));
+		}
+		
 	}
 
 	def login : Action[play.api.mvc.AnyContent] = login("");

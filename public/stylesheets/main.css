@@ -244,6 +244,11 @@ body {
 
 .projectbox-title {
 	width:100%;
+	padding:0px 0px 0px 20px !important;
+}
+
+.projectbox-needshelp-description {
+	font-weight:bold;
 }
 
 .projectbox-container {

@@ -7,7 +7,7 @@
 	}
 	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
 
-	<p class="content">@Html(update.content.replace("\r\n", "<br>"))</p>
+	<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
 	@if(update.files.length > 0) {
 		<span class="hint">attachments:
 			@for(filename <- update.files) {
