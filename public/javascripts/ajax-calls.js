@@ -81,6 +81,10 @@ function submitUpdate() {
 
 		var fileInputs = $(".file-inputs")
 		$(".file-inputs").parents("form").trigger("reset");
+		$("#update-files-filenames").text("");
+		$("#update-files-mask").animate( {
+			backgroundColor : "#ddd"
+		})
 
 		var fileHtmlGroup = $.parseHTML(data["fileHtml"]); 
 		

@@ -259,7 +259,8 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                      
                      <div class="file-inputs">
                         <span class ="button" id="update-files-mask">choose files</span>
-                        <input type="file" id="update-files" multiple>
+                        <span id="update-files-filenames"></span>
+                        <input type="file" id="update-files" multiple style="display:none">
                         <span class="blue-button" id="post-update" value="Post Update">post update</span>
                      </div>
 

@@ -437,6 +437,13 @@ body {
 	height:auto;
 }
 
+#update-files-filenames {
+	padding-top: 8px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size:12pt;
+}
+
 .post-update-container {
 	width : 80%;
 	height : 48px;

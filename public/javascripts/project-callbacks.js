@@ -91,4 +91,25 @@ function setupProjectCallbacks() {
 		$(".post-update-container").css("display", "block");
 	})
 
+	$("#update-files-mask").click(function() {
+		$("#update-files").click();
+	})
+
+	$("#update-files").change(function() {
+		$("#update-files-mask").animate({
+			backgroundColor : "#aedefc"
+		}, 3000);
+
+		var files = $("#update-files").get(0).files
+		var filenames = (function(files) {
+			var list = [];
+			for(var i = 0; i < files.length; i++) {
+				list.push(files[i].name);
+			}
+			return list;
+		})(files).join(", ");
+		
+		$("#update-files-filenames").text(filenames)
+	})
+
 }
