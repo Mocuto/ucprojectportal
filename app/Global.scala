@@ -14,18 +14,18 @@ import play.api.libs.json._
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object AdminFilter {
-	def apply(actionNames: String*) = new AdminFilter(actionNames)
+object AccessFilter {
+	def apply(userGroupName : String, actionNames: String*) = new AccessFilter(userGroupName, actionNames)
 }
 
-class AdminFilter(actionNames: Seq[String]) extends Filter {
+class AccessFilter(userGroupName : String, actionNames: Seq[String]) extends Filter {
 	def apply(next: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
 		if(authorizationRequired(request)) {
 		  request.session.get("authenticated") match {
 		  	case None => Future {
 		  		Results.Redirect("/login/" + request.path)
 		  	}
-		  	case authenticatedUser if UserGroup.isUserInGroup(User.get(authenticatedUser.get), "admin") == false => Future {
+		  	case authenticatedUser if UserGroup.isUserInGroup(User.get(authenticatedUser.get), userGroupName) == false => Future {
 		  		Results.NotFound(views.html.messages.notFound("this page does not exist"));
 		  	}
 		  	case _ => {
@@ -88,7 +88,8 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 													"resetUnread", "getUnreadCount", "ignore",
 													"clearAll",
 													"decide", "signout"),
-								 AdminFilter("admin", "deleteProject", "deleteUser", "metrics"),
+								 AccessFilter("admin", "admin", "deleteProject", "deleteUser", "metrics"),
+								 AccessFilter("moderator", "moderation"),
 								 MetricsFilter) {
 
 }

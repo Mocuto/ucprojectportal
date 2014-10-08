@@ -16,6 +16,8 @@ import utils.nosql.CassieCommunicator
 object UserGroup {
 
 	def undefined : UserGroup = return UserGroup("", List[String](), false)
+
+	def all : Seq[UserGroup] = return CassieCommunicator.getUserGroups
 	
 	def get (name : String) : UserGroup = CassieCommunicator.getUserGroup(name);
 

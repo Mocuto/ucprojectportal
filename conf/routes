@@ -38,6 +38,9 @@ GET		/admin/user/delete/:username 			controllers.AdminController.deleteUser(user
 GET 	/admin/project/delete/:id 				controllers.AdminController.deleteProject(id : Int)
 GET     /admin/metrics              			com.kenshoo.play.metrics.MetricsController.metrics
 
+#Moderation routes
+GET 	/moderation 							controllers.ModerationController.moderation
+
 #Request routes
 POST	/request/join/:projectId 				controllers.RequestController.join(projectId : Int)
 POST	/request/accept/:projectId/:requester 	controllers.RequestController.accept(projectId : Int, requester : String)

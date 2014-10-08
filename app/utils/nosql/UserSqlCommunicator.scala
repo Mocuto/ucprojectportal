@@ -97,6 +97,17 @@ trait UserSqlCommunicator extends BaseSqlCommunicator {
     }
   }
 
+  def getUserGroups : Seq[UserGroup] = {
+      val executeString = s"select * from $USER_GROUPS";
+      executeAsync(executeString) match {
+        case None => List[UserGroup]();
+        case Some(r : ResultSetFuture) => {
+          val rows = r.getUninterruptibly().all();
+          return rows.map(row => UserGroup.fromRow(row))
+        }
+      }
+  }
+
   def getUserGroup(name : String) : UserGroup = {
     val executeString = s"select * from $USER_GROUPS where name = '$name'"
     executeAsync(executeString) match {

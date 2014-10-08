@@ -32,6 +32,8 @@ object ProjectUpdate {
 		);
 	}
 
+	def get(user : User) : Seq[ProjectUpdate] = return CassieCommunicator.getUpdatesForUser(user.username);
+
 	def create (content: String, author: String, projectId : Int, files : Seq[(String, TemporaryFile)]) : ProjectUpdate = {
 		val timeSubmitted = new Date();
 

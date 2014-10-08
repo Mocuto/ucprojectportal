@@ -14,6 +14,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.collection.JavaConversions._
+import scala.collection.mutable.MutableList
 import scala.util.Random
 
 import utils._
@@ -55,36 +56,50 @@ object Project {
 
 	def all : Seq[Project] = CassieCommunicator.getProjects;
 	def allSorted : Seq[Project] = {
-		return Project.all.sortWith( (x,y) => {
-			val xInProgress = (x.state == ProjectState.IN_PROGRESS || x.state == ProjectState.IN_PROGRESS_NEEDS_HELP);
-			val yInProgress = (y.state == ProjectState.IN_PROGRESS || y.state == ProjectState.IN_PROGRESS_NEEDS_HELP);
+		val projects = Project.all;
 
-			if(xInProgress && yInProgress) {
-				Random.nextBoolean()
-			}
-			else if(xInProgress && !yInProgress) {
-				 true;
-			}
-			else if(yInProgress && !xInProgress) {
-				 false;
+		val projectCount = projects.length;
+		val randomizedProjects = MutableList.fill(projectCount) { Project.undefined }
+
+		val rankCount = 2 //Options are either not frozen/closed or frozen/closed, thus there are only two ranks
+
+		//In the future we may want to partially apply the tabulate
+		//And supply the index function separately
+		val filteredProjectIndexes = List.fill(2) { new MutableList[Int] }
+		for (i <- 0 until projectCount) {
+			val p = projects(i)
+			if (p.state == ProjectState.CLOSED || p.state == ProjectState.COMPLETED) {
+				filteredProjectIndexes(1) += i;
 			}
 			else {
-				val now = DateTime.now;
-
-				val sinceX = Years.yearsIn(new DateTime(x.timeStarted) to now).getYears;
-				val sinceY = Years.yearsIn(new DateTime(y.timeStarted) to now).getYears;
-
-				if(sinceX < 1 && sinceY < 1 || sinceX >= 1 && sinceY >= 1) {
-					 Random.nextBoolean()
-				}
-				else if(sinceX < 1 && sinceY >= 1) {
-					 true;
-				}
-				else {
-					 false;
-				}
+				filteredProjectIndexes(0) += i;
 			}
-		} )
+		}
+
+		var start = 0;
+
+		(0 until rankCount).foreach( x => {
+			val currentList = filteredProjectIndexes(x);
+			(0 until filteredProjectIndexes(x).length).foreach( i => {
+				val randomIndex =
+				 	if (i == 0) {
+						0
+					}
+					else {
+							Random.nextInt % i
+					}
+
+				if(i != randomIndex) {
+					randomizedProjects(start + i) = randomizedProjects(start + randomIndex);
+				}
+
+				randomizedProjects(start + randomIndex) = projects(currentList(i))
+			})
+			start += currentList.length;
+		})
+
+		return randomizedProjects;
+
 	}
 
 	def get(username : String) : Seq[Project] = {

@@ -461,6 +461,10 @@ body {
 	font-size : 10pt;
 }
 
+.user-info {
+	margin-left:32px;
+}
+
 .project-category-select {
 	width:100%;
 }
