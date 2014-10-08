@@ -26,7 +26,7 @@
 			<div class="content-description">
 				@for(user <- model.User.all) {
 					@if(user.hasConfirmed == false) {
-						@links.userLink(user.username)<br />
+						user.username<br />
 					}
 				}
 			</div>
