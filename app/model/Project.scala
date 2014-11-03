@@ -86,7 +86,7 @@ object Project {
 						0
 					}
 					else {
-							Random.nextInt % i
+							Math.abs(Random.nextInt) % i
 					}
 
 				if(i != randomIndex) {

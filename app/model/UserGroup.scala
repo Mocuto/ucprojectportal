@@ -50,6 +50,7 @@ object UserGroup {
 	}
 
 	def NORMAL : UserGroup = UserGroup.get("normal");
+	def FACULTY : UserGroup = UserGroup.get("faculty/staff");
 }
 
 case class UserGroup(name : String, users : Seq[String], isDefined : Boolean = true) {

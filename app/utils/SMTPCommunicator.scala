@@ -25,7 +25,16 @@ object SMTPCommunicator {
 	def sendEmail(recipient : String, subject : String, content : String) {
 		var tries = 0;
 		var wasSent : Boolean = false;
-		val recipientEmail = recipient + "@mail.uc.edu"
+		val recipientEmail = if (UserGroup.isUserInGroup(recipient, "faculty/staff"))
+		 	{
+				recipient + "@ucmail.uc.edu" 
+			} 
+			else { 
+				recipient + "@mail.uc.edu" 
+			}
+			
+		
+
 		logger.debug(s"recipient: $recipientEmail")
 		logger.debug(s"subject: $subject")
 		logger.debug(s"content: $content");
