@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
 )     
 
 libraryDependencies ++= Seq(
-	"com.datastax.cassandra" % "cassandra-driver-core" % "2.0.0-rc2",
+	"com.datastax.cassandra" % "cassandra-driver-core" % "2.1.0",
 	"com.github.nscala-time" %% "nscala-time" % "1.0.0",
 	"com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.0",
   "com.kenshoo" %% "metrics-play" % "2.3.0_0.1.6"

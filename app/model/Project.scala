@@ -23,11 +23,11 @@ import utils.nosql.CassieCommunicator
 object Project {
 
 	def apply (name : String) : Project = new Project(name);
-	def apply (name : String, description : String, categories : Seq[String], teamMembers : Seq[String]) : Project = { 
-		new Project(name, description, categories = categories, teamMembers = teamMembers);
+	def apply (name : String, description : String, categories : Seq[String], state : String, teamMembers : Seq[String]) : Project = { 
+		new Project(name, description, categories = categories, state = state, teamMembers = teamMembers);
 	}
 
-	def unapplyIncomplete(project : Project) : Option[(String, String, List[String], List[String])] = Some(project.name, project.description, project.categories.toList, project.teamMembers.toList);
+	def unapplyIncomplete(project : Project) : Option[(String, String, List[String], String, List[String])] = Some(project.name, project.description, project.categories.toList, project.state, project.teamMembers.toList);
 
 	def undefined : Project = {
 		return Project(
@@ -39,11 +39,11 @@ object Project {
 		)
 	}
 
-	def create (name: String, description : String, primaryContact : String, categories : Seq[String], teamMembers : Seq[String]) : Project = {
+	def create (name: String, description : String, primaryContact : String, categories : Seq[String], state : String, teamMembers : Seq[String]) : Project = {
 
-		val project = Project(name, description, categories, primaryContact :: teamMembers.toList);
+		val project = Project(name, description, categories, state, primaryContact :: teamMembers.toList);
 
-		val newProject = CassieCommunicator.addProject(project, primaryContact, categories, primaryContact :: teamMembers.toList);
+		val newProject = CassieCommunicator.addProject(project, primaryContact, categories, state, primaryContact :: teamMembers.toList);
 
 		for (username <- teamMembers) {
 			if(username != primaryContact) {
@@ -248,8 +248,8 @@ case class Project (id : Int, name: String, description : String,
  					primaryContact : String = "", teamMembers : Seq[String] = List[String](), 
  					state : String = "", stateMessage : String = "",
  					isDefined : Boolean = true) {
-	def this (name : String, description : String, categories : Seq[String], teamMembers : Seq[String]) = this(-1, name, description, categories=categories, teamMembers=teamMembers)
-	def this (name : String) = this(name, description = "", categories = List[String](), teamMembers = List[String]());
+	def this (name : String, description : String, categories : Seq[String], state : String, teamMembers : Seq[String]) = this(-1, name, description, categories=categories, state = state, teamMembers=teamMembers)
+	def this (name : String) = this(name, description = "", categories = List[String](), state="", teamMembers = List[String]());
 
 	def notifyMembersExcluding(excludingUsername : String, updateContent : String) {
 		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent));

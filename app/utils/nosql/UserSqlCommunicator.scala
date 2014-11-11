@@ -37,17 +37,26 @@ trait UserSqlCommunicator extends BaseSqlCommunicator {
 	  }
 
 	  def setUserActivated(user : User, hashedPassword : String, firstName : String, lastName : String) {
+      val cleanFirstName = firstName.replace("'", "''");
+      val cleanLastName = lastName.replace("'", "''");
+
 	    val authenticationString = s"insert into $USER_AUTHENTICATION($USER_AUTHENTICATION_INSERT_FIELDS) values ('${user.username}', '$hashedPassword')";
 	    execute(authenticationString) match {
 	      case None => println(s"user account activation unsuccessful for user: ${user.username}")
 	      case _ => {
-	        val hasConfirmedString = s"update $USERS set has_confirmed = true, first_name = '$firstName', last_name = '$lastName' where username = '${user.username}'";
+	        val hasConfirmedString = s"update $USERS set has_confirmed = true, first_name = '$cleanFirstName', last_name = '$cleanLastName' where username = '${user.username}'";
 	        removeActivationCodeForUser(user);
 	        execute(hasConfirmedString);
 	      }
 	    }
 
 	  }
+
+  def setUserForgotPassword(user : User) {
+    val executeString = s"update users set has_confirmed = false where username = '${user.username}'";
+
+    executeAsync(executeString);
+  }
 
   def getUserWithUsernameAndPassword(username : String, password : String) : User = {
     val executeString = s"select * from $USER_AUTHENTICATION where username='$username'";
@@ -120,6 +129,9 @@ trait UserSqlCommunicator extends BaseSqlCommunicator {
   }
 
   def getActivationCodeForUser(user : User) : Option[String] = {
+    if (user.isDefined == false) {
+      return None
+    }
     val executeString = s"select code from $USER_ACTIVATION where username = '${user.username}'"
     executeAsync(executeString) match {
       case None => None;

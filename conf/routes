@@ -30,6 +30,10 @@ GET 	/activate/resend 						controllers.ActivationController.resendActivation
 POST	/activate/resend/try					controllers.ActivationController.tryResendActivation
 GET 	/activate/:username/:uuid				controllers.ActivationController.activate(username : String, uuid : String)
 POST	/activate/try 							controllers.ActivationController.tryActivate
+GET 	/activate/forgot 						controllers.ActivationController.forgotPassword
+POST 	/activate/forgot/try 					controllers.ActivationController.tryForgotPassword
+GET 	/reset 									controllers.ActivationController.resetPassword(username : String, uuid : String)
+POST	/reset/try 								controllers.ActivationController.tryResetPassword
 
 #Admin routes
 GET 	/admin									controllers.AdminController.admin

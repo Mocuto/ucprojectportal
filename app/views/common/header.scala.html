@@ -1,7 +1,7 @@
 @(user: model.User)
 <script>
 	user = @Html(user.toJson.toString)
-	DEFAULT_MESSAGE = 'hi @(user.firstName.toLowerCase() +"!")'
+	DEFAULT_MESSAGE = @Html(s"hi ${user.firstName.toLowerCase()}!")
 
 </script>
 <div class="title-nav">

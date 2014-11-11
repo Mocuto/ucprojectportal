@@ -75,6 +75,13 @@ object SMTPCommunicator {
 		sendEmail(recipient, subject, content);
 	}
 
+	def sendForgotPasswordEmail(recipient : String, uuid : String) {
+		val subject = "Reset Your Project Portal Password";
+		val content = views.html.email.emailResetPassword(User.get(recipient), uuid).toString;
+
+		sendEmail(recipient, subject, content);
+	}
+
 	def sendNotificationUpdateEmail(recipient: String, updater : String, projectId : Int, updateContent : String) {
 		val subject = s"${model.User.getFullName(updater)} Posted an Update in the Project ${model.Project.get(projectId).name}!";
 		val content = views.html.email.emailUpdate(User.get(updater), Project.get(projectId), updateContent).toString

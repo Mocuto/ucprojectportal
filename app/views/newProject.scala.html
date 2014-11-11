@@ -1,6 +1,6 @@
 @(user : model.User)(implicit form: Form[model.Project])
 
-@main("Student Government Project Portal")(Some(user)) {
+@main("New Project | Student Government Project Portal")(Some(user)) {
 
     <div class="main-container">
       <div class="huge-header">create a new project</div>
@@ -22,10 +22,27 @@
       <br>
       <select name="categories[]" class="project-category-select chosen" multiple>
         @for(category <- model.ProjectCategory.all) {
-          <option value="@category.name.toLowerCase()">@category.name.toLowerCase()</option>
+          @if(form("categories").value.contains(category.name.toLowerCase())) {
+            <option value="@category.name.toLowerCase()" selected="selected">@category.name.toLowerCase()</option>
+          } else {
+            <option value="@category.name.toLowerCase()">@category.name.toLowerCase()</option>
+          }
         }
       </select>
       <br>
+      <div style="margin-top:32px">what's its current state?</div>
+      <br>
+      <select name="state" class="chosen" id="project-state-select">
+                                      @for(state <- model.ProjectState.all) {
+                                          @if(form("state").value == state.name) {
+                                             <option value="@state.name.toLowerCase()" selected="selected">@state.name.toLowerCase()</option>
+                                          } else {
+                                             <option value="@state.name.toLowerCase()">@state.name.toLowerCase()</option>                                        
+                                          }
+
+                                      }
+      </select>
+      <br>                        
       <div style="margin-top:32px">who's your team?</div>
       <br>
       <select name="team-members[]" id="project-team-members-select" class="chosen" multiple>

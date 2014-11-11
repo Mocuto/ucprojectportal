@@ -1,6 +1,6 @@
 @(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, isPrimaryContact : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
 @import model.User; val authenticatedUser = model.User.get(username)
-@main("Student Government Project Portal")( Some(authenticatedUser)) {
+@main(s"${project.name} | Student Government Project Portal")( Some(authenticatedUser)) {
 <script>
 var PROJECT_ID = @project.id;
 var PRIMARY_CONTACT = "@project.primaryContact"
