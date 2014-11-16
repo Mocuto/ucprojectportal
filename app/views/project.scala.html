@@ -22,7 +22,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
         }
         @if(isPrimaryContact) {
           <span class="huge-header editable" id="project-name">@project.name</span>
-          <textarea id="project-name-input" class="roundbox-textinput edit-field textarea-description" for="project-name" placeholder="project name" name="name" style="font-size:48pt">@project.name.toLowerCase()</textarea>
+          <textarea id="project-name-input" class="roundbox-textinput edit-field textarea-description" for="project-name" placeholder="project name" name="name" style="font-size:48pt">@project.name</textarea>
           <span class="edit-button" for="project-name" style="display:inline-block; position:relative; margin-left:16px;"></span>
         } else {
           <span class="huge-header">@project.name</span>
