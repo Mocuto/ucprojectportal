@@ -225,11 +225,12 @@ object Project {
 		row match {
 			case null => Project.undefined
 			case row : Row => {
+				val primaryContactStr = row.getString("primary_contact")
 				return Project(
 					name= row.getString("name"),
 		 			id = row.getInt("id"), 
 		 			description= row.getString("description"), 
-		 			primaryContact = row.getString("primary_contact"),
+		 			primaryContact = if (primaryContactStr == null) "" else primaryContactStr,
 		 			categories = row.getSet("categories", classOf[String]).toList,
 		 			teamMembers = row.getSet("team_members", classOf[String]).toList,
 		 			state = row.getString("state"),

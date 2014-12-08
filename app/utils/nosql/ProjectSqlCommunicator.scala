@@ -151,7 +151,7 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 		  execute(projectString);
 		}
 		else {
-		  execute(s"update $PROJECTS set primary_contact = null where id = ${project.id}")
+		  execute(s"update $PROJECTS set primary_contact = '' where id = ${project.id}")
 		}
 	}
 
