@@ -118,9 +118,9 @@ body {
 #login-button {
 	background-color:#fa544f;
 	color:black;
-	padding:4px;
+	padding:6px 4px 4px 4px;
 	width:200px;
-	height:32px;
+	height:26px;
 	font-size:16pt;
 	font-weight:200;
 	cursor:pointer;
@@ -461,6 +461,10 @@ body {
 	font-size : 10pt;
 }
 
+.user-info {
+	margin-left:32px;
+}
+
 .project-category-select {
 	width:100%;
 }
@@ -587,4 +591,21 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 }
 .feedback-label {
 	margin-right:16px;
+}
+
+.forgot-password {
+	color:black; 
+	margin-left:6px;
+	margin-bottom:8px; 
+	display:block; 
+	text-align:left
+}
+
+.forgot-password * {
+	color : black;
+	text-decoration: none;
+}
+
+.forgot-password:hover {
+	text-decoration: underline;
 }

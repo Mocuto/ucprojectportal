@@ -34,6 +34,7 @@ object ProjectController extends Controller with SessionHandler {
 			"name" -> nonEmptyText,
 			"description" -> nonEmptyText,
 			"categories" -> list(nonEmptyText),
+			"state" -> nonEmptyText,
 			"team-members" -> list(nonEmptyText)
 		) (Project.apply)(Project.unapplyIncomplete).verifying("at least one category is needed", fields => fields match {
 			case project => {  project.categories.length > 0}
@@ -132,7 +133,7 @@ object ProjectController extends Controller with SessionHandler {
 					},
 					incompleteProject => {
 						var completeProject = Project.create(incompleteProject.name, incompleteProject.description, username,
-							incompleteProject.categories, incompleteProject.teamMembers);
+							incompleteProject.categories, incompleteProject.state, incompleteProject.teamMembers);
 						projectsCreatedCounter.inc();
 						Redirect(routes.ProjectController.project(completeProject.id));
 					}

@@ -82,6 +82,15 @@ object User {
 		});
 	}
 
+	def forgotPassword(user : User) : Option[String] = {
+		CassieCommunicator.setUserForgotPassword(user);
+		return Some(getActivationCode(user).getOrElse[String] {
+			val uuid = java.util.UUID.randomUUID.toString;
+			CassieCommunicator.addActivationCodeForUser(user, uuid);
+			uuid
+		});
+	}
+
 	def getActivationCode(user : User) : Option[String] = CassieCommunicator.getActivationCodeForUser(user);
 
 	def getActivationCode(username : String) : Option[String] = CassieCommunicator.getActivationCodeForUser(User.get(username));

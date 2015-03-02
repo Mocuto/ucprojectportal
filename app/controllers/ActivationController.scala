@@ -28,6 +28,8 @@ object ActivationController extends Controller {
 
 	val ACTIVATION_EMAIL_HAS_BEEN_SENT = "the activation email has been sent. be sure to check your spam folder!"
 
+	val FORGOT_PASSWORD_EMAIL = "a password reset email has been sent. be sure to check your spam folder!"
+
 	val USER_ACCOUNT_ALREADY_ACTIVATED = 
 		s"""
 			|this user account has already been activated. please <a href='/login'>log in</a>
@@ -65,9 +67,32 @@ object ActivationController extends Controller {
 		})
 	)
 
+	val forgotPasswordForm = Form (
+		"username" -> nonEmptyText
+		.verifying("account is unactivated", fields => fields match {
+			case(username) => User.get(username).lastLogin != null
+		})
+	)
+
+	val resetPasswordForm = Form(
+		tuple(
+			"password" -> nonEmptyText,
+			"confirm_password" -> nonEmptyText,
+			"username" -> nonEmptyText,
+			"code" -> nonEmptyText
+		).verifying("password and confirm password do not match", fields => fields match {
+			case(password, confirmPassword, username, code) => password == confirmPassword
+		}).verifying("invalid reset code", fields => fields match {
+			case(password, confirmPassword, username, code) => println(s"code is $code"); User.getActivationCode(username).get == code
+		}).verifying("account is unactivated", fields => fields match {
+			case(_, _, username : String, _) => User.get(username).lastLogin != null
+		})
+	)
+
 	def resendActivation = Action { implicit request => {
 		Ok(views.html.resendActivation(resendActivationForm));
 	}}
+
 
 	def tryResendActivation = Action { implicit request => {
 		resendActivationForm.bindFromRequest.fold(
@@ -84,6 +109,31 @@ object ActivationController extends Controller {
 
 	}}
 
+	def forgotPassword = Action { implicit request => {
+		Ok(views.html.forgotPassword(forgotPasswordForm));
+	}}
+
+	def tryForgotPassword = Action { implicit request => {
+		forgotPasswordForm.bindFromRequest.fold(
+			formWithErrors => {
+				BadRequest(views.html.forgotPassword(formWithErrors))
+			},
+			username => {
+				val user = User.get(username);
+				val uuid = User.forgotPassword(user)
+
+				if(user.lastLogin == null) {
+					SMTPCommunicator.sendActivationEmail(username, uuid.getOrElse(""));
+					Ok(views.html.messages.prettyMessage(play.twirl.api.Html(ACTIVATION_EMAIL_HAS_BEEN_SENT)))
+				} 
+				else {
+					SMTPCommunicator.sendForgotPasswordEmail(username, uuid.getOrElse(""));
+					Ok(views.html.messages.prettyMessage(play.twirl.api.Html(FORGOT_PASSWORD_EMAIL)))
+				}
+			}
+		)	
+	}}
+
 	def activate(username : String, uuid : String) = Action { implicit request => {
 		User.getActivationCode(username) match {
 			case None => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
@@ -91,6 +141,48 @@ object ActivationController extends Controller {
 			case _ => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
 		}
 	}}
+
+	def resetPassword(username: String, uuid : String) = Action {implicit request => {
+		User.getActivationCode(username) match {
+			case None => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
+			case Some(correctUUID) if correctUUID == uuid => Ok(views.html.resetPassword(username, uuid)(resetPasswordForm));
+			case _ => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
+		}
+	}}
+	def tryResetPassword = Action { implicit request => {
+		resetPasswordForm.bindFromRequest.fold(
+			formWithErrors => {
+				val username = formWithErrors("username").value.get;
+				val code = formWithErrors("code").value.get;
+
+				User.getActivationCode(username) match {
+					case None => {
+
+						BadRequest(views.html.messages.prettyMessage(play.twirl.api.Html(USER_ACCOUNT_DOES_NOT_EXIST)))
+						
+					}
+					case Some(correctCode) => {
+						if(correctCode != code) {
+							BadRequest(views.html.messages.prettyMessage(play.twirl.api.Html(ACTIVATION_CODE_INCORRECT)))
+						} else {
+							BadRequest(views.html.resetPassword(username, code)(formWithErrors))
+						}
+					}
+				}
+			},
+			passwordData => {
+				passwordData match {
+					case (password, confirmPassword, username, code) => {
+						val user = User.get(username);
+						User.activate(username, user.firstName, user.lastName, password)
+						User.authenticate(username, password);
+						Redirect(routes.Application.index).withSession("authenticated" -> username)
+					}
+				}
+			}
+		)
+	}}
+
 
 	def tryActivate = Action { implicit request => {
 		activateForm.bindFromRequest.fold(

@@ -33,6 +33,18 @@ trait ProjectUpdateSqlCommunicator extends BaseSqlCommunicator {
 	      }
     }}
 
+    def getUpdatesForUser(username : String) : Seq[ProjectUpdate] = {
+    	val executeString = s"select * from $PROJECT_UPDATES where author='$username' ALLOW FILTERING";
+
+    	execute(executeString) match {
+    		case None => return List[ProjectUpdate]();
+    		case Some(r : ResultSet) => {
+    			val rows = r.all();
+    			return rows.map(row => ProjectUpdate.fromRow(row));
+    		}
+    	}
+    }
+
 	def getNumberOfUpdatesForProject(projectId: Int) : Long = {
 		val executeString = s"select count(*) from $PROJECT_UPDATES"
 

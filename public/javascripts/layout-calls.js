@@ -94,19 +94,46 @@ function setupLayout() {
 		}, 300)
 	})
 
+	var initialWidth = $(".title-nav").width() //Grab the left position left first
+	var initialPaddingLeft = parseInt($(".title-nav").css("padding-left"));
+
 	function onWindowResize() {
 		var width = $(this).width();
+		initialWidth = width;
+
 		var notificationTextWidth = $("#notification-text").width();
 		if(width < 1024 + notificationTextWidth) {
 			$("#uc-sg").hide()
+
 		}
 		else {
 			$("#uc-sg").show()
+			$('.title-nav').css("width", "auto");
 		}
 
+	    $('.title-nav').css({
+				'width': $(this).scrollLeft() + initialWidth, //Use it later
+				'paddingLeft' : $(this).scrollLeft() + initialPaddingLeft
+		});
 	}
 
 	onWindowResize.call($(window));
 
 	$(window).resize(onWindowResize);
+
+	$(window).scroll(function(){ 
+		var width = $(this).width();
+		var notificationTextWidth = $("#notification-text").width();
+		//if(width < 1024 + notificationTextWidth)
+	 {
+		    $('.title-nav').css({
+				'width': $(this).scrollLeft() + initialWidth, //Use it later
+				'paddingLeft' : $(this).scrollLeft() + initialPaddingLeft
+			});
+		}
+		//else {
+		//	$('.title-nav').css("width", "auto");
+		//}
+
+	});
 }

@@ -14,6 +14,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.collection.JavaConversions._
+import scala.collection.mutable.MutableList
 import scala.util.Random
 
 import utils._
@@ -22,11 +23,11 @@ import utils.nosql.CassieCommunicator
 object Project {
 
 	def apply (name : String) : Project = new Project(name);
-	def apply (name : String, description : String, categories : Seq[String], teamMembers : Seq[String]) : Project = { 
-		new Project(name, description, categories = categories, teamMembers = teamMembers);
+	def apply (name : String, description : String, categories : Seq[String], state : String, teamMembers : Seq[String]) : Project = { 
+		new Project(name, description, categories = categories, state = state, teamMembers = teamMembers);
 	}
 
-	def unapplyIncomplete(project : Project) : Option[(String, String, List[String], List[String])] = Some(project.name, project.description, project.categories.toList, project.teamMembers.toList);
+	def unapplyIncomplete(project : Project) : Option[(String, String, List[String], String, List[String])] = Some(project.name, project.description, project.categories.toList, project.state, project.teamMembers.toList);
 
 	def undefined : Project = {
 		return Project(
@@ -38,11 +39,11 @@ object Project {
 		)
 	}
 
-	def create (name: String, description : String, primaryContact : String, categories : Seq[String], teamMembers : Seq[String]) : Project = {
+	def create (name: String, description : String, primaryContact : String, categories : Seq[String], state : String, teamMembers : Seq[String]) : Project = {
 
-		val project = Project(name, description, categories, primaryContact :: teamMembers.toList);
+		val project = Project(name, description, categories, state, primaryContact :: teamMembers.toList);
 
-		val newProject = CassieCommunicator.addProject(project, primaryContact, categories, primaryContact :: teamMembers.toList);
+		val newProject = CassieCommunicator.addProject(project, primaryContact, categories, state, primaryContact :: teamMembers.toList);
 
 		for (username <- teamMembers) {
 			if(username != primaryContact) {
@@ -55,36 +56,50 @@ object Project {
 
 	def all : Seq[Project] = CassieCommunicator.getProjects;
 	def allSorted : Seq[Project] = {
-		return Project.all.sortWith( (x,y) => {
-			val xInProgress = (x.state == ProjectState.IN_PROGRESS || x.state == ProjectState.IN_PROGRESS_NEEDS_HELP);
-			val yInProgress = (y.state == ProjectState.IN_PROGRESS || y.state == ProjectState.IN_PROGRESS_NEEDS_HELP);
+		val projects = Project.all;
 
-			if(xInProgress && yInProgress) {
-				Random.nextBoolean()
-			}
-			else if(xInProgress && !yInProgress) {
-				 true;
-			}
-			else if(yInProgress && !xInProgress) {
-				 false;
+		val projectCount = projects.length;
+		val randomizedProjects = MutableList.fill(projectCount) { Project.undefined }
+
+		val rankCount = 2 //Options are either not frozen/closed or frozen/closed, thus there are only two ranks
+
+		//In the future we may want to partially apply the tabulate
+		//And supply the index function separately
+		val filteredProjectIndexes = List.fill(2) { new MutableList[Int] }
+		for (i <- 0 until projectCount) {
+			val p = projects(i)
+			if (p.state == ProjectState.CLOSED || p.state == ProjectState.COMPLETED) {
+				filteredProjectIndexes(1) += i;
 			}
 			else {
-				val now = DateTime.now;
-
-				val sinceX = Years.yearsIn(new DateTime(x.timeStarted) to now).getYears;
-				val sinceY = Years.yearsIn(new DateTime(y.timeStarted) to now).getYears;
-
-				if(sinceX < 1 && sinceY < 1 || sinceX >= 1 && sinceY >= 1) {
-					 Random.nextBoolean()
-				}
-				else if(sinceX < 1 && sinceY >= 1) {
-					 true;
-				}
-				else {
-					 false;
-				}
+				filteredProjectIndexes(0) += i;
 			}
-		} )
+		}
+
+		var start = 0;
+
+		(0 until rankCount).foreach( x => {
+			val currentList = filteredProjectIndexes(x);
+			(0 until filteredProjectIndexes(x).length).foreach( i => {
+				val randomIndex =
+				 	if (i == 0) {
+						0
+					}
+					else {
+							Math.abs(Random.nextInt) % i
+					}
+
+				if(i != randomIndex) {
+					randomizedProjects(start + i) = randomizedProjects(start + randomIndex);
+				}
+
+				randomizedProjects(start + randomIndex) = projects(currentList(i))
+			})
+			start += currentList.length;
+		})
+
+		return randomizedProjects;
+
 	}
 
 	def get(username : String) : Seq[Project] = {
@@ -210,11 +225,12 @@ object Project {
 		row match {
 			case null => Project.undefined
 			case row : Row => {
+				val primaryContactStr = row.getString("primary_contact")
 				return Project(
 					name= row.getString("name"),
 		 			id = row.getInt("id"), 
 		 			description= row.getString("description"), 
-		 			primaryContact = row.getString("primary_contact"),
+		 			primaryContact = if (primaryContactStr == null) "" else primaryContactStr,
 		 			categories = row.getSet("categories", classOf[String]).toList,
 		 			teamMembers = row.getSet("team_members", classOf[String]).toList,
 		 			state = row.getString("state"),
@@ -233,8 +249,8 @@ case class Project (id : Int, name: String, description : String,
  					primaryContact : String = "", teamMembers : Seq[String] = List[String](), 
  					state : String = "", stateMessage : String = "",
  					isDefined : Boolean = true) {
-	def this (name : String, description : String, categories : Seq[String], teamMembers : Seq[String]) = this(-1, name, description, categories=categories, teamMembers=teamMembers)
-	def this (name : String) = this(name, description = "", categories = List[String](), teamMembers = List[String]());
+	def this (name : String, description : String, categories : Seq[String], state : String, teamMembers : Seq[String]) = this(-1, name, description, categories=categories, state = state, teamMembers=teamMembers)
+	def this (name : String) = this(name, description = "", categories = List[String](), state="", teamMembers = List[String]());
 
 	def notifyMembersExcluding(excludingUsername : String, updateContent : String) {
 		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent));

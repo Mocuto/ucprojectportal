@@ -91,14 +91,16 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 	    return id;
 	}
 
-	def addProject(project : Project, primaryContact : String, categories : Seq[String], teamMembers : Seq[String]) : Project = {
+	def addProject(project : Project, primaryContact : String, categories : Seq[String], state : String, teamMembers : Seq[String]) : Project = {
 		var id = getNextProjectId();
 
 		val categoriesStr = categories.map(category => s"'${category.replace("'", "''")}'").mkString(",");
 
+		val cleanState = state.replace("'", "''");
+
 		val teamMembersStr = teamMembers.map(member => s"'$member'").mkString(",")
 
-		var executeString = s"insert into $PROJECTS($PROJECT_INSERT_FIELDS) VALUES($id, '${project.description.replace("'", "''")}', { $teamMembersStr}, '${project.name.replace("'", "''")}', '$primaryContact', 'in progress', { $categoriesStr } , dateOf(now()))";
+		var executeString = s"insert into $PROJECTS($PROJECT_INSERT_FIELDS) VALUES($id, '${project.description.replace("'", "''")}', { $teamMembersStr}, '${project.name.replace("'", "''")}', '$primaryContact', '$cleanState', { $categoriesStr } , dateOf(now()))";
 		execute(executeString);
 
 		executeString = s"update $USERS set primary_contact_projects = primary_contact_projects + { $id } where username='$primaryContact'";
@@ -149,7 +151,7 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 		  execute(projectString);
 		}
 		else {
-		  execute(s"update $PROJECTS set primary_contact = null where id = ${project.id}")
+		  execute(s"update $PROJECTS set primary_contact = '' where id = ${project.id}")
 		}
 	}
 

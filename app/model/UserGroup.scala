@@ -16,6 +16,8 @@ import utils.nosql.CassieCommunicator
 object UserGroup {
 
 	def undefined : UserGroup = return UserGroup("", List[String](), false)
+
+	def all : Seq[UserGroup] = return CassieCommunicator.getUserGroups
 	
 	def get (name : String) : UserGroup = CassieCommunicator.getUserGroup(name);
 
@@ -48,6 +50,7 @@ object UserGroup {
 	}
 
 	def NORMAL : UserGroup = UserGroup.get("normal");
+	def FACULTY : UserGroup = UserGroup.get("faculty/staff");
 }
 
 case class UserGroup(name : String, users : Seq[String], isDefined : Boolean = true) {

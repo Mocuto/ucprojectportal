@@ -17,6 +17,16 @@
 
 				<div class="blue-button submit-button" style="margin-top:16px;">create user</div>
 			}
+			<div class="content-header">
+			user groups
+			</div>
+			<select name="state" class="chosen" id="project-state-select">
+	          @for(userGroup <- model.UserGroup.all) {
+	         	<option value="@userGroup.name" selected="selected">@userGroup.name</option>
+	          }
+          	</select>
+			<textarea name="usernames" style="width:100%" class="roundbox-textinput textarea-description" placeholder="enter the usernames separated by a comma" ></textarea>
+			<div class="blue-button submit-button" style="margin-top:16px;">add user to group</div>
 		</div>
 
 		<!-- Projects -->
