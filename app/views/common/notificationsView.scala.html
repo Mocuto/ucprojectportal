@@ -53,7 +53,7 @@
 		<tr>
 			<td class="notification-td">
 				@{project = Project.get(notification.content("project_id").toInt)}
-				<span class="hint">you have been added to the project @links.projectLink(project.id)!</span>
+				<span class="hint">you have been added to the project: @links.projectLink(project.id)!</span>
 			</td>
 			<td>
 				<span class="button ignore-notification" time-created="@utils.Conversions.dateToStr(notification.timeCreated)">dismiss</span>
