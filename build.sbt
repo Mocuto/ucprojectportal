@@ -4,6 +4,13 @@ version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.11.1"
 
+resolvers ++= Seq(
+    "RoundEights" at "http://maven.spikemark.net/roundeights",
+    "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/"
+)
+
+resolvers += "apache-snapshots-repo" at "https://repository.apache.org/snapshots/"
+
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
@@ -18,14 +25,11 @@ libraryDependencies ++= Seq(
   "com.kenshoo" %% "metrics-play" % "2.3.0_0.1.6"
 )
 
-resolvers ++= Seq(
-    "RoundEights" at "http://maven.spikemark.net/roundeights",
-    "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/"
-)
-
 libraryDependencies ++= Seq(
     "com.roundeights" %% "hasher" % "1.0.0",
-    "org.mindrot" % "jbcrypt" % "0.3m"
+    "org.mindrot" % "jbcrypt" % "0.3m",
+    "org.apache.lucene" % "lucene-core" % "5.0.0",
+    "org.apache.lucene" % "lucene-facet" % "5.0.0"
 )
 
 
