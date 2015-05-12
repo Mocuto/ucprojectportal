@@ -1,0 +1,63 @@
+@(user : model.User)(projects : Seq[model.Project], query : String)
+
+@main("Student Government Project Portal")( Some(user)) {
+	<script>
+		var categoryItems = [@Html( model.ProjectCategory.all.map(x => s"'${x.name}'").mkString(",") )]
+		var stateItems = [@Html( model.ProjectState.all.map(x => s"'${x.name.replace(' ', '-').replace( '(' ,'-').replace( ')', '-')}'").mkString(",") )]
+		var filterItems = categoryItems.concat(stateItems).concat(['new']);
+
+	</script>
+	<div class="main-container">
+		<div class="huge-header project-name-container">search</div>
+		<input class="roundbox-textinput typeahead" id="searchbox"  style="width:90%" placeholder="start typing!" value="@query"/>
+		<span class="blue-button" id="search-go" style="font-size:14pt">Go</span>
+		@if(query.length > 0) {
+			<div class="large-header">
+				@projects.length results
+			</div>		
+			}
+	   	<div class="projectbox-container">
+	   		<div class="grid-sizer"></div>
+		   	@for(project <- projects) {
+	   			@common.projectView(project, user.username)
+		   	}
+	   	</div>
+   	</div>
+   	<script type="text/javascript">
+
+   		var projectNames = [ @Html(model.Project.all.map(x => s"'${x.name}'").mkString(","))]
+
+		var findProjectMatches = function(q, syncResults) {
+		   // an array that will be populated with substring matches
+			var matches = [];
+ 
+			// regex used to determine if a string contains the substring `q`
+			var substrRegex = new RegExp(q, 'i');
+
+			// iterate through the pool of strings and for any string that
+			// contains the substring `q`, add it to the `matches` array
+			$.each(projectNames, function(i, str) {
+			  if (substrRegex.test(str)) {
+			    matches.push(str);
+			  }
+			});
+
+			return syncResults(matches)
+		}
+
+		$('.typeahead').typeahead({
+		  minLength: 3,
+		  highlight: true
+		},
+		{
+		  name: 'projects',
+		  source: findProjectMatches
+		});
+
+		$("#search-go").click(function() {
+			var query = $("#searchbox").val();
+			window.location.href = "/search/" + encodeURIComponent(query);
+		})
+
+   	</script>
+}

@@ -1,5 +1,7 @@
 package controllers
 
+import actors.Scheduler
+
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
@@ -135,6 +137,9 @@ object ProjectController extends Controller with SessionHandler {
 						var completeProject = Project.create(incompleteProject.name, incompleteProject.description, username,
 							incompleteProject.categories, incompleteProject.state, incompleteProject.teamMembers);
 						projectsCreatedCounter.inc();
+
+						Scheduler.indexNow(completeProject)
+
 						Redirect(routes.ProjectController.project(completeProject.id));
 					}
 				)
@@ -203,6 +208,8 @@ object ProjectController extends Controller with SessionHandler {
 						)
 					)
 
+					Scheduler.indexNow(updatedProject);
+
 					Ok(response);
 				}
 			}
@@ -230,6 +237,8 @@ object ProjectController extends Controller with SessionHandler {
 							"response" -> JsString("left project")
 						)
 					)
+
+					Scheduler.indexNow(project)
 
 					Ok(response);
 				}

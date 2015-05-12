@@ -2,7 +2,10 @@ import controllers._;
 
 import com.kenshoo.play.metrics.MetricsFilter
 
+import java.nio.file.{Files, Paths}
+
 import model._;
+import model.routines._
 
 import play.api._
 import play.api.data._
@@ -13,6 +16,8 @@ import play.api.libs.json._
 
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
+
+import actors.Scheduler
 
 object AccessFilter {
 	def apply(userGroupName : String, actionNames: String*) = new AccessFilter(userGroupName, actionNames)
@@ -91,5 +96,59 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 								 AccessFilter("admin", "admin", "deleteProject", "deleteUser", "metrics"),
 								 AccessFilter("moderator", "moderation"),
 								 MetricsFilter) {
+
+
+
+	def startCassandra() : Unit = {
+		Logger.info("Attempting to start Cassandra...")
+		//TODO: Implement this
+	}
+
+	def cleanLockFiles() : Unit = {
+		val writeLock = Paths.get(constants.Directories.INDEXES, "write.lock")
+
+		val deleted = Files.deleteIfExists(writeLock)
+
+		if(deleted) {
+			Logger.info("Indexes lock file deleted")
+		}
+	}
+
+	/** This method will create the /uploads and /indexes directory
+
+	*/
+	def createDirectories() : Unit = {
+		val uploadsDir = Paths.get(constants.Directories.UPLOADS);
+		val indexesDir = Paths.get(constants.Directories.INDEXES);
+
+		if(Files.exists(uploadsDir) == false)
+		{
+			Files.createDirectory(uploadsDir)
+			Logger.info(s"Created uploads directory: $uploadsDir")
+		}
+
+		if(Files.exists(indexesDir) == false)
+		{
+			Files.createDirectory(indexesDir)
+			Logger.info(s"Created indexes directory: $indexesDir")
+		}
+	}
+
+	def startDaemons() : Unit = {
+		Scheduler.schedule[Project](Routine.IndexingRoutine)
+	}
+
+	override def onStart(app: Application) : Unit = {
+		Logger.info("Application has started")
+
+		createDirectories();
+
+		cleanLockFiles();
+
+		startCassandra();
+
+		//startDaemons();
+
+	}
 
 }
