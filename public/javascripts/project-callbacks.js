@@ -89,11 +89,11 @@ function setupProjectCallbacks() {
 
 	$("#update-input").click(function() {
 		$(".post-update-container").css("display", "block");
-	})
+	});
 
 	$("#update-files-mask").click(function() {
 		$("#update-files").click();
-	})
+	});
 
 	$("#update-files").change(function() {
 		$("#update-files-mask").animate({
@@ -110,6 +110,11 @@ function setupProjectCallbacks() {
 		})(files).join(", ");
 		
 		$("#update-files-filenames").text(filenames)
-	})
+	});
 
+	$("#logTimeLink").click(function() {
+		$("#logTimeModal").popane({
+			show : "true"
+		});
+	});
 }

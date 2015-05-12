@@ -18,6 +18,7 @@ POST	/submitUpdate							controllers.ProjectController.submitUpdate
 POST	/submitProject							controllers.ProjectController.submitProject
 POST	/editProject/:id						controllers.ProjectController.editProject(id : Int)
 POST	/leaveProject/:id 						controllers.ProjectController.leaveProject(id : Int)
+#POST	/project/:id/time 						controllers.ProjectController.logTime
 
 #Login routes
 GET		/login 									controllers.Application.login(path : String = "")

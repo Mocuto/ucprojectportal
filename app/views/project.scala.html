@@ -36,10 +36,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
 
                   @project match {
                      case project if authenticatedUser.primaryProjects.contains(project) => {
-                        you own this project  
+                        you own this project  <div class="log-time-link" id="logTimeLink">log time</div>
                      } 
                      case project if authenticatedUser.projects.contains(project) => {
-                        you are on this project team
+                        you are on this project team <div class="log-time-link" id="logTimeLink">log time</div>
                      }
                      case project if project.state == model.ProjectState.COMPLETED => {
                         this project is completed and cannot be joined
@@ -286,5 +286,20 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           </td>
         </tr>
       </table>
+      </div>
+
+      <div class="popane" id="logTimeModal">
+        <span class="close-button">close</span>
+        <span class="content-header">log time</span>
+        <br>
+        <br>
+        <table>
+          <tbody>
+            <tr><td class="input-label">Date:</td><td><input type="text" class="roundbox-textinput" placeholder="MM/DD/YYYY" /></td></tr>
+            <tr><td class="input-label">Time Worked:</td><td><input type="text" class="roundbox-textinput" placeholder="e.g., 1h 30m" /></td></tr>
+            <tr><td class="input-label">Comments:</td><td><textarea type="text" class="roundbox-textinput textarea-description" placeholder="Met with the team to discuss next plan of action"></textarea></td></tr>
+          </tbody>  
+        </table>
+        <div class="blue-button submit-button modal-submit">submit</div>
       </div>
 }
