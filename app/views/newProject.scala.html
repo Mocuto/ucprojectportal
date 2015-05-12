@@ -37,8 +37,9 @@
       <br>
       <select name="state" class="chosen" id="project-state-select">
                                       @for(state <- model.ProjectState.all) {
-                                          @if(form("state").value == state.name) {
+                                          @if(form("state").value == state.name || form("state").value == None && state.name == model.ProjectState.DEFAULT) {
                                              <option value="@state.name.toLowerCase()" selected="selected">@state.name.toLowerCase()</option>
+                                             @form("state").value
                                           } else {
                                              <option value="@state.name.toLowerCase()">@state.name.toLowerCase()</option>                                        
                                           }
