@@ -35,6 +35,7 @@ object ProjectController extends Controller with SessionHandler {
 			"description" -> nonEmptyText,
 			"categories" -> list(nonEmptyText),
 			"state" -> nonEmptyText,
+			"state-message" -> text,
 			"team-members" -> list(nonEmptyText)
 		) (Project.apply)(Project.unapplyIncomplete).verifying("at least one category is needed", fields => fields match {
 			case project => {  project.categories.length > 0}
@@ -132,8 +133,34 @@ object ProjectController extends Controller with SessionHandler {
 						BadRequest(views.html.newProject(User.get(username))(formWithErrors))
 					},
 					incompleteProject => {
-						var completeProject = Project.create(incompleteProject.name, incompleteProject.description, username,
-							incompleteProject.categories, incompleteProject.state, incompleteProject.teamMembers);
+						val completeProject = 
+							incompleteProject match {
+								case Project(_,
+									name,
+									description,
+									timeStarted,
+									timeFinished,
+									categories,
+									_,
+									_,
+									teamMembers,
+									ProjectState.IN_PROGRESS_NEEDS_HELP,
+									stateMessage,
+									_) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
+								case Project(
+									_,
+									name,
+									description,
+									timeStarted,
+									timeFinished,
+									categories,
+									_,
+									_,
+									teamMembers,
+									state,
+									_,
+									_) => Project.create(name, description, username, categories, state, "", teamMembers);
+						}
 						projectsCreatedCounter.inc();
 						Redirect(routes.ProjectController.project(completeProject.id));
 					}

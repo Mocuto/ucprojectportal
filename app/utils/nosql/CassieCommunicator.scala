@@ -34,7 +34,7 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
 
 	private[nosql] val PROJECTS = "projects";
 	private[nosql] val PROJECTS_KEY = "id"
-	private[nosql] val PROJECT_INSERT_FIELDS = "id, description, team_members, name, primary_contact, state, categories, time_started"
+	private[nosql] val PROJECT_INSERT_FIELDS = "id, description, team_members, name, primary_contact, state, state_message, categories, time_started"
 	private[nosql] val PROJECT_UPDATE_FIELDS = "id, name, description, state, categories, state_message, primary_contact, time_finished"
 
 	private[nosql] val PROJECT_UPDATES = "project_updates";

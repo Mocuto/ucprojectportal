@@ -32,9 +32,12 @@ object ProjectState {
 	}
 
 	def COMPLETED = "completed"
+	def IDEA = "idea"
 	def IN_PROGRESS = "in progress"
-	def IN_PROGRESS_NEEDS_HELP = "in progress (needs help)"
+	final val IN_PROGRESS_NEEDS_HELP = "in progress (needs help)"
 	def CLOSED = "frozen"
+
+	def DEFAULT = IDEA
 }
 
 case class ProjectState(name : String, isDefined : Boolean = true)
