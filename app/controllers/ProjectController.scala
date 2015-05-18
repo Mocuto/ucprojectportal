@@ -132,39 +132,29 @@ object ProjectController extends Controller with SessionHandler {
 					formWithErrors => {
 						BadRequest(views.html.newProject(User.get(username))(formWithErrors))
 					},
-					incompleteProject => {
+					incompleteProject => incompleteProject match {
+						case Project(
+							_,
+							name,
+							description,
+							timeStarted,
+							timeFinished,
+							categories,
+							_,
+							_,
+							teamMembers,
+							state,
+							stateMessage,
+							_) => {
 						val completeProject = 
-							incompleteProject match {
-								case Project(_,
-									name,
-									description,
-									timeStarted,
-									timeFinished,
-									categories,
-									_,
-									_,
-									teamMembers,
-									ProjectState.IN_PROGRESS_NEEDS_HELP,
-									stateMessage,
-									_) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
-								case Project(
-									_,
-									name,
-									description,
-									timeStarted,
-									timeFinished,
-									categories,
-									_,
-									_,
-									teamMembers,
-									state,
-									_,
-									_) => Project.create(name, description, username, categories, state, "", teamMembers);
+							(state, stateMessage) match {
+								case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
+								case (state, _) => Project.create(name, description, username, categories, state, "", teamMembers);
 						}
 						projectsCreatedCounter.inc();
 						Redirect(routes.ProjectController.project(completeProject.id));
 					}
-				)
+				})
 			}
 		}
 

@@ -61,8 +61,12 @@ object User {
 	def getFullName(username : String) : String = { val user = CassieCommunicator.getUserWithUsername(username); return s"${user.firstName} ${user.lastName}"}
 
 	def create(user : User) : User =  {
-		CassieCommunicator.addUser(user);
-		UserGroup.NORMAL.addUser(user);
+
+		if (User.get(user.username).isDefined == false) {
+			CassieCommunicator.addUser(user);
+			UserGroup.NORMAL.addUser(user);			
+		}
+
 		makeActivation(user) match {
 			case Some(code) => SMTPCommunicator.sendActivationEmail(user.username, code);
 			case None => Predef.assert(false, "makeActivation in model.User returned None")
