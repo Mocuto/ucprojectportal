@@ -14,10 +14,12 @@ trait UserPrivilegesTable[A <: UserPrivileges] extends CassandraTable[UserPrivil
 trait UserPrivilegesModel[A <: UserPrivileges, B <: UserPrivilegesTable[A]] {
 	val T : B;
 
+	val defaultTimeout = Duration.Inf;
+
     implicit val session = CassieCommunicator.session
 
 	def get (username : String) : scala.concurrent.Future[Option[A]] = T.select.where (_.username eqs username).one()
-	def getBlock (username: String) : Option[A] = scala.concurrent.Await.result(get(username), 3.seconds)
+	def getUninterruptibly (username: String) : Option[A] = scala.concurrent.Await.result(get(username), defaultTimeout)
 }
 
 object UserPrivileges {
@@ -57,4 +59,18 @@ sealed class UserPrivilegesCreate extends UserPrivilegesTable[UserPrivileges.Cre
 object UserPrivilegesCreate extends UserPrivilegesCreate with UserPrivilegesModel[UserPrivileges.Create, UserPrivilegesCreate] {
 	val T = this;
 	override val tableName = "user_privileges_create"
+}
+
+sealed class UserPrivilegesEdit extends UserPrivilegesTable[UserPrivileges.Edit] {
+	object edit_projects_all extends BooleanColumn(this)
+	object edit_projects_self extends BooleanColumn(this)
+	object edit_user_permissions extends BooleanColumn(this)
+	object join_projects extends BooleanColumn(this);
+
+	override def fromRow(r : Row) = UserPrivileges.Edit(username(r), join_projects(r), edit_projects_self(r), edit_projects_all(r), edit_user_permissions(r));
+}
+
+object UserPrivilegesEdit extends UserPrivilegesEdit with UserPrivilegesModel[UserPrivileges.Edit, UserPrivilegesEdit] {
+	val T = this;
+	override val tableName = "user_privileges_edit"
 }

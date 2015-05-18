@@ -1,4 +1,4 @@
-@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, isPrimaryContact : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
+@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, canEdit : Boolean, canUpdate : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
 @import model.User; val authenticatedUser = model.User.get(username)
 @main(s"${project.name} | Student Government Project Portal")( Some(authenticatedUser)) {
 <script>
@@ -20,7 +20,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
         } else {
           <img src="/assets/images/logos/dashboard-@{model.ProjectCategory.get(project.categories(0)).icon}.png" />
         }
-        @if(isPrimaryContact) {
+        @if(canEdit) {
           <span class="huge-header editable" id="project-name">@project.name</span>
           <textarea id="project-name-input" class="roundbox-textinput edit-field textarea-description" for="project-name" placeholder="project name" name="name" style="font-size:48pt">@project.name</textarea>
           <span class="edit-button" for="project-name" style="display:inline-block; position:relative; margin-left:16px;"></span>
@@ -73,13 +73,13 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                      			<span class="content-header">description</span>
                      		</td>
                      		<td>
-                     		@if(isPrimaryContact) {
+                     		@if(canEdit) {
                      			<span class="edit-button" for="project-description"></span>
                      		}
                      		</td>
                  		</tr>
                  	</table>
-                 	@if(isPrimaryContact) {
+                 	@if(canEdit) {
                  		<p class="content project-description editable" id="project-description">@project.description</p>
 						<textarea name="description" id="project-description-input" for="project-description" class="edit-field roundbox-textinput textarea-description" placeholder="enter a description" style="width:100%; font-size:12pt">@project.description</textarea>
                  	} else {
@@ -93,13 +93,13 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                               <span class="content-header">categories</span>
                            </td>
                            <td>
-                           @if(isPrimaryContact) {
+                           @if(canEdit) {
                               <span class="edit-button" for="project-categories"></span>
                            }
                            </td>
                         </tr>
                      </table>
-                     @if(isPrimaryContact) {
+                     @if(canEdit) {
                          <p class="content editable" id="project-categories">
                            @project.categories.mkString(", ").toLowerCase()
                         </p>
@@ -127,13 +127,13 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                               <span class="content-header">state</span>
                            </td>
                            <td>
-                              @if(isPrimaryContact) {
+                              @if(canEdit) {
                                  <span class="edit-button" for="project-state"></span>
                               }
                            </td>
                         </tr>
                      </table>
-                     @if(isPrimaryContact) {
+                     @if(canEdit) {
                            <p class="content editable" id="project-state">@project.state</p>
                            @if(project.state == model.ProjectState.IN_PROGRESS_NEEDS_HELP) {
                               <p class="content" id="project-state-message" style="font-style:italic;">@project.stateMessage</p>
@@ -184,13 +184,13 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                          <div class="content-header">primary contact</div>
                        </td>
                        <td>
-                       @if(isPrimaryContact) {
+                       @if(canEdit) {
                          <span class="edit-button" for="project-primary-contact"></span>
                         }
                        </td>
                       </tr>
                     </table>
-                      @if(isPrimaryContact) {
+                      @if(canEdit) {
                         <p class="content" id="project-primary-contact">@links.userLink(project.primaryContact)</p>
                         <span class="edit-field" for="project-primary-contact" field-name="primary-contact">
                           <select class="chosen" name="primary-contact" id="project-primary-contact-select">
@@ -215,7 +215,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                      			<span class="content-header">team members</span>
                  			</td>
                  			<td>
-                 				@if(isPrimaryContact) {
+                 				@if(canEdit) {
                  					<span class="edit-button" for="project-team-members"></span>
 
                  				}
@@ -223,7 +223,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  		</tr>
                  	</table>
                   <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(", "))</p>
-                 	@if(isPrimaryContact) {
+                 	@if(canEdit) {
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
                         @for(otherUser <- model.User.allConfirmed) {
@@ -251,7 +251,8 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           <tr>
             <td style="width:100%">
             <div id="project-update-log">
-               @if(project.teamMembers.contains(authenticatedUser.username) == true && project.state != model.ProjectState.COMPLETED && project.state != model.ProjectState.CLOSED) {
+               @*if(project.teamMembers.contains(authenticatedUser.username) == true && project.state != model.ProjectState.COMPLETED && project.state != model.ProjectState.CLOSED) { *@
+               @if(canUpdate) {
                 @helper.form(action = routes.ProjectController.submitUpdate) {
                 
                   <div class="roundbox update">

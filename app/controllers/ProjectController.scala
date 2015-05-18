@@ -7,6 +7,7 @@ import com.typesafe.plugin._
 import java.util.Date
 
 import model._
+import model.UserPrivileges
 
 import play.api._
 import play.api.mvc._
@@ -57,9 +58,14 @@ object ProjectController extends Controller with SessionHandler {
 				else {
 					val updates = Project.getUpdates(id);
 
-					val isPrimaryContact = project.primaryContact == username;
+					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivileges.Edit(username, false, false, false, false) }
 
-					Ok(views.html.project(project, updates, username, isPrimaryContact)(None)(projectUpdateForm))
+					val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivileges.Create(username, false, false, false, false)}
+					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
+
+					Ok(views.html.project(project, updates, username, canEdit, canUpdate)(None)(projectUpdateForm))
 				}
 			}
 		}
@@ -90,7 +96,10 @@ object ProjectController extends Controller with SessionHandler {
 				    /* binding success, you get the actual value. */
 				    val project = Project.get(update.projectId);
 
-				    if(project.teamMembers.contains(username) == false) {
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivileges.Create(username, false, false, false, false)}
+					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
+
+				    if(canUpdate == false) {
 				    	Status(462)("You are not a member of this project");
 				    }
 				    else if(project.isDefined == false) {
@@ -165,7 +174,11 @@ object ProjectController extends Controller with SessionHandler {
 			case Some(username) => {
 				val project = Project.get(id);
 
-				if(project.primaryContact != username && !UserGroup.isAdmin(username)) 
+				val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivileges.Edit(username, false, false, false, false) }
+
+				val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+
+				if(canEdit == false) 
 				{
 					Status(401)("You are not authorized to edit this project");
 				}
