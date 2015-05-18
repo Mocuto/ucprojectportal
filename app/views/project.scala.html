@@ -1,4 +1,4 @@
-@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, canEdit : Boolean, canUpdate : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
+@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, canEdit : Boolean, canUpdate : Boolean, canJoin : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
 @import model.User; val authenticatedUser = model.User.get(username)
 @main(s"${project.name} | Student Government Project Portal")( Some(authenticatedUser)) {
 <script>
@@ -54,7 +54,9 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                               @if(model.ProjectRequest.get(project.id, project.primaryContact, username).isDefined == true) {
                                  <div class="hint">request sent</div>
                               } else {
+                                @if(canJoin) {
                                  <span type="button" id="request-join" project-id="@project.id" class="button">join</span>       
+                                }
                               }
                                                
                               </td>
