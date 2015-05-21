@@ -3,6 +3,7 @@ import controllers._;
 import com.kenshoo.play.metrics.MetricsFilter
 
 import model._;
+import model.UserPrivileges;
 
 import play.api._
 import play.api.data._
@@ -15,26 +16,33 @@ import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object AccessFilter {
-	def apply(userGroupName : String, actionNames: String*) = new AccessFilter(userGroupName, actionNames)
+	def apply(requiredViewPrivilegeFunc : (String => UserPrivileges.View), actionNames: String*) = new AccessFilter(requiredViewPrivilegeFunc, actionNames)
 }
 
-class AccessFilter(userGroupName : String, actionNames: Seq[String]) extends Filter {
+class AccessFilter(requiredViewPrivilegeFunc : (String => UserPrivileges.View), actionNames: Seq[String]) extends Filter {
 	def apply(next: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+
 		if(authorizationRequired(request)) {
-		  request.session.get("authenticated") match {
-		  	case None => Future {
-		  		Results.Redirect("/login/" + request.path)
-		  	}
-		  	case authenticatedUser if UserGroup.isUserInGroup(User.get(authenticatedUser.get), userGroupName) == false => Future {
-		  		Results.NotFound(views.html.messages.notFound("this page does not exist"));
-		  	}
-		  	case _ => {
-			  next(request)
-		  	}
-		  }
+			request.session.get("authenticated") match {
+				case None => Future { Results.Redirect("/login/" + request.path) }
+				case Some(username) => {
+					lazy val requiredViewPrivilege = requiredViewPrivilegeFunc(username)
+					(UserPrivilegesView.get(username) zip next(request)).map {
+						case (Some(UserPrivileges.View(username, a, b, c, d, e)), result : Result) if (UserPrivileges.View(
+								username,
+								a & requiredViewPrivilege.projects,
+								b & requiredViewPrivilege.users,
+								c & requiredViewPrivilege.accountability,
+								d & requiredViewPrivilege.moderator,
+								e & requiredViewPrivilege.admin) == requiredViewPrivilege) => result;
+
+						case _ => Results.NotFound(views.html.messages.notFound("this page does not exist"));
+					}
+				}
+			}
 		}
 		else {
-			next(request)
+			next(request);
 		}
 	}
 
@@ -88,8 +96,9 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 													"resetUnread", "getUnreadCount", "ignore",
 													"clearAll",
 													"decide", "signout"),
-								 AccessFilter("admin", "admin", "deleteProject", "deleteUser", "metrics"),
-								 AccessFilter("moderator", "moderation"),
+								 //AccessFilter("accountability", "accountability"),
+								 AccessFilter(UserPrivilegesView.admin(_ : String), "admin", "deleteProject", "deleteUser", "metrics"),
+								 AccessFilter(UserPrivilegesView.moderator(_ : String), "moderator", "moderation"),
 								 MetricsFilter) {
 
 }

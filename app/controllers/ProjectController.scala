@@ -53,7 +53,7 @@ object ProjectController extends Controller with SessionHandler {
 
 				val project = Project.get(id);
 
-				val viewingPermissions = UserPrivilegesView.getUninterruptibly(username).getOrElse { UserPrivileges.View(username, false, false, false, false, false)}
+				val viewingPermissions = UserPrivilegesView.getUninterruptibly(username).getOrElse { UserPrivilegesView.undefined(username)}
 
 				if (viewingPermissions.projects == false) {
 					NotFound(views.html.messages.notFound("You do not have permission to view this project"))
@@ -65,12 +65,12 @@ object ProjectController extends Controller with SessionHandler {
 				else {
 					val updates = Project.getUpdates(id);
 
-					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivileges.Edit(username, false, false, false, false) }
+					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
 
 					val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
 					val canJoin = editPermissions.joinProjects;
 
-					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivileges.Create(username, false, false, false, false)}
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
 					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
 
 					Ok(views.html.project(project, updates, username, canEdit, canUpdate, canJoin)(None)(projectUpdateForm))
@@ -82,7 +82,18 @@ object ProjectController extends Controller with SessionHandler {
 
 	def newProject = Action { implicit request => {
 		authenticated match {
-			case Some(username) => Ok(views.html.newProject(User.get(username)));
+			case Some(username) => { 
+
+				val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+				if(createPermissions.projects == false) {
+					Status(462)(views.html.messages.notFound("You do not have permission to create projects"));
+				}
+				else {
+					Ok(views.html.newProject(User.get(username))); 					
+				}
+
+
+			}
 		}
 	}}
 
@@ -104,7 +115,7 @@ object ProjectController extends Controller with SessionHandler {
 				    /* binding success, you get the actual value. */
 				    val project = Project.get(update.projectId);
 
-					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivileges.Create(username, false, false, false, false)}
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
 					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
 
 				    if(canUpdate == false) {
@@ -163,13 +174,19 @@ object ProjectController extends Controller with SessionHandler {
 							state,
 							stateMessage,
 							_) => {
-						val completeProject = 
-							(state, stateMessage) match {
-								case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
-								case (state, _) => Project.create(name, description, username, categories, state, "", teamMembers);
+						val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+						if(createPermissions.projects == false) {
+							Status(462)("You do not have permission to create projects");
 						}
-						projectsCreatedCounter.inc();
-						Redirect(routes.ProjectController.project(completeProject.id));
+						else {
+							val completeProject = 
+								(state, stateMessage) match {
+									case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
+									case (state, _) => Project.create(name, description, username, categories, state, "", teamMembers);
+							}
+							projectsCreatedCounter.inc();
+							Redirect(routes.ProjectController.project(completeProject.id));							
+						}
 					}
 				})
 			}
@@ -182,7 +199,7 @@ object ProjectController extends Controller with SessionHandler {
 			case Some(username) => {
 				val project = Project.get(id);
 
-				val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivileges.Edit(username, false, false, false, false) }
+				val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
 
 				val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
 
