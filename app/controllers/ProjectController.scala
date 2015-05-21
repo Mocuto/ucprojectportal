@@ -52,7 +52,14 @@ object ProjectController extends Controller with SessionHandler {
 			case Some(username) => {
 
 				val project = Project.get(id);
-				if(project.isDefined == false) {
+
+				val viewingPermissions = UserPrivilegesView.getUninterruptibly(username).getOrElse { UserPrivileges.View(username, false, false, false, false, false)}
+
+				if (viewingPermissions.projects == false) {
+					NotFound(views.html.messages.notFound("You do not have permission to view this project"))
+				}
+
+				else if(project.isDefined == false) {
 					NotFound(views.html.messages.notFound("This project does not exist"));
 				}
 				else {
