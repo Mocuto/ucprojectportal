@@ -18,7 +18,7 @@ function setupProjectCallbacks() {
 				step : function(num) {
 					var packeryParent = $(event.target).parents(".projectbox-container");
 					packeryParent.isotope('layout')
-			
+
 				}
 			});
 		}
@@ -75,7 +75,7 @@ function setupProjectCallbacks() {
 		leaveProject(projectId);
 	})
 
-	$(".projectbox-container").imagesLoaded( function(){ 
+	$(".projectbox-container").imagesLoaded( function(){
 		$(".projectbox-container").isotope({
 			layoutMode : 'packery',
 			itemSelector : '.isotope-item',
@@ -108,13 +108,7 @@ function setupProjectCallbacks() {
 			}
 			return list;
 		})(files).join(", ");
-		
-		$("#update-files-filenames").text(filenames)
-	});
 
-	$("#logTimeLink").click(function() {
-		$("#logTimeModal").popane({
-			show : "true"
-		});
+		$("#update-files-filenames").text(filenames)
 	});
 }

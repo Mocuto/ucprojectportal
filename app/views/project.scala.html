@@ -36,10 +36,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
 
                   @project match {
                      case project if authenticatedUser.primaryProjects.contains(project) => {
-                        you own this project  <div class="log-time-link" id="logTimeLink">log time</div>
-                     } 
+                        you own this project
+                     }
                      case project if authenticatedUser.projects.contains(project) => {
-                        you are on this project team <div class="log-time-link" id="logTimeLink">log time</div>
+                        you are on this project team
                      }
                      case project if project.state == model.ProjectState.COMPLETED => {
                         this project is completed and cannot be joined
@@ -48,15 +48,15 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                         <table>
                            <tr>
                               <td  style="width:100%">
-                         you are <b>not</b> on this project team!                             
+                         you are <b>not</b> on this project team!
                               </td>
                               <td>
                               @if(model.ProjectRequest.get(project.id, project.primaryContact, username).isDefined == true) {
                                  <div class="hint">request sent</div>
                               } else {
-                                 <span type="button" id="request-join" project-id="@project.id" class="button">join</span>       
+                                 <span type="button" id="request-join" project-id="@project.id" class="button">join</span>
                               }
-                                               
+
                               </td>
                            </tr>
                         </table>
@@ -64,7 +64,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
 
                      }
                   }
-   
+
                   </div>
                   <div class="roundbox" style="margin-right:64px">
                   	<table>
@@ -85,8 +85,8 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  	} else {
 						<p class="content project-description">@project.description</p>
                  	}
-                     
-                     
+
+
                      <table>
                         <tr>
                            <td style="width: 100%">
@@ -109,7 +109,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                                  @if(project.categories.contains(category.name.toLowerCase())) {
                                  <option value="@category.name.toLowerCase()" selected="selected">@category.name.toLowerCase()</option>
                                  } else {
-                                 <option value="@category.name.toLowerCase()">@category.name.toLowerCase()</option>                                 
+                                 <option value="@category.name.toLowerCase()">@category.name.toLowerCase()</option>
                                  }
 
                               }
@@ -120,7 +120,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                            @project.categories.mkString(", ").toLowerCase()
                         </p>
                      }
-  
+
                      <table>
                         <tr>
                            <td style="width: 100%">
@@ -140,14 +140,14 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                            } else {
                               <p class="content" id="project-state-message" style="font-style:italic; display:none">@project.stateMessage</p>
                            }
-                           
+
                            <span class="edit-field content" field-name="state" for="project-state">
                               <select name="state" class="chosen" id="project-state-select">
                                       @for(state <- model.ProjectState.all) {
                                           @if(project.state == state) {
                                              <option value="@state.name.toLowerCase()" selected="selected">@state.name.toLowerCase()</option>
                                           } else {
-                                             <option value="@state.name.toLowerCase()">@state.name.toLowerCase()</option>                                        
+                                             <option value="@state.name.toLowerCase()">@state.name.toLowerCase()</option>
                                           }
 
                                       }
@@ -170,7 +170,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                <td>
                   <div class="roundbox" style="margin-right:64px">
                      <span class="content-header">project dates</span>
-                     <p class="content">@utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase() - 
+                     <p class="content">@utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase() -
                      @if(project.timeFinished == null) {
                       present
                      } else {
@@ -208,7 +208,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                       }
 
                      <!-- Team Members -->
-                     
+
                      <table>
                      	<tr>
                      		<td style="width:100%">
@@ -243,7 +243,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
          </table>
 
          <!-- Update Log / Files -->
-         
+
          <div class="select-group huge-header" style="margin-left:16px">
             <span class="select-item selected" id="project-update-log-button">update log</span>  |  <span class="select-item unselected" id="project-all-files-button">all files</span>
          </div>
@@ -253,10 +253,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
             <div id="project-update-log">
                @if(project.teamMembers.contains(authenticatedUser.username) == true && project.state != model.ProjectState.COMPLETED && project.state != model.ProjectState.CLOSED) {
                 @helper.form(action = routes.ProjectController.submitUpdate) {
-                
+
                   <div class="roundbox update">
                      <textarea name="content" id="update-input" class="roundbox-textinput textarea-description" placeholder="write a status update"></textarea>
-                     
+
                      <div class="file-inputs">
                         <span class ="button" id="update-files-mask">choose files</span>
                         <span id="update-files-filenames"></span>
@@ -286,20 +286,5 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           </td>
         </tr>
       </table>
-      </div>
-
-      <div class="popane" id="logTimeModal">
-        <span class="close-button">close</span>
-        <span class="content-header">log time</span>
-        <br>
-        <br>
-        <table>
-          <tbody>
-            <tr><td class="input-label">Date:</td><td><input type="text" class="roundbox-textinput" placeholder="MM/DD/YYYY" /></td></tr>
-            <tr><td class="input-label">Time Worked:</td><td><input type="text" class="roundbox-textinput" placeholder="e.g., 1h 30m" /></td></tr>
-            <tr><td class="input-label">Comments:</td><td><textarea type="text" class="roundbox-textinput textarea-description" placeholder="Met with the team to discuss next plan of action"></textarea></td></tr>
-          </tbody>  
-        </table>
-        <div class="blue-button submit-button modal-submit">submit</div>
       </div>
 }

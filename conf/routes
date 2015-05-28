@@ -9,7 +9,7 @@ GET /javascriptRoutes    controllers.Application.javascriptRoutes
 GET     /                           			controllers.Application.index
 
 GET 	/filter									controllers.Application.filter(filterStr :String = "")
-GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)	
+GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)
 
 #Project routes
 GET		/project/new							controllers.ProjectController.newProject
@@ -18,7 +18,6 @@ POST	/submitUpdate							controllers.ProjectController.submitUpdate
 POST	/submitProject							controllers.ProjectController.submitProject
 POST	/editProject/:id						controllers.ProjectController.editProject(id : Int)
 POST	/leaveProject/:id 						controllers.ProjectController.leaveProject(id : Int)
-#POST	/project/:id/time 						controllers.ProjectController.logTime
 
 #Login routes
 GET		/login 									controllers.Application.login(path : String = "")
