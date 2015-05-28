@@ -1,6 +1,6 @@
 #panel
 {
-    position: absolute;
+    position: fixed;
     background: transparent;
     right: 0;
     top: 100px;
@@ -13,9 +13,8 @@
     width: 0px;
     overflow: hidden;
     background: white;
-    border: 5px solid white;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
     float: right;
     height: 320px;
 }
@@ -28,26 +27,28 @@
     float: right;
     margin: 0px;
     padding: 0px;
+    height: 320px;
 }
 
 #myTab
 {
     cursor: pointer;
     position: relative;
-    top: 10px;
+    top: 0;
     background: white;
-    height: 150px;
+    height: 240px;
     width: 40%;
     color: #fa544f;
     float: right;
     margin: 0px;
-    padding: 0px;
     border-bottom-left-radius: 15px;
     border-top-left-radius: 15px;
-    padding: 10px;
-    border: 2px solid white;
+    padding: 80px 10px 0px 10px;
+    border: 2px solid black;
+    border-right: 6px solid white;
     border-right: 0;
     text-align: center;
+    z-index: 101;
 }
 
 #myTab:hover
@@ -58,79 +59,7 @@
     color: white;
 }
 
-#taskListHeaders
-{
-    margin: 0 0 5px 0;
-    padding-left: 25px;
-    border-bottom: 1px solid #263f67;
-}
-
-    #taskListHeaders div:first-child
-    {
-        float: left;
-        width: 75px;
-    }
-
-    #taskListHeaders div:nth-child(2)
-    {
-        float: left;
-        width: 125px;
-    }
-
-#taskItemList
-{
-    height: 200px;
-    overflow: auto;
-}
-
-.taskItem
-{
-    overflow: auto;
-}
-
-    .taskItem div
-    {
-        float: left;
-        display: inline;
-    }
-
-        .taskItem div:nth-child(2)
-        {
-            width: 25px;
-        }
-
-        .taskItem div:nth-child(3)
-        {
-            width: 75px;
-        }
-
-        .taskItem div:nth-child(4)
-        {
-            width: 125px;
-        }
-
-        .taskItem div:nth-child(5)
-        {
-            overflow: hidden;
-            float: none;
-            display: block;
-        }
-
-    .taskItem:nth-child(odd)
-    {
-        background-color: lightgray;
-    }
-
-    .taskItem:hover
-    {
-        background-color: yellow;
-    }
-
-.closeDetail
-{
-    width: 93%;
-    max-width: 93%;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding-bottom: 5px;
+.input-label {
+  text-align: right;
+  vertical-align: top;
 }

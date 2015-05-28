@@ -54,28 +54,58 @@
     		}
     		case user : Some[User] => {
     			@common.header(user.get)
-    		}
-    	}
 
-        <div id="panel">
-          <div id="panel-content">
-            Add Time Log Stuff Here
-          </div>
-          <div id="panel-tab">
-            <div id="myTab">
-              <strong>
-                L<br/>
-                O<br/>
-                G<br/>
-                <br/>
-                T<br/>
-                I<br/>
-                M<br/>
-                E<br/>
-              </strong>
+          <div id="panel">
+            <div id="panel-content">
+              <table style="width: 100%; padding: 15px;">
+                <tr>
+                  <td class="input-label">Date:</td>
+                  <td><input type="text" id="mDate" /></td>
+                </tr>
+                <tr>
+                  <td class="input-label">Hours:</td>
+                  <td><input type="text" id="mHours" /></td>
+                </tr>
+                <tr>
+                  <td class="input-label">Project:</td>
+                  <td>
+                    <select class="" name="mProject">
+                      <option value="">None</option>
+                      <option value="1">Project 1</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="input-label">Comments:</td>
+                  <td><textarea name="mComments" rows="5" cols="35"></textarea></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><input type="checkbox" name="mPostUpdate" checked="false"> Post this as a project update</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><input type="button" name="mSubmitHours" value="Submit Hours"></td>
+                </tr>
+              </table>
+            </div>
+            <div id="panel-tab">
+              <div id="myTab">
+                <strong style="padding-top: 10px;">
+                  L<br/>
+                  O<br/>
+                  G<br/>
+                  <br/>
+                  T<br/>
+                  I<br/>
+                  M<br/>
+                  E<br/>
+                </strong>
+              </div>
             </div>
           </div>
-        </div>
+    		}
+    	}
         @content
     </body>
     <script type="text/javascript">
