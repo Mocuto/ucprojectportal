@@ -8,9 +8,10 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/chosen.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/slidePanel.css")" media="screen">
+
         <!-- Libraries -->
-        
+
         <script src="@routes.Assets.at("javascripts/libraries/jquery-1.9.0.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/libraries/popane.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/libraries/jquery.autosize.min.js")" type="text/javascript"></script>
@@ -55,6 +56,46 @@
     			@common.header(user.get)
     		}
     	}
+
+        <div id="panel">
+          <div id="panel-content">
+            Add Time Log Stuff Here
+          </div>
+          <div id="panel-tab">
+            <div id="myTab">
+              <strong>
+                L<br/>
+                O<br/>
+                G<br/>
+                <br/>
+                T<br/>
+                I<br/>
+                M<br/>
+                E<br/>
+              </strong>
+            </div>
+          </div>
+        </div>
         @content
     </body>
+    <script type="text/javascript">
+      var taskPanelOpen = false;
+
+      $(function () {
+          $("#panel-tab").click(function (event) {
+              event.stopPropagation();
+              showIfNotVisible("#panel-content");
+          });
+      });
+
+      function showIfNotVisible(element) {
+            if (taskPanelOpen) {
+                $(element).animate({ width: '0px' }, 500);
+                taskPanelOpen = false;
+            } else {
+                $(element).animate({ width: '450px' }, 500);
+                taskPanelOpen = true;
+            }
+        }
+    </script>
 </html>
