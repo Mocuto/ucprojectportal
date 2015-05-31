@@ -59,33 +59,33 @@
             <div id="panel-content">
               <table style="width: 100%; padding: 15px;">
                 <tr>
-                  <td class="input-label">Date:</td>
-                  <td><input type="text" id="mDate" /></td>
+                  <td class="input-label">date:</td>
+                  <td><input type="text" id="mDate" class="roundbox-textinput" placeholder="ex. 12/25/2015" /></td>
                 </tr>
                 <tr>
-                  <td class="input-label">Hours:</td>
-                  <td><input type="text" id="mHours" /></td>
+                  <td class="input-label">hours:</td>
+                  <td><input type="text" id="mHours" class="roundbox-textinput" placeholder="ex. 1.5" /></td>
                 </tr>
                 <tr>
-                  <td class="input-label">Project:</td>
+                  <td class="input-label">project:</td>
                   <td>
-                    <select class="" name="mProject">
-                      <option value="">None</option>
+                    <select name="project" class="chosen" id="office-hour-project-select" style="width: 100%">
+                      <option value="" selected="selected">None</option>
                       <option value="1">Project 1</option>
                     </select>
                   </td>
                 </tr>
                 <tr>
-                  <td class="input-label">Comments:</td>
-                  <td><textarea name="mComments" rows="5" cols="35"></textarea></td>
+                  <td class="input-label">comments:</td>
+                  <td><textarea name="mComments" rows="5" cols="30" style="resize: none"></textarea></td>
                 </tr>
                 <tr>
                   <td></td>
-                  <td><input type="checkbox" name="mPostUpdate" checked="false"> Post this as a project update</td>
+                  <td><input type="checkbox" name="mPostUpdate"> post this as a project update</td>
                 </tr>
                 <tr>
                   <td></td>
-                  <td><input type="button" name="mSubmitHours" value="Submit Hours"></td>
+                  <td><span class="blue-button" id="submitHours">submit hours</span></td>
                 </tr>
               </table>
             </div>
