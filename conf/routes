@@ -61,6 +61,8 @@ POST	/notification/countUnread				controllers.NotificationController.getUnreadCo
 POST	/notification/ignore/:timeCreated		controllers.NotificationController.ignore(timeCreated : String)
 POST	/notification/clearAll 					controllers.NotificationController.clearAll
 
+#Office Hour routes
+POST /officehour/logHour controllers.OfficeHourController.logHour
 
 #Misc routes
 GET		/signout								controllers.Application.signout

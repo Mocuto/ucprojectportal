@@ -77,7 +77,7 @@
                 </tr>
                 <tr>
                   <td class="input-label">comments:</td>
-                  <td><textarea name="mComments" rows="5" cols="30" style="resize: none"></textarea></td>
+                  <td><textarea id="mComments" rows="5" cols="30" style="resize: none"></textarea></td>
                 </tr>
                 <tr>
                   <td></td>
@@ -126,6 +126,21 @@
                 $(element).animate({ width: '450px' }, 500);
                 taskPanelOpen = true;
             }
-        }
+      }
+
+      $("#submitHours").on("click", function() {
+          var reqBody = {
+            date: $("#mDate").val(),
+            projectId: $("#office-hour-project-select").val(),
+            hours: $("#mHours").val(),
+            comment: $("#mComments").val(),
+            markAsUpdate: $("#mPostUpdate").is(":checked")
+          };
+
+          $.post("/officehour/logHour", reqBody, function(data) {
+            alert(data);
+          });
+      });
+
     </script>
 </html>
