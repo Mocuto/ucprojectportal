@@ -74,6 +74,10 @@ function setupLayout() {
 
 	$(".popane").popane();
 
+	$(".popane-menu").popane({
+		position : "absolute"
+	})
+
 	$(".dashboard-item").hover(function() {
 		$(this).find(".dashboard-item-text").animate({
 			"color" : "white"

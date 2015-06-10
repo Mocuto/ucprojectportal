@@ -22,13 +22,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import utils._
 
 object ProjectController extends Controller with SessionHandler {
-	private val projectUpdateForm = Form(
-		mapping(
-			"content" -> nonEmptyText,
-			"project_id" -> number,
-			"date" -> ignored(new Date())
-		) (ProjectUpdate.applyIncomplete)(ProjectUpdate.unapplyIncomplete)
-	)
 
 	implicit val projectForm = Form(
 		mapping(
@@ -44,8 +37,6 @@ object ProjectController extends Controller with SessionHandler {
 	)
 
 	val projectsCreatedCounter = MetricsRegistry.default.counter("projects.created")
-	val updatesCreatedCounter = MetricsRegistry.default.counter("projects.created")
-
 
 	def project(id : Int) = Action { implicit request => {
 		authenticated match {
@@ -73,14 +64,14 @@ object ProjectController extends Controller with SessionHandler {
 					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
 					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
 
-					Ok(views.html.project(project, updates, username, canEdit, canUpdate, canJoin)(None)(projectUpdateForm))
+					Ok(views.html.project(project, updates, username, canEdit, canUpdate, canJoin)(None)(ProjectUpdateController.projectUpdateForm))
 				}
 			}
 		}
 
 	}}
 
-	def newProject = Action { implicit request => {
+	def create = Action { implicit request => {
 		authenticated match {
 			case Some(username) => { 
 
@@ -97,63 +88,7 @@ object ProjectController extends Controller with SessionHandler {
 		}
 	}}
 
-	def submitUpdate = Action { implicit request =>
-		authenticated match {
-			case Some(username) => {
-				projectUpdateForm.bindFromRequest.fold(
-				  formWithErrors => {
-				    // binding failure, you retrieve the form containing errors:
-				    //BadRequest(views.html.user(formWithErrors))
-				    var errorMessage : String = "";
-				    formWithErrors.errors map { error  => {
-				    		errorMessage = s"$errorMessage ${error.key}";
-				    	}
-				    }
-					BadRequest(errorMessage);
-				  },
-				  update => {
-				    /* binding success, you get the actual value. */
-				    val project = Project.get(update.projectId);
-
-					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
-					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
-
-				    if(canUpdate == false) {
-				    	Status(462)("You are not a member of this project");
-				    }
-				    else if(project.isDefined == false) {
-				    	Status(404)("This project does not exist")
-				    }
-				    else {
-					    val multipartFormData = request.body.asMultipartFormData.get
-					    val files = multipartFormData.files.map(filepart => (filepart.filename, filepart.ref));
-
-					    val completeUpdate = ProjectUpdate.create(update.content, username, update.projectId, files = files);
-
-					    Future {
-					    	project.notifyMembersExcluding(username, completeUpdate.content);
-						}
-
-					    val response = JsObject(
-					    	Seq(
-				    			"html" -> JsString(views.html.common.updateView(completeUpdate).toString),
-				    			"fileHtml" -> JsString(
-				    				completeUpdate.files.map(x => views.html.common.fileUpdateView(ProjectFile.get(completeUpdate.projectId, completeUpdate.timeSubmitted, x)).toString).mkString
-			    				)
-				    		)
-					    )
-
-					    updatesCreatedCounter.inc();
-
-					    Ok(response);
-				    }
-				  }
-				)
-			}
-		}
-	}
-
-	def submitProject = Action { implicit request =>
+	def submit = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				projectForm.bindFromRequest.fold(
@@ -194,7 +129,7 @@ object ProjectController extends Controller with SessionHandler {
 
 	}
 
-	def editProject(id : Int) = Action { implicit request =>
+	def edit(id : Int) = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val project = Project.get(id);
@@ -264,7 +199,7 @@ object ProjectController extends Controller with SessionHandler {
 		}
 	}
 
-	def leaveProject(id : Int) = Action { implicit request =>
+	def leave(id : Int) = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val project = Project.get(id);

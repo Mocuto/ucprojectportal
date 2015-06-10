@@ -6,6 +6,13 @@
 		<span class="hint">uploaded a file</span>
 	}
 	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
+	
+	<span style="float : right">arrow here
+		<div class="update-menu">
+			<div class="menu-item">item 1</div>
+			<div class="menu-item">item 2</div>
+		</div>
+	</span>
 
 	<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
 	@if(update.files.length > 0) {

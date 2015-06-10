@@ -3,7 +3,7 @@
 # ~~~~
 
 # Javascript routes
-GET /javascriptRoutes    controllers.Application.javascriptRoutes
+GET /javascriptRoutes    						controllers.Application.javascriptRoutes
 
 # Home page
 GET     /                           			controllers.Application.index
@@ -12,12 +12,16 @@ GET 	/filter									controllers.Application.filter(filterStr :String = "")
 GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)	
 
 #Project routes
-GET		/project/new							controllers.ProjectController.newProject
+GET		/project/new							controllers.ProjectController.create
+POST	/project/new							controllers.ProjectController.submit
 GET		/project/:id 							controllers.ProjectController.project(id : Int)
-POST	/submitUpdate							controllers.ProjectController.submitUpdate
-POST	/submitProject							controllers.ProjectController.submitProject
-POST	/editProject/:id						controllers.ProjectController.editProject(id : Int)
-POST	/leaveProject/:id 						controllers.ProjectController.leaveProject(id : Int)
+POST	/editProject/:id						controllers.ProjectController.edit(id : Int)
+POST	/leaveProject/:id 						controllers.ProjectController.leave(id : Int)
+
+#Project Update routes
+POST	/project/:id/update/submit				controllers.ProjectUpdateController.submit(id : Int)
+#POST 	/project/:id/update/:author/:ts/edit 	controllers.ProjectUpdateController.edit(id : Int, author : String, ts : String)
+POST 	/project/:id/update/:author/:ts/delete 	controllers.ProjectUpdateController.delete(id : Int, author : String, ts : String)
 
 #Login routes
 GET		/login 									controllers.Application.login(path : String = "")
