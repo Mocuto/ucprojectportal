@@ -18,7 +18,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import utils._
 
-object ActivationController extends Controller {
+object ActivationController extends Controller with SessionHandler {
 
 	val USER_ACCOUNT_DOES_NOT_EXIST =
 		s"""
@@ -89,6 +89,18 @@ object ActivationController extends Controller {
 		})
 	)
 
+
+	case class UserForm(firstName : String, lastName : String, preferredPronouns : String, position : String);
+
+	val sgAccountForm = Form(
+		mapping(
+			"first_name" -> nonEmptyText,
+			"last_name" -> nonEmptyText,
+			"preferred_pronouns" -> nonEmptyText,
+			"position" -> nonEmptyText
+		) (UserForm.apply) (UserForm.unapply)
+	)
+
 	def resendActivation = Action { implicit request => {
 		Ok(views.html.resendActivation(resendActivationForm));
 	}}
@@ -140,6 +152,10 @@ object ActivationController extends Controller {
 			case Some(correctUUID) if correctUUID == uuid => Ok(views.html.activate(username, uuid)(activateForm));
 			case _ => BadRequest(views.html.messages.notFound(PAGE_NOT_FOUND))
 		}
+	}}
+
+	def activateNEW(path : String) = Action { implicit request => authenticated match {
+		case Some(username) => Ok(views.html.activateNEW(path)(sgAccountForm))
 	}}
 
 	def resetPassword(username: String, uuid : String) = Action {implicit request => {
@@ -219,5 +235,30 @@ object ActivationController extends Controller {
 			}
 		)
 	}}
+
+	def tryActivateNEW = Action { implicit request =>
+		sgAccountForm.bindFromRequest.fold(
+			formWithErrors => {
+				BadRequest(views.html.activateNEW()(formWithErrors))
+			},
+			userForm => (request.session.get("authenticated"), userForm) match {
+				case (Some(username : String), UserForm(firstName, lastName, pronouns, position)) => {
+					User.setupSG(username, firstName, lastName, pronouns, position);
+					println(username);
+					SMTPCommunicator.sendAllVerifyUserEmail(username);
+					Redirect(routes.Application.gettingStarted)
+				}
+				case (None, _) => Redirect(routes.ShibbolethController.secure)
+			}
+		)
+	}
+
+	def activateNonSG = Action { implicit request =>
+		whenAuthorized(username => {
+				User.setupNonSG(username);
+				Redirect(routes.Application.gettingStarted)
+			})(orElse = Redirect(routes.ShibbolethController.secure))
+		
+	}
 
 }

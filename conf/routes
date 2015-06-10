@@ -26,6 +26,10 @@ POST	/tryLogin								controllers.Application.tryLogin(path : String = "")
 POST	/tryLogin/*path							controllers.Application.tryLogin(path : String)
 
 #Activation routes
+GET 	/activateNEW 							controllers.ActivationController.activateNEW(path : String = "")
+POST 	/activateNEW/try 						controllers.ActivationController.tryActivateNEW
+GET 	/activateNEW/non-sg 					controllers.ActivationController.activateNonSG
+GET 	/activateNEW/*path 						controllers.ActivationController.activateNEW(path : String)
 GET 	/activate/resend 						controllers.ActivationController.resendActivation
 POST	/activate/resend/try					controllers.ActivationController.tryResendActivation
 GET 	/activate/:username/:uuid				controllers.ActivationController.activate(username : String, uuid : String)
@@ -67,8 +71,11 @@ GET		/signout								controllers.Application.signout
 GET		/uploads/:file							controllers.Application.uploads(file : String)
 GET 	/feedback 								controllers.Application.feedback
 POST 	/feedback/submit 						controllers.Application.submitFeedback
+GET 	/getting-started						controllers.Application.gettingStarted
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               			controllers.Assets.at(path="/public", file)
+
+GET 	/secure/ 								controllers.ShibbolethController.secure
 
 GET		/:username								controllers.UserController.user(username)

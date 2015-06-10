@@ -178,4 +178,6 @@ object Application extends Controller with SessionHandler {
 		}
 	}
 
+	def gettingStarted = TODO
+
 }

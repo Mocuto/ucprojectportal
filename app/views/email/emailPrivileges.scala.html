@@ -1,0 +1,20 @@
+@(user : model.User)
+
+@defining(constants.ServerSettings.HOST_URL + routes.UserController.user(user.username)) { url =>
+
+@email(Html(s"${links.userLinkEmail(user.username)} registered their account as a ${user.position} in Student Government")) {
+	<span>Verify that this user is who they say they are, and set the appropriate user privileges for them.</span>
+	<br>
+	<br>
+	<span style="border-radius: 30px;
+	background-color:#ddd;
+	padding:4px 12px 4px 12px;
+	font-size:12pt;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	vertical-align: middle;
+	cursor:pointer;
+	margin-left:auto;
+	margin-right:auto;"><a href="@url" style="text-decoration:none; color:black">set their user privileges</a></span>
+}}

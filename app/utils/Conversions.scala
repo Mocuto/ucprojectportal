@@ -27,4 +27,9 @@ object Conversions {
 			s"'$key' : '$value'"
 		}).mkString(",") + "}"; 
 	}
+
+	implicit def eppnToUsername(eppn : String) : String = eppn.substring(0, eppn.indexOf("@") match {
+		case -1 => eppn.length
+		case length : Int => length
+	});
 }

@@ -49,12 +49,16 @@ body {
 	max-width:1306px;
 }
 
-.login-container {
+.login-container, .activate-container {
 	margin:175px auto 0px auto;
 	margin-left:auto;
 	margin-right:auto;
 	width: 70%;
 	text-align:center;
+}
+
+.activate-container {
+	height:760px;
 }
 
 .login-input {
@@ -610,4 +614,31 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 
 .forgot-password:hover {
 	text-decoration: underline;
+}
+
+.activate-button {
+	float: right;
+	width: 40%;
+	display: inline-block;
+	margin-top: 32px;
+	background-color: #fa544f;
+	padding: 25px;
+	border-radius: 60px;
+	height: 240px;
+	cursor: pointer;
+}
+
+.activate-button img {
+	width: 90px;
+	margin: 16px;
+}
+
+.activate-button:hover {
+	background-color:#aedefc;
+}
+
+#activate-inputs {
+	display: none;
+	width: 200px;
+	margin-top:32px;
 }

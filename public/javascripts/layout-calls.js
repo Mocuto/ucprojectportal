@@ -94,6 +94,26 @@ function setupLayout() {
 		}, 300)
 	})
 
+	$("#activate-sg-button").click(function() {
+		$(".activate-button").fadeOut(500, function() {
+			$("#activate-inputs").css({
+				"display": "block",
+				"opacity": 0,
+				"position": "relative",
+				"bottom" : "-100px"});
+
+			$("#activate-inputs").animate({
+				"opacity": 1.0,
+				"bottom": "0px"
+			}, {
+				duration: 450,
+				complete: function() {
+					$("#activate-inputs").css("position", "relative")
+				}
+			})
+		})
+	})
+
 	var initialWidth = $(".title-nav").width() //Grab the left position left first
 	var initialPaddingLeft = parseInt($(".title-nav").css("padding-left"));
 

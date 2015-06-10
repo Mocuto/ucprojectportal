@@ -6,6 +6,8 @@ scalaVersion := "2.11.1"
 
 lazy val phantomVersion = "1.5.0"
 
+lazy val openSAMLVersion = "2.6.0"
+
 resolvers ++= Seq(
     "RoundEights" at "http://maven.spikemark.net/roundeights",
     "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/"
@@ -50,9 +52,11 @@ libraryDependencies ++= Seq(
     "org.mindrot" % "jbcrypt" % "0.3m",
     "org.apache.lucene" % "lucene-core" % "5.0.0",
     "org.apache.lucene" % "lucene-facet" % "5.0.0",
-    "com.websudos"  %% "phantom-dsl" % phantomVersion
+    "com.websudos"  %% "phantom-dsl" % phantomVersion,
+    "org.opensaml" % "opensaml" % openSAMLVersion
 )
 
+libraryDependencies += "com.github.marklister" %% "base64" % "v0.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 

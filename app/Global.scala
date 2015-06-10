@@ -15,6 +15,8 @@ import play.api.libs.json._
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 
+import com.github.marklister.base64.Base64.Decoder
+
 object AccessFilter {
 	def apply(requiredViewPrivilegeFunc : (String => UserPrivileges.View), actionNames: String*) = new AccessFilter(requiredViewPrivilegeFunc, actionNames)
 }
@@ -24,7 +26,7 @@ class AccessFilter(requiredViewPrivilegeFunc : (String => UserPrivileges.View), 
 
 		if(authorizationRequired(request)) {
 			request.session.get("authenticated") match {
-				case None => Future { Results.Redirect("/login/" + request.path) }
+				case None => Future { println("It's me"); Results.Redirect("/login/" + request.path) }
 				case Some(username) => {
 					lazy val requiredViewPrivilege = requiredViewPrivilegeFunc(username)
 					(UserPrivilegesView.get(username) zip next(request)).map {
@@ -59,9 +61,13 @@ object AuthorizedFilter {
 class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 	def apply(next: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+		//println(request);
+		
+		//println(formData)
 		if(authorizationRequired(request)) {
 		  request.session.get("authenticated") match {
 		  	case None => Future {
+		  		println(request.session.get("authenticated"))
 		  		Results.Redirect(routes.Application.login(request.path))
 		  	}
 		  	case Some(username) => {
@@ -71,7 +77,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		  		}
 		  		else {
 		  			Future {
-	  					Results.Redirect(routes.Application.login(request.path))
+	  					Results.Redirect(routes.ActivationController.activateNEW(request.path))
 		  			}
 		  		}
 		  	}

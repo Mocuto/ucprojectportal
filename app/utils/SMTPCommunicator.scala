@@ -12,6 +12,8 @@ import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 import views._
 
 object SMTPCommunicator {
@@ -66,6 +68,20 @@ object SMTPCommunicator {
 			println(subject)
 			println(content);
 		}
+	}
+
+	def sendAllVerifyUserEmail(username : String) : Unit = {
+		val privilege = UserPrivileges.Edit("", userPermissions = true);
+		(UserPrivilegesEdit.whoMatchOrExceed(privilege)) onSuccess {
+			case usernames => usernames.map(x => sendVerifyUserEmail(x.username, username))
+		}
+	}
+
+	def sendVerifyUserEmail(to : String, about : String) : Unit = {
+		val subject = "Verify New User Account"
+		val content = views.html.email.emailPrivileges(User.get(about)).toString
+		println(s"to is $to, about is $about")
+		sendEmail(to, subject, content);
 	}
 
 	def sendActivationEmail(recipient : String, uuid : String) {
