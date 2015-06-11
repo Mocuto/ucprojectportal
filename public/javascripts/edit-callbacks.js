@@ -48,7 +48,8 @@ function onEditButtonClicked() {
 
 			$("#" + field).text(state)
 			$("#project-state-message").text(stateMessage);
-			if(state === STATE_IN_PROGRESS_NEEDS_HELP) {
+			if(state === STATE_IN_PROGRESS_NEEDS_HELP)
+			{
 				$("#project-state-message").show();
 			}
 

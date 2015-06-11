@@ -7,6 +7,7 @@ import com.typesafe.plugin._
 import java.util.Date
 
 import model._
+import model.UserPrivileges
 
 import play.api._
 import play.api.mvc._
@@ -35,6 +36,7 @@ object ProjectController extends Controller with SessionHandler {
 			"description" -> nonEmptyText,
 			"categories" -> list(nonEmptyText),
 			"state" -> nonEmptyText,
+			"state-message" -> text,
 			"team-members" -> list(nonEmptyText)
 		) (Project.apply)(Project.unapplyIncomplete).verifying("at least one category is needed", fields => fields match {
 			case project => {  project.categories.length > 0}
@@ -50,15 +52,28 @@ object ProjectController extends Controller with SessionHandler {
 			case Some(username) => {
 
 				val project = Project.get(id);
-				if(project.isDefined == false) {
+
+				val viewingPermissions = UserPrivilegesView.getUninterruptibly(username).getOrElse { UserPrivilegesView.undefined(username)}
+
+				if (viewingPermissions.projects == false) {
+					NotFound(views.html.messages.notFound("You do not have permission to view this project"))
+				}
+
+				else if(project.isDefined == false) {
 					NotFound(views.html.messages.notFound("This project does not exist"));
 				}
 				else {
 					val updates = Project.getUpdates(id);
 
-					val isPrimaryContact = project.primaryContact == username;
+					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
 
-					Ok(views.html.project(project, updates, username, isPrimaryContact)(None)(projectUpdateForm))
+					val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+					val canJoin = editPermissions.joinProjects;
+
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
+
+					Ok(views.html.project(project, updates, username, canEdit, canUpdate, canJoin)(None)(projectUpdateForm))
 				}
 			}
 		}
@@ -67,7 +82,18 @@ object ProjectController extends Controller with SessionHandler {
 
 	def newProject = Action { implicit request => {
 		authenticated match {
-			case Some(username) => Ok(views.html.newProject(User.get(username)));
+			case Some(username) => { 
+
+				val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+				if(createPermissions.projects == false) {
+					Status(462)(views.html.messages.notFound("You do not have permission to create projects"));
+				}
+				else {
+					Ok(views.html.newProject(User.get(username))); 					
+				}
+
+
+			}
 		}
 	}}
 
@@ -89,7 +115,10 @@ object ProjectController extends Controller with SessionHandler {
 				    /* binding success, you get the actual value. */
 				    val project = Project.get(update.projectId);
 
-				    if(project.teamMembers.contains(username) == false) {
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
+
+				    if(canUpdate == false) {
 				    	Status(462)("You are not a member of this project");
 				    }
 				    else if(project.isDefined == false) {
@@ -131,13 +160,35 @@ object ProjectController extends Controller with SessionHandler {
 					formWithErrors => {
 						BadRequest(views.html.newProject(User.get(username))(formWithErrors))
 					},
-					incompleteProject => {
-						var completeProject = Project.create(incompleteProject.name, incompleteProject.description, username,
-							incompleteProject.categories, incompleteProject.state, incompleteProject.teamMembers);
-						projectsCreatedCounter.inc();
-						Redirect(routes.ProjectController.project(completeProject.id));
+					incompleteProject => incompleteProject match {
+						case Project(
+							_,
+							name,
+							description,
+							timeStarted,
+							timeFinished,
+							categories,
+							_,
+							_,
+							teamMembers,
+							state,
+							stateMessage,
+							_) => {
+						val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+						if(createPermissions.projects == false) {
+							Status(462)("You do not have permission to create projects");
+						}
+						else {
+							val completeProject = 
+								(state, stateMessage) match {
+									case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
+									case (state, _) => Project.create(name, description, username, categories, state, "", teamMembers);
+							}
+							projectsCreatedCounter.inc();
+							Redirect(routes.ProjectController.project(completeProject.id));							
+						}
 					}
-				)
+				})
 			}
 		}
 
@@ -148,7 +199,11 @@ object ProjectController extends Controller with SessionHandler {
 			case Some(username) => {
 				val project = Project.get(id);
 
-				if(project.primaryContact != username && !UserGroup.isAdmin(username)) 
+				val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
+
+				val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+
+				if(canEdit == false) 
 				{
 					Status(401)("You are not authorized to edit this project");
 				}

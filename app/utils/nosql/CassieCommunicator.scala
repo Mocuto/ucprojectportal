@@ -22,7 +22,7 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
   private val keyspace = Play.application.configuration.getString("cassandra.keyspace")
 
 	private[nosql] val USERS = "users"
-	private[nosql] val USER_INSERT_FIELDS = "username"
+	private[nosql] val USER_INSERT_FIELDS = "username, first_name, last_name, position, primary_contact_projects, projects, unread_notifications, has_confirmed, last_login"
 
 	private[nosql] val USER_GROUPS = "user_groups"
 
@@ -34,7 +34,7 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
 
 	private[nosql] val PROJECTS = "projects";
 	private[nosql] val PROJECTS_KEY = "id"
-	private[nosql] val PROJECT_INSERT_FIELDS = "id, description, team_members, name, primary_contact, state, categories, time_started"
+	private[nosql] val PROJECT_INSERT_FIELDS = "id, description, team_members, name, primary_contact, state, state_message, categories, time_started"
 	private[nosql] val PROJECT_UPDATE_FIELDS = "id, name, description, state, categories, state_message, primary_contact, time_finished"
 
 	private[nosql] val PROJECT_UPDATES = "project_updates";
@@ -68,7 +68,8 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
     Cluster.builder();
   }
 	private[nosql] val cluster = builder.addContactPoint(serverIp).build();
-	private[nosql] val session = cluster.connect(keyspace);
+	
+  val session = cluster.connect(keyspace);
 
 	private[nosql] val logger = Logger(this.getClass())
 

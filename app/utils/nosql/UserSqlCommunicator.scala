@@ -160,7 +160,7 @@ trait UserSqlCommunicator extends BaseSqlCommunicator {
 	}
 
 	def addUser(user : User) {
-		val executeString = s"insert into $USERS($USER_INSERT_FIELDS) VALUES('${user.username}')"
+		val executeString = s"insert into $USERS($USER_INSERT_FIELDS) VALUES('${user.username}', '', '', '', {}, {}, 0, false, '')"
 		executeAsync(executeString);
 	}
 

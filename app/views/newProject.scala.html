@@ -1,7 +1,10 @@
 @(user : model.User)(implicit form: Form[model.Project])
 
 @main("New Project | Student Government Project Portal")(Some(user)) {
+    <script>
+    var STATE_IN_PROGRESS_NEEDS_HELP = "@model.ProjectState.IN_PROGRESS_NEEDS_HELP";
 
+    </script>
     <div class="main-container">
       <div class="huge-header">create a new project</div>
      	<div class="roundbox">
@@ -34,14 +37,17 @@
       <br>
       <select name="state" class="chosen" id="project-state-select">
                                       @for(state <- model.ProjectState.all) {
-                                          @if(form("state").value == state.name) {
+                                          @if(form("state").value == state.name || form("state").value == None && state.name == model.ProjectState.DEFAULT) {
                                              <option value="@state.name.toLowerCase()" selected="selected">@state.name.toLowerCase()</option>
+                                             @form("state").value
                                           } else {
                                              <option value="@state.name.toLowerCase()">@state.name.toLowerCase()</option>                                        
                                           }
 
                                       }
       </select>
+      <br>
+      <input class="roundbox-textinput" name="state-message" id="project-state-message-input" style="display:none" placeholder="what do you need help with?" />
       <br>                        
       <div style="margin-top:32px">who's your team?</div>
       <br>

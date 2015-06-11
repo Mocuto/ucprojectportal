@@ -11,7 +11,7 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   ws
-)
+)     
 
 libraryDependencies ++= Seq(
 	"com.datastax.cassandra" % "cassandra-driver-core" % "2.1.0",
@@ -37,7 +37,10 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
     "com.roundeights" %% "hasher" % "1.0.0",
-    "org.mindrot" % "jbcrypt" % "0.3m"
+    "org.mindrot" % "jbcrypt" % "0.3m",
+    "org.apache.lucene" % "lucene-core" % "5.0.0",
+    "org.apache.lucene" % "lucene-facet" % "5.0.0",
+    "com.websudos"  %% "phantom-dsl" % phantomVersion
 )
 
 
