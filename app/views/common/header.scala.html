@@ -1,4 +1,4 @@
-@(user: model.User)
+@(user : model.User)
 <script>
 	user = @Html(user.toJson.toString)
 	DEFAULT_MESSAGE = "@Html(s"hi ${user.firstName.toLowerCase()}!")"
@@ -25,7 +25,7 @@
 		} else {
 			hi @(user.firstName.toLowerCase() +"!")
 		}
-		
+
 	</span>
 
 	<div class="popane" id="notifications-window">

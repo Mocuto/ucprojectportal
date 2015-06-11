@@ -26,8 +26,8 @@ case class UserOfficeHour(
 sealed class UserOfficeHours extends CassandraTable[UserOfficeHours, UserOfficeHour] {
   object date extends StringColumn(this) with PrimaryKey[String]
   object username extends StringColumn(this) with PrimaryKey[String]
+  object projectId extends IntColumn(this) with PrimaryKey[Int]
 
-  object projectId extends IntColumn(this)
   object log extends MapColumn[UserOfficeHours, UserOfficeHour, Double, String](this)
 
   def fromRow(row: Row): UserOfficeHour = {
@@ -52,6 +52,14 @@ object UserOfficeHours extends UserOfficeHours with BasicConnector {
       .future()
   }
 
+  def updateRecord(officeHour: UserOfficeHour): ScalaFuture[ResultSet] = {
+    update.where(_.username eqs officeHour.username)
+      .and(_.date eqs officeHour.date)
+      .and(_.projectId eqs officeHour.projectId)
+      .modify(_.log put officeHour.log.head)
+      .future()
+  }
+
   def getUserOfficeHours(username: String): ScalaFuture[Seq[UserOfficeHour]] = {
     select.where(_.username eqs username).fetch()
   }
@@ -62,5 +70,9 @@ object UserOfficeHours extends UserOfficeHours with BasicConnector {
 
   def getUserHoursForDate(username: String, date: String): ScalaFuture[Seq[UserOfficeHour]] = {
     select.where(_.username eqs username).and(_.date eqs date).fetch()
+  }
+
+  def getUserOfficeHoursForDateAndProject(username: String, date: String, projectId: Int): ScalaFuture[Seq[UserOfficeHour]] = {
+    select.where(_.username eqs username).and(_.date eqs date).and(_.projectId eqs projectId).fetch()
   }
 }

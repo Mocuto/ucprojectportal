@@ -19,6 +19,8 @@ import play.api.libs.json._
 
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ Future => ScalaFuture }
+import scala.util.{Success, Failure}
 
 import utils._
 
@@ -39,7 +41,12 @@ object OfficeHourController extends Controller with SessionHandler {
         OfficeHourForm.bindFromRequest.fold(
           formWithErrors => {
             // return errors to client
-            BadRequest("formWithErrors")
+            var errorMessage : String = "";
+				    formWithErrors.errors map { error  => {
+				    		errorMessage = s"${error.key}";
+				    	}
+				    }
+					  BadRequest(errorMessage);
           },
           incompleteOfficeHour => {
             // insert into database and return a 200
@@ -49,8 +56,16 @@ object OfficeHourController extends Controller with SessionHandler {
             val officeHour = nosql.UserOfficeHour(username, df.format(incompleteOfficeHour.date),
                                             incompleteOfficeHour.projectId, logMap)
 
-            nosql.UserOfficeHours.insertNewRecord(officeHour)
-            Ok("Test")
+            val f: ScalaFuture[Seq[nosql.UserOfficeHour]] = nosql.UserOfficeHours.getUserOfficeHoursForDateAndProject(username, officeHour.date, officeHour.projectId)
+
+            val officeHours: Seq[nosql.UserOfficeHour] = Await.result(f, duration.Duration.Inf)
+
+            if (officeHours.size > 0){
+              nosql.UserOfficeHours.updateRecord(officeHour)
+            } else {
+              nosql.UserOfficeHours.insertNewRecord(officeHour)
+            }
+            Ok("Success")
           }
         )
       }
