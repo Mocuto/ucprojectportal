@@ -20,7 +20,7 @@ case class UserOfficeHour(
   username: String,
   date: String,
   projectId: Int,
-  log: Map[Double, String]
+  log: Map[String, Double]
 )
 
 sealed class UserOfficeHours extends CassandraTable[UserOfficeHours, UserOfficeHour] {
@@ -28,7 +28,7 @@ sealed class UserOfficeHours extends CassandraTable[UserOfficeHours, UserOfficeH
   object username extends StringColumn(this) with PrimaryKey[String]
   object projectId extends IntColumn(this) with PrimaryKey[Int]
 
-  object log extends MapColumn[UserOfficeHours, UserOfficeHour, Double, String](this)
+  object log extends MapColumn[UserOfficeHours, UserOfficeHour, String, Double](this)
 
   def fromRow(row: Row): UserOfficeHour = {
     UserOfficeHour(

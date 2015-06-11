@@ -16,6 +16,7 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
+import play.api.libs.Files._
 
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -35,6 +36,8 @@ object OfficeHourController extends Controller with SessionHandler {
     ) (OfficeHour.apply)(OfficeHour.unapplyIncomplete)
   )
 
+  val updatesCreatedCounter = MetricsRegistry.default.counter("projects.created")
+
   def logHour = Action { implicit request => {
     authenticated match {
       case Some(username) => {
@@ -50,8 +53,8 @@ object OfficeHourController extends Controller with SessionHandler {
           },
           incompleteOfficeHour => {
             // insert into database and return a 200
-            var logMap:Map[Double, String] = Map()
-            logMap += (incompleteOfficeHour.hours -> incompleteOfficeHour.comment)
+            var logMap:Map[String, Double] = Map()
+            logMap += (incompleteOfficeHour.comment -> incompleteOfficeHour.hours)
             val df = new SimpleDateFormat("MM/dd/yyyy")
             val officeHour = nosql.UserOfficeHour(username, df.format(incompleteOfficeHour.date),
                                             incompleteOfficeHour.projectId, logMap)
@@ -64,6 +67,16 @@ object OfficeHourController extends Controller with SessionHandler {
               nosql.UserOfficeHours.updateRecord(officeHour)
             } else {
               nosql.UserOfficeHours.insertNewRecord(officeHour)
+            }
+
+            if (incompleteOfficeHour.markAsUpdate){
+              val completeUpdate = ProjectUpdate.create(incompleteOfficeHour.comment, username, incompleteOfficeHour.projectId, Seq[(String, TemporaryFile)]());
+              val project = Project.get(incompleteOfficeHour.projectId);
+					    Future {
+					    	project.notifyMembersExcluding(username, incompleteOfficeHour.comment);
+						  }
+
+					    updatesCreatedCounter.inc();
             }
             Ok("Success")
           }
