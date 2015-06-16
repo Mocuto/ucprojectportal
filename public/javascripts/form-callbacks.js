@@ -1,6 +1,7 @@
 function setupFormCallbacks() {
 	$("#post-update").click(function() {
-		submitUpdate();
+		var projectId = $(this).attr("project-id")
+		submitUpdate(projectId);
 	})
 
 	$("#login-button, .submit-button").click(function() {

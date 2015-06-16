@@ -59,12 +59,29 @@ object ProjectController extends Controller with SessionHandler {
 					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
 
 					val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+					val canEditAllUpdates = editPermissions.updatesAll;
+					val canEditOwnUpdates = editPermissions.updatesOwn;
+
 					val canJoin = editPermissions.joinProjects;
 
 					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
 					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
 
-					Ok(views.html.project(project, updates, username, canEdit, canUpdate, canJoin)(None)(ProjectUpdateController.projectUpdateForm))
+					val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)}
+					val canDeleteAllUpdates = deletePermissions.updatesAll
+					val canDeleteOwnUpdates = deletePermissions.updatesOwn
+
+					Ok(views.html.project(
+						project,
+						updates,
+						username,
+						canEdit,
+						canUpdate,
+						canJoin,
+						canEditAllUpdates,
+						canEditOwnUpdates,
+						canDeleteAllUpdates,
+						canDeleteOwnUpdates)(None)(ProjectUpdateController.projectUpdateForm))
 				}
 			}
 		}

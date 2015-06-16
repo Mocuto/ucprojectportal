@@ -1,18 +1,27 @@
-@(update : model.ProjectUpdate)
+@(update : model.ProjectUpdate, canEdit : Boolean, canDelete : Boolean)
+@import java.lang.String; val timeSubmitted = utils.Conversions.dateToStr(update.timeSubmitted);
 
-<div class="roundbox update">
+<div class="roundbox update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">
 	<span class="content-header">@links.userLink(update.author)</span>
 	@if(update.files.length > 0) {
 		<span class="hint">uploaded a file</span>
 	}
-	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
+	@if(canEdit || canDelete) {
+		<span style="float : right; margin-left: 16px">
+			<span class="update-arrow noselect"></span>
+			<div class="update-menu hint noselect">
+				@if(canEdit) {
+					<div class="menu-item edit-update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">edit</div>
+				}
+				@if(canDelete) {
+					<div class="menu-item delete-update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">delete</div>
+				}
+				
+			</div>
+		</span>
+	}
 	
-	<span style="float : right">arrow here
-		<div class="update-menu">
-			<div class="menu-item">item 1</div>
-			<div class="menu-item">item 2</div>
-		</div>
-	</span>
+	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
 
 	<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
 	@if(update.files.length > 0) {

@@ -33,7 +33,10 @@ function dialogYesNo(message, yesText, noText, yesCallback, noCallback) {
 		.text(noText)
 		.addClass("button")
 		.click(function() {
-			noCallback.call(this);
+			if(typeof noCallback !== "undefined")
+			{
+				noCallback.call(this);
+			}
 			notificationBox.popane({show : "false"});
 		})
 		.appendTo(optionTd)

@@ -55,7 +55,7 @@ function leaveProject(projectId) {
 	})
 }
 
-function submitUpdate() {
+function submitUpdate(projectId) {
 	var content = $("#update-input").val();
 	var files = $("#update-files").get(0).files;
 	var formData = new FormData();
@@ -68,7 +68,7 @@ function submitUpdate() {
 		sucess: onProjectSubmitSuccess,
 		error: onProjectSubmitError
 	}
-	var route = jsRoutes.controllers.ProjectController.submitUpdate();
+	var route = jsRoutes.controllers.ProjectUpdateController.submit(projectId);
 	ajaxSendFormData(formData, route, function(data) {
 
 		var updateHtml = $($.parseHTML(data["html"])[1]);
@@ -86,14 +86,26 @@ function submitUpdate() {
 			backgroundColor : "#ddd"
 		})
 
-		var fileHtmlGroup = $.parseHTML(data["fileHtml"]); 
+		var fileHtmlGroup = $.parseHTML(data["fileHtml"]) || []; 
 		
 		for(var i = 1; i < fileHtmlGroup.length; i++) {
 			var fileHtml = $(fileHtmlGroup[i]);
 			$(".file-group").prepend(fileHtml)
 		}
 
+		setupUpdateMenuCallbacks();
+
 	});
+}
+
+function deleteUpdate(projectId, author, timeSubmitted) {
+
+	var route = jsRoutes.controllers.ProjectUpdateController.delete(projectId, author, timeSubmitted)
+	ajaxSendFormData(new FormData(), route, function(data) {
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]').slideUp();
+	}, function() {
+		//TODO
+	})
 }
 
 function requestJoin(projectId) {

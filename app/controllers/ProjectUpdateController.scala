@@ -34,7 +34,7 @@ object ProjectUpdateController extends Controller with SessionHandler {
 
 	val updatesCreatedCounter = MetricsRegistry.default.counter("projects.created")
 
-	def submit = Action { implicit request =>
+	def submit(projectId : Int) = Action { implicit request =>
 		whenAuthorized(username => {
 			projectUpdateForm.bindFromRequest.fold(
 			  formWithErrors => {
@@ -48,7 +48,7 @@ object ProjectUpdateController extends Controller with SessionHandler {
 			  },
 			  update => {
 			    /* binding success, you get the actual value. */
-			    val project = Project.get(update.projectId);
+			    val project = Project.get(projectId);
 
 				val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
 				val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
@@ -63,17 +63,23 @@ object ProjectUpdateController extends Controller with SessionHandler {
 				    val multipartFormData = request.body.asMultipartFormData.get
 				    val files = multipartFormData.files.map(filepart => (filepart.filename, filepart.ref));
 
-				    val completeUpdate = ProjectUpdate.create(update.content, username, update.projectId, files = files);
+				    val completeUpdate = ProjectUpdate.create(update.content, username, projectId, files = files);
 
 				    Future {
 				    	project.notifyMembersExcluding(username, completeUpdate.content);
 					}
 
+					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
+					val canEdit = editPermissions.updatesAll || editPermissions.updatesOwn && completeUpdate.author == username
+
+					val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)}
+					val canDelete = deletePermissions.updatesAll || deletePermissions.updatesOwn && completeUpdate.author == username
+
 				    val response = JsObject(
 				    	Seq(
-			    			"html" -> JsString(views.html.common.updateView(completeUpdate).toString),
+			    			"html" -> JsString(views.html.common.updateView(completeUpdate, canEdit, canDelete).toString),
 			    			"fileHtml" -> JsString(
-			    				completeUpdate.files.map(x => views.html.common.fileUpdateView(ProjectFile.get(completeUpdate.projectId, completeUpdate.timeSubmitted, x)).toString).mkString
+			    				completeUpdate.files.map(x => views.html.common.fileUpdateView(ProjectFile.get(projectId, completeUpdate.timeSubmitted, x)).toString).mkString
 		    				)
 			    		)
 				    )
@@ -108,6 +114,6 @@ object ProjectUpdateController extends Controller with SessionHandler {
 					case None => NotFound("This update does not exist")
 				}				
 			}
-		}) ()
+		})
 	}
 }

@@ -8,7 +8,7 @@
     <div class="main-container">
       <div class="huge-header">create a new project</div>
      	<div class="roundbox">
-     	@helper.form(action = routes.ProjectController.submitProject) {
+     	@helper.form(action = routes.ProjectController.submit) {
       @for(error <- form.errors) {
         <div class="form-error">@error.key match {
           case "" => { *@error.message }

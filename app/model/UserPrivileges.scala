@@ -51,6 +51,8 @@ object UserPrivileges {
 		joinProjects : Boolean = false,
 		projectsOwn : Boolean = false,
 		projectsAll : Boolean = false,
+		updatesOwn : Boolean = false,
+		updatesAll : Boolean = false,
 		userPermissions : Boolean = false) extends UserPrivileges {
 		def matches (that : Edit) = (
 			joinProjects == that.joinProjects && 
@@ -183,10 +185,19 @@ sealed class UserPrivilegesEdit extends CassandraTable[UserPrivilegesEdit, UserP
 	object username extends StringColumn(this) with PartitionKey[String]
 	object edit_projects_all extends BooleanColumn(this)
 	object edit_projects_self extends BooleanColumn(this)
+	object edit_updates_all extends BooleanColumn(this)
+	object edit_updates_self extends BooleanColumn(this)
 	object edit_user_permissions extends BooleanColumn(this)
 	object join_projects extends BooleanColumn(this);
 
-	override def fromRow(r : Row) = UserPrivileges.Edit(username(r), join_projects(r), edit_projects_self(r), edit_projects_all(r), edit_user_permissions(r));
+	override def fromRow(r : Row) = UserPrivileges.Edit(
+		username(r),
+		join_projects(r),
+		edit_projects_self(r),
+		edit_projects_all(r),
+		edit_updates_self(r),
+		edit_updates_all(r),
+		edit_user_permissions(r));
 }
 
 object UserPrivilegesEdit extends UserPrivilegesEdit with UserPrivilegesModel[UserPrivileges.Edit] {
@@ -199,6 +210,8 @@ object UserPrivilegesEdit extends UserPrivilegesEdit with UserPrivilegesModel[Us
     	insert.value(_.username, item.username)
     		.value(_.edit_projects_all, item.projectsAll)
     		.value(_.edit_projects_self, item.projectsOwn)
+    		.value(_.edit_updates_all, item.updatesAll)
+    		.value(_.edit_updates_self, item.updatesOwn)
     		.value(_.edit_user_permissions, item.userPermissions)
     		.value(_.join_projects, item.joinProjects)
     		.future();

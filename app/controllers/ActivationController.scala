@@ -257,7 +257,7 @@ object ActivationController extends Controller with SessionHandler {
 		whenAuthorized(username => {
 				User.setupNonSG(username);
 				Redirect(routes.Application.gettingStarted)
-			})(orElse = Redirect(routes.ShibbolethController.secure))
+			})(request = implicitly, orElse = Redirect(routes.ShibbolethController.secure))
 		
 	}
 

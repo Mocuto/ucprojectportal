@@ -1,4 +1,4 @@
-@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, canEdit : Boolean, canUpdate : Boolean, canJoin : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
+@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, canEdit : Boolean, canUpdate : Boolean, canJoin : Boolean, canEditAllUpdates : Boolean, canEditOwnUpdates : Boolean, canDeleteAllUpdates : Boolean, canDeleteOwnUpdates : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
 @import model.User; val authenticatedUser = model.User.get(username)
 @main(s"${project.name} | Student Government Project Portal")( Some(authenticatedUser)) {
 <script>
@@ -253,9 +253,8 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
           <tr>
             <td style="width:100%">
             <div id="project-update-log">
-               @*if(project.teamMembers.contains(authenticatedUser.username) == true && project.state != model.ProjectState.COMPLETED && project.state != model.ProjectState.CLOSED) { *@
                @if(canUpdate) {
-                @helper.form(action = routes.ProjectController.submitUpdate) {
+                @helper.form(action = routes.ProjectUpdateController.submit(project.id)) {
                 
                   <div class="roundbox update">
                      <textarea name="content" id="update-input" class="roundbox-textinput textarea-description" placeholder="write a status update"></textarea>
@@ -264,7 +263,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                         <span class ="button" id="update-files-mask">choose files</span>
                         <span id="update-files-filenames"></span>
                         <input type="file" id="update-files" multiple style="display:none">
-                        <span class="blue-button" id="post-update" value="Post Update">post update</span>
+                        <span class="blue-button" id="post-update" value="Post Update" project-id="@project.id">post update</span>
                      </div>
 
                   </div>
@@ -272,7 +271,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                }
                <div class="update-group">
                	@for(update <- updates) {
-                     @common.updateView(update)
+                     @common.updateView(update, canEditAllUpdates || canEditOwnUpdates && update.author == username, canDeleteAllUpdates || canDeleteOwnUpdates && update.author == username)
                	}
             	</div>
             </div>

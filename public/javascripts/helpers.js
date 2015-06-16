@@ -47,5 +47,7 @@ $(document).ready(function() {
 
 	setupFormCallbacks();
 
+	setupUpdateMenuCallbacks();
+
 	pulse();
 })
