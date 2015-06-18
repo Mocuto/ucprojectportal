@@ -75,7 +75,12 @@ GET		/signout								controllers.Application.signout
 GET		/uploads/:file							controllers.Application.uploads(file : String)
 GET 	/feedback 								controllers.Application.feedback
 POST 	/feedback/submit 						controllers.Application.submitFeedback
+
 GET 	/getting-started						controllers.Application.gettingStarted
+
+GET 	/search/:query 							controllers.Application.search(query : String)
+GET 	/search 								controllers.Application.search(query : String = "")
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               			controllers.Assets.at(path="/public", file)

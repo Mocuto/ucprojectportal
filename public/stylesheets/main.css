@@ -540,6 +540,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	border-radius: 30px;
 	width: 500px;
 	box-shadow: 0px 5px 20px #333;
+	display: none;
 }
 
 #popane-overlay {

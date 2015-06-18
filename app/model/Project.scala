@@ -249,29 +249,44 @@ object Project {
 	 }
 }
 
-case class Project (
-			id : Int,
-			name: String, description : String,
-		 	timeStarted : Date = new Date(),
-		 	timeFinished : Date = null,
-			categories : Seq[String] = List[String](),
-			tags : Seq[String] = List[String](),
-			primaryContact : String = "",
-			teamMembers : Seq[String] = List[String](), 
-			state : String = "", stateMessage : String = "",
-			isDefined : Boolean = true) {
-	def this (
-		name : String,
+case class Project (	
+		id : Int,
+		name: String, 
 		description : String,
-		categories : Seq[String],
-		state : String,
-		stateMessage : String,
-		teamMembers : Seq[String]) = this(-1, name, description, categories=categories, state = state, stateMessage = stateMessage, teamMembers=teamMembers)
+		timeStarted : Date = new Date(), 
+		timeFinished : Date = null,
+		categories : Seq[String] = List[String](), 
+		tags : Seq[String] = List[String](),
+	 	primaryContact : String = "", 
+	 	teamMembers : Seq[String] = List[String](), 
+	 	state : String = "", 
+	 	stateMessage : String = "",
+	 	isDefined : Boolean = true) {
 
-	def this (name : String) = this(name, description = "", categories = List[String](), state=ProjectState.DEFAULT, stateMessage="", teamMembers = List[String]());
+	def this (
+			name : String, 
+			description : String, 
+			categories : Seq[String], 
+			state : String, 
+			teamMembers : Seq[String]) = {
 
-	def notifyMembersExcluding(excludingUsername : String, updateContent : String) {
-		teamMembers.foreach(username => if(excludingUsername.equals(username) == false) Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent));
+ 		this(-1, name, description, categories=categories, state = state, teamMembers=teamMembers)
+	}
+
+	def this (name : String) = this(
+			name, 
+			description = "", 
+			categories = List[String](), 
+			state="", 
+			teamMembers = List[String]())
+
+	def notifyMembersExcluding(excludingUsername : String, updateContent : String) : Unit = {
+		teamMembers foreach(username => {
+			if(excludingUsername != username)
+			{
+				Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent)
+			}
+		});
 	}
 
 	def isNew : Boolean = Weeks.weeksBetween(new DateTime(timeStarted), DateTime.now).getWeeks <= 1;

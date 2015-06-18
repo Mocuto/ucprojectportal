@@ -102,6 +102,7 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 		val teamMembersStr = teamMembers.map(member => s"'$member'").mkString(",")
 
 		var executeString = s"insert into $PROJECTS($PROJECT_INSERT_FIELDS) VALUES($id, '${project.description.replace("'", "''")}', { $teamMembersStr}, '${project.name.replace("'", "''")}', '$primaryContact', '$cleanState', '$cleanStateMessage' , { $categoriesStr } , dateOf(now()))";
+
 		execute(executeString);
 
 		executeString = s"update $USERS set primary_contact_projects = primary_contact_projects + { $id } where username='$primaryContact'";

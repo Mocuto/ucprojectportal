@@ -161,6 +161,21 @@ object Application extends Controller with SessionHandler {
 		}
 	}
 
+	def search(query : String) = Action { implicit request =>
+		authenticated match {
+			case Some(username) => {
+				val user = User.get(username);
+
+				val projects = if (query.length == 0) {
+					List[Project]();
+				} else {
+					ProjectSearcher.search(query);
+				}
+				Ok(views.html.search(user)(projects, query))
+			}
+		}
+	}
+
 	def submitFeedback = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
