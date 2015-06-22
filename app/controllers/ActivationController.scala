@@ -89,7 +89,6 @@ object ActivationController extends Controller with SessionHandler {
 		})
 	)
 
-
 	case class UserForm(firstName : String, lastName : String, preferredPronouns : String, position : String);
 
 	val sgAccountForm = Form(
@@ -248,7 +247,7 @@ object ActivationController extends Controller with SessionHandler {
 					SMTPCommunicator.sendAllVerifyUserEmail(username);
 					Redirect(routes.Application.gettingStarted)
 				}
-				case (None, _) => Redirect(routes.ShibbolethController.secure)
+				case (None, _) => Redirect(routes.ShibbolethController.secure(""))
 			}
 		)
 	}
@@ -257,7 +256,7 @@ object ActivationController extends Controller with SessionHandler {
 		whenAuthorized(username => {
 				User.setupNonSG(username);
 				Redirect(routes.Application.gettingStarted)
-			})(request = implicitly, orElse = Redirect(routes.ShibbolethController.secure))
+			})(request = implicitly, orElse = Redirect(routes.ShibbolethController.secure("")))
 		
 	}
 

@@ -1,5 +1,7 @@
 package controllers
 
+import actors.masters.IndexerMaster
+
 import com.codahale.metrics.Meter
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
@@ -33,7 +35,7 @@ object RequestController extends Controller with SessionHandler {
 				val receiver = User.get(project.primaryContact);
 				val authenticatedUser = User.get(username);
 
-				project match{
+				project match {
 					case project if project.isDefined == false => { //Check if the project with that id does not exist
 						Status(404)(s"project with id = $projectId does not exist")
 					}
@@ -107,6 +109,9 @@ object RequestController extends Controller with SessionHandler {
 						val user = User.get(requester);
 
 						acceptMeter.mark();
+
+						IndexerMaster index project
+
 						Ok(response)				
 					}
 				}

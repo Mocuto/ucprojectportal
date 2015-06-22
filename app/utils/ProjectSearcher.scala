@@ -2,16 +2,23 @@ package utils
 
 import actors.masters.IndexerMaster
 
+import java.nio.file.{Paths, Files}
+
 import model.Project
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer
 import org.apache.lucene.index.{DirectoryReader, IndexReader}
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser
-import org.apache.lucene.search.{BooleanClause, IndexSearcher}
+import org.apache.lucene.search._
+import org.apache.lucene.store._
 
 object ProjectSearcher {
 
-	val reader = DirectoryReader.open(IndexerMaster.writer, true)
+	val indexesDir = Paths.get(constants.ServerSettings.IndexingDirectory);
+
+	val directory = new NIOFSDirectory(indexesDir)
+
+	val reader = DirectoryReader.open(directory)
 
 	val searcher = new IndexSearcher(reader);
 

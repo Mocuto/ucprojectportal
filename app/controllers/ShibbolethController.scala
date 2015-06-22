@@ -23,11 +23,7 @@ import utils._
 
 object ShibbolethController extends Controller with SessionHandler {
 
-	def secure = Action { implicit request => {
-		//val formData = request.body.asFormUrlEncoded.get
-
-		//println(formData)
-		//println(request.headers.toString)
+	def secure(path : String) = Action { implicit request => 
 
 		request.headers.get("eppn") match {
 			case Some(eppn) => {
@@ -40,7 +36,7 @@ object ShibbolethController extends Controller with SessionHandler {
 						println(x);
 						println("Creating user");
 						User.createFromShibboleth(username);
-						Redirect(routes.ActivationController.activateNEW("")).withSession("authenticated" -> username)
+						Redirect(routes.ActivationController.activateNEW(path)).withSession("authenticated" -> username)
 					}
 					case user : User => Redirect(routes.Application.index).withSession("authenticated" -> username)
 				}
@@ -49,5 +45,7 @@ object ShibbolethController extends Controller with SessionHandler {
 		}
 
 
-	}}
+	}
+
+	def secure : Action[play.api.mvc.AnyContent] = secure("")
 }

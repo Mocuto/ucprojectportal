@@ -5,7 +5,7 @@
 
 </script>
 <div class="title-nav">
-	<span class="title-project-portal"><a href="/">project portal</a></span> | <span id="uc-sg">university of cincinnati undergraduate student government</span>
+	<span class="title-project-portal"><a href="/">project portal</a></span> | <span id="uc-sg">undergraduate student government</span>
 	<span class="title-nav-item">
 		<a href="/signout">
 			sign out
@@ -25,7 +25,13 @@
 		} else {
 			hi @(user.firstName.toLowerCase() +"!")
 		}
-		
+	</span>
+
+	<span class="title-nav-item search-nav-item">
+		<span style="max-height:32px">
+			<span class="search-button"></span>
+			<input class="roundbox-textinput typeahead search-box" id="search-box"></span>
+		</span>
 	</span>
 
 	<div class="popane" id="notifications-window">

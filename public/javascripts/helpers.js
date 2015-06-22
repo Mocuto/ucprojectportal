@@ -1,4 +1,4 @@
-var PULSE_INTERVAL = 3000;
+var PULSE_INTERVAL = 5000;
 
 
 function pulse() {
@@ -48,6 +48,8 @@ $(document).ready(function() {
 	setupFormCallbacks();
 
 	setupUpdateMenuCallbacks();
+
+	setupSearch();
 
 	pulse();
 })

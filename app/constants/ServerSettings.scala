@@ -13,6 +13,10 @@ object ServerSettings {
 	val ADMIN_EMAIL =  Play.application.configuration.getString("admin.email")//"akomolot@mail.uc.edu"
 	val ADMIN_NAME =  Play.application.configuration.getString("admin.name")//"Tobi Akomolede"
 
+	val IndexingDirectory = Play.application.configuration.getString("indexing.directory")
 	val INDEXING_INTERVAL : Int = Play.application.configuration.getInt("routine.indexing.interval");
+
+	val AuthenticationMode = enums.AuthenticationMode.fromString(Play.application.configuration.getString("authentication"))
+
 }
 

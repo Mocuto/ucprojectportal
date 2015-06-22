@@ -57,8 +57,11 @@ object Application extends Controller with SessionHandler {
 		Ok(
 			Routes.javascriptRouter("jsRoutes")
 			(
+			 routes.javascript.Application.search,
 			 routes.javascript.ProjectController.edit,
 			 routes.javascript.ProjectController.leave,
+			 routes.javascript.ProjectController.jsonForAll,
+			 routes.javascript.ProjectController.jsonForUser,
 			 routes.javascript.ProjectUpdateController.submit,
 			 //routes.javascript.ProjectUpdateContoller.edit,
 			 routes.javascript.ProjectUpdateController.delete,

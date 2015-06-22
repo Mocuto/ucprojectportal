@@ -693,3 +693,79 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	-ms-user-select: none;
 	user-select: none;
 }
+
+.search-nav-item {
+	max-height: 32px;
+	position: relative;
+	top: -2px;
+}
+
+.search-nav-item, .search-nav-item * {
+	overflow: visible;
+}
+
+.search-nav-item *:hover {
+	text-decoration: none;
+}
+
+.search-nav-item .tt-suggestion {
+	text-align: left;
+	width: 188px;
+	padding-top: 4px;
+	padding-bottom:4px;
+	padding-left:4px;
+	cursor: pointer;
+}
+
+.search-nav-item .tt-suggestion:hover {
+	background-color:#aedefc;
+	text-decoration: underline;
+}
+
+.search-nav-item .tt-suggestion:last-child {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.tt-menu {
+	background-color: white;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.tt-menu, .tt-menu * {
+	float:none;
+	max-height: none;
+}
+
+.search-button {
+	background-image: url("/assets/images/icons/search.png");
+	background-size: cover;
+	width: 18px;
+	height: 18px;
+	position: relative;
+	right: 20px;
+	z-index: 1;
+	top:2px;
+	cursor: pointer;
+}
+
+.search-box {
+	width: 192px;
+	height: 24px;
+	text-align: left;
+	box-sizing: border-box;
+	margin-bottom: 0px;
+	font-size: 12px;
+	padding-left: 32px;
+	visibility: hidden;
+	max-height: 32px;
+}
+
+#search-box:focus {
+	background-color:#eee;
+}
+
+.twitter-typeahead {
+	max-height: 32px;
+}

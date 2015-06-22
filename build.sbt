@@ -52,7 +52,7 @@ libraryDependencies ++= Seq(
     "org.mindrot" % "jbcrypt" % "0.3m",
     "org.apache.lucene" % "lucene-core" % "5.0.0",
     "com.websudos"  %% "phantom-dsl" % phantomVersion,
-    "org.opensaml" % "opensaml" % openSAMLVersion
+    "org.opensaml" % "opensaml" % openSAMLVersion,
     "org.apache.lucene" % "lucene-analyzers-common" % "5.0.0",
     "org.apache.lucene" % "lucene-queryparser" % "5.0.0",
     "org.apache.lucene" % "lucene-facet" % "5.0.0"

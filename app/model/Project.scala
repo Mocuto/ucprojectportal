@@ -18,14 +18,19 @@ import scala.collection.mutable.MutableList
 import scala.util.Random
 
 import utils._
+import utils.Conversions._
 import utils.nosql.CassieCommunicator
 
 object Project {
 
 	def apply (name : String) : Project = new Project(name);
-	def apply (name : String, description : String, categories : Seq[String], state : String, stateMessage : String, teamMembers : Seq[String]) : Project = { 
-		new Project(name, description, categories = categories, state = state, stateMessage = stateMessage, teamMembers = teamMembers);
-	}
+	def apply (
+		name : String,
+		description : String,
+		categories : Seq[String],
+		state : String,
+		stateMessage : String,
+		teamMembers : Seq[String]) = new Project(name, description, categories = categories, state = state, stateMessage = stateMessage, teamMembers = teamMembers);
 
 	def unapplyIncomplete(project : Project) : Option[(String, String, List[String], String, String, List[String])] = Some(
 		project.name,
@@ -267,7 +272,8 @@ case class Project (
 			name : String, 
 			description : String, 
 			categories : Seq[String], 
-			state : String, 
+			state : String,
+			stateMessage : String,
 			teamMembers : Seq[String]) = {
 
  		this(-1, name, description, categories=categories, state = state, teamMembers=teamMembers)
@@ -277,7 +283,8 @@ case class Project (
 			name, 
 			description = "", 
 			categories = List[String](), 
-			state="", 
+			state = "",
+			stateMessage = "",
 			teamMembers = List[String]())
 
 	def notifyMembersExcluding(excludingUsername : String, updateContent : String) : Unit = {

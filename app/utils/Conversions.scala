@@ -1,8 +1,11 @@
 package utils
 
 import java.text.SimpleDateFormat
-
 import java.util.Date
+
+import model._
+
+import play.api.libs.json._
 
 import scala.collection.JavaConversions._
 
@@ -32,4 +35,21 @@ object Conversions {
 		case -1 => eppn.length
 		case length : Int => length
 	});
+
+	implicit def funToRunnable(fun: => Unit) = new Runnable() { def run() = fun }
+
+	implicit val projectWrites = new Writes[Project] {
+  		def writes(p: Project) = Json.obj(
+	    "id" -> p.id,
+	    "name" -> p.name,
+	    "description" -> p.description,
+	    "timeStarted" -> p.timeStarted,
+	    "timeFinished" -> p.timeFinished,
+	    "categories" -> p.categories,
+	    "primaryContact" -> p.primaryContact,
+	    "teamMembers" -> p.teamMembers,
+	    "state" -> p.state,
+	    "stateMessage" -> p.stateMessage
+	  )
+	}
 }

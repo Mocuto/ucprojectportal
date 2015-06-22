@@ -1,5 +1,8 @@
 package constants
 
 object Indexing {
-	val PROJECT_ID = "project-id";
+	val ProjectId = "project-id";
+
+	val KillIndexWriter = "kill-index-writer"
+	val IndexWriterWorkStatus = "index-writer-work-status"
 }

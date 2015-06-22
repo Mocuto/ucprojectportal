@@ -121,6 +121,68 @@ function setupLayout() {
 		})
 	})
 
+	$(".search-button").click(function() {
+		var active = $("#search-box").attr("active")
+
+
+		if(active !== "true")
+		{
+			$("#search-box").attr("active", true);
+			var styleWidth = $("#search-box").css("width")
+			var boxWidth = +styleWidth.substr(0, styleWidth.length - 2)
+			$(this).animate({
+				"right" : boxWidth - 4
+			}, {
+				duration: 250,
+				complete: function() {
+					$(".search-box").css("visibility", "visible")
+					$(".search-box").css("opacity", "0")
+					$(".search-box").focus()
+					$(".search-box").animate({
+						"opacity" : 1
+					}, 250)
+				}
+			})		
+		}
+		else
+		{
+			var query = $("#search-box").val()
+
+			if(query.length > 0)
+			{
+				redirectToSearch();
+			}
+			
+		}
+	})
+
+	$("#search-box").blur(function() {
+		var query = $("#search-box").val()
+
+		if(query.length == 0)
+		{
+			$("#search-box").attr("active", false);
+
+			$(".search-box").animate({
+				"opacity" : 0
+			}, {
+				duration : 200,
+				complete : function() {
+					$(".search-box").css("visibility", "hidden");
+				}
+			})
+
+			$(".search-button").animate({
+				right : "20px"
+			}, 200)
+		}
+	})
+
+	$(".typeahead").bind("typeahead:select", function(event, suggestion) {
+		var query = suggestion;
+		redirectToSearchWithQuery(suggestion)
+	})
+
 	var initialWidth = $(".title-nav").width() //Grab the left position left first
 	var initialPaddingLeft = parseInt($(".title-nav").css("padding-left"));
 

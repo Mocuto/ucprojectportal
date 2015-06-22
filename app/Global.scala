@@ -1,12 +1,13 @@
 import controllers._;
 
+import actors.masters.IndexerMaster
+
 import com.kenshoo.play.metrics.MetricsFilter
 
 import java.nio.file.{Files, Paths}
 
 import model._;
 import model.UserPrivileges;
-import model.routines._
 
 import play.api._
 import play.api.data._
@@ -65,14 +66,16 @@ object AuthorizedFilter {
 class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 	def apply(next: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-		//println(request);
-		
-		//println(formData)
 		if(authorizationRequired(request)) {
 		  request.session.get("authenticated") match {
 		  	case None => Future {
-		  		println(request.session.get("authenticated"))
-		  		Results.Redirect(routes.Application.login(request.path))
+		  		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
+		  			Results.Redirect(routes.Application.login(request.path))		  			
+		  		}
+		  		else {
+		  			Results.Redirect(routes.ShibbolethController.secure(request.path))
+		  		}
+
 		  	}
 		  	case Some(username) => {
 		  		val user = User.get(username);
@@ -94,7 +97,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 	private def authorizationRequired(request: RequestHeader) : Boolean = {
 		val actionInvoked: String = request.tags.getOrElse(play.api.Routes.ROUTE_ACTION_METHOD, "")
-		return actionNames.contains(actionInvoked)
+		return !actionNames.contains(actionInvoked)
 	}
 
 
@@ -143,7 +146,8 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 	}
 
 	def startDaemons() : Unit = {
-		Scheduler.schedule[Project](Routine.IndexingRoutine)
+		//Scheduler.schedule[Project](Routine.IndexingRoutine)
+		IndexerMaster.start();
 	}
 
 	override def onStart(app: Application) : Unit = {

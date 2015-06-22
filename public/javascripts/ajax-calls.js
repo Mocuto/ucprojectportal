@@ -35,14 +35,14 @@ function editProject(formData, optionalCallback) {
 		}
 	}
 
-	var route = jsRoutes.controllers.ProjectController.editProject(PROJECT_ID);
+	var route = jsRoutes.controllers.ProjectController.edit(PROJECT_ID);
 	ajaxSendFormData(formData, route, optionalCallback, function() {
 
 	})
 }
 
 function leaveProject(projectId) {
-	var route = jsRoutes.controllers.ProjectController.leaveProject(projectId);
+	var route = jsRoutes.controllers.ProjectController.leave(projectId);
 	ajaxSendFormData(new FormData(), route, function() {
 		for(var i = 0; i < $(".projectbox-" + projectId).length; i++) {
 			var projectbox = $(".projectbox-" + projectId)[i]

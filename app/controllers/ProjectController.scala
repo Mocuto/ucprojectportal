@@ -1,6 +1,6 @@
 package controllers
 
-import actors.Scheduler
+import actors.masters.IndexerMaster
 
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
@@ -140,12 +140,10 @@ object ProjectController extends Controller with SessionHandler {
 							}
 							projectsCreatedCounter.inc();
 
-							Scheduler.indexNow(completeProject)
+							IndexerMaster.index(completeProject)
 
 							Redirect(routes.ProjectController.project(completeProject.id));							
 						}
-		
-						Redirect(routes.ProjectController.project(completeProject.id));
 					}
 				})
 			}
@@ -217,7 +215,7 @@ object ProjectController extends Controller with SessionHandler {
 						)
 					)
 
-					Scheduler.indexNow(updatedProject);
+					IndexerMaster.index(updatedProject);
 
 					Ok(response);
 				}
@@ -247,11 +245,27 @@ object ProjectController extends Controller with SessionHandler {
 						)
 					)
 
-					Scheduler.indexNow(project)
+					IndexerMaster index project
 
 					Ok(response);
 				}
 			}
 		}
+	}
+
+	def jsonForAll = Action { implicit request =>
+		whenAuthorized(username => {
+			val response = Json.toJson((Project all) map(_.name))
+
+			Ok(response)
+		})
+	}
+
+	def jsonForUser = Action { implicit request =>
+		whenAuthorized(username => {
+			val response = Json.toJson((Project get username) map (_.name)) 
+
+			Ok(response);
+		})
 	}
 }
