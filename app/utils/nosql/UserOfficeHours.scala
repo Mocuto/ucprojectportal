@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 
 import com.datastax.driver.core.{ ResultSet, Row }
 
-import com.websudos.phantom.dsl._
+import com.websudos.phantom.Implicits._
 
 import com.twitter.conversions.time._
 
@@ -41,8 +41,10 @@ sealed class UserOfficeHours extends CassandraTable[UserOfficeHours, UserOfficeH
 }
 
 
-object UserOfficeHours extends UserOfficeHours with BasicConnector {
+object UserOfficeHours extends UserOfficeHours {
   override lazy val tableName = "user_office_hours"
+
+  implicit val session = CassieCommunicator.session
 
   def insertNewRecord(officeHour: UserOfficeHour): ScalaFuture[ResultSet] = {
     insert.value(_.username, officeHour.username)

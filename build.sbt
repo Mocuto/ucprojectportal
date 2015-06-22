@@ -4,14 +4,14 @@ version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.11.1"
 
-val phantomVersion = "1.8.12"
+val phantomVersion = "1.5.0"
 
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache,
   ws
-)     
+)
 
 libraryDependencies ++= Seq(
 	"com.datastax.cassandra" % "cassandra-driver-core" % "2.1.0",

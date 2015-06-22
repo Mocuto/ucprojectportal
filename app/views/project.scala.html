@@ -95,7 +95,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                               <span class="content-header">categories</span>
                            </td>
                            <td>
-                           @if(isPrimaryContact) {
+                           @if(canEdit) {
                               <span class="edit-button" for="project-categories"></span>
                            }
                            </td>
@@ -225,7 +225,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  		</tr>
                  	</table>
                   <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(", "))</p>
-                 	@if(isPrimaryContact) {
+                 	@if(canEdit) {
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
                         @for(otherUser <- model.User.allConfirmed) {
