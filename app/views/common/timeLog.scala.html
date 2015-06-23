@@ -96,7 +96,8 @@
       $.post("/officehour/logHour", reqBody, function(data) {
           $("#logTimeError").html("");
           $("#mDate").val("");
-          $("#office-hour-project-select").val("");
+          $("#office-hour-project-select").val(-1);
+          $('#office-hour-project-select').trigger("chosen:updated");
           $("#mHours").val("");
           $("#mComments").val("");
           $("#logTimeSuccess").html("Time logged successfully!");
