@@ -65,7 +65,7 @@ function onEditButtonClicked() {
 
 			formData.append("description", description);
 
-			$("#" + field).text(description);
+			$("#" + field).html(description.brTagify());
 		}
 
 		else if (column === "categories") {

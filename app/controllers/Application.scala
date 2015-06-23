@@ -63,7 +63,7 @@ object Application extends Controller with SessionHandler {
 			 routes.javascript.ProjectController.jsonForAll,
 			 routes.javascript.ProjectController.jsonForUser,
 			 routes.javascript.ProjectUpdateController.submit,
-			 //routes.javascript.ProjectUpdateContoller.edit,
+			 routes.javascript.ProjectUpdateController.edit,
 			 routes.javascript.ProjectUpdateController.delete,
 			 routes.javascript.RequestController.join,
 			 routes.javascript.RequestController.accept,

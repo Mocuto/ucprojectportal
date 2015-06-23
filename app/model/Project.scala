@@ -15,6 +15,7 @@ import play.api.mvc._
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.MutableList
+import scala.concurrent._
 import scala.util.Random
 
 import utils._
@@ -230,7 +231,10 @@ object Project {
 		return Project.get(id);
 	}
 
-	def getUpdates(id : Int) : Seq[ProjectUpdate] = CassieCommunicator.getUpdatesForProject(id);
+	//def getUpdates(id : Int) : Seq[ProjectUpdate] = CassieCommunicator.getUpdatesForProject(id);
+	def getUpdates(id : Int) : Seq[ProjectUpdate] = ProjectUpdateTable.getUninterruptibly(id)
+
+	def getUpdatesAsync(id : Int) : Future[Seq[ProjectUpdate]] = ProjectUpdateTable.get(id)
 
 	implicit def fromRow (row : Row) : Project =  { 
 		row match {

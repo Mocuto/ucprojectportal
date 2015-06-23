@@ -67,6 +67,7 @@ function dialog(content) {
 
 function setupLayout() {
 	$(".textarea-description").autosize()
+	$(".textarea-update").autosize()
 
 	$(".chosen").chosen({
 			no_results_text: "oops, nothing found!",

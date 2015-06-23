@@ -23,7 +23,15 @@
 	
 	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
 
+
+	@if(canEdit) {
+		<p class="content editable">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
+		<textarea class="edit-field roundbox-textinput textarea-update" placeholder="write a status update" style="display:none;">@Html(update.content)</textarea>
+		<span class="blue-button edit-field edit-update-button"  value="Edit Update" style="display: none;">ok</span>
+
+	} else {
 	<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
+	}
 	@if(update.files.length > 0) {
 		<span class="hint">attachments:
 			@for(filename <- update.files) {

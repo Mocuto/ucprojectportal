@@ -16,11 +16,11 @@ object Conversions {
 
 	def stripUUID(filename : String) : String = return filename.substring(Math.max(0, filename.indexOf("--") + 2));
 
-	implicit def dateToStr(date : Date) : String = return formatter.format(date);
+	implicit def dateToStr(date : Date) : String = return date.getTime().toString //return formatter.format(date);
 
 	implicit def dateToDisplayedStr(date : Date) : String = return if (date != null) displayedFormatter.format(date) else "?";
 
-	implicit def strToDate(str : String) : Date = return formatter.parse(str);
+	implicit def strToDate(str : String) : Date =  new Date(str.toLong) //return formatter.parse(str);
 
 	implicit def mapToStr(map : Map[String, String]) : String = { 
 

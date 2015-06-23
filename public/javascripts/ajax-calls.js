@@ -23,7 +23,10 @@ $.ajax({
 	},
 	error: function(error, textstatus, message){
 		//alert("ERROR" + error.responseText);
-		onError.call(this, error, textstatus, message);
+		if(typeof onError !== "undefined")
+		{
+			onError.call(this, error, textstatus, message);			
+		}
 	}
 });				
 }
@@ -52,6 +55,24 @@ function leaveProject(projectId) {
 		}
 	}, function() {
 
+	})
+}
+
+function editUpdate(projectId, author, timeSubmitted, content) {
+	var formData = new FormData();
+
+	formData.append("content", content);
+
+	var route = jsRoutes.controllers.ProjectUpdateController.edit(projectId, author, timeSubmitted)
+	ajaxSendFormData(formData, route, function(data) {
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
+			.children(".edit-field").css("display", "none")
+
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
+			.children(".content").css("display", "block")
+
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
+			.children(".content").html(content.brTagify());
 	})
 }
 

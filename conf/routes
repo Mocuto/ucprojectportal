@@ -23,7 +23,7 @@ GET 	/project/json/all 						controllers.ProjectController.jsonForAll
 
 #Project Update routes
 POST	/project/:id/update/submit				controllers.ProjectUpdateController.submit(id : Int)
-#POST 	/project/:id/update/:author/:ts/edit 	controllers.ProjectUpdateController.edit(id : Int, author : String, ts : String)
+POST 	/project/:id/update/:author/:ts/edit 	controllers.ProjectUpdateController.edit(id : Int, author : String, ts : String)
 POST 	/project/:id/update/:author/:ts/delete 	controllers.ProjectUpdateController.delete(id : Int, author : String, ts : String)
 
 #Login routes

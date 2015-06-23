@@ -231,6 +231,12 @@ body {
 	font-family: Helvetica, sans-serif;
 }
 
+.textarea-update {
+	resize: none;
+	font-family: Helvetica, sans-serif;
+	width:100%;
+}
+
 .projectbox {
 	background-color:white;
 	border-radius:40px;
@@ -428,10 +434,14 @@ body {
 	width:100%;
 }
 
-#post-update {
+#post-update, .edit-update-button {
 	margin-top:6px;
 	float : right;
 	font-size: 12pt;
+}
+
+.edit-update-button {
+	margin-top:-13px;
 }
 
 #update-files-mask {

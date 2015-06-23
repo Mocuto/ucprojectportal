@@ -1,6 +1,17 @@
 var PULSE_INTERVAL = 5000;
 
 
+String.prototype.replaceAll = function(what, to) {
+	var find = what;
+	var re = new RegExp(find, 'g');
+
+	return this.replace(re, to);
+}
+
+String.prototype.brTagify = function() {
+	return this.replaceAll("\r\n", "<br>").replaceAll("\n", "<br>")
+}
+
 function pulse() {
 	var unreadNotifications = getUnreadNotificationCount(function(data) {
 

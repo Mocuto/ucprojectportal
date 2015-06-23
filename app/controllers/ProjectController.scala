@@ -11,6 +11,8 @@ import java.util.Date
 import model._
 import model.UserPrivileges
 
+import org.joda.time._
+
 import play.api._
 import play.api.mvc._
 import play.api.data._
@@ -40,55 +42,64 @@ object ProjectController extends Controller with SessionHandler {
 
 	val projectsCreatedCounter = MetricsRegistry.default.counter("projects.created")
 
-	def project(id : Int) = Action { implicit request => {
-		authenticated match {
-			case Some(username) => {
+	def project(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			
+			val updates = Project.getUpdates(id);
+			val viewingPermissions = (UserPrivilegesView getUninterruptibly username).getOrElse { UserPrivilegesView.undefined(username)};
+			val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username)};
+			val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)};
+			val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)};
+		
+			val project = Project.get(id);
 
-				val project = Project.get(id);
+			val mostRecentUpdates = (
+				updates.groupBy(u => (u.projectId, u.author, u.timeSubmitted))
+					.map({ 
+						case (key, sublist) => sublist reduce { 
+							(a, b) =>
+								if( a.timeEditted.after(b.timeEditted)) {
+									a
+								}
+								else {
+									b
+								}
+							}
+					})
+			).toSeq.sortWith((a,b) => a.timeSubmitted.after(b.timeSubmitted));
 
-				val viewingPermissions = UserPrivilegesView.getUninterruptibly(username).getOrElse { UserPrivilegesView.undefined(username)}
-
-				if (viewingPermissions.projects == false) {
-					NotFound(views.html.messages.notFound("You do not have permission to view this project"))
-				}
-
-				else if(project.isDefined == false) {
-					NotFound(views.html.messages.notFound("This project does not exist"));
-				}
-				else {
-					val updates = Project.getUpdates(id);
-
-					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
-
-					val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
-					val canEditAllUpdates = editPermissions.updatesAll;
-					val canEditOwnUpdates = editPermissions.updatesOwn;
-
-					val canJoin = editPermissions.joinProjects;
-
-					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
-					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
-
-					val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)}
-					val canDeleteAllUpdates = deletePermissions.updatesAll
-					val canDeleteOwnUpdates = deletePermissions.updatesOwn
-
-					Ok(views.html.project(
-						project,
-						updates,
-						username,
-						canEdit,
-						canUpdate,
-						canJoin,
-						canEditAllUpdates,
-						canEditOwnUpdates,
-						canDeleteAllUpdates,
-						canDeleteOwnUpdates)(None)(ProjectUpdateController.projectUpdateForm))
-				}
+			if (viewingPermissions.projects == false) {
+				NotFound(views.html.messages.notFound("You do not have permission to view this project"))
 			}
-		}
 
-	}}
+			else if(project.isDefined == false) {
+				NotFound(views.html.messages.notFound("This project does not exist"));
+			}
+			else {
+				val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+				val canEditAllUpdates = editPermissions.updatesAll;
+				val canEditOwnUpdates = editPermissions.updatesOwn;
+				val canJoin = editPermissions.joinProjects;
+
+				val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
+				val canDeleteAllUpdates = deletePermissions.updatesAll
+				val canDeleteOwnUpdates = deletePermissions.updatesOwn
+
+
+				Ok(views.html.project(
+					project,
+					mostRecentUpdates,
+					username,
+					canEdit,
+					canUpdate,
+					canJoin,
+					canEditAllUpdates,
+					canEditOwnUpdates,
+					canDeleteAllUpdates,
+					canDeleteOwnUpdates)(None)(ProjectUpdateController.projectUpdateForm))
+			}
+		})
+	}
 
 	def create = Action { implicit request => {
 		authenticated match {

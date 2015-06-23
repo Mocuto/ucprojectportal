@@ -92,7 +92,33 @@ object ProjectUpdateController extends Controller with SessionHandler {
 		})
 	}
 
-	def edit = TODO
+	def edit(projectId : Int, author : String, timeSubmittedStr : String) = Action { implicit request =>
+		whenAuthorized(username => {
+
+			val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
+
+			val canEdit = editPermissions.updatesAll || editPermissions.updatesOwn && author == username;
+
+			if(canEdit == false) {
+				Status(401)("You cannot edit updates you did not create")
+			}
+			else {
+				val dataParts = request.body.asMultipartFormData.get.dataParts
+
+				val newContent : String = dataParts.getOrElse("content", List(""))(0)
+				ProjectUpdate.edit(projectId, author, utils.Conversions.strToDate(timeSubmittedStr), newContent);
+
+				val response = JsObject( 
+					Seq(
+						"response" -> JsString("project update edited")
+					)
+				)
+
+				Ok(response);
+			}
+
+		})
+	}
 
 	def delete(projectId : Int, author : String, timeSubmittedStr : String) = Action { implicit request =>
 		whenAuthorized(username => {
@@ -103,16 +129,11 @@ object ProjectUpdateController extends Controller with SessionHandler {
 				Status(462)("You cannot delete updates you did not create.")
 			}
 			else {
-				ProjectUpdate.get(projectId, author, timeSubmittedStr) match {
-					case Some(update) => {
-						update.delete()
+				ProjectUpdate.get(projectId, author, timeSubmittedStr).foreach(_.delete())
 
-						val response = JsObject(Seq("response" -> JsString("left project")))
+				val response = JsObject(Seq("response" -> JsString("left project")))
 
-						Ok(response)						
-					}
-					case None => NotFound("This update does not exist")
-				}				
+				Ok(response)
 			}
 		})
 	}
