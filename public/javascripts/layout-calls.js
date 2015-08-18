@@ -33,7 +33,10 @@ function dialogYesNo(message, yesText, noText, yesCallback, noCallback) {
 		.text(noText)
 		.addClass("button")
 		.click(function() {
-			noCallback.call(this);
+			if(typeof noCallback !== "undefined")
+			{
+				noCallback.call(this);
+			}
 			notificationBox.popane({show : "false"});
 		})
 		.appendTo(optionTd)
@@ -64,6 +67,7 @@ function dialog(content) {
 
 function setupLayout() {
 	$(".textarea-description").autosize()
+	$(".textarea-update").autosize()
 
 	$(".chosen").chosen({
 			no_results_text: "oops, nothing found!",
@@ -73,6 +77,10 @@ function setupLayout() {
 	$(".edit-field").css("display", "none");
 
 	$(".popane").popane();
+
+	$(".popane-menu").popane({
+		position : "absolute"
+	})
 
 	$(".dashboard-item").hover(function() {
 		$(this).find(".dashboard-item-text").animate({
@@ -86,12 +94,94 @@ function setupLayout() {
 
 	$("#login-button").hover(function() {
 		$(this).animate({
-			"backgroundColor" : "#aedefc"
+			"backgroundColor" : "black"
 		}, 300)
 	}, function() { //Mouse leave
 		$(this).animate({
-			"backgroundColor" : "#fa544f"
+			"backgroundColor" : "#C51834"
 		}, 300)
+	})
+
+	$("#activate-sg-button").click(function() {
+		$(".activate-button").fadeOut(500, function() {
+			$("#activate-inputs").css({
+				"display": "block",
+				"opacity": 0,
+				"position": "relative",
+				"bottom" : "-100px"});
+
+			$("#activate-inputs").animate({
+				"opacity": 1.0,
+				"bottom": "0px"
+			}, {
+				duration: 450,
+				complete: function() {
+					$("#activate-inputs").css("position", "relative")
+				}
+			})
+		})
+	})
+
+	$(".search-button").click(function() {
+		var active = $("#search-box").attr("active")
+
+
+		if(active !== "true")
+		{
+			$("#search-box").attr("active", true);
+			var styleWidth = $("#search-box").css("width")
+			var boxWidth = +styleWidth.substr(0, styleWidth.length - 2)
+			$(this).animate({
+				"right" : boxWidth - 4
+			}, {
+				duration: 250,
+				complete: function() {
+					$(".search-box").css("visibility", "visible")
+					$(".search-box").css("opacity", "0")
+					$(".search-box").focus()
+					$(".search-box").animate({
+						"opacity" : 1
+					}, 250)
+				}
+			})		
+		}
+		else
+		{
+			var query = $("#search-box").val()
+
+			if(query.length > 0)
+			{
+				redirectToSearch();
+			}
+			
+		}
+	})
+
+	$("#search-box").blur(function() {
+		var query = $("#search-box").val()
+
+		if(query.length == 0)
+		{
+			$("#search-box").attr("active", false);
+
+			$(".search-box").animate({
+				"opacity" : 0
+			}, {
+				duration : 200,
+				complete : function() {
+					$(".search-box").css("visibility", "hidden");
+				}
+			})
+
+			$(".search-button").animate({
+				right : "20px"
+			}, 200)
+		}
+	})
+
+	$(".typeahead").bind("typeahead:select", function(event, suggestion) {
+		var query = suggestion;
+		redirectToSearchWithQuery(suggestion)
 	})
 
 	var initialWidth = $(".title-nav").width() //Grab the left position left first

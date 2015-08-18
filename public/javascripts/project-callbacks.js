@@ -1,3 +1,79 @@
+function onLikeButtonClicked() {
+	var active = $(this).attr("active")
+	var projectId = $(this).attr("project-id")
+	var likeCountSelector = $(this).parent().children(".like-count");
+	var likeCount = (+likeCountSelector.text() || 0);
+	var seeMoreMenuContainer = $(this).parent().children(".see-more-menu-container");
+	var obj = this;
+
+	if(active !== "true")
+	{
+		likeProject(projectId, function() {
+			likeCountSelector.text(likeCount + 1)
+			seeMoreMenuContainer.css({"display" : ""})
+			var html = '<div class="see-more-menu-item" for="' + user.username + '"><a href="/' + user.username + '">' + user.firstName + '</a></div>'
+			seeMoreMenuContainer.children(".see-more-menu").prepend(html);
+		})
+		$(this).attr("active", true)
+
+	}
+	else
+	{
+		unlikeProject(projectId, function() {
+			if(likeCount == 1)
+			{
+				likeCountSelector.text("")
+				seeMoreMenuContainer.css({"display" : "none"})
+			}
+			else
+			{
+				likeCountSelector.text(likeCount - 1);
+			}
+
+			var sel = ".see-more-menu-item[for='" + user.username + "']";
+			var find = seeMoreMenuContainer.children(".see-more-menu").find(sel);
+			find.remove();
+			
+			$(obj).css({"background-image" : "url('/assets/images/icons/heart-unselected.png')"});
+
+			$(obj).bind("mouseleave", function() {
+				$(obj).unbind("mouseleave");
+				$(obj).css({"background-image" : ""});
+			})
+		})
+		$(this).attr("active", false);
+	}
+}
+
+function onFollowButtonClicked() {
+	var active = $(this).attr("active")
+	var projectId = $(this).attr("project-id")
+	var obj = this;
+
+	if(active !== "true")
+	{
+		followProject(projectId, function() {
+
+		})
+		$(this).attr("active", true)
+
+	}
+	else
+	{
+		unfollowProject(projectId, function() {
+		
+			
+			$(obj).css({"background-image" : "url('/assets/images/icons/eye-unselected.png')"});
+
+			$(obj).bind("mouseleave", function() {
+				$(obj).unbind("mouseleave");
+				$(obj).css({"background-image" : ""});
+			})
+		})
+		$(this).attr("active", false);
+	}
+}
+
 function setupProjectCallbacks() {
 
 	function toggleProjectBox(event) {
@@ -43,15 +119,15 @@ function setupProjectCallbacks() {
 	})
 
 	$("#project-update-log-button").click(function() {
-		$(this).css("color", "white");
-		$("#project-all-files-button").css("color", "#ff9c9c");
+		$(this).removeClass("unselected");
+		$("#project-all-files-button").addClass("unselected");
 		$("#project-update-log").show().parent().css("width", "100%");
 		$("#project-all-files").hide().parent().css("width", "0%");
 	})
 
 	$("#project-all-files-button").click(function() {
-		$(this).css("color", "white");
-		$("#project-update-log-button").css("color", "#ff9c9c");
+		$(this).removeClass("unselected")
+		$("#project-update-log-button").addClass("unselected")
 		$("#project-update-log").hide().parent().css("width", "0%");
 		$("#project-all-files").show().parent().css("width", "100%");
 	})
@@ -111,4 +187,7 @@ function setupProjectCallbacks() {
 
 		$("#update-files-filenames").text(filenames)
 	});
+	
+	$(".like-button").on("click", onLikeButtonClicked)
+	$(".follow-button").on("click", onFollowButtonClicked)
 }

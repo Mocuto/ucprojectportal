@@ -30,9 +30,7 @@ object ProjectFile {
  	def get(projectId : Int, timeSubmitted : Date, filename : String) : ProjectFile = return CassieCommunicator.getFile(projectId, timeSubmitted, filename)
 
 	def saveFile (temporaryFile : (String, TemporaryFile), author : String, projectId : Int, timeSubmitted : Date) : ProjectFile = {
-		//First move file
 
-		//TODO: Generate UUID here, use that as the file name. Save original filename into database
 		val uuid = java.util.UUID.randomUUID.toString;
 
 		val originalName = temporaryFile._1
@@ -44,6 +42,7 @@ object ProjectFile {
 		} 
 
 		val file = new File(s"uploads/$filename");
+		
 	    temporaryFile._2.moveTo(file, true);
 
 	    return createProjectFile(filename, originalName, author, projectId, timeSubmitted);

@@ -3,6 +3,6 @@
 @email(Html("welcome to the project portal. please activate your acount below.")) {
 	<br>
 	<span>
-	@defining(constants.ServerSettings.HOST_URL + routes.ActivationController.activate(user.username, uuid)) { url => <a href="@url" style="text-decoration:none; color:#aedefc">@url</a></span>
+	@defining(constants.ServerSettings.HostUrl + routes.ActivationController.activate(user.username, uuid)) { url => <a href="@url" style="text-decoration:none; color:#aedefc">@url</a></span>
 	}
 }

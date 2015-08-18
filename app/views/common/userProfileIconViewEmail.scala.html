@@ -1,0 +1,59 @@
+@(user : model.User)
+<div title="@user.fullName"  style="
+	display: inline-block;
+	text-align: center;
+	text-transform: lowercase;
+	font-size: 14px;
+	margin-right: 3px;
+	">
+<a href="@routes.UserController.user(user.username)">
+@user.profile match {
+	case Some(path) => {<span style="
+	background-size:cover;
+	border-radius:50%;
+	overflow: visible;
+	width: 48px;
+	height: 48px;
+	box-sizing: border-box;
+	display: inline-block;
+	max-height: none;
+	border: 2px solid black;
+	cursor: pointer;
+	position: relative;
+	background-image:url('@constants.ServerSettings.HostUrl/@path');
+	"></span></a>}
+	case None => {<span style="
+	background-size:cover;
+	border-radius:50%;
+	overflow: visible;
+	width: 48px;
+	height: 48px;
+	box-sizing: border-box;
+	display: inline-block;
+	max-height: none;
+	border: 2px solid black;
+	cursor: pointer;
+	position: relative;
+	"><span class="user-profile-text" style="
+	text-decoration: none;
+	color: black;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	right: 0px;
+	top: 8px;
+	font-size: 24px;
+	text-transform: uppercase;
+	">@user.initials</span></span></a>}
+}
+
+<span class="user-profile-icon-caption" style="
+	overflow: hidden;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 12px;
+	color:black;
+">@user.firstName</span>
+
+</div>

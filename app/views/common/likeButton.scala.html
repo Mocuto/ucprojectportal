@@ -1,0 +1,15 @@
+@(username : String, project : model.Project)
+
+<span class="like-button-container" title="like this project">
+	<span class="like-button" project-id="@project.id" active="@if(project.likes.contains(username)) {true} else {false}"></span>
+	<span class="like-count">@if(project.likes.length > 0) {@project.likes.length}</span>
+
+	<div class="see-more-menu-container" style="display:@if(project.likes.length ==0) {none}">
+		<div class="see-more-menu-arrow"></div>
+		<div class="see-more-menu">
+		@for(name <- project.likes) {
+			<div class="see-more-menu-item" for="@name"><a href="@routes.UserController.user(name)">@model.User.get(name).firstName</a></div>
+		}
+		</div>
+	</div>
+</span>

@@ -1,0 +1,46 @@
+@(user : model.User, canJoin : Boolean)(projects : Seq[model.Project], query : String)
+
+@main("Student Government Project Portal")( Some(user)) {
+	<script>
+		var categoryItems = [@Html( model.ProjectCategory.all.map(x => s"'${x.name}'").mkString(",") )]
+		var stateItems = [@Html( model.ProjectState.all.map(x => s"'${x.name.replace(' ', '-').replace( '(' ,'-').replace( ')', '-')}'").mkString(",") )]
+		var filterItems = categoryItems.concat(stateItems).concat(['new']);
+
+	</script>
+	<div class="main-container">
+		<div class="huge-header project-name-container">search</div>
+		@if(query.length > 0) {
+			<div class="large-header">
+				@projects.length results for "@query"
+			</div>		
+			}
+	   	<div class="projectbox-container">
+	   		<div class="grid-sizer"></div>
+		   	@for(project <- projects) {
+	   			@common.projectView(project, user.username, canJoin)
+		   	}
+	   	</div>
+   	</div>
+
+   	@if(query.length > 0) {
+	   	<script>
+	   		$(document).ready(function() {
+		   		$(".search-box").css({
+		   			"visibility" : "visible",
+		   			"opacity" : 1
+		   		})
+
+		   		var styleWidth = $(".search-box").css("width");
+				var boxWidth = +styleWidth.substr(0, styleWidth.length - 2)
+
+		   		$("#search-box").val("@query");
+		   		$("#search-box").attr("active", true);
+
+		   		$(".search-button").css({
+		   			"right" : boxWidth - 4
+		   		})	   			
+	   		})
+   		</script>
+   	}
+
+}

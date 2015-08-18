@@ -1,5 +1,23 @@
-var PULSE_INTERVAL = 3000;
+var PULSE_INTERVAL = 5000;
 
+
+String.prototype.replaceAll = function(what, to) {
+	var find = what;
+	var re = new RegExp(find, 'g');
+
+	return this.replace(re, to);
+}
+
+String.prototype.brTagify = function() {
+	return this.replaceAll("\r\n", "<br>").replaceAll("\n", "<br>")
+}
+
+function tickDates() {
+	$(".time-ago").each(function() {
+		var time = +$(this).attr("time-submitted")
+		$(this).text(moment(time).fromNow())
+	})
+}
 
 function pulse() {
 	var unreadNotifications = getUnreadNotificationCount(function(data) {
@@ -8,7 +26,12 @@ function pulse() {
 
 		var notificationText = DEFAULT_MESSAGE;
 		if(count > 0) {
-			notificationText = user.firstName + ", you have " + count + " new notification" + (count == 1 ? "" : "s") +"!";
+			notificationText = "notifications (" + count + ")";
+			$(".unread-notification-marker").css("display", "initial").text(count)
+		}
+		else {
+			$(".unread-notification-marker").css("display", "none").text("")
+
 		}
 		var notificationsHtml = data["html"];
 		
@@ -29,6 +52,8 @@ function pulse() {
 		}
 	});
 
+	tickDates();
+
 	window.setTimeout(pulse, PULSE_INTERVAL);
 
 }
@@ -46,6 +71,14 @@ $(document).ready(function() {
 	setupEditCallbacks();
 
 	setupFormCallbacks();
+
+	setupUpdateMenuCallbacks();
+
+	setupSearch();
+
+	setupModerator();
+
+	setupUserProfileCallbacks();
 
 	pulse();
 })

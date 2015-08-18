@@ -1,0 +1,19 @@
+@(amountMore : Int, usernames : Seq[String])
+<div class="projectbox-see-more noselect">
+	<span class='user-profile user-profile-icon'>
+		<span class="user-profile-text">...</span>
+	</span>
+	@if(amountMore > 1) {
+		<span class="user-profile-icon-caption">+@amountMore others</span>
+	} else {
+		<span class="user-profile-icon-caption">+1 other</span>
+	}
+	<div class="see-more-menu-container">
+		<div class="see-more-menu-arrow"></div>
+		<div class="see-more-menu">
+		@for(name <- usernames) {
+			<div class="see-more-menu-item" title="@model.User.get(name).fullName"><a href="@routes.UserController.user(name)">@model.User.get(name).firstName</a></div>
+		}
+		</div>
+	</div>
+</div>

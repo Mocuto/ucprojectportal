@@ -23,7 +23,8 @@ function setupFilterCallbacks() {
 			var index = activeFilters.indexOf(filterVal);
 
 			$(this).animate({
-				backgroundColor : "white"
+				backgroundColor : "white",
+				color : "black"
 			})
 
 			if(index != -1) {
@@ -35,7 +36,8 @@ function setupFilterCallbacks() {
 
 			$(this).attr("activated", "true");
 			$(this).animate({
-				backgroundColor : "#aedefc"
+				backgroundColor : "black",
+				color : "white"
 			})
 
 			activeFilters.push(filterVal);

@@ -1,13 +1,37 @@
-@(update : model.ProjectUpdate)
+@(update : model.ProjectUpdate, canEdit : Boolean, canDelete : Boolean)
+@import java.lang.String; val timeSubmitted = utils.Conversions.dateToStr(update.timeSubmitted);
 
-<div class="roundbox update">
-	<span class="content-header">@links.userLink(update.author)</span>
+<div class="roundbox update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">
+	<span class="content-header">@links.userLink(model.User.get(update.author))</span>
 	@if(update.files.length > 0) {
 		<span class="hint">uploaded a file</span>
 	}
+	@if(canEdit || canDelete) {
+		<span style="float : right; margin-left: 16px">
+			<span class="update-arrow noselect"></span>
+			<div class="update-menu hint noselect">
+				@if(canEdit) {
+					<div class="menu-item edit-update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">edit</div>
+				}
+				@if(canDelete) {
+					<div class="menu-item delete-update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">delete</div>
+				}
+				
+			</div>
+		</span>
+	}
+	
 	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
 
+
+	@if(canEdit) {
+		<p class="content editable">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
+		<textarea class="edit-field roundbox-textinput textarea-update" placeholder="write a status update" style="display:none;">@Html(update.content)</textarea>
+		<span class="blue-button edit-field edit-update-button"  value="Edit Update" style="display: none;">ok</span>
+
+	} else {
 	<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
+	}
 	@if(update.files.length > 0) {
 		<span class="hint">attachments:
 			@for(filename <- update.files) {

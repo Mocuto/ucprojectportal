@@ -1,0 +1,11 @@
+@(user : model.User, isLoggedInUser : Boolean, isPrimaryContact : Boolean)
+<div title="@user.fullName" class="user-profile-icon-wrapper noselect @(if (isPrimaryContact) "large")">
+<a href="@routes.UserController.user(user.username)">
+@user.profile match {
+	case Some(path) => {<span class='user-profile user-profile-icon' style="background-image:url('/@path')"></span></a>}
+	case None => {<span class='user-profile user-profile-icon'><span class="user-profile-text">@user.initials</span></span></a>}
+}
+@defining(if(isLoggedInUser) "you" else user.firstName) { name =>
+<span class="user-profile-icon-caption">@name</span>
+}
+</div>

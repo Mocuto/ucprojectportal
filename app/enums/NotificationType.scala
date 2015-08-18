@@ -1,9 +1,9 @@
-package model
+package enums
 
 object NotificationType extends Enumeration {
 	type NotificationType = Value
 
-	val UPDATE, REQUEST, MESSAGE, ADDED_TO_PROJECT, NA = Value;
+	val UPDATE, REQUEST, MESSAGE, ADDED_TO_PROJECT, ProjectFrozen, ProjectLiked, NA = Value;
 
 	def fromString(str : String) : NotificationType = {
 		str.toLowerCase() match {
@@ -11,6 +11,8 @@ object NotificationType extends Enumeration {
 			case "update" => return NotificationType.UPDATE
 			case "message" => return NotificationType.MESSAGE
 			case "added to project" => return NotificationType.ADDED_TO_PROJECT
+			case "project frozen" => return NotificationType.ProjectFrozen
+			case "project liked" => return NotificationType.ProjectLiked
 			case _ => return NotificationType.NA
 		}
 	}
@@ -21,6 +23,8 @@ object NotificationType extends Enumeration {
 			case NotificationType.UPDATE => "update"
 			case NotificationType.MESSAGE => "message"
 			case NotificationType.ADDED_TO_PROJECT => "added to project"
+			case NotificationType.ProjectFrozen => "project frozen"
+			case NotificationType.ProjectLiked => "project liked"
 			case NotificationType.NA => null
 		}
 	}

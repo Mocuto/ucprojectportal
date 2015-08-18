@@ -11,6 +11,12 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   ws
+
+lazy val openSAMLVersion = "2.6.0"
+
+resolvers ++= Seq(
+    "RoundEights" at "http://maven.spikemark.net/roundeights",
+    "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/"
 )
 
 libraryDependencies ++= Seq(
@@ -39,13 +45,19 @@ libraryDependencies ++= Seq(
     "com.roundeights" %% "hasher" % "1.0.0",
     "org.mindrot" % "jbcrypt" % "0.3m",
     "org.apache.lucene" % "lucene-core" % "5.0.0",
-    "org.apache.lucene" % "lucene-facet" % "5.0.0",
-    "com.websudos"  %% "phantom-dsl" % phantomVersion
+    "com.websudos"  %% "phantom-dsl" % phantomVersion,
+    "org.opensaml" % "opensaml" % openSAMLVersion,
+    "org.apache.lucene" % "lucene-analyzers-common" % "5.0.0",
+    "org.apache.lucene" % "lucene-queryparser" % "5.0.0",
+    "org.apache.lucene" % "lucene-facet" % "5.0.0"
 )
 
+libraryDependencies += "com.github.marklister" %% "base64" % "v0.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalacOptions += "-feature"
 
 scalacOptions += "-language:implicitConversions"
+
+scalacOptions += "-language:postfixOps"

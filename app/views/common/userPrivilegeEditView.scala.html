@@ -1,0 +1,108 @@
+@(user : model.User, userPrivileges : model.UserPrivileges.PrivilegeSet, loggedInPrivileges : model.UserPrivileges.PrivilegeSet)
+
+@offOrOn(b : Boolean) = @{ if(b) "on" else "off" }
+
+<div class="roundbox">
+	<div class="content-header">access</div>
+	<span class="privilege-button-container" username="@user.username">
+		@if(!user.verified) {
+			<span class="button verify-button">verify this user</span>
+		}
+		@if(user.emeritus) {
+			<span class="button emeritus-button" active="true" title="Emeritus users do not receive emails notifications">unmark this user as emeritus</span>
+		} else {
+		<span class="button emeritus-button" active="false" title="Emeritus users do not receive emails notifications">mark this user as emeritus</span>
+		}
+	</span>
+
+	@if(!loggedInPrivileges.view.isEmpty) {
+		<div class="content-header">view</div>
+		<span class="privilege-button-container" username="@user.username">
+			@if(loggedInPrivileges.view.projects) {
+			<span class="button privilege-button" active="@userPrivileges.view.projects" privilege-name="view-projects">view projects: @offOrOn(userPrivileges.view.projects)</span>
+			}
+			@if(loggedInPrivileges.view.users) {
+			<span class="button privilege-button" active="@userPrivileges.view.users" privilege-name="view-users">view users: @offOrOn(userPrivileges.view.users)</span>
+			}
+			@if(loggedInPrivileges.view.accountability) {
+			<span class="button privilege-button" active="@userPrivileges.view.accountability" privilege-name="view-accountability">view accountability: @offOrOn(userPrivileges.view.accountability)</span>
+			}
+			@if(loggedInPrivileges.view.moderator) {
+			<span class="button privilege-button" active="@userPrivileges.view.moderator" privilege-name="view-moderator">view moderator: @offOrOn(userPrivileges.view.moderator)</span>
+			}
+			@if(loggedInPrivileges.view.admin) {
+			<span class="button privilege-button" active="@userPrivileges.view.admin" privilege-name="view-admin">view admin: @offOrOn(userPrivileges.view.admin)</span>
+			}
+		</span>
+	}
+
+	@if(!loggedInPrivileges.edit.isEmpty) {
+	<div class="content-header">edit</div>
+	<span class="privilege-button-container" username="@user.username">
+			@if(loggedInPrivileges.edit.joinProjects) {
+			<span class="button privilege-button" active="@userPrivileges.edit.joinProjects" privilege-name="edit-join-projects">join projects: @offOrOn(userPrivileges.edit.joinProjects)</span>
+			}
+			@if(loggedInPrivileges.edit.projectsOwn) {
+			<span class="button privilege-button" active="@userPrivileges.edit.projectsOwn" privilege-name="edit-projects-own">edit own projects: @offOrOn(userPrivileges.edit.projectsOwn)</span>
+			}
+			@if(loggedInPrivileges.edit.projectsAll) {
+			<span class="button privilege-button" active="@userPrivileges.edit.projectsAll" privilege-name="edit-projects-all">edit all projects: @offOrOn(userPrivileges.edit.projectsAll)</span>
+			}
+			@if(loggedInPrivileges.edit.updatesOwn) {
+			<span class="button privilege-button" active="@userPrivileges.edit.updatesOwn" privilege-name="edit-updates-own">edit own updates: @offOrOn(userPrivileges.edit.updatesOwn)</span>
+			}
+			@if(loggedInPrivileges.edit.updatesAll) {
+			<span class="button privilege-button" active="@userPrivileges.edit.updatesAll" privilege-name="edit-updates-all">edit all updates: @offOrOn(userPrivileges.edit.updatesAll)</span>
+			}
+			@if(loggedInPrivileges.edit.userPermissions) {
+			<span class="button privilege-button" active="@userPrivileges.edit.userPermissions" privilege-name="edit-user-permissions">edit user permissions: @offOrOn(userPrivileges.edit.userPermissions)</span>
+			}
+	</span>
+	}
+	@if(!loggedInPrivileges.follow.isEmpty) {
+	<div class="content-header">follow</div>
+	<span class="privilege-button-container" username="@user.username">
+			@if(loggedInPrivileges.follow.usersAll) {
+			<span class="button privilege-button" active="@userPrivileges.follow.usersAll" privilege-name="follow-users-all">follow all users: @offOrOn(userPrivileges.follow.usersAll)</span>
+			}
+			@if(loggedInPrivileges.follow.projectsAll) {
+			<span class="button privilege-button" active="@userPrivileges.follow.projectsAll" privilege-name="follow-projects-all">follow all projects: @offOrOn(userPrivileges.follow.projectsAll)</span>
+			}
+	</span>
+	}
+	@if(!loggedInPrivileges.create.isEmpty) {
+	<div class="content-header">create</div>
+	<span class="privilege-button-container" username="@user.username">
+			@if(loggedInPrivileges.create.projects) {
+			<span class="button privilege-button" active="@userPrivileges.create.projects" privilege-name="create-projects">create projects: @offOrOn(userPrivileges.create.projects)</span>
+			}
+			@if(loggedInPrivileges.create.updatesTheirProjects) {
+			<span class="button privilege-button" active="@userPrivileges.create.updatesTheirProjects" privilege-name="create-updates-their-projects">update their projects: @offOrOn(userPrivileges.create.updatesTheirProjects)</span>
+			}
+			@if(loggedInPrivileges.create.updatesAllProjects) {
+			<span class="button privilege-button" active="@userPrivileges.create.updatesAllProjects" privilege-name="create-updates-all-projects">update all projects: @offOrOn(userPrivileges.create.updatesAllProjects)</span>
+			}
+			@if(loggedInPrivileges.create.users) {
+			<span class="button privilege-button" active="@userPrivileges.create.users" privilege-name="create-users">create users: @offOrOn(userPrivileges.create.users)</span>
+			}
+	</span>
+	}
+	@if(!loggedInPrivileges.delete.isEmpty) {
+		<div class="content-header">delete</div>
+	<span class="privilege-button-container" username="@user.username">
+			@if(loggedInPrivileges.delete.updatesOwn) {
+			<span class="button privilege-button" active="@userPrivileges.delete.updatesOwn" privilege-name="delete-updates-own">delete own updates: @offOrOn(userPrivileges.delete.updatesOwn)</span>
+			}
+			@if(loggedInPrivileges.delete.updatesAll) {
+			<span class="button privilege-button" active="@userPrivileges.delete.updatesAll" privilege-name="delete-updates-all">delete all updates: @offOrOn(userPrivileges.delete.updatesAll)</span>
+			}
+			@if(loggedInPrivileges.delete.users) {
+			<span class="button privilege-button" active="@userPrivileges.delete.users" privilege-name="delete-users">delete users: @offOrOn(userPrivileges.delete.users)</span>
+			}
+			@if(loggedInPrivileges.delete.projects) {
+			<span class="button privilege-button" active="@userPrivileges.delete.projects" privilege-name="delete-projects">create users: @offOrOn(userPrivileges.delete.projects)</span>
+			}
+	</span>
+	}
+	
+</div>

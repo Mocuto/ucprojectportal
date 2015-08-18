@@ -1,8 +1,8 @@
 @(updater : model.User, project : model.Project, updateContent : String)
 
-@defining(constants.ServerSettings.HOST_URL + routes.ProjectController.project(project.id)) { url =>
+@defining(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id)) { url =>
 
-@email(Html(s"${links.userLinkEmail(updater.username)} posted in the project ${project.name}")) {
+@email(Html(s"${links.userLinkEmail(updater)} posted in the project ${project.name}")) {
 	<span>&quot;@updateContent&quot;</span>
 	<br>
 	<br>

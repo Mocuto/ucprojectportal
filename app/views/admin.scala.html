@@ -7,7 +7,7 @@
 		<div class="large-header">users</div>
 		<div class="roundbox">
 			@for(user <- model.User.all) {
-				<div>@links.userLink(user.username, s"${user.username} - ${user.fullName}") - <a href="@routes.AdminController.deleteUser(user.username)">delete</a></div><br>
+				<div>@links.userLink(user, Some(s"${user.username} - ${user.fullName}")) - <a href="@routes.AdminController.deleteUser(user.username)">delete</a></div><br>
 			}
 			<div class="content-header">
 			new user
@@ -49,7 +49,7 @@
 		<div class="large-header">feedback</div>
 		<div class="roundbox">
 		@for(feedback <- model.Feedback.all) {
-			<div class="header">@links.userLink(feedback.author) - @feedback.feedbackType</div>
+			<div class="header">@links.userLink(model.User.get(feedback.author)) - @feedback.feedbackType</div>
 			<div class="description">@feedback.content</div>
 		}
 

@@ -3,21 +3,32 @@
 # ~~~~
 
 # Javascript routes
-GET /javascriptRoutes    controllers.Application.javascriptRoutes
+GET /javascriptRoutes    						controllers.Application.javascriptRoutes
 
 # Home page
 GET     /                           			controllers.Application.index
 
-GET 	/filter									controllers.Application.filter(filterStr :String = "")
-GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)
+GET 	/filter									controllers.Application.filter(filterStr : String = "")
+GET 	/filter/:filterStr						controllers.Application.filter(filterStr : String)	
 
 #Project routes
-GET		/project/new							controllers.ProjectController.newProject
+GET		/project/new							controllers.ProjectController.create
+POST	/project/new							controllers.ProjectController.submit
 GET		/project/:id 							controllers.ProjectController.project(id : Int)
-POST	/submitUpdate							controllers.ProjectController.submitUpdate
-POST	/submitProject							controllers.ProjectController.submitProject
-POST	/editProject/:id						controllers.ProjectController.editProject(id : Int)
-POST	/leaveProject/:id 						controllers.ProjectController.leaveProject(id : Int)
+POST	/project/:id/edit						controllers.ProjectController.edit(id : Int)
+POST	/project/:id/leave 						controllers.ProjectController.leave(id : Int)
+POST 	/project/:id/like 						controllers.ProjectController.like(id : Int)
+POST 	/project/:id/unlike 					controllers.ProjectController.unlike(id : Int)
+POST 	/project/:id/follow 					controllers.ProjectController.follow(id : Int)
+POST 	/project/:id/unfollow 					controllers.ProjectController.unfollow(id : Int)
+
+GET 	/project/json/user 						controllers.ProjectController.jsonForUser
+GET 	/project/json/all 						controllers.ProjectController.jsonForAll
+
+#Project Update routes
+POST	/project/:id/update/submit				controllers.ProjectUpdateController.submit(id : Int)
+POST 	/project/:id/update/:author/:ts/edit 	controllers.ProjectUpdateController.edit(id : Int, author : String, ts : String)
+POST 	/project/:id/update/:author/:ts/delete 	controllers.ProjectUpdateController.delete(id : Int, author : String, ts : String)
 
 #Login routes
 GET		/login 									controllers.Application.login(path : String = "")
@@ -26,6 +37,10 @@ POST	/tryLogin								controllers.Application.tryLogin(path : String = "")
 POST	/tryLogin/*path							controllers.Application.tryLogin(path : String)
 
 #Activation routes
+GET 	/activateNEW 							controllers.ActivationController.activateNEW(path : String = "")
+POST 	/activateNEW/try 						controllers.ActivationController.tryActivateNEW
+GET 	/activateNEW/non-sg 					controllers.ActivationController.activateNonSG
+GET 	/activateNEW/*path 						controllers.ActivationController.activateNEW(path : String)
 GET 	/activate/resend 						controllers.ActivationController.resendActivation
 POST	/activate/resend/try					controllers.ActivationController.tryResendActivation
 GET 	/activate/:username/:uuid				controllers.ActivationController.activate(username : String, uuid : String)
@@ -44,6 +59,10 @@ GET     /admin/metrics              			com.kenshoo.play.metrics.MetricsControlle
 
 #Moderation routes
 GET 	/moderation 							controllers.ModerationController.moderation
+POST 	/moderation/emeritus/:username 			controllers.ModerationController.emeritus(username : String)
+POST 	/moderation/verify/:username 			controllers.ModerationController.verify(username : String)
+POST 	/moderation/edit/:username 				controllers.ModerationController.editUserPrivileges(username : String)
+POST 	/moderaiton/edit/:username/following 	controllers.ModerationController.editUserFollowing(username : String)
 
 #Request routes
 POST	/request/join/:projectId 				controllers.RequestController.join(projectId : Int)
@@ -70,7 +89,17 @@ GET		/uploads/:file							controllers.Application.uploads(file : String)
 GET 	/feedback 								controllers.Application.feedback
 POST 	/feedback/submit 						controllers.Application.submitFeedback
 
+GET 	/getting-started						controllers.Application.gettingStarted
+
+GET 	/search 								controllers.Application.search(query : String = "")
+GET 	/search/:query 							controllers.Application.search(query : String)
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               			controllers.Assets.at(path="/public", file)
 
+GET 	/secure/ 								controllers.ShibbolethController.secure(path : String = "")
+GET 	/secure/*path 							controllers.ShibbolethController.secure(path : String)
+
 GET		/:username								controllers.UserController.user(username)
+POST 	/:username/profile/upload 				controllers.UserController.profilePic(username)

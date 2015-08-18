@@ -1,13 +1,20 @@
 package controllers
 
+import actors.masters.{ActivityMaster, IndexerMaster}
+
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
+
+import enums.ActivityType
+import enums.ActivityType._
 
 import java.util.Date
 
 import model._
 import model.UserPrivileges
+
+import org.joda.time._
 
 import play.api._
 import play.api.mvc._
@@ -22,13 +29,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import utils._
 
 object ProjectController extends Controller with SessionHandler {
-	private val projectUpdateForm = Form(
-		mapping(
-			"content" -> nonEmptyText,
-			"project_id" -> number,
-			"date" -> ignored(new Date())
-		) (ProjectUpdate.applyIncomplete)(ProjectUpdate.unapplyIncomplete)
-	)
 
 	implicit val projectForm = Form(
 		mapping(
@@ -44,43 +44,68 @@ object ProjectController extends Controller with SessionHandler {
 	)
 
 	val projectsCreatedCounter = MetricsRegistry.default.counter("projects.created")
-	val updatesCreatedCounter = MetricsRegistry.default.counter("projects.created")
 
+	def project(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			
+			val updates = Project.getUpdates(id);
+			val viewingPermissions = (UserPrivilegesView getUninterruptibly username).getOrElse { UserPrivilegesView.undefined(username)};
+			val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username)};
+			val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)};
+			val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)};
+		
+			val project = Project.get(id);
 
-	def project(id : Int) = Action { implicit request => {
-		authenticated match {
-			case Some(username) => {
+			val mostRecentUpdates = (
+				updates.groupBy(u => (u.projectId, u.author, u.timeSubmitted))
+					.map({ 
+						case (key, sublist) => sublist reduce { 
+							(a, b) =>
+								if( a.timeEditted.after(b.timeEditted)) {
+									a
+								}
+								else {
+									b
+								}
+							}
+					})
+			).toSeq.sortWith((a,b) => a.timeSubmitted.after(b.timeSubmitted));
 
-				val project = Project.get(id);
-
-				val viewingPermissions = UserPrivilegesView.getUninterruptibly(username).getOrElse { UserPrivilegesView.undefined(username)}
-
-				if (viewingPermissions.projects == false) {
-					NotFound(views.html.messages.notFound("You do not have permission to view this project"))
-				}
-
-				else if(project.isDefined == false) {
-					NotFound(views.html.messages.notFound("This project does not exist"));
-				}
-				else {
-					val updates = Project.getUpdates(id);
-
-					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
-
-					val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
-					val canJoin = editPermissions.joinProjects;
-
-					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
-					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
-
-					Ok(views.html.project(project, updates, username, canEdit, canUpdate, canJoin)(None)(projectUpdateForm))
-				}
+			if (viewingPermissions.projects == false) {
+				NotFound(views.html.messages.notFound("You do not have permission to view this project"))
 			}
-		}
 
-	}}
+			else if(project.isDefined == false) {
+				NotFound(views.html.messages.notFound("This project does not exist"));
+			}
+			else {
+				val canEdit = editPermissions.projectsAll || (editPermissions.projectsOwn && project.primaryContact == username);
+				val canEditAllUpdates = editPermissions.updatesAll;
+				val canEditOwnUpdates = editPermissions.updatesOwn;
+				val canJoin = editPermissions.joinProjects;
 
-	def newProject = Action { implicit request => {
+				val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
+				val canDeleteAllUpdates = deletePermissions.updatesAll
+				val canDeleteOwnUpdates = deletePermissions.updatesOwn
+
+				ActivityMaster.logProjectActivity(username, id, ActivityType.ViewProject);
+
+				Ok(views.html.project(
+					project,
+					mostRecentUpdates,
+					username,
+					canEdit,
+					canUpdate,
+					canJoin,
+					canEditAllUpdates,
+					canEditOwnUpdates,
+					canDeleteAllUpdates,
+					canDeleteOwnUpdates)(None)(ProjectUpdateController.projectUpdateForm))
+			}
+		})
+	}
+
+	def create = Action { implicit request => {
 		authenticated match {
 			case Some(username) => { 
 
@@ -91,110 +116,55 @@ object ProjectController extends Controller with SessionHandler {
 				else {
 					Ok(views.html.newProject(User.get(username))); 					
 				}
-
-
 			}
 		}
 	}}
 
-	def submitUpdate = Action { implicit request =>
-		authenticated match {
-			case Some(username) => {
-				projectUpdateForm.bindFromRequest.fold(
-				  formWithErrors => {
-				    // binding failure, you retrieve the form containing errors:
-				    //BadRequest(views.html.user(formWithErrors))
-				    var errorMessage : String = "";
-				    formWithErrors.errors map { error  => {
-				    		errorMessage = s"$errorMessage ${error.key}";
-				    	}
-				    }
-					BadRequest(errorMessage);
-				  },
-				  update => {
-				    /* binding success, you get the actual value. */
-				    val project = Project.get(update.projectId);
-
+	def submit = Action { implicit request =>
+		whenAuthorized(username => {
+			projectForm.bindFromRequest.fold(
+				formWithErrors => {
+					BadRequest(views.html.newProject(User.get(username))(formWithErrors))
+				},
+				incompleteProject => {
 					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
-					val canUpdate = createPermissions.updatesAllProjects || (createPermissions.updatesTheirProjects && project.teamMembers.contains(username))
-
-				    if(canUpdate == false) {
-				    	Status(462)("You are not a member of this project");
-				    }
-				    else if(project.isDefined == false) {
-				    	Status(404)("This project does not exist")
-				    }
-				    else {
-					    val multipartFormData = request.body.asMultipartFormData.get
-					    val files = multipartFormData.files.map(filepart => (filepart.filename, filepart.ref));
-
-					    val completeUpdate = ProjectUpdate.create(update.content, username, update.projectId, files = files);
-
-					    Future {
-					    	project.notifyMembersExcluding(username, completeUpdate.content);
-						}
-
-					    val response = JsObject(
-					    	Seq(
-				    			"html" -> JsString(views.html.common.updateView(completeUpdate).toString),
-				    			"fileHtml" -> JsString(
-				    				completeUpdate.files.map(x => views.html.common.fileUpdateView(ProjectFile.get(completeUpdate.projectId, completeUpdate.timeSubmitted, x)).toString).mkString
-			    				)
-				    		)
-					    )
-
-					    updatesCreatedCounter.inc();
-
-					    Ok(response);
-				    }
-				  }
-				)
-			}
-		}
-	}
-
-	def submitProject = Action { implicit request =>
-		authenticated match {
-			case Some(username) => {
-				projectForm.bindFromRequest.fold(
-					formWithErrors => {
-						BadRequest(views.html.newProject(User.get(username))(formWithErrors))
-					},
-					incompleteProject => incompleteProject match {
-						case Project(
-							_,
-							name,
-							description,
-							timeStarted,
-							timeFinished,
-							categories,
-							_,
-							_,
-							teamMembers,
-							state,
-							stateMessage,
-							_) => {
-						val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
-						if(createPermissions.projects == false) {
-							Status(462)("You do not have permission to create projects");
-						}
-						else {
-							val completeProject = 
-								(state, stateMessage) match {
-									case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
-									case (state, _) => Project.create(name, description, username, categories, state, "", teamMembers);
-							}
-							projectsCreatedCounter.inc();
-							Redirect(routes.ProjectController.project(completeProject.id));							
-						}
+					if(createPermissions.projects == false) {
+						Status(462)("You do not have permission to create projects");
 					}
-				})
-			}
-		}
+					else {
+						val completeProject = 
+							(incompleteProject.state, incompleteProject.stateMessage) match {
+								case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(
+									incompleteProject.name,
+									incompleteProject.description,
+									username,
+									incompleteProject.categories,
+									ProjectState.IN_PROGRESS_NEEDS_HELP,
+									incompleteProject.stateMessage, 
+									incompleteProject.teamMembers);
 
+								case (state, _) => Project.create(
+									incompleteProject.name,
+									incompleteProject.description,
+									username,
+									incompleteProject.categories,
+									incompleteProject.state,
+									"",
+									incompleteProject.teamMembers);
+						}
+						projectsCreatedCounter.inc();
+
+						IndexerMaster.index(completeProject)
+
+						ActivityMaster.logProjectActivity(username, completeProject.id, ActivityType.SubmitProject);
+
+						Redirect(routes.ProjectController.project(completeProject.id));							
+					}
+			})
+		})
 	}
 
-	def editProject(id : Int) = Action { implicit request =>
+	def edit(id : Int) = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val project = Project.get(id);
@@ -233,7 +203,7 @@ object ProjectController extends Controller with SessionHandler {
 						stateMessage = dataParts.getOrElse("state-message", List(project.stateMessage))(0),
 						teamMembers = dataParts.getOrElse("team-members", project.teamMembers),
 						primaryContact = dataParts.getOrElse("primary-contact", List(project.primaryContact))(0),
-						timeFinished = if(isFinished) new Date() else null
+						timeFinished = if(isFinished) Some(new Date()) else None
 					)
 
 					Project.update(updatedProject)
@@ -258,13 +228,17 @@ object ProjectController extends Controller with SessionHandler {
 						)
 					)
 
+					IndexerMaster.index(updatedProject);
+
+					ActivityMaster.logProjectActivity(username, id, ActivityType.EditProject);
+
 					Ok(response);
 				}
 			}
 		}
 	}
 
-	def leaveProject(id : Int) = Action { implicit request =>
+	def leave(id : Int) = Action { implicit request =>
 		authenticated match {
 			case Some(username) => {
 				val project = Project.get(id);
@@ -286,9 +260,95 @@ object ProjectController extends Controller with SessionHandler {
 						)
 					)
 
+					IndexerMaster index project
+
+					ActivityMaster.logProjectActivity(username, id, ActivityType.LeaveProject);
+
 					Ok(response);
 				}
 			}
 		}
+	}
+
+	def like(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.addLike(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("liked project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.LikeProject);
+
+			Notification.createProjectLiked(User.get(username), Project.get(id))
+
+			Ok(response);
+		})
+	}
+
+	def unlike(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.removeLike(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("liked project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.UnlikeProject)
+
+			Ok(response);
+		})
+	}
+
+	def follow(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.addFollower(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("followed project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.FollowProject)
+
+			Ok(response);
+		})
+	}
+
+	def unfollow(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.removeFollower(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("unfollowed project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.UnfollowProject)
+
+			Ok(response);
+		})
+	}
+
+	def jsonForAll = Action { implicit request =>
+		whenAuthorized(username => {
+			val response = Json.toJson((Project all) map(_.name))
+
+			Ok(response)
+		})
+	}
+
+	def jsonForUser = Action { implicit request =>
+		whenAuthorized(username => {
+			val response = Json.toJson((Project get username) map (_.name)) 
+
+			Ok(response);
+		})
 	}
 }

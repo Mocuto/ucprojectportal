@@ -1,0 +1,33 @@
+@(user : model.User, title : String, projects : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Seq[model.Project]])
+
+@sectionHeader(text : String) = {
+	<div style="
+		color:white;
+		font-size:20pt;
+		margin-bottom: 8px;
+		">@text
+	</div>
+}
+
+@email(Html(title)) {
+
+	@if(projects.contains(enums.ProjectActivityStatus.Freezing)) {
+		@sectionHeader("the following projects must be updated or they will be automatically frozen!!")
+
+		<div>
+		@for(project <- projects(enums.ProjectActivityStatus.Freezing)) {
+			<div style="margin-bottom:8px;">@links.projectLinkEmail(project.id, s"${project.name}, last active ${utils.Conversions.getTimeAgo(project.lastActivity)}")</div>
+		}
+		</div>
+	}
+
+	@if(projects.contains(enums.ProjectActivityStatus.Cold)) {
+		@sectionHeader("these projects are getting cold, give them an update!")
+
+		<div>
+		@for(project <- projects(enums.ProjectActivityStatus.Cold)) {
+			<div style="margin-bottom:8px;">@links.projectLinkEmail(project.id, s"${project.name}, last active ${utils.Conversions.getTimeAgo(project.lastActivity)}")</div>
+		}
+		</div>
+	}
+}

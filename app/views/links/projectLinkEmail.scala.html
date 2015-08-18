@@ -1,3 +1,3 @@
 @(id : Int, content : String = null)
 
-<a href="@constants.ServerSettings.HOST_URL/project/@id" style="color : #aedefc">@if(content == null) { @model.Project.get(id).name.toLowerCase()}else {@content}</a>
+<a href="@constants.ServerSettings.HostUrl/project/@id" style="color : black; font-weight:bold">@if(content == null) { @model.Project.get(id).name}else {@content}</a>

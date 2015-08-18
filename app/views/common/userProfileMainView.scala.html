@@ -1,0 +1,17 @@
+@(user : model.User, canEdit : Boolean)
+
+@user.profile match {
+ case Some(path) => {
+ <span class="user-profile-main user-profile" username="@user.username" style="background-image:url('@path')"><span class="user-profile-text">&nbsp; &nbsp;</span>}
+ case None => {<span class="user-profile-main user-profile empty" username="@user.username"> <span class="user-profile-text">@user.initials</span>}
+}
+
+@if(canEdit) {
+	<span class="user-profile-upload">
+		<span class="camera-icon"></span>
+		<span class="user-profile-upload-text">upload profile picture</span>
+		
+	</span>
+	<input type="file" id="user-profile-file" username="@user.username" style="display:none">
+}
+</span>

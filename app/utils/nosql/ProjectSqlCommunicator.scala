@@ -102,6 +102,7 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 		val teamMembersStr = teamMembers.map(member => s"'$member'").mkString(",")
 
 		var executeString = s"insert into $PROJECTS($PROJECT_INSERT_FIELDS) VALUES($id, '${project.description.replace("'", "''")}', { $teamMembersStr}, '${project.name.replace("'", "''")}', '$primaryContact', '$cleanState', '$cleanStateMessage' , { $categoriesStr } , dateOf(now()))";
+
 		execute(executeString);
 
 		executeString = s"update $USERS set primary_contact_projects = primary_contact_projects + { $id } where username='$primaryContact'";
@@ -131,7 +132,7 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 		  case _  => project.stateMessage.replace("'", "''");
 		}
 
-		val timestamp = if(project.timeFinished == null) null else s"'${utils.Conversions.dateToStr(project.timeFinished)}'";
+		val timestamp = if(project.timeFinished == None) null else s"'${utils.Conversions.dateToStr(project.timeFinished.get)}'";
 
 		val executeString = s"insert into $PROJECTS($PROJECT_UPDATE_FIELDS) VALUES(${project.id}, '${project.name}' , '${project.description.replace("'", "''")}', '${project.state}', { $categoriesStr }, '$stateMessage', '${project.primaryContact}', $timestamp)";
 

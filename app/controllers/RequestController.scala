@@ -1,8 +1,13 @@
 package controllers
 
+import actors.masters.{ActivityMaster, IndexerMaster}
+
 import com.codahale.metrics.Meter
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
+
+import enums.ActivityType
+import enums.ActivityType._
 
 import java.util.Date
 
@@ -33,7 +38,11 @@ object RequestController extends Controller with SessionHandler {
 				val receiver = User.get(project.primaryContact);
 				val authenticatedUser = User.get(username);
 
-				project match{
+				val editPrivileges = UserPrivilegesEdit.getUninterruptibly(username).getOrElse {UserPrivilegesEdit.undefined(username)}
+
+				val canJoin = editPrivileges.joinProjects;
+
+				project match {
 					case project if project.isDefined == false => { //Check if the project with that id does not exist
 						Status(404)(s"project with id = $projectId does not exist")
 					}
@@ -42,6 +51,9 @@ object RequestController extends Controller with SessionHandler {
 					}
 					case project if project.state == ProjectState.COMPLETED => {
 						Status(460)(s"cannot join a completed project")
+					}
+					case project if !canJoin => {
+						Status(460)("You do not have permission to join projects")
 					}
 					case _ => {
 						joinMeter.mark();
@@ -69,6 +81,8 @@ object RequestController extends Controller with SessionHandler {
 										"response" -> JsString("your request has been sent")
 									)
 								)
+
+								ActivityMaster.logProjectActivity(username, projectId, ActivityType.RequestJoin)
 
 								Ok(response);
 							}
@@ -107,6 +121,11 @@ object RequestController extends Controller with SessionHandler {
 						val user = User.get(requester);
 
 						acceptMeter.mark();
+
+						IndexerMaster index project
+
+						ActivityMaster.logAcceptRequest(username, projectId, requester)
+
 						Ok(response)				
 					}
 				}
@@ -131,6 +150,9 @@ object RequestController extends Controller with SessionHandler {
 						)
 					)
 					ignoreMeter.mark()
+
+					ActivityMaster.logIgnoreRequest(username, projectId, requester)
+
 					Ok(response)
 				}
 			}

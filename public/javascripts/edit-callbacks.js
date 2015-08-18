@@ -36,7 +36,7 @@ function onEditButtonClicked() {
 
 			formData.append("name", name);
 
-			$("#" + field).text(name.toLowerCase());
+			$("#" + field).text(name);
 		}
 
 		else if(column === "state") {
@@ -65,7 +65,7 @@ function onEditButtonClicked() {
 
 			formData.append("description", description);
 
-			$("#" + field).text(description);
+			$("#" + field).html(description.brTagify());
 		}
 
 		else if (column === "categories") {

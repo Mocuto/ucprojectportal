@@ -23,9 +23,60 @@ $.ajax({
 	},
 	error: function(error, textstatus, message){
 		//alert("ERROR" + error.responseText);
-		onError.call(this, error, textstatus, message);
+		if(typeof onError !== "undefined")
+		{
+			onError.call(this, error, textstatus, message);			
+		}
 	}
 });				
+}
+
+function verifyUser(username, firstName, lastName, preferredPronouns, position, callback) {
+	var route = jsRoutes.controllers.ModerationController.verify(username)
+
+	var formData = new FormData()
+	formData.append("first_name", firstName)
+	formData.append("last_name", lastName)
+	formData.append("preferred_pronouns", preferredPronouns)
+	formData.append("position", position)
+
+	ajaxSendFormData(formData, route, callback)
+}
+
+function setUserProfile(username, file) {
+	var route = jsRoutes.controllers.UserController.profilePic(username)
+
+	var formData = new FormData();
+	formData.append("file", file);
+
+	ajaxSendFormData(formData, route, function(response) {
+		var path = response.path;
+
+		$('.user-profile[username="' + username + '"]').css({
+			"background-image" : "url('" + path + "')"
+		}).children(".user-profile-text").html("&nbsp; &nbsp;")
+
+		$('.empty.user-profile-main[username="' + username + '"]').removeClass("empty")
+	})
+}
+
+function setUserEmeritus(username, value, callback) {
+	var route = jsRoutes.controllers.ModerationController.emeritus(username)
+
+	var formData = new FormData();
+	formData.append("value", value);
+
+	ajaxSendFormData(formData, route, callback)
+}
+
+function setUserPrivilege(username, privilegeName, value, callback) {
+	var route = jsRoutes.controllers.ModerationController.editUserPrivileges(username)
+
+	var formData = new FormData();
+	formData.append("privilege-name", privilegeName)
+	formData.append("privilege-value", value)
+
+	ajaxSendFormData(formData, route, callback)
 }
 
 function editProject(formData, optionalCallback) {
@@ -35,14 +86,14 @@ function editProject(formData, optionalCallback) {
 		}
 	}
 
-	var route = jsRoutes.controllers.ProjectController.editProject(PROJECT_ID);
+	var route = jsRoutes.controllers.ProjectController.edit(PROJECT_ID);
 	ajaxSendFormData(formData, route, optionalCallback, function() {
 
 	})
 }
 
 function leaveProject(projectId) {
-	var route = jsRoutes.controllers.ProjectController.leaveProject(projectId);
+	var route = jsRoutes.controllers.ProjectController.leave(projectId);
 	ajaxSendFormData(new FormData(), route, function() {
 		for(var i = 0; i < $(".projectbox-" + projectId).length; i++) {
 			var projectbox = $(".projectbox-" + projectId)[i]
@@ -55,7 +106,45 @@ function leaveProject(projectId) {
 	})
 }
 
-function submitUpdate() {
+function likeProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.like(projectId);
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function unlikeProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.unlike(projectId);
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function followProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.follow(projectId);
+	ajaxSendFormData(new FormData, route, callback);
+}
+
+function unfollowProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.unfollow(projectId);
+	ajaxSendFormData(new FormData(), route, callback);
+}
+
+function editUpdate(projectId, author, timeSubmitted, content) {
+	var formData = new FormData();
+
+	formData.append("content", content);
+
+	var route = jsRoutes.controllers.ProjectUpdateController.edit(projectId, author, timeSubmitted)
+	ajaxSendFormData(formData, route, function(data) {
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
+			.children(".edit-field").css("display", "none")
+
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
+			.children(".content").css("display", "block")
+
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
+			.children(".content").html(content.brTagify());
+	})
+}
+
+function submitUpdate(projectId) {
 	var content = $("#update-input").val();
 	var files = $("#update-files").get(0).files;
 	var formData = new FormData();
@@ -68,7 +157,7 @@ function submitUpdate() {
 		sucess: onProjectSubmitSuccess,
 		error: onProjectSubmitError
 	}
-	var route = jsRoutes.controllers.ProjectController.submitUpdate();
+	var route = jsRoutes.controllers.ProjectUpdateController.submit(projectId);
 	ajaxSendFormData(formData, route, function(data) {
 
 		var updateHtml = $($.parseHTML(data["html"])[1]);
@@ -86,14 +175,26 @@ function submitUpdate() {
 			backgroundColor : "#ddd"
 		})
 
-		var fileHtmlGroup = $.parseHTML(data["fileHtml"]); 
+		var fileHtmlGroup = $.parseHTML(data["fileHtml"]) || []; 
 		
 		for(var i = 1; i < fileHtmlGroup.length; i++) {
 			var fileHtml = $(fileHtmlGroup[i]);
 			$(".file-group").prepend(fileHtml)
 		}
 
+		setupUpdateMenuCallbacks();
+
 	});
+}
+
+function deleteUpdate(projectId, author, timeSubmitted) {
+
+	var route = jsRoutes.controllers.ProjectUpdateController.delete(projectId, author, timeSubmitted)
+	ajaxSendFormData(new FormData(), route, function(data) {
+		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]').slideUp();
+	}, function() {
+		//TODO
+	})
 }
 
 function requestJoin(projectId) {
