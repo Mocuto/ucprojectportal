@@ -65,7 +65,13 @@ trait Master {
 
 	protected val actor : ActorRef = Akka.system.actorOf(masterProps, name = actorName)
 
+	protected var isStopped = false;
+
 	def start() : Unit;
+
+	def stop() : Unit = {
+		isStopped = true;
+	}
 
 	def terminate() : Unit = {
 		//Override

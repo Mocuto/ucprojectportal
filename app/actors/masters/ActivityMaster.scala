@@ -18,6 +18,8 @@ import model._
 
 import org.joda.time.{Days, Weeks, Interval}
 
+import play.api.Logger
+
 import scala.collection.Map
 import scala.concurrent._
 
@@ -130,14 +132,16 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	}
 
 	def scheduleWarnings() : Unit = scheduleAtNext(constants.ServerSettings.ProjectWarningHour, ProjectWarnings) {
-
+		if(isStopped) {
+			return
+		}
 		import scala.concurrent.ExecutionContext.Implicits.global
 		val f = Future {
 			startWarnings();
 		}
 		
 		f onComplete {
-			case _ => {
+			case _ if !isStopped => {
 				Logger.info("scheduling next round of warnings")
 				scheduleWarnings();
 			}
