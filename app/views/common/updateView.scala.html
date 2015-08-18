@@ -2,7 +2,7 @@
 @import java.lang.String; val timeSubmitted = utils.Conversions.dateToStr(update.timeSubmitted);
 
 <div class="roundbox update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">
-	<span class="content-header">@links.userLink(update.author)</span>
+	<span class="content-header">@links.userLink(model.User.get(update.author))</span>
 	@if(update.files.length > 0) {
 		<span class="hint">uploaded a file</span>
 	}

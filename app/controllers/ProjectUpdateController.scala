@@ -1,5 +1,7 @@
 package controllers
 
+import actors.masters.ActivityMaster
+
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
@@ -66,7 +68,8 @@ object ProjectUpdateController extends Controller with SessionHandler {
 				    val completeUpdate = ProjectUpdate.create(update.content, username, projectId, files = files);
 
 				    Future {
-				    	project.notifyMembersExcluding(username, completeUpdate.content);
+				    	project.notifyFollowersAndMembersExcluding(username, completeUpdate.content);
+				    	
 					}
 
 					val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username) }
@@ -85,6 +88,8 @@ object ProjectUpdateController extends Controller with SessionHandler {
 				    )
 
 				    updatesCreatedCounter.inc();
+
+				    ActivityMaster.logSubmitUpdate(username, projectId, update.timeSubmitted, update.content)
 
 				    Ok(response);
 			    }
@@ -105,14 +110,18 @@ object ProjectUpdateController extends Controller with SessionHandler {
 			else {
 				val dataParts = request.body.asMultipartFormData.get.dataParts
 
+				val timeSubmitted = utils.Conversions.strToDate(timeSubmittedStr)
+
 				val newContent : String = dataParts.getOrElse("content", List(""))(0)
-				ProjectUpdate.edit(projectId, author, utils.Conversions.strToDate(timeSubmittedStr), newContent);
+				val update = ProjectUpdate.edit(projectId, author, timeSubmitted, newContent);
 
 				val response = JsObject( 
 					Seq(
 						"response" -> JsString("project update edited")
 					)
 				)
+
+				ActivityMaster.logEditUpdate(username, projectId, author, timeSubmitted, update.timeEditted)
 
 				Ok(response);
 			}
@@ -132,6 +141,8 @@ object ProjectUpdateController extends Controller with SessionHandler {
 				ProjectUpdate.get(projectId, author, timeSubmittedStr).foreach(_.delete())
 
 				val response = JsObject(Seq("response" -> JsString("left project")))
+
+				ActivityMaster.logDeleteUpdate(username, projectId, author, utils.Conversions.strToDate(timeSubmittedStr))
 
 				Ok(response)
 			}

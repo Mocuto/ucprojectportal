@@ -5,10 +5,15 @@ import com.datastax.driver.core.Row
 import com.github.nscala_time._
 import com.github.nscala_time.time._
 import com.github.nscala_time.time.Imports._
+import com.websudos.phantom.Implicits._
+
+import enums._
+import enums.ProjectActivityStatus
+import enums.ProjectActivityStatus._
 
 import java.util.Date
 
-import org.joda.time.{Weeks, Years}
+import org.joda.time.{Days, Interval, Weeks}
 
 import play.api.libs.json._
 import play.api.mvc._
@@ -21,6 +26,117 @@ import scala.util.Random
 import utils._
 import utils.Conversions._
 import utils.nosql.CassieCommunicator
+
+protected sealed class ProjectTable extends CassandraTable[ProjectTable, Project] {
+	object id extends IntColumn(this) with PartitionKey[Int]
+	object categories extends SetColumn[ProjectTable, Project, String](this)
+	object description extends StringColumn(this)
+	object followers extends SetColumn[ProjectTable, Project, String](this)
+	object last_activity extends DateColumn(this)
+	object last_warning extends OptionalDateColumn(this)
+	object likes extends SetColumn[ProjectTable, Project, String](this)
+	object name extends StringColumn(this)
+	object primary_contact extends StringColumn(this)
+	object state extends StringColumn(this)
+	object state_message extends StringColumn(this)
+	object team_members extends SetColumn[ProjectTable, Project, String](this)
+	object time_finished extends OptionalDateColumn(this)
+	object time_started extends DateColumn(this)
+
+	override def fromRow(r : Row) : Project = r match {
+			case null => Project.undefined
+			case _ => {
+				val primaryContactStr = r.getString("primary_contact")
+				return Project(
+					name= name(r),
+		 			id = id(r), 
+		 			description= description(r), 
+		 			primaryContact = primary_contact(r),
+		 			categories = categories(r).toList,
+		 			teamMembers = team_members(r).toList,
+		 			state = state(r),
+		 			stateMessage = state_message(r),
+		 			timeStarted = time_started(r),
+		 			timeFinished = time_finished(r),
+		 			lastActivity = last_activity(r),
+		 			lastWarning = last_warning(r),
+		 			likes = likes(r).toList,
+		 			followers = followers(r).toList,
+					isDefined = true
+				);
+			}
+		}
+}
+
+object ProjectTable extends ProjectTable {
+	override val tableName = "projects";
+	implicit val session = CassieCommunicator.session
+
+	def add(
+		name: String,
+		description : String,
+		primaryContact : String,
+		categories : Seq[String],
+		state : String,
+		stateMessage : String,
+		teamMembers : Seq[String]) : Project = {
+		val id = (allUninterruptibly.reduce((a,b) => if(a.id > b.id) a else b)).id + 1;
+		val date = new Date();
+		val timeFinished = if(state == ProjectState.COMPLETED || state == ProjectState.CLOSED) Some(date) else None;
+
+		val project = Project(
+			id = id,
+			name = name,
+			description = description,
+			primaryContact = primaryContact,
+			categories = categories,
+			state = state,
+			stateMessage = stateMessage,
+			teamMembers = teamMembers,
+			timeStarted = date,
+			timeFinished = timeFinished,
+			lastActivity = date
+		)
+
+		insert
+			.value(_.id, id)
+			.value(_.name, name)
+			.value(_.description, description)
+			.value(_.primary_contact, primaryContact)
+			.value(_.categories, categories.toSet)
+			.value(_.state, state)
+			.value(_.state_message, stateMessage)
+			.value(_.team_members, teamMembers.toSet)
+			.value(_.time_started, date)
+			.value(_.time_finished, timeFinished)
+			.value(_.last_activity, date)
+			.future()
+
+		project
+	}
+
+	def get(id : Int) : Future[Option[Project]] = select.where(_.id eqs id).one();
+	def getUninterruptibly (id: Int) : Option[Project] = scala.concurrent.Await.result(get(id), constants.Cassandra.defaultTimeout)
+
+	def all : Future[Seq[Project]] = select.fetch();
+	def allUninterruptibly : Seq[Project] = scala.concurrent.Await.result(all, constants.Cassandra.defaultTimeout)
+
+	def addLike(id : Int, username : String) : Unit = update.where(_.id eqs id).modify(_.likes add username).future();
+	def removeLike(id : Int, username : String) : Unit = update.where(_.id eqs id).modify(_.likes remove username).future();
+
+	def updateLastActivity(id : Int, date : Date) : Unit = update.where(_.id eqs id).modify(_.last_activity setTo date).future();
+	def updateLastWarning(id : Int) : Unit = update.where(_.id eqs id).modify(_.last_warning setTo Some(new Date())).future();
+
+	def addFollower(id : Int, username : String) : Unit = {
+		update.where(_.id eqs id).modify(_.followers add username).future();
+		User.addProjectToFollow(username, id);
+	}
+
+	def removeFollower(id : Int, username : String) : Unit = {
+		update.where(_.id eqs id).modify(_.followers remove username).future();
+		User.removeProjectToFollow(username, id);
+	}
+}
 
 object Project {
 
@@ -53,9 +169,7 @@ object Project {
 
 	def create (name: String, description : String, primaryContact : String, categories : Seq[String], state : String, stateMessage : String, teamMembers : Seq[String]) : Project = {
 
-		val project = Project(name, description, categories, state, stateMessage, primaryContact :: teamMembers.toList);
-
-		val newProject = CassieCommunicator.addProject(project, primaryContact, categories, state, stateMessage, primaryContact :: teamMembers.toList);
+		val newProject = ProjectTable.add(name, description, primaryContact, categories, state, stateMessage, primaryContact :: teamMembers.toList)
 
 		for (username <- teamMembers) {
 			if(username != primaryContact) {
@@ -66,7 +180,8 @@ object Project {
 		return newProject
 	}
 
-	def all : Seq[Project] = CassieCommunicator.getProjects;
+	def all : Seq[Project] = ProjectTable.allUninterruptibly//CassieCommunicator.getProjects;
+	
 	def allSorted : Seq[Project] = {
 		val projects = Project.all;
 
@@ -114,17 +229,14 @@ object Project {
 
 	}
 
-	def get(username : String) : Seq[Project] = {
-		return CassieCommunicator.getProjectsForUsername(username);
-	}
+	def get(username : String) : Seq[Project] = User.get(username).projects.map(Project.get(_ : Int))
 
 	def get(id : Int) : Project = {
-		return CassieCommunicator.getProject(id);
+		//return CassieCommunicator.getProject(id);
+		return ProjectTable.getUninterruptibly(id).getOrElse({ Project.undefined })
 	}
 
-	def getPrimaryForUsername(username : String) : Seq [Project] = {
-		return CassieCommunicator.getPrimaryProjectsForUsername(username);
-	}
+	def getPrimaryForUsername(username : String) : Seq [Project] = User.get(username).primaryContactProjects.map(Project.get(_ : Int))
 
 	def update(project : Project) {
 		if(!project.isDefined) {
@@ -148,18 +260,31 @@ object Project {
 			delete(project.id);
 		}
 		else {
-			Project.update(Project(
-					id = project.id,
-					name = project.name,
-					description = project.description,
-					categories = project.categories,
-					state = ProjectState.CLOSED,
-					stateMessage = project.stateMessage,
-					teamMembers = project.teamMembers,
-					primaryContact = null,
-					timeFinished = project.timeFinished
-			))
+			freeze(project)
 		}
+	}
+
+	def freeze(project : Project) {
+		Project.update(Project(
+				id = project.id,
+				name = project.name,
+				description = project.description,
+				categories = project.categories,
+				state = ProjectState.CLOSED,
+				stateMessage = project.stateMessage,
+				teamMembers = project.teamMembers,
+				primaryContact = project.primaryContact,
+				lastActivity = project.lastActivity,
+				lastWarning = project.lastWarning,
+				likes = project.likes,
+				timeFinished = Some(new Date())
+		))
+	}
+
+	def freezeWithNotification(project : Project) {
+		freeze(project)
+
+		project.teamMembers foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
 	}
 
 	def allTags : Seq[String] = return CassieCommunicator.getTagsWithType("project").getOrElse { return List[String]() };
@@ -236,6 +361,18 @@ object Project {
 
 	def getUpdatesAsync(id : Int) : Future[Seq[ProjectUpdate]] = ProjectUpdateTable.get(id)
 
+	def addLike(id : Int, username : String) : Unit = ProjectTable.addLike(id, username)
+
+	def removeLike(id : Int, username : String) : Unit = ProjectTable.removeLike(id, username)
+
+	def addFollower(id : Int, follower : String) : Unit = ProjectTable.addFollower(id, follower)
+
+	def removeFollower(id : Int, follower : String) : Unit = ProjectTable.removeFollower(id, follower)
+
+	def updateLastActivity(id : Int, date : Date) : Unit = ProjectTable.updateLastActivity(id, date)
+
+	def updateLastWarning(id : Int) : Unit = ProjectTable.updateLastWarning(id)
+
 	implicit def fromRow (row : Row) : Project =  { 
 		row match {
 			case null => Project.undefined
@@ -251,7 +388,9 @@ object Project {
 		 			state = row.getString("state"),
 		 			stateMessage = row.getString("state_message"),
 		 			timeStarted = row.getDate("time_started"),
-		 			timeFinished = row.getDate("time_finished")
+		 			lastActivity = row.getDate("last_activity"),
+		 			lastWarning = if(row.isNull("last_warning")) None else Some(row.getDate("last_warning")),
+		 			timeFinished = if(row.isNull("time_finished")) None else Some(row.getDate("time_finished"))
 				);
 			}
 		}
@@ -263,13 +402,17 @@ case class Project (
 		name: String, 
 		description : String,
 		timeStarted : Date = new Date(), 
-		timeFinished : Date = null,
+		timeFinished : Option[Date] = None,
+		lastActivity : Date = new Date(),
+		lastWarning : Option[Date] = Some(new Date()),
 		categories : Seq[String] = List[String](), 
 		tags : Seq[String] = List[String](),
 	 	primaryContact : String = "", 
 	 	teamMembers : Seq[String] = List[String](), 
 	 	state : String = "", 
 	 	stateMessage : String = "",
+	 	likes : Seq[String] = List[String](),
+	 	followers : Seq[String] = List[String](),
 	 	isDefined : Boolean = true) {
 
 	def this (
@@ -291,8 +434,8 @@ case class Project (
 			stateMessage = "",
 			teamMembers = List[String]())
 
-	def notifyMembersExcluding(excludingUsername : String, updateContent : String) : Unit = {
-		teamMembers foreach(username => {
+	def notifyFollowersAndMembersExcluding(excludingUsername : String, updateContent : String) : Unit = {
+		(teamMembers ++ followers).toSet[String]  foreach(username => {
 			if(excludingUsername != username)
 			{
 				Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent)
@@ -303,4 +446,12 @@ case class Project (
 	def isNew : Boolean = Weeks.weeksBetween(new DateTime(timeStarted), DateTime.now).getWeeks <= 1;
 
 	def removeUser(user : User) : Project = Project.removeUser(id, user);
+
+	def activityStatus : ProjectActivityStatus = (Days daysIn(new Interval(lastActivity.getTime, (new Date()).getTime))).getDays match {
+		case x if x <= constants.ServerSettings.ActivityStatus.Hot.getDays && state != ProjectState.CLOSED => ProjectActivityStatus.Hot
+		case x if x <= constants.ServerSettings.ActivityStatus.Warm.getDays && state != ProjectState.CLOSED => ProjectActivityStatus.Warm
+		case x if x <= constants.ServerSettings.ActivityStatus.Cold.getDays && state != ProjectState.CLOSED => ProjectActivityStatus.Cold
+		case x if x <= constants.ServerSettings.ActivityStatus.Freezing.getDays && state != ProjectState.CLOSED => ProjectActivityStatus.Freezing
+		case _ => ProjectActivityStatus.Frozen
+	}
 }

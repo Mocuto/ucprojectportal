@@ -13,10 +13,10 @@
 			<div class="content-description">
 				@for(user <- model.User.all) {
 					@if(user.hasConfirmed == true) {
-						@links.userLink(user.username)<br />
+						@links.userLink(user)<br />
 						<div class="user-info">last login - @utils.Conversions.dateToDisplayedStr(user.lastLogin)</div>
-						<div class="user-info">projects owned - @user.primaryProjects.length</div>
-						<div class="user-info">projects working on (not owned) - @(user.projects.length - user.primaryProjects.length)</div>
+						<div class="user-info">projects owned - @user.primaryContactProjects.length</div>
+						<div class="user-info">projects working on (not owned) - @(user.projects.length - user.primaryContactProjects.length)</div>
 						<div class="user-info">number of updates - @model.ProjectUpdate.get(user).length</div>
 					}
 				}
@@ -35,7 +35,7 @@
 			<div class="conent-descriptions">
 				@for(project <- model.Project.all) {
 					@links.projectLink(project.id)<br />
-					<div class="user-info">primary contact - @links.userLink(project.primaryContact)</div>
+					<div class="user-info">primary contact - @links.userLink(model.User.get(project.primaryContact))</div>
 				}
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-@(path : String = "")(form : Form[controllers.ActivationController.UserForm])
+@(path : String = "")(form : Form[model.form.Forms.UserForm])
 
 @main("Activate Your Account")(None) {
 
@@ -35,10 +35,10 @@
             <div class="form-error-login">*@error.message</div>  
           }
         	<span id="activate-inputs">
-				<input class="login-input" name="first_name" type="text" placeholder="first name">
-				<input class="login-input" name="last_name" type="text" placeholder="last name">
-				<input class="login-input" name="preferred_pronouns" type="text" placeholder="preferred pronouns">
-				<input class="login-input" name="position" type="text" placeholder="position">
+    				<input class="login-input" name="first_name" type="text" placeholder="first name">
+    				<input class="login-input" name="last_name" type="text" placeholder="last name">
+    				<input class="login-input" name="preferred_pronouns" type="text" placeholder="preferred pronouns">
+    				<input class="login-input" name="position" type="text" placeholder="position">
 		        <input type="submit" style="display:none"/>
 		        <span id="login-button">finish</span><br>
 	        </span>

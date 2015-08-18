@@ -1,0 +1,21 @@
+@(project : model.Project)
+
+@defining(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id)) { url =>
+
+@email(Html(s"the project, ${views.html.links.projectLinkEmail(project.id).toString}, was automatically frozen due to inactivity")) {
+	<span>you may want to update the project with its current status</span>
+	<br>
+	<br>
+	<span style="border-radius: 4px;
+	background-color:#ddd;
+	padding:4px 12px 4px 12px;
+	font-size:12pt;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	vertical-align: middle;
+	cursor:pointer;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;"><a href="@url" style="text-decoration:none; color:black">go to the project</a></span>
+}}

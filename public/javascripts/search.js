@@ -3,7 +3,10 @@ function setupSearch() {
 	var dataset = new Bloodhound({
 		datumTokenizer: Bloodhound.tokenizers.whitespace,
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		prefetch: jsRoutes.controllers.ProjectController.jsonForUser().url,
+		prefetch: {
+			url: jsRoutes.controllers.ProjectController.jsonForUser().url,
+			cache : false
+		},
 		remote: {
 			url: jsRoutes.controllers.ProjectController.jsonForAll().url
 		}

@@ -94,11 +94,11 @@ function setupLayout() {
 
 	$("#login-button").hover(function() {
 		$(this).animate({
-			"backgroundColor" : "#aedefc"
+			"backgroundColor" : "black"
 		}, 300)
 	}, function() { //Mouse leave
 		$(this).animate({
-			"backgroundColor" : "#fa544f"
+			"backgroundColor" : "#C51834"
 		}, 300)
 	})
 

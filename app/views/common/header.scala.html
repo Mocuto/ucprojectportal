@@ -1,16 +1,14 @@
 @(user: model.User)
 <script>
 	user = @Html(user.toJson.toString)
-	DEFAULT_MESSAGE = "@Html(s"hi ${user.firstName.toLowerCase()}!")"
+	DEFAULT_MESSAGE = "notifications"
 
 </script>
 <div class="title-nav">
-	<span class="title-project-portal"><a href="/">project portal</a></span> | <span id="uc-sg">undergraduate student government</span>
-	<span class="title-nav-item">
-		<a href="/signout">
-			sign out
-		</a>
+	<span style="display: inline-block; padding-top:4px">
+		<span class="title-project-portal"><a href="/">project portal</a></span><span id="uc-sg">university of cincinnati undergraduate student government</span>
 	</span>
+	@common.userProfileHeaderView(user)
 	<span class="title-nav-item">
 		<a href="/filter">
 			all projects
@@ -18,13 +16,6 @@
 	</span>
 	<span class="title-nav-item">
 		<a href="/@user.username">my projects</a>
-	</span>
-	<span class="title-nav-item" id="notification-text">
-		@if(user.unreadNotifications > 0) {
-			@(user.firstName.toLowerCase()), you have @user.unreadNotifications new @("notification" + (if(user.unreadNotifications > 1) "s" else ""))!
-		} else {
-			hi @(user.firstName.toLowerCase() +"!")
-		}
 	</span>
 
 	<span class="title-nav-item search-nav-item">

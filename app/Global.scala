@@ -1,6 +1,6 @@
 import controllers._;
 
-import actors.masters.IndexerMaster
+import actors.masters._
 
 import com.kenshoo.play.metrics.MetricsFilter
 
@@ -15,6 +15,7 @@ import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
+import play.api.Logger
 
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -31,7 +32,7 @@ class AccessFilter(requiredViewPrivilegeFunc : (String => UserPrivileges.View), 
 
 		if(authorizationRequired(request)) {
 			request.session.get("authenticated") match {
-				case None => Future { println("It's me"); Results.Redirect("/login/" + request.path) }
+				case None => Future { Results.Redirect("/login/" + request.path) }
 				case Some(username) => {
 					lazy val requiredViewPrivilege = requiredViewPrivilegeFunc(username)
 					(UserPrivilegesView.get(username) zip next(request)).map {
@@ -69,7 +70,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		if(authorizationRequired(request)) {
 		  request.session.get("authenticated") match {
 		  	case None => Future {
-		  		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
+		  		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Login) {
 		  			Results.Redirect(routes.Application.login(request.path))		  			
 		  		}
 		  		else {
@@ -97,18 +98,24 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 	private def authorizationRequired(request: RequestHeader) : Boolean = {
 		val actionInvoked: String = request.tags.getOrElse(play.api.Routes.ROUTE_ACTION_METHOD, "")
+
 		return !actionNames.contains(actionInvoked)
 	}
 
 
 }
 
-object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "user",
+object Global extends WithFilters(AuthorizedFilter("login", "tryLogin",
+													"secure", "at", 
+													"activate", "resendActivation", "tryResendActivation", "tryActivate", "activateNEW", "tryActivateNEW",
+													"forgotPassword", "tryForgotPassword", "resetPassword", "tryResetPassword"),
+
+/*object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "user",
 													"submitProject", "leaveProject", "editProject",
 													"feedback" , "submitUpdate", "uploads",
 													"resetUnread", "getUnreadCount", "ignore",
 													"clearAll",
-													"decide", "signout"),
+													"decide", "signout"),*/
 								 //AccessFilter("accountability", "accountability"),
 								 AccessFilter(UserPrivilegesView.admin(_ : String), "admin", "deleteProject", "deleteUser", "metrics"),
 								 AccessFilter(UserPrivilegesView.moderator(_ : String), "moderator", "moderation"),
@@ -129,7 +136,7 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 
 	*/
 	def createDirectories() : Unit = {
-		val uploadsDir = Paths.get(constants.Directories.UPLOADS);
+		val uploadsDir = Paths.get(constants.Directories.Uploads);
 		val indexesDir = Paths.get(constants.Directories.INDEXES);
 
 		if(Files.exists(uploadsDir) == false)
@@ -146,8 +153,9 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 	}
 
 	def startDaemons() : Unit = {
-		//Scheduler.schedule[Project](Routine.IndexingRoutine)
 		IndexerMaster.start();
+
+		ActivityMaster.start()
 	}
 
 	override def onStart(app: Application) : Unit = {
@@ -158,7 +166,6 @@ object Global extends WithFilters(AuthorizedFilter("index", "project", "newProje
 		cleanLockFiles();
 
 		startDaemons();
-
 	}
 
 }

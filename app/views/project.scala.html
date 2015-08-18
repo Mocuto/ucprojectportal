@@ -1,6 +1,20 @@
-@(project : model.Project, updates: Seq[model.ProjectUpdate], username : String, canEdit : Boolean, canUpdate : Boolean, canJoin : Boolean, canEditAllUpdates : Boolean, canEditOwnUpdates : Boolean, canDeleteAllUpdates : Boolean, canDeleteOwnUpdates : Boolean)(message : Option[String])(implicit form: Form[model.ProjectUpdate])
+@(
+project : model.Project,
+updates: Seq[model.ProjectUpdate],
+username : String,
+canEdit : Boolean,
+canUpdate : Boolean,
+canJoin : Boolean,
+canEditAllUpdates : Boolean,
+canEditOwnUpdates : Boolean,
+canDeleteAllUpdates : Boolean,
+canDeleteOwnUpdates : Boolean)(
+message : Option[String])(
+implicit form: Form[model.ProjectUpdate])
+
 @import model.User; val authenticatedUser = model.User.get(username)
 @main(s"${project.name} | Student Government Project Portal")( Some(authenticatedUser)) {
+
 <script>
 var PROJECT_ID = @project.id;
 var PRIMARY_CONTACT = "@project.primaryContact"
@@ -35,7 +49,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                   <div class="roundbox" style="margin-right:64px">
 
                   @project match {
-                     case project if authenticatedUser.primaryProjects.contains(project) => {
+                     case project if authenticatedUser.primaryContactProjects.contains(project) => {
                         you own this project  
                      } 
                      case project if authenticatedUser.projects.contains(project) => {
@@ -172,12 +186,19 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                <td>
                   <div class="roundbox" style="margin-right:64px">
                      <span class="content-header">project dates</span>
-                     <p class="content">@utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase() - 
-                     @if(project.timeFinished == null) {
-                      present
+
+                     <p class="content">started on @utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase()</p> 
+                     @if(project.timeFinished == None) {
+                      <p class="content">last active <span class="time-ago" time-submitted="@project.lastActivity.getTime()">@utils.Conversions.getTimeAgo(project.lastActivity)</span></p>
                      } else {
-                      @utils.Conversions.dateToDisplayedStr(project.timeFinished).toLowerCase()
-                     }</p>
+                        @if(project.state == model.ProjectState.CLOSED) {
+                          <p class="content">frozen on @utils.Conversions.dateToDisplayedStr(project.timeFinished.get).toLowerCase()</p>
+                        } else {
+                          <p class="content">completed on @utils.Conversions.dateToDisplayedStr(project.timeFinished.get).toLowerCase()</p>
+                        }
+                    }
+                      
+                     
                   </div>
                   <div class="roundbox" style="margin-right:64px">
                     <table>
@@ -193,7 +214,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                       </tr>
                     </table>
                       @if(canEdit) {
-                        <p class="content" id="project-primary-contact">@links.userLink(project.primaryContact)</p>
+                        <p class="content" id="project-primary-contact">@links.userLink(model.User.get(project.primaryContact))</p>
                         <span class="edit-field" for="project-primary-contact" field-name="primary-contact">
                           <select class="chosen" name="primary-contact" id="project-primary-contact-select">
                             @for(otherUser <- project.teamMembers.map(teamMember => model.User.get(teamMember))) {
@@ -206,7 +227,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                           </select>
                         </span>
                       } else {
-                        <p class="content">@links.userLink(project.primaryContact)</p>
+                        <p class="content">@links.userLink(User.get(project.primaryContact))</p>
                       }
 
                      <!-- Team Members -->
@@ -224,7 +245,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  			</td>
                  		</tr>
                  	</table>
-                  <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(username)).mkString(", "))</p>
+                  <p class="content" id="project-team-members">@Html(project.teamMembers.map(username => links.userLink(model.User.get(username))).mkString(", "))</p>
                  	@if(canEdit) {
                     <span class="edit-field" for="project-team-members" field-name="team-members">
                       <select class="chosen" name="team-members" id="project-team-members-select" multiple>
@@ -251,7 +272,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
          </div>
          <table style="min-width:1306px">
           <tr>
-            <td style="width:100%">
+            <td style="width:100%; padding:0px">
             <div id="project-update-log">
                @if(canUpdate) {
                 @helper.form(action = routes.ProjectUpdateController.submit(project.id)) {

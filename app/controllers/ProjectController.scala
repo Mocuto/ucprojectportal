@@ -1,10 +1,13 @@
 package controllers
 
-import actors.masters.IndexerMaster
+import actors.masters.{ActivityMaster, IndexerMaster}
 
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
+
+import enums.ActivityType
+import enums.ActivityType._
 
 import java.util.Date
 
@@ -85,6 +88,7 @@ object ProjectController extends Controller with SessionHandler {
 				val canDeleteAllUpdates = deletePermissions.updatesAll
 				val canDeleteOwnUpdates = deletePermissions.updatesOwn
 
+				ActivityMaster.logProjectActivity(username, id, ActivityType.ViewProject);
 
 				Ok(views.html.project(
 					project,
@@ -112,54 +116,52 @@ object ProjectController extends Controller with SessionHandler {
 				else {
 					Ok(views.html.newProject(User.get(username))); 					
 				}
-
-
 			}
 		}
 	}}
 
 	def submit = Action { implicit request =>
-		authenticated match {
-			case Some(username) => {
-				projectForm.bindFromRequest.fold(
-					formWithErrors => {
-						BadRequest(views.html.newProject(User.get(username))(formWithErrors))
-					},
-					incompleteProject => incompleteProject match {
-						case Project(
-							_,
-							name,
-							description,
-							timeStarted,
-							timeFinished,
-							categories,
-							_,
-							_,
-							teamMembers,
-							state,
-							stateMessage,
-							_) => {
-						val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
-						if(createPermissions.projects == false) {
-							Status(462)("You do not have permission to create projects");
-						}
-						else {
-							val completeProject = 
-								(state, stateMessage) match {
-									case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(name, description, username, categories, ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage, teamMembers);
-									case (state, _) => Project.create(name, description, username, categories, state, "", teamMembers);
-							}
-							projectsCreatedCounter.inc();
-
-							IndexerMaster.index(completeProject)
-
-							Redirect(routes.ProjectController.project(completeProject.id));							
-						}
+		whenAuthorized(username => {
+			projectForm.bindFromRequest.fold(
+				formWithErrors => {
+					BadRequest(views.html.newProject(User.get(username))(formWithErrors))
+				},
+				incompleteProject => {
+					val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)}
+					if(createPermissions.projects == false) {
+						Status(462)("You do not have permission to create projects");
 					}
-				})
-			}
-		}
+					else {
+						val completeProject = 
+							(incompleteProject.state, incompleteProject.stateMessage) match {
+								case (ProjectState.IN_PROGRESS_NEEDS_HELP, stateMessage) => Project.create(
+									incompleteProject.name,
+									incompleteProject.description,
+									username,
+									incompleteProject.categories,
+									ProjectState.IN_PROGRESS_NEEDS_HELP,
+									incompleteProject.stateMessage, 
+									incompleteProject.teamMembers);
 
+								case (state, _) => Project.create(
+									incompleteProject.name,
+									incompleteProject.description,
+									username,
+									incompleteProject.categories,
+									incompleteProject.state,
+									"",
+									incompleteProject.teamMembers);
+						}
+						projectsCreatedCounter.inc();
+
+						IndexerMaster.index(completeProject)
+
+						ActivityMaster.logProjectActivity(username, completeProject.id, ActivityType.SubmitProject);
+
+						Redirect(routes.ProjectController.project(completeProject.id));							
+					}
+			})
+		})
 	}
 
 	def edit(id : Int) = Action { implicit request =>
@@ -201,7 +203,7 @@ object ProjectController extends Controller with SessionHandler {
 						stateMessage = dataParts.getOrElse("state-message", List(project.stateMessage))(0),
 						teamMembers = dataParts.getOrElse("team-members", project.teamMembers),
 						primaryContact = dataParts.getOrElse("primary-contact", List(project.primaryContact))(0),
-						timeFinished = if(isFinished) new Date() else null
+						timeFinished = if(isFinished) Some(new Date()) else None
 					)
 
 					Project.update(updatedProject)
@@ -227,6 +229,8 @@ object ProjectController extends Controller with SessionHandler {
 					)
 
 					IndexerMaster.index(updatedProject);
+
+					ActivityMaster.logProjectActivity(username, id, ActivityType.EditProject);
 
 					Ok(response);
 				}
@@ -258,10 +262,78 @@ object ProjectController extends Controller with SessionHandler {
 
 					IndexerMaster index project
 
+					ActivityMaster.logProjectActivity(username, id, ActivityType.LeaveProject);
+
 					Ok(response);
 				}
 			}
 		}
+	}
+
+	def like(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.addLike(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("liked project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.LikeProject);
+
+			Notification.createProjectLiked(User.get(username), Project.get(id))
+
+			Ok(response);
+		})
+	}
+
+	def unlike(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.removeLike(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("liked project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.UnlikeProject)
+
+			Ok(response);
+		})
+	}
+
+	def follow(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.addFollower(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("followed project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.FollowProject)
+
+			Ok(response);
+		})
+	}
+
+	def unfollow(id : Int) = Action { implicit request =>
+		whenAuthorized(username => {
+			Project.removeFollower(id, username);
+
+			val response = JsObject( 
+				Seq(
+					"response" -> JsString("unfollowed project")
+				)
+			)
+
+			ActivityMaster.logProjectActivity(username, id, ActivityType.UnfollowProject)
+
+			Ok(response);
+		})
 	}
 
 	def jsonForAll = Action { implicit request =>

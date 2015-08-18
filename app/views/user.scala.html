@@ -1,14 +1,42 @@
-@(user : model.User, loggedInUser : model.User)(isAuthenticatedUser : Boolean)
+@(user : model.User,
+loggedInUser : model.User)(
+isAuthenticatedUser : Boolean,
+canEdit : Boolean)(
+userPrivileges : model.UserPrivileges.PrivilegeSet,
+loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.form.Forms.UserForm])
+
 @import java.lang.Boolean; var isLastCell = false
 
+@getFormValue(name : String) = @{
+	verifyForm(name).value.getOrElse("")
+}
+
 @main("Student Government Project Portal")(Some(loggedInUser)) {
+	@if(canEdit && !isAuthenticatedUser) {
+		<div id="activate-inputs" class="popane roundbox verify-inputs" username="@user.username">
+			<div class="header" style="font-size: 16pt; margin-bottom: 16px;">validate their profile</div>
+			<div class="verify-header">first name</div>
+			<input class="login-input verify-first-name" name="first_name" type="text" placeholder="enter first name" value='@getFormValue("first_name")'>
+			<div class="verify-header ">last name</div>
+			<input class="login-input verify-last-name" name="last_name" type="text" placeholder="enter last name" value='@getFormValue("last_name")'>
+			<div class="verify-header">preferred pronouns</div>
+			<input class="login-input verify-preferred-pronouns" name="preferred_pronouns" type="text" placeholder="enter preferred pronouns" value='@getFormValue("preferred_pronouns")'>
+			<div class="verify-header" style="margin-top:24px">position <span class="button non-sg-button">mark as non-sg</span></div>
+
+			<input class="login-input verify-position" id="position-button" name="position" type="text" placeholder="enter position" value='@getFormValue("position")' style="display:inline-block">
+
+		    <span class="finish-verify-button">verify</span><br>
+		</div>
+	}
 	<div class="main-container">
 
-		<div class="huge-header project-name-container">
+		<div class="huge-header project-name-container" style="margin-right:48px">
+			@common.userProfileMainView(user, isAuthenticatedUser || canEdit)
+			<span style="position: relative; top:-40px">
 			@if(isAuthenticatedUser == true) {
 				my projects
 			} else {
-				@Html(links.userLink(user.username) + "'s projects")
+				@Html(s"${links.userLink(user)}'s projects")
 			}
 	      	@if(isAuthenticatedUser == true) {
 	   	  		<a href="project/new" class="blue-button" style="float:right; text-decoration:none">
@@ -18,38 +46,53 @@
 	   	  		<span  class="blue-button" id="manage-projects-button" style="float:right; text-decoration:none; margin-right:32px">manage projects</span>
 	   	  		
 	      	}
+	      	</span>
 
 		</div>
 
-    	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else Html(links.userLink(user.username, user.firstName.toLowerCase()) + " owns")}</div>
+    	<div class="large-header">@{if(isAuthenticatedUser == true) "my activity" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + "'s activity")}</div>
+
+    	<div class="roundbox user-activity-feed" style="margin-right:48px">
+    		@for(activity <- model.UserActivity.getNeutralized(user.username, 10, List(enums.ActivityType.SubmitProject, enums.ActivityType.SubmitUpdate, enums.ActivityType.LikeProject))) {
+    			@common.userActivityFeedView(activity)
+    		}
+    	</div>
+
+		<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + " owns")}</div>
 
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
-		   	@for(project <- user.primaryProjects) {
+		   	@for(project <- user.primaryContactProjects.map(model.Project.get(_))) {
 		   		@if(project.state != model.ProjectState.COMPLETED) {
-		   			@common.projectView(project, loggedInUser.username)
+		   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects)
 		   		}
 		   	}
 	   	</div>
 
-	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else Html(links.userLink(user.username, user.firstName.toLowerCase()) + " works")} on</div>
+	   	<br>
+
+	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i work" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + " works")} on</div>
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
-		   	@for(project <- user.projects) {
-		   		@if(project.primaryContact != user.username && project.state != model.ProjectState.COMPLETED) {
-		   			@common.projectView(project, loggedInUser.username)
-		   		}
+		   	@for(project <- user.projects.map(model.Project.get(_)) if project.primaryContact != user.username && project.state != model.ProjectState.COMPLETED) {
+	   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects)
 		   	}
 	   	</div>
 
-	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i've" else Html(links.userLink(user.username, user.firstName.toLowerCase()) + " has")} completed</div>
+	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i've" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + " has")} completed</div>
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
-		   	@for(project <- user.projects) {
+		   	@for(project <- user.projects.map(model.Project.get(_))) {
 		   		@if(project.state == model.ProjectState.COMPLETED) {
-		   			@common.projectView(project, loggedInUser.username)
+		   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects)
 		   		}
 		   	}
 	   	</div>
+
+
+	   	@if(canEdit && !isAuthenticatedUser) {
+	   	<div class="large-header">privileges and moderation</div>
+	   		@common.userPrivilegeEditView(user, userPrivileges, loggedInPrivileges)
+	   	}
    	</div>
 }

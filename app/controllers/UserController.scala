@@ -1,11 +1,14 @@
 package controllers
 
+import actors.masters.ActivityMaster
+
 import com.typesafe.plugin._
 
 import java.util.Date
 
 import model._
 import model.UserPrivileges
+import model.form.Forms._
 
 import play.api._
 import play.api.mvc._
@@ -21,23 +24,70 @@ import utils._
 
 object UserController extends Controller with SessionHandler {
 
-	def user(username : String) = Action { implicit request => {
-		authenticated match {
-			case Some(authenticatedUsername) => {
-				val user = User.get(username)
+	def user(username : String) = Action { implicit request => 
+		whenAuthorized (authenticatedUsername => {
+	
+			val user = User.get(username)
 
-				val viewPermissions = UserPrivilegesView.getUninterruptibly(authenticatedUsername).getOrElse { UserPrivileges.View(authenticatedUsername, false, false, false, false, false) };
+			val viewPermissions = UserPrivilegesView.getUninterruptibly(authenticatedUsername).getOrElse { UserPrivileges.View(authenticatedUsername, false, false, false, false, false) };
+			val isModerator = viewPermissions.moderator;
 
-				if(viewPermissions.users == false && username != authenticatedUsername) {
-					NotFound(views.html.messages.notFound("You do not have permission to view this user"));
+			implicit val userPrivilegeSet = UserPrivileges.get(username);
+			implicit val authenticatedPrivilegeSet = UserPrivileges.get(authenticatedUsername);
+
+			val canEdit = authenticatedPrivilegeSet.edit.userPermissions;
+
+			if(viewPermissions.users == false && username != authenticatedUsername) {
+				NotFound(views.html.messages.notFound("You do not have permission to view this user"));
+			}
+			else if (user.isDefined == false || user.hasConfirmed == false) {
+				NotFound(views.html.messages.notFound("This user does not exist"));
+			}
+			else {
+				val loggedInUser = User.get(authenticatedUsername);
+
+				ActivityMaster.logViewUser(viewer = authenticatedUsername, viewee = username)
+
+				val filledForm = ModerationController.verifyUserForm.fill(model.form.Forms.UserForm(user.firstName, user.lastName, user.preferredPronouns, user.position))
+
+				Ok(views.html.user(user, loggedInUser)(username == authenticatedUsername, canEdit)(userPrivilegeSet, authenticatedPrivilegeSet)(filledForm));
+			}
+		})
+	}
+
+	def profilePic(username : String) = Action { implicit request =>
+		whenAuthorized(authUsername => {
+
+			val editPermissions = UserPrivilegesEdit.getUninterruptibly(authUsername).getOrElse { UserPrivilegesEdit.undefined(authUsername) }
+			val canEdit = username == authUsername || editPermissions.userPermissions;
+
+			if(!canEdit) {
+				Status(404)("You do not have permission to edit this user's profile.")
+			}
+			else if(!User.get(username).isDefined) {
+				NotFound("This user does not exist");
+			}
+			else {
+				val multipartFormData = request.body.asMultipartFormData.get
+				val files = multipartFormData.files.map(filepart => (filepart.filename, filepart.ref));
+
+				if(files.length > 0) {
+					val file = files(0)
+
+					val filename = User.setProfilePic(username, file)
+
+				    val response = JsObject(
+				    	Seq(
+			    			"path" -> JsString(filename)
+			    		)
+				    )
+
+				    Ok(response);
 				}
-				else if (user.isDefined == false || user.hasConfirmed == false) {
-					NotFound(views.html.messages.notFound("This user does not exist"));
-				} else {
-					val loggedInUser = User.get(authenticatedUsername);
-					Ok(views.html.user(user, loggedInUser)(username == authenticatedUsername));
+				else {
+				    BadRequest("A file is needed.")
 				}
 			}
-		}
-	}}
+		})
+	}
 }

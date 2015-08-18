@@ -36,7 +36,7 @@ function onEditButtonClicked() {
 
 			formData.append("name", name);
 
-			$("#" + field).text(name.toLowerCase());
+			$("#" + field).text(name);
 		}
 
 		else if(column === "state") {

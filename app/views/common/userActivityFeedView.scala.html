@@ -1,0 +1,49 @@
+@(activity : model.UserActivity)
+@import java.lang.Integer; val updateLength = 110;
+
+
+@updateContent(projectId : Int, timeSubmitted : java.util.Date, content : String) = {
+	
+	@if(content.length > updateLength) {
+		<a href="@routes.ProjectController.project(projectId)"><span class="update-link">"@{content.take(updateLength -3)}..."</span></a>
+	} else {
+		<a href="@routes.ProjectController.project(projectId)"><span class="update-link">"content"</span></a>
+	}
+	
+}
+
+@defining(model.User.get(activity.username).firstName.toLowerCase) { name =>
+	<div class="user-activity">
+		<span class="hint">
+	@activity match {
+		case model.UserActivity(_, enums.ActivityType.SubmitProject, _, detail, true) => {
+			@name created the project @links.projectLink(detail("project-id").toInt)!
+		}
+
+		case model.UserActivity(_, enums.ActivityType.SubmitUpdate, _, detail, true) => {
+			@(detail("project-id").toInt, utils.Conversions.strToDate(detail("time-submitted"))) match {
+				case (projectId, timeSubmitted) => {
+					@name updated the project @model.Project.get(projectId).name, @updateContent(projectId, timeSubmitted, detail("content"))
+				}
+			}
+		}
+
+		case model.UserActivity(_, enums.ActivityType.JoinProject, _, detail, true) => {
+			@name joined the project @links.projectLink(detail("project-id").toInt)
+		}
+
+		case model.UserActivity(_, enums.ActivityType.LikeProject, _, detail, true) => {
+			@name liked the project @links.projectLink(detail("project-id").toInt)
+		}
+
+		case model.UserActivity(_, enums.ActivityType.FollowProject, _, detail, true) => {
+			@name started watching the project @links.projectLink(detail("project-id").toInt)
+		}
+
+	}
+	</span>
+	<span class="hint">
+	- <span time-submitted="@activity.timeSubmitted.getTime()" class="time-ago">@utils.Conversions.getTimeAgo(activity.timeSubmitted)</span>
+	</span>
+}
+</div>

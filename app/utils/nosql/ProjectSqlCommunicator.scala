@@ -132,7 +132,7 @@ trait ProjectSqlCommunicator extends BaseSqlCommunicator {
 		  case _  => project.stateMessage.replace("'", "''");
 		}
 
-		val timestamp = if(project.timeFinished == null) null else s"'${utils.Conversions.dateToStr(project.timeFinished)}'";
+		val timestamp = if(project.timeFinished == None) null else s"'${utils.Conversions.dateToStr(project.timeFinished.get)}'";
 
 		val executeString = s"insert into $PROJECTS($PROJECT_UPDATE_FIELDS) VALUES(${project.id}, '${project.name}' , '${project.description.replace("'", "''")}', '${project.state}', { $categoriesStr }, '$stateMessage', '${project.primaryContact}', $timestamp)";
 

@@ -1,0 +1,26 @@
+@(user : model.User)
+
+@user.profile match {
+	case Some(path) => {<span title="Click to sign out or see notifications" class="title-nav-item user-profile user-profile-header" style="background-image:url('/@path')">}
+	case None => {<span title="Click to sign out or see notifications" class="title-nav-item user-profile user-profile-header empty"><span class="user-profile-text">@user.initials</span>}
+}
+
+	@if(user.unreadNotifications > 0) {
+		<span class="unread-notification-marker">
+		@user.unreadNotifications
+		</span>
+	} else {
+		<span class="unread-notification-marker" style="display: none">
+		
+		</span>
+	}
+
+
+	<span class="profile-menu-container">
+		<div class="profile-menu-arrow"></div>
+		<div class="profile-menu hint noselect">
+			<div class="menu-item" id="notification-text">notifications</div>
+			<div class="menu-item"><a href="@routes.Application.signout">sign out</a></div>
+		</div>
+	</span>
+</span>

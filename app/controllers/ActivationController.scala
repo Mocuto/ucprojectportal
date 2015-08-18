@@ -5,6 +5,7 @@ import com.typesafe.plugin._
 import java.util.Date
 
 import model._
+import model.form.Forms._
 
 import play.api._
 import play.api.mvc._
@@ -23,7 +24,7 @@ object ActivationController extends Controller with SessionHandler {
 	val USER_ACCOUNT_DOES_NOT_EXIST =
 		s"""
 			|this user account does not exist. for support,
-			|please contact <a href='${constants.ServerSettings.ADMIN_EMAIL}'>${constants.ServerSettings.ADMIN_NAME.toLowerCase()}</a>
+			|please contact <a href='${constants.ServerSettings.AdminEmail}'>${constants.ServerSettings.AdminName.toLowerCase()}</a>
 		""".stripMargin
 
 	val ACTIVATION_EMAIL_HAS_BEEN_SENT = "the activation email has been sent. be sure to check your spam folder!"
@@ -88,8 +89,6 @@ object ActivationController extends Controller with SessionHandler {
 			case(_, _, username : String, _) => User.get(username).lastLogin != null
 		})
 	)
-
-	case class UserForm(firstName : String, lastName : String, preferredPronouns : String, position : String);
 
 	val sgAccountForm = Form(
 		mapping(
@@ -235,19 +234,20 @@ object ActivationController extends Controller with SessionHandler {
 		)
 	}}
 
-	def tryActivateNEW = Action { implicit request =>
+	def tryActivateNEW = Action.async { implicit request =>
 		sgAccountForm.bindFromRequest.fold(
 			formWithErrors => {
-				BadRequest(views.html.activateNEW()(formWithErrors))
+				Future { BadRequest(views.html.activateNEW()(formWithErrors)) }
 			},
 			userForm => (request.session.get("authenticated"), userForm) match {
 				case (Some(username : String), UserForm(firstName, lastName, pronouns, position)) => {
-					User.setupSG(username, firstName, lastName, pronouns, position);
-					println(username);
-					SMTPCommunicator.sendAllVerifyUserEmail(username);
-					Redirect(routes.Application.gettingStarted)
+					User.setupSG(username, firstName, lastName, pronouns, position).map( x => { 
+						println(username);
+						SMTPCommunicator.sendAllVerifyUserEmail(username);
+						Redirect(routes.Application.gettingStarted)
+					})
 				}
-				case (None, _) => Redirect(routes.ShibbolethController.secure(""))
+				case (None, _) => Future { Redirect(routes.ShibbolethController.secure("")) }
 			}
 		)
 	}

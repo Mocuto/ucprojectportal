@@ -25,6 +25,10 @@ object ShibbolethController extends Controller with SessionHandler {
 
 	def secure(path : String) = Action { implicit request => 
 
+		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Login) {
+			Redirect(routes.Application.login(path))
+		}
+
 		request.headers.get("eppn") match {
 			case Some(eppn) => {
 				val username = utils.Conversions.eppnToUsername(eppn);

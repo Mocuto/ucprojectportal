@@ -2,21 +2,34 @@ package constants
 
 import play.Play
 
+import org.joda.time._
+
 object ServerSettings {
-	val DEBUG_URL = Play.application.configuration.getString("host.debug"); //"65.31.51.202:9000"
-	val PRODUCTION_URL = Play.application.configuration.getString("host.production"); //"ucprojectportal.com"
+	val DebugUrl = Play.application.configuration.getString("host.debug"); //"65.31.51.202:9000"
+	val ProductionUrl = Play.application.configuration.getString("host.production"); //"ucprojectportal.com"
+	val ChosenHost = DebugUrl;
+	val Protocol = Play.application.configuration.getString("host.protocol")
+	val HostUrl = Protocol + "://" + ChosenHost;
 
-	val CHOSEN_HOST = DEBUG_URL;
-
-	val HOST_URL = "http://" + CHOSEN_HOST;
-
-	val ADMIN_EMAIL =  Play.application.configuration.getString("admin.email")//"akomolot@mail.uc.edu"
-	val ADMIN_NAME =  Play.application.configuration.getString("admin.name")//"Tobi Akomolede"
+	val AdminEmail =  Play.application.configuration.getString("admin.email")//"akomolot@mail.uc.edu"
+	val AdminName =  Play.application.configuration.getString("admin.name")//"Tobi Akomolede"
 
 	val IndexingDirectory = Play.application.configuration.getString("indexing.directory")
-	val INDEXING_INTERVAL : Int = Play.application.configuration.getInt("routine.indexing.interval");
 
 	val AuthenticationMode = enums.AuthenticationMode.fromString(Play.application.configuration.getString("authentication"))
 
+	object ActivityStatus {
+		val Hot = Days.days(Play.application.configuration.getInt("project.activity.hot"))
+		val Warm = Days.days(Play.application.configuration.getInt("project.activity.warm"))
+		val Cold = Days.days(Play.application.configuration.getInt("project.activity.cold"))
+		val Freezing = Days.days(Play.application.configuration.getInt("project.activity.freezing"))
+	}
+
+	val ProjectWarningHour = Play.application.configuration.getInt("project.warning.hour")
+	val ProjectDigestDay = Play.application.configuration.getInt("project.digest.day")
+	val ProjectDigestHour = Play.application.configuration.getInt("project.digest.hour")
+
+	val HotProjectsCount = Play.application.configuration.getInt("project.digest.project.count")
+	val HotContributorsCount = Play.application.configuration.getInt("project.digest.contributor.count")
 }
 

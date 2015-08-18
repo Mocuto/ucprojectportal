@@ -31,6 +31,54 @@ $.ajax({
 });				
 }
 
+function verifyUser(username, firstName, lastName, preferredPronouns, position, callback) {
+	var route = jsRoutes.controllers.ModerationController.verify(username)
+
+	var formData = new FormData()
+	formData.append("first_name", firstName)
+	formData.append("last_name", lastName)
+	formData.append("preferred_pronouns", preferredPronouns)
+	formData.append("position", position)
+
+	ajaxSendFormData(formData, route, callback)
+}
+
+function setUserProfile(username, file) {
+	var route = jsRoutes.controllers.UserController.profilePic(username)
+
+	var formData = new FormData();
+	formData.append("file", file);
+
+	ajaxSendFormData(formData, route, function(response) {
+		var path = response.path;
+
+		$('.user-profile[username="' + username + '"]').css({
+			"background-image" : "url('" + path + "')"
+		}).children(".user-profile-text").html("&nbsp; &nbsp;")
+
+		$('.empty.user-profile-main[username="' + username + '"]').removeClass("empty")
+	})
+}
+
+function setUserEmeritus(username, value, callback) {
+	var route = jsRoutes.controllers.ModerationController.emeritus(username)
+
+	var formData = new FormData();
+	formData.append("value", value);
+
+	ajaxSendFormData(formData, route, callback)
+}
+
+function setUserPrivilege(username, privilegeName, value, callback) {
+	var route = jsRoutes.controllers.ModerationController.editUserPrivileges(username)
+
+	var formData = new FormData();
+	formData.append("privilege-name", privilegeName)
+	formData.append("privilege-value", value)
+
+	ajaxSendFormData(formData, route, callback)
+}
+
 function editProject(formData, optionalCallback) {
 	if (typeof optionalCallback === "undefined") {
 		optionalCallback = function() {
@@ -56,6 +104,26 @@ function leaveProject(projectId) {
 	}, function() {
 
 	})
+}
+
+function likeProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.like(projectId);
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function unlikeProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.unlike(projectId);
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function followProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.follow(projectId);
+	ajaxSendFormData(new FormData, route, callback);
+}
+
+function unfollowProject(projectId, callback) {
+	var route = jsRoutes.controllers.ProjectController.unfollow(projectId);
+	ajaxSendFormData(new FormData(), route, callback);
 }
 
 function editUpdate(projectId, author, timeSubmitted, content) {

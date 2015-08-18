@@ -1,68 +1,100 @@
-@(project : model.Project, username : String)
+@(project : model.Project, username : String, canJoin : Boolean)
 @import java.lang.String; val filterStr = project.categories.map(x => s"category-${x.replace(' ', '-')}").mkString(" ") + " state-" + project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
 @import java.lang.String; val stateStr = project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
+@import java.lang.Integer; val UsersPerCard = 7;
 
 @if(project.isNew == true) {
 <div class="isotope-item @filterStr category-new">
 } else {
 <div class="isotope-item @filterStr">
 }
-<table class="projectbox projectbox-@project.id" expanded="false" >
-	<tr>
-		<td>
+<div class="projectbox projectbox-@project.id" expanded="false" >
+	<div style="height:81px">
+		<div class="project-category-state">
 			<span class="leave-project-button" for="@project.id" style="display : none"></span>
 			@if(model.ProjectCategory.get(project.categories(0)).icon == null) {
 				<img src="/assets/images/icons/project-@stateStr-student-experience.png" class="projectbox-icon"/>
 			} else {
 				<img src="/assets/images/icons/project-@stateStr-@{model.ProjectCategory.get(project.categories(0)).icon}.png" class="projectbox-icon"/>
 			}
+			<span class="project-state">@project.state</span>
 			
-		</td>
-		<td class="projectbox-title">
-			@project.name
-			@if(project.state == model.ProjectState.IN_PROGRESS_NEEDS_HELP) {
-				<br />
-				<span class="projectbox-needshelp-description">@project.stateMessage</span>
-			}
-		</td>
-		
-	</tr>
-	<tr>
-		<td colspan="2">
-			<div  class="projectbox-description">
-				<p class="hint">
-					@Html(project.description.replace("\r\n", "<br>"))
-				</p>
-				<br/>
-				<div>
+		</div>
+		<div class="projectbox-title">@project.name</div>
+		@if(project.state == model.ProjectState.IN_PROGRESS_NEEDS_HELP) {
+			<br />
+			<!--<span class="projectbox-needshelp-description">@project.stateMessage</span>-->
+		}
+	</div>
+
+	<div>
+		<div  class="projectbox-description">
+			<p class="hint" style="padding-left:16px">
+				@Html(project.description.replace("\r\n", "<br>"))
+			</p>
+			<br/>
+			<div style="padding-left:16px;">
+				@common.userProfileIconView(model.User.get(project.primaryContact), project.primaryContact == username, true)
+
+				@if(project.teamMembers.contains(username) && project.primaryContact != username)  {
+					@common.userProfileIconView(model.User.get(username), true, false)
+				}
+
+				@defining(project.teamMembers.filter(m => m != username && m != project.primaryContact)) { remainingMembers =>
+					@for(member <- remainingMembers.take(UsersPerCard)) {
+						@common.userProfileIconView(model.User.get(member), false, false)
+					}
+					@if(remainingMembers.length > UsersPerCard) {
+						@seeMoreView(remainingMembers.length - UsersPerCard, remainingMembers.drop(UsersPerCard))
+					}
+				}
+				@project match {
+	              	case project if project.primaryContact == username => {
+	              		
+	              	}
+	              	case project if project.teamMembers.contains(username) => {
+	              		
+	              	}
+	              	case project if model.ProjectRequest.get(project.id, project.primaryContact, username).isDefined == true => {
+						<!--<div class="hint">request sent</div>-->
+					<div class="join-button noselect">
+						<span class='user-profile user-profile-icon'>
+							<span class="user-profile-text">√</span>
+						</span>
+							<div class="user-profile-icon-caption" style="font-size:10pt">request sent</div>
+							<span class="join-button-positioner">&nbsp;</span>
+					</div>	
+	              	}
+	              	case project if project.state == model.ProjectState.COMPLETED => {
+	              		<!--this project is completed-->
+	              	}
+	              	case _ if canJoin => {
+					<div class="join-button request-join noselect" project-id="@project.id">
+						<span class='user-profile user-profile-icon'>
+							<span class="user-profile-text">+</span>
+						</span>
+							<div class="user-profile-icon-caption">join</div>
+							<span class="join-button-positioner">&nbsp;</span>
+					</div>	
+	              	}
+	              	case _ => {}
+	              }
+
+			</div>
+		</div>
+	</div>
+	<div style="margin-top:4px">
+			<span style="width: 100%; display: block; padding-top:4px">
+				<div style="float: left">
 					<a href="/project/@project.id" style="text-decoration: none">
-						<span class="button">
-							continue to project profile
+						<span class="button" style="font-size:10pt">
+							view project
 						</span>
 					</a>
-					<span style="font-size:8pt; float:right;">
-		              @project match {
-		              	case project if project.primaryContact == username => {
-		              		you own this project
-		              	}
-		              	case project if project.teamMembers.contains(username) => {
-		              		you are on this project team
-		              	}
-		              	case project if model.ProjectRequest.get(project.id, project.primaryContact, username).isDefined == true => {
-							<div class="hint">request sent</div>
-		              	}
-		              	case project if project.state == model.ProjectState.COMPLETED => {
-		              		this project is completed
-		              	}
-		              	case _ => {
-							<span type="button" class="request-join button" project-id="@project.id">join</span> 
-		              	}
-
-		              }
-					</span>
 				</div>
-			</div>
-		</td>
-		</tr>
-</table>
+				<div style="float: right">@common.likeButton(username, project)</div>
+				<div style="float: right; margin-right:24px">@common.followButton(username, project)</div>
+			</span>
+	</div>
+</div>
 </div>

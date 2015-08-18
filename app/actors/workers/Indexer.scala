@@ -21,38 +21,27 @@ trait ProjectIndexer {
 	val STATE : String;
 	val STATE_MESSAGE : String;
 
-	implicit def index(project : Project)  : Option[Document] = {
+	implicit def index(p : Project)  : Option[Document] = {
+		if(p.isDefined) {
 
-		project match {
-			case Project(
-					id, 
-					name, 
-					description, 
-					_, 
-					_, 
-					categories, 
-					_, 
-					primaryContact, 
-					teamMembers, 
-					state, 
-					stateMessage, 
-					true) => {
-				val doc = new Document();
+			val doc = new Document();
 
-				doc.add(new IntField(ID, id, Field.Store.YES));
-				doc.add(new TextField(NAME, name, Field.Store.NO));
-				doc.add(new TextField(DESCRIPTION, description, Field.Store.NO));
-				doc.add(new TextField(CATEGORIES, categories.mkString(" "), Field.Store.NO));
-				doc.add(new StringField(PRIMARY_CONTACT, primaryContact, Field.Store.NO));
-				doc.add(new TextField(TEAM_MEMBERS, teamMembers.mkString(" "), Field.Store.NO));
-				doc.add(new TextField(STATE, state, Field.Store.NO))
-				doc.add(new TextField(STATE_MESSAGE, stateMessage, Field.Store.NO));
+			doc.add(new IntField(ID, p.id, Field.Store.YES));
+			doc.add(new TextField(NAME, p.name, Field.Store.NO));
+			doc.add(new TextField(DESCRIPTION, p.description, Field.Store.NO));
+			doc.add(new TextField(CATEGORIES, p.categories.mkString(" "), Field.Store.NO));
+			doc.add(new StringField(PRIMARY_CONTACT, p.primaryContact, Field.Store.NO));
+			doc.add(new TextField(TEAM_MEMBERS, p.teamMembers.mkString(" "), Field.Store.NO));
+			doc.add(new TextField(STATE, p.state, Field.Store.NO))
+			doc.add(new TextField(STATE_MESSAGE, p.stateMessage, Field.Store.NO));
 
-				Logger.debug(s"""Generating index document for ${doc.get("project-id")}""");
+			Logger.debug(s"""Generating index document for ${doc.get("project-id")}""");
 
-				return Some(doc);
-			}
-			case _ => None
+			return Some(doc);
+		}
+
+		else {
+			None
 		}
 	}
 }

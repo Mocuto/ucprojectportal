@@ -1,0 +1,5 @@
+@(username : String, project : model.Project)
+
+<span class="follow-button-container" title="watch this project">
+	<span class="follow-button" project-id="@project.id" active="@if(project.followers.contains(username)) {true} else {false}"></span>
+</span>

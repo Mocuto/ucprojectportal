@@ -88,31 +88,15 @@ trait IndexWriterHandler {
 	private def deleteWriteLock() : Unit = Files.deleteIfExists(writeLock)
 }
 
-class IndexerMaster extends Actor with IndexWriterHandler {
+class IndexerMaster extends Actor with WorkRouter with IndexWriterHandler {
 
-	protected val capActorSize = 5;
-
-	private val routees = Vector.fill(capActorSize) {
-		val r = context.actorOf(Props[Indexer])
-		context watch r
-		ActorRefRoutee(r)
-	}
-
-	private val router = {
-		Router(RoundRobinRoutingLogic(), routees)
-	}
+	def workerProps = Props[Indexer]
 
 	private var workCounter = 0;
 
-	private def routeWork(w : ActorWork[Project]) : Unit = {
-		router.route(w, context self);
-		workCounter += 1;
-	}
+	override protected def onWorkRouted(w : ActorWork[_]) : Unit = workCounter += 1;
 
-	private def handleResult(f : => Unit) : Unit = {
-		f
-		workCounter -= 1;
-	}
+	override protected def onResultHandled() : Unit = workCounter -= 1;
 
 	def receive = {
 
@@ -124,13 +108,7 @@ class IndexerMaster extends Actor with IndexWriterHandler {
 
 		case ActorResult(p : Project, _) => handleResult { Logger.info(s"Tried to index project, had erroneous result: $p") }
 
-		case ActorTerminated(a) => {
-			println("Terminating router");
-			router.removeRoutee(a);
-			val r = context.actorOf(Props[Indexer])
-			context watch r
-			router.addRoutee(r);
-		}
+		case ActorTerminated(a) => onActorTerminated(a)
 
 		case IndexWriterWorkStatus => sender ! workCounter
 
@@ -142,20 +120,22 @@ class IndexerMaster extends Actor with IndexWriterHandler {
 }
 
 //TODO: Generalize this
-object IndexerMaster extends actors.Scheduler {
+object IndexerMaster extends Master with actors.Scheduler {
 
 	import play.api.libs.concurrent.Akka
 	import play.api.Play.current
 
-	implicit val timeout = Timeout(5 seconds)
+	def actorName = "indexer-master"
 
-	val actor = Akka.system.actorOf(Props[IndexerMaster], name = "index-master")
+	def masterProps = Props[IndexerMaster]
+
+	implicit val timeout = Timeout(5 seconds)
 
 	def index(p : Project) = actor ! ActorWork(p);
 
 	def start() : Unit = {
 		Project.all.foreach (this index _)
-		checkOn(5 minutes) {
+		checkOn(5 minutes, actorName) {
 			for (workCounter <- (actor ? IndexWriterWorkStatus) if workCounter == 0) actor ! KillIndexWriter
 		}
 	}

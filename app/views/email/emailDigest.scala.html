@@ -1,0 +1,138 @@
+@(user : model.User,
+numberOfProjects : Int,
+hotProjectsWithCount : Seq[(model.Project, Int)],
+hotContributorsWithCount : Seq[(model.User, Int)],
+projectsForStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Seq[model.Project]],
+percentagesForStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int],
+newProjects : Seq[model.Project],
+completedProjects : Seq[model.Project],
+userPercentagesForStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int],
+userPercentagesForFollowingStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int])
+
+@sectionHeader(text : String) = {
+	<div style="
+		color:white;
+		font-size:20pt;
+		margin-bottom: 8px;
+		">@text
+	</div>
+}
+
+@hotProject(project : model.Project, count : Int) = {
+	<div style="
+		background-color:white;
+		padding:4px 16px 4px 16px;
+		border-radius:8px;
+		margin-bottom:16px;
+		">
+		<div style="
+		font-size:16pt;
+		color:black;
+		margin-bottom:4px;
+		">@project.name</div>
+		<div style="
+		font-size:12pt;
+		color:black;
+		font-weight:100;
+		margin-bottom:8px;
+		">number of updates: <span style="
+			color: #C51834;
+			margin-left: 12px;
+			font-size: 24pt;
+			vertical-align: middle;
+			">@count</div>
+		<div style="margin-bottom:8px;">
+			@for(username <- project.teamMembers.take(7)) {
+				@common.userProfileIconViewEmail(model.User.get(username))
+			}
+		</div>
+		<div style="
+		border-radius: 4px;
+		background-color:#ddd;
+		padding:4px 12px 4px 12px;
+		font-size:12pt;
+		text-decoration: none;
+		color:black;
+		text-align:center;
+		vertical-align: middle;
+		cursor:pointer;
+		margin-left:auto;
+		margin-right:auto;"><a href="@(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id))" style="text-decoration:none; color:black">go to the project</a></div>
+	</div>
+}
+
+@hotContributor(user : model.User, count : Int) = {
+	<div style="
+		background-color:white;
+		padding:4px 16px 4px 16px;
+		border-radius:8px;
+		">
+		<span style="
+		display: inline-block;
+		position: relative;
+		top:8px;
+		">
+		@common.userProfileViewEmail(user)
+		</span>
+		<span style="
+		display: inline-block;
+		top: -8px;
+ 		position: relative;
+		">
+			<div style="
+			font-size:16pt;
+			color:black;
+			">@user.fullName</div>
+			<div style="
+			font-size:12pt;
+			color:black;
+			font-weight:100;
+			">number of updates: <span style="
+				color:#C51834;
+				margin-left:12px;
+				font-size: 24pt;
+				vertical-align:middle;
+				">@count</span>
+			</div>
+		</span>
+	</div>
+}
+
+@percentageStatus(
+	statusType : enums.ProjectActivityStatus.ProjectActivityStatus,
+	percentageMap : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int],
+	projectMap : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Seq[model.Project]]) = {
+
+	@if(percentageMap.contains(statusType)) {
+		<div>@percentageMap(statusType)% of all projects are @enums.ProjectActivityStatus.toString(statusType) (@projectMap(statusType).length @(if (projectMap(statusType).length > 1) "projects" else "project"))</div>
+	}
+}
+
+@email(Html("your project portal weekly digest")) {
+	@sectionHeader("hot projects")
+	@for((project, count) <- hotProjectsWithCount) {
+		@hotProject(project, count)
+	}
+	@sectionHeader("hot contributors")
+	@for((user, count) <- hotContributorsWithCount) {
+		@hotContributor(user, count)
+	}
+	@sectionHeader("stats for all projects")
+	@percentageStatus(enums.ProjectActivityStatus.Hot, percentagesForStatus, projectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Warm, percentagesForStatus, projectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Cold, percentagesForStatus, projectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Freezing, percentagesForStatus, projectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Frozen, percentagesForStatus, projectsForStatus)
+	@if(newProjects.length > 0) {
+		@sectionHeader("fresh new projects")
+		@for(project <- newProjects) {
+			<span>@project.name</span><br />
+		}
+	}
+	@if(completedProjects.length > 0) {
+		@sectionHeader("recently completed projects")
+		@for(project <- completedProjects) {
+			<span>@project.name</span><br />
+		}
+	}
+}

@@ -1,10 +1,15 @@
 package model
 
+import actors.masters.ActivityMaster
+
 import com.codahale.metrics.Counter
 import com.datastax.driver.core.Row
 import com.github.nscala_time.time.Imports._
 import com.kenshoo.play.metrics.MetricsRegistry
 import com.typesafe.plugin._
+
+import enums.NotificationType
+import enums.NotificationType._
 
 import java.util.Date
 
@@ -20,7 +25,7 @@ import utils.nosql.CassieCommunicator
 
 object Notification {
 
-	val SENDER = "sender"
+	val Sender = "sender" //Move into constants
 
 	val createdMeter = MetricsRegistry.default.meter("notifications.created")
 	val updateMeter = MetricsRegistry.default.meter("notifications.updates.created")
@@ -44,7 +49,7 @@ object Notification {
 			return true;
 		}
 
-		val content = Map("sender" -> sender.username, "project_id" -> project.id.toString);
+		val content = Map(Sender -> sender.username, "project_id" -> project.id.toString);
 		
 		val notification = Notification.create(receiver, content, NotificationType.REQUEST);
 
@@ -72,6 +77,20 @@ object Notification {
 
 		addedToProjectMeter.mark();
 		Notification.create(receiver, content, NotificationType.ADDED_TO_PROJECT)
+	}
+
+	def createProjectFrozen(receiver : User, project : Project) {
+		val content = Map("project_id" -> project.id.toString)
+
+		Notification.create(receiver, content, NotificationType.ProjectFrozen)
+	}
+
+	def createProjectLiked(user : User, project : Project) : Unit = {
+		val content = Map("project_id" -> project.id.toString, Sender -> user.username)
+
+		project.teamMembers.foreach(receiver => Notification.create(User.get(receiver), content, NotificationType.ProjectLiked))
+
+		ActivityMaster.scheduleProjectLikedEmail(user, project)
 	}
 
 	def create(user : User, content : Map[String, String], notificationType : NotificationType.Value) : Notification = {

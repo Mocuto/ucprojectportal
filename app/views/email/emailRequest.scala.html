@@ -1,8 +1,8 @@
 @(requester : model.User, project : model.Project)
 
-@defining(constants.ServerSettings.HOST_URL + routes.RequestController.decide(project.id, requester.username, true), constants.ServerSettings.HOST_URL + routes.RequestController.decide(project.id, requester.username, false)) { case (acceptUrl, ignoreUrl) =>
+@defining(constants.ServerSettings.HostUrl + routes.RequestController.decide(project.id, requester.username, true), constants.ServerSettings.HostUrl + routes.RequestController.decide(project.id, requester.username, false)) { case (acceptUrl, ignoreUrl) =>
 
-@email(Html(s"${links.userLinkEmail(requester.username)} requested to join the project ${project.name}")) {
+@email(Html(s"${links.userLinkEmail(requester)} requested to join the project ${project.name}")) {
 	<span></span>
 	<br>
 	<br>

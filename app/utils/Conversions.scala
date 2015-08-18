@@ -5,7 +5,10 @@ import java.util.Date
 
 import model._
 
+import org.joda.time._
+
 import play.api.libs.json._
+import play.api.Logger
 
 import scala.collection.JavaConversions._
 
@@ -19,6 +22,27 @@ object Conversions {
 	implicit def dateToStr(date : Date) : String = return date.getTime().toString //return formatter.format(date);
 
 	implicit def dateToDisplayedStr(date : Date) : String = return if (date != null) displayedFormatter.format(date) else "?";
+
+	def getTimeAgo(date : Date) : String = {
+		val interval = new Interval(date getTime, (new Date()) getTime)
+
+		if( ((Weeks weeksIn interval) getWeeks) > 1) {
+			return ( ((Weeks weeksIn interval) getWeeks) toString) + " weeks ago"
+		}
+		else if( ((Days daysIn interval) getDays) > 1) {
+			return ( ((Days daysIn interval) getDays) toString) + " days ago"
+		}
+		else if (((Hours hoursIn interval) getHours) > 1) {
+			return ( ((Hours hoursIn interval) getHours) toString) + " hours ago"
+		}
+		else if ( ((Minutes minutesIn interval) getMinutes) > 1) {
+			return ( ((Minutes minutesIn interval) getMinutes) toString) + " minutes ago"
+		}
+		else {
+			"just now"
+		}
+	}
+
 
 	implicit def strToDate(str : String) : Date =  new Date(str.toLong) //return formatter.parse(str);
 
@@ -51,5 +75,16 @@ object Conversions {
 	    "state" -> p.state,
 	    "stateMessage" -> p.stateMessage
 	  )
+	}
+
+	def sumList(xs: List[Int]): Int = {
+
+	  def inner(xs: List[Int], accum: Int): Int = {
+	    xs match {
+	      case x :: tail => inner(tail, accum + x)
+	      case Nil => accum
+	    }
+	  }
+	  inner(xs, 0)
 	}
 }

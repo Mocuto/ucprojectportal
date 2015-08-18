@@ -1,13 +1,41 @@
+function onProfilePicClicked(event) {
+	event.stopPropagation();
+
+	if ($(this).attr("active") != "true")
+	{
+			$(this).children(".profile-menu-container").css("display", "block");
+			$(this).attr("active", true)
+
+			var obj = this;
+			$("html").click(function() {
+				$(obj).children(".profile-menu-container").css("display", "none");
+				$(obj).attr("active", false)
+			})
+	}
+	else
+	{
+			$(this).children(".profile-menu-container").css("display", "none");
+			$(this).attr("active", false)
+	}
+}
+
+function showNotificationsWindow(event) {
+	resetUnreadNotifications();
+
+	$("#popane-overlay").css("backgroundColor", "black");
+	$("#notifications-window").popane({
+		show : "true"
+	})
+
+	event.stopPropagation();
+}
+
 function setupNotificationCallbacks() {
 
-	$("#notification-text").click(function() {
-		resetUnreadNotifications();
+	$(".user-profile-header").click(onProfilePicClicked)
 
-		$("#popane-overlay").css("backgroundColor", "black");
-		$("#notifications-window").popane({
-			show : "true"
-		})
-	})
+	$("#notification-text").click(showNotificationsWindow)
+	$(".unread-notification-marker").click(showNotificationsWindow)
 
 	$("#request-join, .request-join").click(function() {
 		var projectId = Number($(this).attr("project-id"));

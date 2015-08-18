@@ -40,6 +40,10 @@ object ProjectUpdateTable extends ProjectUpdateTable {
 	override val tableName = "project_updates";
 	implicit val session = CassieCommunicator.session
 
+	def all : Future[Seq[ProjectUpdate]] = select.fetch()
+
+	def allUninterruptibly : Seq[ProjectUpdate] = scala.concurrent.Await.result(all, constants.Cassandra.defaultTimeout)
+
 	def get(projectId : Int, author : String, timeSubmitted : Date, timeEditted : Date) : Future[Option[ProjectUpdate]] = select
 		.where(_.project_id eqs projectId)
 		.and(_.author eqs author)
@@ -67,16 +71,27 @@ object ProjectUpdateTable extends ProjectUpdateTable {
 		.value(_.content, update.content)
 		.future();
 
-	def edit(projectId : Int, author : String, timeSubmitted : Date, newContent : String) = {
-		val files = ProjectUpdate.getLatest(projectId, author, timeSubmitted).files;
+	def edit(projectId : Int, author : String, timeSubmitted : Date, newContent : String) : ProjectUpdate = {
+		val oldUpdate = ProjectUpdate.getLatest(projectId, author, timeSubmitted)
+		val files = oldUpdate.files;
+
+		val timeEditted = new Date()
 
 		insert.value(_.project_id, projectId)
 			.value(_.author, author)
 			.value(_.time_submitted, timeSubmitted)
 			.value(_.files, files.toList)
 			.value(_.content, newContent)
-			.value(_.time_editted, new Date())
+			.value(_.time_editted, timeEditted)
 			.future();
+
+		ProjectUpdate(
+			projectId = projectId,
+			author = author,
+			timeSubmitted = timeSubmitted,
+			content = newContent,
+			files = files,
+			timeEditted = timeEditted)
 	}
 }
 
@@ -97,6 +112,8 @@ object ProjectUpdate {
 			author = ""
 		);
 	}
+
+	def all : Seq[ProjectUpdate] = ProjectUpdateTable.allUninterruptibly
 
 	def get(user : User) : Seq[ProjectUpdate] = return CassieCommunicator.getUpdatesForUser(user.username);
 
@@ -133,7 +150,7 @@ object ProjectUpdate {
 		return update;
 	}
 
-	def edit(projectId : Int, author : String, timeSubmitted : Date, newContent : String) {
+	def edit(projectId : Int, author : String, timeSubmitted : Date, newContent : String) : ProjectUpdate = {
 		ProjectUpdateTable.edit(projectId, author, timeSubmitted, newContent);
 	}
 

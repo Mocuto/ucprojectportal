@@ -17,6 +17,10 @@ POST	/project/new							controllers.ProjectController.submit
 GET		/project/:id 							controllers.ProjectController.project(id : Int)
 POST	/project/:id/edit						controllers.ProjectController.edit(id : Int)
 POST	/project/:id/leave 						controllers.ProjectController.leave(id : Int)
+POST 	/project/:id/like 						controllers.ProjectController.like(id : Int)
+POST 	/project/:id/unlike 					controllers.ProjectController.unlike(id : Int)
+POST 	/project/:id/follow 					controllers.ProjectController.follow(id : Int)
+POST 	/project/:id/unfollow 					controllers.ProjectController.unfollow(id : Int)
 
 GET 	/project/json/user 						controllers.ProjectController.jsonForUser
 GET 	/project/json/all 						controllers.ProjectController.jsonForAll
@@ -55,6 +59,10 @@ GET     /admin/metrics              			com.kenshoo.play.metrics.MetricsControlle
 
 #Moderation routes
 GET 	/moderation 							controllers.ModerationController.moderation
+POST 	/moderation/emeritus/:username 			controllers.ModerationController.emeritus(username : String)
+POST 	/moderation/verify/:username 			controllers.ModerationController.verify(username : String)
+POST 	/moderation/edit/:username 				controllers.ModerationController.editUserPrivileges(username : String)
+POST 	/moderaiton/edit/:username/following 	controllers.ModerationController.editUserFollowing(username : String)
 
 #Request routes
 POST	/request/join/:projectId 				controllers.RequestController.join(projectId : Int)
@@ -92,3 +100,4 @@ GET 	/secure/ 								controllers.ShibbolethController.secure(path : String = ""
 GET 	/secure/*path 							controllers.ShibbolethController.secure(path : String)
 
 GET		/:username								controllers.UserController.user(username)
+POST 	/:username/profile/upload 				controllers.UserController.profilePic(username)

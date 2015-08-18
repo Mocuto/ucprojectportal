@@ -3,6 +3,8 @@ package utils.nosql
 import com.datastax.driver.core.{Cluster, ResultSet, ResultSetFuture, Row}
 import com.datastax.driver.core.exceptions._
 
+import enums.NotificationType
+
 import java.util.Date
 
 import model._

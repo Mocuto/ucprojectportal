@@ -58,8 +58,13 @@ object Application extends Controller with SessionHandler {
 			Routes.javascriptRouter("jsRoutes")
 			(
 			 routes.javascript.Application.search,
+			 routes.javascript.UserController.profilePic,
 			 routes.javascript.ProjectController.edit,
 			 routes.javascript.ProjectController.leave,
+			 routes.javascript.ProjectController.like,
+			 routes.javascript.ProjectController.unlike,
+			 routes.javascript.ProjectController.follow,
+			 routes.javascript.ProjectController.unfollow,
 			 routes.javascript.ProjectController.jsonForAll,
 			 routes.javascript.ProjectController.jsonForUser,
 			 routes.javascript.ProjectUpdateController.submit,
@@ -72,6 +77,10 @@ object Application extends Controller with SessionHandler {
 			 routes.javascript.NotificationController.getUnreadCount,
 			 routes.javascript.NotificationController.ignore,
 			 routes.javascript.NotificationController.clearAll,
+			 routes.javascript.ModerationController.editUserPrivileges,
+			 routes.javascript.ModerationController.editUserFollowing,
+			 routes.javascript.ModerationController.emeritus,
+			 routes.javascript.ModerationController.verify,
 			 routes.javascript.AdminController.deleteUser,
 			 routes.javascript.AdminController.deleteProject
 			 )
@@ -89,19 +98,24 @@ object Application extends Controller with SessionHandler {
 
 	}}
 
-	def filter(filterStr : String) = Action { implicit request => {
-		authenticated match {
-			case Some(username) => {
-				val authenticatedUser = User.get(username);
-				Ok(views.html.filter(authenticatedUser, filterStr))
-			}
-		}
-	}}
+	def filter(filterStr : String) = Action { implicit request =>
+		whenAuthorized(username => {
+			val authenticatedUser = User.get(username);
+			val editPrivileges = UserPrivilegesEdit.getUninterruptibly(username).getOrElse {UserPrivilegesEdit.undefined(username)}
+			val canJoin = editPrivileges.joinProjects
+			Ok(views.html.filter(authenticatedUser, filterStr, canJoin))
+		})
+	}
 
 	def login(path : String) = Action {
-		path match {
-			case "/" => Redirect(routes.Application.login(""))
-			case _ => Ok(views.html.login(path)(loginForm));
+		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
+			Redirect(routes.ShibbolethController.secure(path))
+		}
+		else {
+			path match {
+				case "/" => Redirect(routes.Application.login(""))
+				case _ => Ok(views.html.login(path)(loginForm));
+			}
 		}
 		
 	}
@@ -165,18 +179,19 @@ object Application extends Controller with SessionHandler {
 	}
 
 	def search(query : String) = Action { implicit request =>
-		authenticated match {
-			case Some(username) => {
-				val user = User.get(username);
+		whenAuthorized(username => {
+			val user = User.get(username);
 
-				val projects = if (query.length == 0) {
-					List[Project]();
-				} else {
-					ProjectSearcher.search(query);
-				}
-				Ok(views.html.search(user)(projects, query))
+			val projects = if (query.length == 0) {
+				List[Project]();
+			} else {
+				ProjectSearcher.search(query);
 			}
-		}
+			val editPrivileges = UserPrivilegesEdit.getUninterruptibly(username).getOrElse {UserPrivilegesEdit.undefined(username)}
+			val canJoin = editPrivileges.joinProjects
+
+			Ok(views.html.search(user, canJoin)(projects, query))
+		})
 	}
 
 	def submitFeedback = Action { implicit request =>

@@ -12,6 +12,13 @@ String.prototype.brTagify = function() {
 	return this.replaceAll("\r\n", "<br>").replaceAll("\n", "<br>")
 }
 
+function tickDates() {
+	$(".time-ago").each(function() {
+		var time = +$(this).attr("time-submitted")
+		$(this).text(moment(time).fromNow())
+	})
+}
+
 function pulse() {
 	var unreadNotifications = getUnreadNotificationCount(function(data) {
 
@@ -19,7 +26,12 @@ function pulse() {
 
 		var notificationText = DEFAULT_MESSAGE;
 		if(count > 0) {
-			notificationText = user.firstName + ", you have " + count + " new notification" + (count == 1 ? "" : "s") +"!";
+			notificationText = "notifications (" + count + ")";
+			$(".unread-notification-marker").css("display", "initial").text(count)
+		}
+		else {
+			$(".unread-notification-marker").css("display", "none").text("")
+
 		}
 		var notificationsHtml = data["html"];
 		
@@ -39,6 +51,8 @@ function pulse() {
 			//TODO: Handle case by case
 		}
 	});
+
+	tickDates();
 
 	window.setTimeout(pulse, PULSE_INTERVAL);
 
@@ -61,6 +75,10 @@ $(document).ready(function() {
 	setupUpdateMenuCallbacks();
 
 	setupSearch();
+
+	setupModerator();
+
+	setupUserProfileCallbacks();
 
 	pulse();
 })
