@@ -35,6 +35,7 @@ protected sealed class ProjectTable extends CassandraTable[ProjectTable, Project
 	object last_activity extends DateColumn(this)
 	object last_warning extends OptionalDateColumn(this)
 	object likes extends SetColumn[ProjectTable, Project, String](this)
+	object office_hours_logged extends DoubleColumn(this)
 	object name extends StringColumn(this)
 	object primary_contact extends StringColumn(this)
 	object state extends StringColumn(this)
@@ -62,6 +63,7 @@ protected sealed class ProjectTable extends CassandraTable[ProjectTable, Project
 		 			lastWarning = last_warning(r),
 		 			likes = likes(r).toList,
 		 			followers = followers(r).toList,
+		 			officeHoursLogged = office_hours_logged(r),
 					isDefined = true
 				);
 			}
@@ -95,22 +97,26 @@ object ProjectTable extends ProjectTable {
 			teamMembers = teamMembers,
 			timeStarted = date,
 			timeFinished = timeFinished,
-			lastActivity = date
+			lastActivity = date,
+			officeHoursLogged = 0
 		)
 
-		insert
-			.value(_.id, id)
-			.value(_.name, name)
-			.value(_.description, description)
-			.value(_.primary_contact, primaryContact)
-			.value(_.categories, categories.toSet)
-			.value(_.state, state)
-			.value(_.state_message, stateMessage)
-			.value(_.team_members, teamMembers.toSet)
-			.value(_.time_started, date)
-			.value(_.time_finished, timeFinished)
-			.value(_.last_activity, date)
-			.future()
+		scala.concurrent.Await.result(
+			insert
+				.value(_.id, id)
+				.value(_.name, name)
+				.value(_.description, description)
+				.value(_.primary_contact, primaryContact)
+				.value(_.categories, categories.toSet)
+				.value(_.state, state)
+				.value(_.state_message, stateMessage)
+				.value(_.team_members, teamMembers.toSet)
+				.value(_.time_started, date)
+				.value(_.time_finished, timeFinished)
+				.value(_.last_activity, date)
+				.value(_.office_hours_logged, 0.0)
+				.future(),
+				constants.Cassandra.defaultTimeout)
 
 		project
 	}
@@ -135,6 +141,14 @@ object ProjectTable extends ProjectTable {
 	def removeFollower(id : Int, username : String) : Unit = {
 		update.where(_.id eqs id).modify(_.followers remove username).future();
 		User.removeProjectToFollow(username, id);
+	}
+
+	def addOfficeHours(id : Int, amount : Double) : Unit = {
+		println(s"Project.addOfficeHours $id $amount")
+		get(id).map(_ match {
+			case Some(project) if project.isDefined => update.where(_.id eqs id).modify(_.office_hours_logged setTo (project.officeHoursLogged + amount)).future()
+			case x => println(x)//NOOP
+		})
 	}
 }
 
@@ -284,7 +298,7 @@ object Project {
 	def freezeWithNotification(project : Project) {
 		freeze(project)
 
-		project.teamMembers foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
+		project.involvedMembers foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
 	}
 
 	def allTags : Seq[String] = return CassieCommunicator.getTagsWithType("project").getOrElse { return List[String]() };
@@ -373,6 +387,8 @@ object Project {
 
 	def updateLastWarning(id : Int) : Unit = ProjectTable.updateLastWarning(id)
 
+	def addOfficeHours(id : Int, amount : Double) = ProjectTable.addOfficeHours(id, amount)
+
 	implicit def fromRow (row : Row) : Project =  { 
 		row match {
 			case null => Project.undefined
@@ -413,6 +429,7 @@ case class Project (
 	 	stateMessage : String = "",
 	 	likes : Seq[String] = List[String](),
 	 	followers : Seq[String] = List[String](),
+	 	officeHoursLogged : Double = 0,
 	 	isDefined : Boolean = true) {
 
 	def this (
@@ -435,13 +452,15 @@ case class Project (
 			teamMembers = List[String]())
 
 	def notifyFollowersAndMembersExcluding(excludingUsername : String, updateContent : String) : Unit = {
-		(teamMembers ++ followers).toSet[String]  foreach(username => {
+		involvedMembers foreach(username => {
 			if(excludingUsername != username)
 			{
 				Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent)
 			}
 		});
 	}
+
+	def involvedMembers : Set[String] = (teamMembers ++ followers ++ teamMembers.flatMap(User.get(_).followers)).toSet[String]
 
 	def isNew : Boolean = Weeks.weeksBetween(new DateTime(timeStarted), DateTime.now).getWeeks <= 1;
 

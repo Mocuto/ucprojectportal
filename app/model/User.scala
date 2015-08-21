@@ -100,8 +100,8 @@ object User {
 		return User.get(username);
 	}
 
-	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String) = {
-		UserTable.setupSG(username, firstName, lastName, preferredPronouns, position);
+	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String, officeHourRequirement : Double) = {
+		UserTable.setupSG(username, firstName, lastName, preferredPronouns, position, officeHourRequirement);
 	}
 
 	def setupNonSG(username : String) = UserTable.setupNonSG(username);
@@ -178,9 +178,24 @@ object User {
 
 	def updateLastActivity(username : String, date : Date) = UserTable.updateLastActivity(username, date)
 
+
+	def addFollower(username : String, follower : String) : Unit = {
+		addUserToFollow(follower, username)
+		UserTable.addFollower(username, follower)
+	}
+
+	def removeFollower(username : String, follower : String) : Unit = {
+		removeUserToFollow(follower, username)
+		UserTable.removeFollower(username, follower)
+	}
+
 	def addProjectToFollow(username : String, projectId : Int) = UserTable.addProjectToFollow(username, projectId);
 
 	def removeProjectToFollow(username : String, projectId : Int) = UserTable.removeProjectToFollow(username, projectId);
+
+	def addUserToFollow(username : String, toFollow : String) = UserTable.addUserToFollow(username, toFollow)
+
+	def removeUserToFollow(username : String, toFollow : String) = UserTable.removeUserToFollow(username, toFollow)
 
 	implicit def fromRow(row : Row) : User = {
 		row match {
@@ -207,9 +222,11 @@ sealed class UserTable extends CassandraTable[UserTable, User] {
 
 	object username extends StringColumn(this) with PartitionKey[String]
 	object first_name extends StringColumn(this)
+	object followers extends SetColumn[UserTable, User, String](this)
 	object last_activity extends DateColumn(this)
 	object last_login extends DateColumn(this)
 	object last_name extends StringColumn(this)
+	object office_hour_requirement extends DoubleColumn(this)
 	object position extends StringColumn(this)
 	object preferred_pronouns extends StringColumn(this)
 	object primary_contact_projects extends SetColumn[UserTable, User, Int](this)
@@ -217,6 +234,7 @@ sealed class UserTable extends CassandraTable[UserTable, User] {
 	object projects extends SetColumn[UserTable, User, Int](this)
 	object projects_following extends SetColumn[UserTable, User, Int](this)
 	object unread_notifications extends IntColumn(this)
+	object users_following extends SetColumn[UserTable, User, String](this)
 	object verified extends BooleanColumn(this)
 	object emeritus_ extends BooleanColumn(this) {
 		override val name = "emeritus"
@@ -226,6 +244,7 @@ sealed class UserTable extends CassandraTable[UserTable, User] {
 			username(r),
 			firstName = first_name(r),
 			lastName = last_name(r),
+			officeHourRequirement = office_hour_requirement(r),
 			position = position(r),
 			preferredPronouns = preferred_pronouns(r),
 			profile = profile(r),
@@ -237,6 +256,8 @@ sealed class UserTable extends CassandraTable[UserTable, User] {
 			lastActivity = last_activity(r),
 			verified = verified(r),
 			emeritus = emeritus_(r),
+			usersFollowing = users_following(r).toSeq,
+			followers = followers(r).toSeq,
 			isDefined = true
 		)
 }
@@ -261,7 +282,9 @@ object UserTable extends UserTable {
 			.value(_.projects, Set[Int]())
 			.value(_.projects_following, Set[Int]())
 			.value(_.unread_notifications, user.unreadNotifications)
+			.value(_.users_following, user.usersFollowing.toSet)
 			.value(_.verified, user.verified)
+			.value(_.office_hour_requirement, user.officeHourRequirement)
 			.future()
 	}
 
@@ -275,7 +298,7 @@ object UserTable extends UserTable {
 
 	def getUninterruptibly(username : String) = scala.concurrent.Await.result(get(username), constants.Cassandra.defaultTimeout)
 
-	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String) = {
+	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String, officeHourRequirement : Double) = {
 		update
 			.where(_.username eqs username)
 			.modify(_.first_name setTo firstName)
@@ -283,6 +306,7 @@ object UserTable extends UserTable {
 			.and(_.preferred_pronouns setTo preferredPronouns)
 			.and(_.position setTo position)
 			.and(_.verified setTo false)
+			.and(_.office_hour_requirement setTo officeHourRequirement)
 			.onlyIf(_.position eqs "")
 			.future();
 	}
@@ -310,14 +334,20 @@ object UserTable extends UserTable {
 
 	def updateLastActivity(username : String, date : Date) = update.where(_.username eqs username).modify(_.last_activity setTo date).future();
 
+	def addFollower(username : String, follower : String) = update.where(_.username eqs username).modify(_.followers add follower).future()
+	def removeFollower(username : String, follower : String) = update.where(_.username eqs username).modify(_.followers remove follower).future();
+
 	def addProjectToFollow(username : String, id : Int) = update.where(_.username eqs username).modify(_.projects_following add id).future();
 	def removeProjectToFollow(username : String, id : Int) = update.where(_.username eqs username).modify(_.projects_following remove id).future();
+
+	def addUserToFollow(username : String, toFollow : String) = update.where(_.username eqs username).modify(_.users_following add toFollow).future();
+	def removeUserToFollow(username : String, toFollow : String) = update.where(_.username eqs username).modify(_.users_following remove toFollow).future();
 }
 
 case class User (
 		username : String, 
 		firstName : String = "", 
-		lastName : String = "", 
+		lastName : String = "",
 		position : String = "",
 		preferredPronouns : String = "",
 		profile : Option[String] = None,
@@ -329,6 +359,9 @@ case class User (
 		lastActivity : Date = new Date(),
 		verified : Boolean = false,
 		emeritus : Boolean = false,
+		usersFollowing : Seq[String] = List[String](),
+		followers : Seq[String] = List[String](),
+		officeHourRequirement : Double = 0.0,
 		isDefined : Boolean = true) {
 
 	implicit def toJson : JsObject = {

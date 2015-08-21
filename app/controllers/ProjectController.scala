@@ -4,7 +4,6 @@ import actors.masters.{ActivityMaster, IndexerMaster}
 
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
-import com.typesafe.plugin._
 
 import enums.ActivityType
 import enums.ActivityType._
@@ -43,7 +42,7 @@ object ProjectController extends Controller with SessionHandler {
 		})
 	)
 
-	val projectsCreatedCounter = MetricsRegistry.default.counter("projects.created")
+	val projectsCreatedCounter = MetricsRegistry.defaultRegistry.counter("projects.created")
 
 	def project(id : Int) = Action { implicit request =>
 		whenAuthorized(username => {
@@ -272,29 +271,37 @@ object ProjectController extends Controller with SessionHandler {
 
 	def like(id : Int) = Action { implicit request =>
 		whenAuthorized(username => {
-			Project.addLike(id, username);
+			if(!Project.get(id).isDefined) {
+				NotFound("This project does not exist")
+			}
+			else {
+				Project.addLike(id, username);
 
-			val response = JsObject( 
-				Seq(
-					"response" -> JsString("liked project")
+				val response = JsObject( 
+					Seq(
+						"response" -> JsString("liked project")
+					)
 				)
-			)
 
-			ActivityMaster.logProjectActivity(username, id, ActivityType.LikeProject);
+				ActivityMaster.logProjectActivity(username, id, ActivityType.LikeProject);
 
-			Notification.createProjectLiked(User.get(username), Project.get(id))
+				Notification.createProjectLiked(User.get(username), Project.get(id))
 
-			Ok(response);
+				Ok(response);
+			}
 		})
 	}
 
 	def unlike(id : Int) = Action { implicit request =>
 		whenAuthorized(username => {
+			if(!Project.get(id).isDefined) {
+				NotFound("This project does not exist")
+			}
 			Project.removeLike(id, username);
 
 			val response = JsObject( 
 				Seq(
-					"response" -> JsString("liked project")
+					"response" -> JsString("unliked project")
 				)
 			)
 
@@ -306,6 +313,14 @@ object ProjectController extends Controller with SessionHandler {
 
 	def follow(id : Int) = Action { implicit request =>
 		whenAuthorized(username => {
+			val followPermissions = UserPrivilegesFollow.getUninterruptibly(username).getOrElse {UserPrivilegesFollow.undefined(username)}
+
+			if(!followPermissions.projectsAll) {
+				Status(401)("You are not authorized to follow projects")
+			}
+			else if(!Project.get(id).isDefined) {
+				NotFound("This project does not exist")
+			}
 			Project.addFollower(id, username);
 
 			val response = JsObject( 
@@ -322,6 +337,14 @@ object ProjectController extends Controller with SessionHandler {
 
 	def unfollow(id : Int) = Action { implicit request =>
 		whenAuthorized(username => {
+			val followPermissions = UserPrivilegesFollow.getUninterruptibly(username).getOrElse {UserPrivilegesFollow.undefined(username)}
+
+			if(!followPermissions.projectsAll) {
+				Status(401)("You are not authorized to unfollow projects")
+			}
+			else if(!Project.get(id).isDefined) {
+				NotFound("This project does not exist")
+			}
 			Project.removeFollower(id, username);
 
 			val response = JsObject( 

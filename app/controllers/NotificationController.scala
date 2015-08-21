@@ -1,7 +1,5 @@
 package controllers
 
-import com.typesafe.plugin._
-
 import java.util.Date
 
 import model._

@@ -13,7 +13,8 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 
 @main("Student Government Project Portal")(Some(loggedInUser)) {
 	@if(canEdit && !isAuthenticatedUser) {
-		<div id="activate-inputs" class="popane roundbox verify-inputs" username="@user.username">
+		<div id="activate-inputs" class="popane verify-inputs" username="@user.username">
+			<span class="close-button">close</span>
 			<div class="header" style="font-size: 16pt; margin-bottom: 16px;">validate their profile</div>
 			<div class="verify-header">first name</div>
 			<input class="login-input verify-first-name" name="first_name" type="text" placeholder="enter first name" value='@getFormValue("first_name")'>
@@ -21,6 +22,7 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 			<input class="login-input verify-last-name" name="last_name" type="text" placeholder="enter last name" value='@getFormValue("last_name")'>
 			<div class="verify-header">preferred pronouns</div>
 			<input class="login-input verify-preferred-pronouns" name="preferred_pronouns" type="text" placeholder="enter preferred pronouns" value='@getFormValue("preferred_pronouns")'>
+			<input class="login-input verify-office-hour-requirement" name="office_hour_requirement" type="text" placeholder="enter required weekly office hours" value="0">
 			<div class="verify-header" style="margin-top:24px">position <span class="button non-sg-button">mark as non-sg</span></div>
 
 			<input class="login-input verify-position" id="position-button" name="position" type="text" placeholder="enter position" value='@getFormValue("position")' style="display:inline-block">
@@ -47,7 +49,9 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 	   	  		
 	      	}
 	      	</span>
-
+	      	@if(isAuthenticatedUser == false) {
+	      		@common.followUserButton(loggedInUser, user.username)
+	      	}
 		</div>
 
     	<div class="large-header">@{if(isAuthenticatedUser == true) "my activity" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + "'s activity")}</div>
@@ -64,7 +68,7 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- user.primaryContactProjects.map(model.Project.get(_))) {
 		   		@if(project.state != model.ProjectState.COMPLETED) {
-		   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects)
+		   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects, loggedInPrivileges.follow.projectsAll)
 		   		}
 		   	}
 	   	</div>
@@ -75,23 +79,53 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- user.projects.map(model.Project.get(_)) if project.primaryContact != user.username && project.state != model.ProjectState.COMPLETED) {
-	   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects)
+	   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects, loggedInPrivileges.follow.projectsAll)
 		   	}
 	   	</div>
 
-	   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i've" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + " has")} completed</div>
-	   	<div class="projectbox-container">
-	   		<div class="grid-sizer"></div>
-		   	@for(project <- user.projects.map(model.Project.get(_))) {
-		   		@if(project.state == model.ProjectState.COMPLETED) {
-		   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects)
-		   		}
-		   	}
-	   	</div>
+	   	<br>
+
+	   	@defining(user.projects.map(model.Project.get(_)).filter(_.state == model.ProjectState.COMPLETED)) { completedProjects =>
+	   		@if(completedProjects.length > 0) {
+			   	<div class="large-header">projects @{if(isAuthenticatedUser == true) "i've" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + " has")} completed</div>
+			   	<div class="projectbox-container">
+			   		<div class="grid-sizer"></div>
+				   	@for(project <- completedProjects) {
+				   		@if(project.state == model.ProjectState.COMPLETED) {
+				   			@common.projectView(project, loggedInUser.username, loggedInPrivileges.edit.joinProjects, loggedInPrivileges.follow.projectsAll)
+				   		}
+				   	}
+			   	</div>   
+
+			   	<br>	
+	   		}
+	   	}
+
 
 
 	   	@if(canEdit && !isAuthenticatedUser) {
-	   	<div class="large-header">privileges and moderation</div>
+		   	<div class="large-header">members @user.firstName.toLowerCase() follows</div>
+		   	<div class="roundbox">
+			   	<span class="edit-users-following-button" follower="@user.username" style="display:inline-block; position:relative; float:right;"></span>
+		   		@if(user.usersFollowing.length ==0 ) {
+		   			<p class="content" id="user-users-following">no one</p>
+		   		} else {
+		   			<p class="content" id="user-users-following">@Html(user.usersFollowing.map(username => links.userLink(model.User.get(username))).mkString(", "))</p>
+		   		}
+			   
+				<div class="users-following-edit-field" for="users-following" field-name="users-following">
+				  <select class="chosen" name="team-members" id="users-following-select" multiple style="width:80%">
+				    @for(otherUser <- model.User.allConfirmed) {
+				      @if(user.usersFollowing.contains(otherUser.username)) {
+				        <option value="@otherUser.username" selected>@otherUser.fullName</option>
+				      } else {
+				        <option value="@otherUser.username">@otherUser.fullName</option>
+				      }
+				    }
+				  </select>
+				</div>
+			</div>
+		   	<div class="large-header">privileges and moderation</div>
 	   		@common.userPrivilegeEditView(user, userPrivileges, loggedInPrivileges)
 	   	}
    	</div>

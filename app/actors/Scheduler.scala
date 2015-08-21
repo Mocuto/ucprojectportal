@@ -90,7 +90,6 @@ trait Scheduler {
 
 		cancellables = cancellables :+ (name, c)
 
-		println("cancellables")
 		cancellables
 	}
 

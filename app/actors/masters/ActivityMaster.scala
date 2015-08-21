@@ -79,7 +79,23 @@ trait ActivityLogger {
 	def logLikeUpdate(username : String, projectId : Int,  author : String, timeSubmitted : Date) : Unit = {
 		log(username, ActivityType.LikeUpdate, Map(
 			"project-id" -> projectId.toString,
+			"author" -> author,
 			"time-submitted" -> (Conversions dateToStr timeSubmitted)))
+	}
+
+	def logUnlikeUpdate(username : String, projectId : Int,  author : String, timeSubmitted : Date) : Unit = {
+		log(username, ActivityType.UnlikeUpdate, Map(
+			"project-id" -> projectId.toString,
+			"author" -> author,
+			"time-submitted" -> (Conversions dateToStr timeSubmitted)))
+	}
+
+	def logFollowUser(follower : String, toFollow : String) : Unit = {
+		log(follower, ActivityType.FollowUser, Map("to-follow" -> toFollow))
+	}
+
+	def logUnfollowUser(follower : String, toFollow : String) : Unit = {
+		log(follower, ActivityType.UnfollowUser, Map("to-follow" -> toFollow))
 	}
 
 	def log(username : String, activityType : ActivityType, detail : Map[String, String]) : Unit = {
@@ -121,6 +137,7 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	val ProjectWarnings = "project warning daily routine"
 	val ProjectDigest = "project digest weekly  routine"
 	val ProjectLikedEmail = (u : User, projectId : Int) => s"${u.username} liked project-$projectId"
+	val UpdateLikedEmail = (u : User, projectId : Int, author : String, timeSubmittedStr : String) => s"${u.username} liked update-$projectId-$author-$timeSubmittedStr"
 
 	val LikedEmailDelayInHours = 3;
 
@@ -164,7 +181,6 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	}
 
 	def startDigest() : Unit = {
-		println("I'm running!")
 		//First compile global portion of digest
 		val updatesThisWeek = ProjectUpdate.all.filter(u => { 
 			((Days.daysBetween(new DateTime(u.timeSubmitted), DateTime.now).getDays) < 7) &&
@@ -243,6 +259,23 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 				
 			}
 		}
+	}
+
+	def scheduleUpdateLikedEmail(u : User, update : ProjectUpdate) : Unit = {
+		val name = UpdateLikedEmail(u, update.projectId, update.author, utils.Conversions.dateToStr(update.timeSubmitted))
+		if(isScheduled(name) == false) {
+			scheduleAt((new DateTime()).plusHours(LikedEmailDelayInHours), name) {
+				import scala.concurrent.ExecutionContext.Implicits.global
+				Future {
+					SMTPCommunicator.sendUpdateLikedEmail(update.projectId, update.author, update.timeSubmitted)
+				}
+				
+			}
+		}
+		import scala.concurrent.ExecutionContext.Implicits.global
+				Future {
+					SMTPCommunicator.sendUpdateLikedEmail(update.projectId, update.author, update.timeSubmitted)
+				}
 	}
 
 	def checkWarningsFor(u : User) = actor ! ActorWork(u)

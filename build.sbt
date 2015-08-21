@@ -2,15 +2,21 @@ name := "ProjectSG"
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.6"
 
 val phantomVersion = "1.5.0"
 
+libraryDependencies += "com.typesafe.play" %% "anorm" % "2.4.0"
+
 libraryDependencies ++= Seq(
   jdbc,
-  anorm,
   cache,
   ws
+)
+
+libraryDependencies += specs2 % Test
+
+resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 lazy val openSAMLVersion = "2.6.0"
 
@@ -22,9 +28,9 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
 	"com.datastax.cassandra" % "cassandra-driver-core" % "2.1.0",
 	"com.github.nscala-time" %% "nscala-time" % "1.0.0",
-	"com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.0",
-  "com.kenshoo" %% "metrics-play" % "2.3.0_0.1.6",
-  "com.websudos"  %% "phantom-dsl"                   % phantomVersion
+	"com.typesafe.play" %% "play-mailer" % "3.0.1",
+  "com.kenshoo" %% "metrics-play" % "2.4.0_0.3.0",
+  "com.websudos"  %% "phantom-dsl" % phantomVersion
 )
 
 resolvers ++= Seq(

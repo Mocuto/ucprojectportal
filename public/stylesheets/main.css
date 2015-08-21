@@ -530,7 +530,7 @@ body {
 	width:100%;
 }
 
-.edit-button {
+.edit-button, .edit-users-following-button {
 	cursor: pointer;
 	background-image:url("/assets/images/buttons/project-edit-inactive.png");
 	background-size:cover;
@@ -540,7 +540,7 @@ body {
 	position: absolute;
 }
 
-.edit-button:hover {
+.edit-button:hover, .edit-users-following-button:hover, .edit-users-following-button[active="true"] {
 background-image:url("/assets/images/buttons/project-edit-active.png");
 }
 
@@ -635,11 +635,15 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	margin-bottom:16px;
 }
 
+.users-following-edit-field {
+	width: 100%;
+}
+
 .file-inputs {
 	width: 102%;
 }
 
-#notifications-window {
+#notifications-window, #office-hours-window, #activate-inputs {
 	background-color:white;
 	position: fixed;
 	padding: 16px;
@@ -647,6 +651,10 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	width: 500px;
 	box-shadow: 0px 5px 20px #333;
 	display: none;
+}
+
+#office-hours-window {
+	width:initial;
 }
 
 #popane-overlay {
@@ -863,6 +871,53 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 .tt-menu, .tt-menu * {
 	float:none;
 	max-height: none;
+}
+
+.office-hour-mark-container {
+	margin-bottom: 16px;
+	height: 48px;
+}
+
+.office-hour-mark {
+    float: left;
+    margin-right: 32px;
+    text-align: center;
+}
+
+.office-hour-mark-header {
+
+}
+
+.office-hour-mark-value {
+	font-size: 16pt;
+	font-weight: 100;
+}
+
+.office-hour-mark-value[warning="true"] {
+	color : #D80707;
+}
+
+.office-hour-mark-value[warning="false"] {
+	color : #00DC75;
+}
+
+.office-hour-title-image {
+	background-image: url("/assets/images/icons/clock.png");
+	background-size: cover;
+	width: 52px;
+	height: 52px;
+	display: inline-block;
+}
+
+.office-hour-button {
+	background-image: url("/assets/images/icons/clock.png");
+	background-size: cover;
+	width: 26px;
+	height: 26px;
+	max-height: none;
+	right: 20px;
+	z-index: 1;
+	cursor: pointer;
 }
 
 .search-button {
@@ -1123,15 +1178,16 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	max-height: 32px;
 }
 
-.like-button {
+.like-button, .like-update-button {
   display: inline-block;
   background-image: url('/assets/images/icons/heart-unselected.png');
   width: 24px;
   height: 20px;
   background-size: cover;
+  cursor: pointer;
 }
 
-.like-button:hover, .like-button[active="true"] {
+.like-button:hover, .like-button[active="true"], .like-update-button:hover, .like-update-button[active="true"] {
 	background-image: url('/assets/images/icons/heart-selected.png');
 }
 
@@ -1146,7 +1202,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	text-transform: lowercase;
 }
 
-.follow-button {
+.follow-button, .follow-user-button {
   display: inline-block;
   background-image: url('/assets/images/icons/eye-unselected.png');
   width: 33px;
@@ -1154,7 +1210,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
   background-size: cover;
 }
 
-.follow-button:hover, .follow-button[active="true"] {
+.follow-button:hover, .follow-button[active="true"], .follow-user-button:hover, .follow-user-button[active="true"] {
 	background-image: url('/assets/images/icons/eye-selected.png');
 }
 

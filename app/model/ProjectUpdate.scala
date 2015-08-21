@@ -25,6 +25,7 @@ protected sealed class ProjectUpdateTable extends CassandraTable[ProjectUpdateTa
 	object categories extends SetColumn[ProjectUpdateTable, ProjectUpdate, String](this)
 	object content extends StringColumn(this)
 	object files extends ListColumn[ProjectUpdateTable, ProjectUpdate, String](this)
+	object likes extends SetColumn[ProjectUpdateTable, ProjectUpdate, String](this)
 
 	override def fromRow(r : Row) = ProjectUpdate(
 		projectId = project_id(r),
@@ -32,11 +33,12 @@ protected sealed class ProjectUpdateTable extends CassandraTable[ProjectUpdateTa
 		timeSubmitted = time_submitted(r),
 		timeEditted = time_editted(r),
 		content = content(r),
-		files = files(r)
+		files = files(r),
+		likes = likes(r).toSeq
 	)
 }
 
-object ProjectUpdateTable extends ProjectUpdateTable {
+private object ProjectUpdateTable extends ProjectUpdateTable {
 	override val tableName = "project_updates";
 	implicit val session = CassieCommunicator.session
 
@@ -91,7 +93,28 @@ object ProjectUpdateTable extends ProjectUpdateTable {
 			timeSubmitted = timeSubmitted,
 			content = newContent,
 			files = files,
+			likes = oldUpdate.likes,
 			timeEditted = timeEditted)
+	}
+
+	def addLike(username : String, projectId : Int, author : String, timeSubmitted : Date, timeEditted : Date) : Unit = {
+		update
+			.where(_.author eqs author)
+			.and(_.project_id eqs projectId)
+			.and(_.time_submitted eqs timeSubmitted)
+			.and(_.time_editted eqs timeEditted)
+			.modify(_.likes add username)
+			.future();
+	}
+
+	def removeLike(username : String, projectId : Int, author : String, timeSubmitted : Date, timeEditted : Date) : Unit = {
+		update
+			.where(_.author eqs author)
+			.and(_.project_id eqs projectId)
+			.and(_.time_submitted eqs timeSubmitted)
+			.and(_.time_editted eqs timeEditted)
+			.modify(_.likes remove username)
+			.future();
 	}
 }
 
@@ -122,14 +145,20 @@ object ProjectUpdate {
 	def get(projectId : Int, author : String, timeSubmitted : Date) = scala.concurrent.Await.result(ProjectUpdateTable.get(projectId, author, timeSubmitted), constants.Cassandra.defaultTimeout)
 
 	def getLatest(projectId : Int, author : String, timeSubmitted :Date) : ProjectUpdate = {
-		get(projectId, author, timeSubmitted).reduce((a, b) => {
-			if(a.timeEditted.after(b.timeEditted)) {
-				a
-			}
-			else {
-				b
-			}
-		})
+		try {
+			get(projectId, author, timeSubmitted).reduce((a, b) => {
+				if(a.timeEditted.after(b.timeEditted)) {
+					a
+				}
+				else {
+					b
+				}
+			})
+		}
+		catch {
+			case e : java.lang.UnsupportedOperationException => ProjectUpdate.undefined
+		}
+
 	}
 
 	def create (content: String, author: String, projectId : Int, files : Seq[(String, TemporaryFile)]) : ProjectUpdate = {
@@ -171,12 +200,22 @@ object ProjectUpdate {
 					projectId = row.getInt("project_id"),
 					timeSubmitted = row.getDate("time_submitted"),
 					timeEditted = row.getDate("time_editted"),
-					files = row.getList("files", classOf[String])
+					files = row.getList("files", classOf[String]),
+					likes = row.getSet("likes", classOf[String]).toList
 				)
 			}
 		}
 	}
+
+	def addLike (username : String, projectId : Int, author : String, timeSubmitted : Date) : Unit = {
+		val latest = getLatest(projectId, author, timeSubmitted)
+		ProjectUpdateTable.addLike(username, projectId, author, timeSubmitted, latest.timeEditted);
+	}
 	
+	def removeLike(username : String, projectId : Int, author : String, timeSubmitted : Date) : Unit = {
+		val latest = getLatest(projectId, author, timeSubmitted)
+		ProjectUpdateTable.removeLike(username, projectId, author, timeSubmitted, latest.timeEditted);
+	}
 }
 
 case class ProjectUpdate (
@@ -186,8 +225,18 @@ case class ProjectUpdate (
 	timeSubmitted : Date = new Date(),
 	timeEditted : Date = new Date(),
 	files : Seq[String] = List[String](),
+	likes : Seq[String] = List[String](),
 	isDefined : Boolean = true) {
-	def this (content : String, author : String, projectId :  Int, timeSubmitted : Date, timeEditted : Date) = this(content, author, projectId, timeSubmitted, timeEditted, List[String](), true)
+	def this (content : String, author : String, projectId :  Int, timeSubmitted : Date, timeEditted : Date) = this(
+		content,
+		author,
+		projectId,
+		timeSubmitted,
+		timeEditted,
+		List[String](),
+		List[String](),
+		true
+	)
 
 
 	implicit def toJson() : JsObject = { 

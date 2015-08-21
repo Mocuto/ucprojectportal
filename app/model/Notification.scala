@@ -6,7 +6,6 @@ import com.codahale.metrics.Counter
 import com.datastax.driver.core.Row
 import com.github.nscala_time.time.Imports._
 import com.kenshoo.play.metrics.MetricsRegistry
-import com.typesafe.plugin._
 
 import enums.NotificationType
 import enums.NotificationType._
@@ -27,11 +26,11 @@ object Notification {
 
 	val Sender = "sender" //Move into constants
 
-	val createdMeter = MetricsRegistry.default.meter("notifications.created")
-	val updateMeter = MetricsRegistry.default.meter("notifications.updates.created")
-	val requestMeter = MetricsRegistry.default.meter("notifications.requests.created");
-	val messageMeter = MetricsRegistry.default.meter("notifications.messages.created");
-	val addedToProjectMeter = MetricsRegistry.default.meter("notifications.added-to-project.created");
+	val createdMeter = MetricsRegistry.defaultRegistry.meter("notifications.created")
+	val updateMeter = MetricsRegistry.defaultRegistry.meter("notifications.updates.created")
+	val requestMeter = MetricsRegistry.defaultRegistry.meter("notifications.requests.created");
+	val messageMeter = MetricsRegistry.defaultRegistry.meter("notifications.messages.created");
+	val addedToProjectMeter = MetricsRegistry.defaultRegistry.meter("notifications.added-to-project.created");
 
 	def getForUser(user : User) : Seq[Notification] = return CassieCommunicator.getNotificationsForUser(user);
 
@@ -91,6 +90,14 @@ object Notification {
 		project.teamMembers.foreach(receiver => Notification.create(User.get(receiver), content, NotificationType.ProjectLiked))
 
 		ActivityMaster.scheduleProjectLikedEmail(user, project)
+	}
+
+	def createUpdateLiked(user : User, update : ProjectUpdate) : Unit = {
+		val content = Map("project_id" -> update.projectId.toString, Sender -> user.username, "author" -> update.author, "time_submitted" -> utils.Conversions.dateToStr(update.timeSubmitted))
+
+		Notification.create(User.get(update.author), content, NotificationType.UpdateLiked)
+
+		ActivityMaster.scheduleUpdateLikedEmail(user, update)
 	}
 
 	def create(user : User, content : Map[String, String], notificationType : NotificationType.Value) : Notification = {

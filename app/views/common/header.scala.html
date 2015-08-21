@@ -18,10 +18,16 @@
 		<a href="/@user.username">my projects</a>
 	</span>
 
-	<span class="title-nav-item search-nav-item">
+	<span class="title-nav-item" style="padding-top:1px; max-height:32px;" title="log office hours">
+		<span style="max-height:32px">
+			<span class="office-hour-button"></span>
+		</span>
+	</span>
+
+	<span class="title-nav-item search-nav-item" title="search">
 		<span style="max-height:32px">
 			<span class="search-button"></span>
-			<input class="roundbox-textinput typeahead search-box" id="search-box"></span>
+			<input class="roundbox-textinput typeahead search-box" id="search-box" placeholder="search..."></span>
 		</span>
 	</span>
 
@@ -33,5 +39,6 @@
 		<br>
 		@notificationsListView(user)
 	</div>
+	@common.officeHoursView(user)
 
 </div>

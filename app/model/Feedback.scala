@@ -2,7 +2,6 @@ package model
 
 import com.datastax.driver.core.Row
 import com.github.nscala_time.time.Imports._
-import com.typesafe.plugin._
 
 import java.util.Date
 

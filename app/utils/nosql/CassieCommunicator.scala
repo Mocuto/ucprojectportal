@@ -1,6 +1,6 @@
 package utils.nosql
 
-import com.datastax.driver.core.{Cluster, ResultSet, ResultSetFuture, Row}
+import com.datastax.driver.core.{Cluster, PreparedStatement, ResultSet, ResultSetFuture, Row}
 import com.datastax.driver.core.exceptions._
 
 import java.util.Date
@@ -58,6 +58,8 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
   private[nosql] val FEEDBACK = "feedback"
   private[nosql] val FEEDBACK_INSERT_FIELDS = "author, content, type, time_submitted"
 
+  private val statementCache = scala.collection.mutable.HashMap.empty[String, PreparedStatement]
+
 
   private[nosql] val builder = if(Play.application.configuration.getBoolean("cassandra.authenticates") == true) {
     val username = Play.application.configuration.getString("cassandra.username");
@@ -86,7 +88,14 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
     }
 
     try {
-      val statement = session.prepare(executeString);
+      val statement = if(statementCache.contains(executeString)) {
+          statementCache(executeString)
+        }
+        else {
+          val ps = session.prepare(executeString);
+          statementCache += (executeString -> ps)
+          ps
+        }
       return Some(session.execute(statement.bind()));
     }
     catch {
@@ -104,7 +113,14 @@ object CassieCommunicator extends BaseSqlCommunicator with NotificationSqlCommun
     }
 
     try {
-      val statement = session.prepare(executeString);
+      val statement = if(statementCache.contains(executeString)) {
+          statementCache(executeString)
+        }
+        else {
+          val ps = session.prepare(executeString);
+          statementCache += (executeString -> ps)
+          ps
+        }
       return Some(session.executeAsync(statement.bind()));
     }
     catch {

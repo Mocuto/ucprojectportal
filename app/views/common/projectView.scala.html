@@ -1,4 +1,4 @@
-@(project : model.Project, username : String, canJoin : Boolean)
+@(project : model.Project, username : String, canJoin : Boolean, canFollow : Boolean)
 @import java.lang.String; val filterStr = project.categories.map(x => s"category-${x.replace(' ', '-')}").mkString(" ") + " state-" + project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
 @import java.lang.String; val stateStr = project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
 @import java.lang.Integer; val UsersPerCard = 7;
@@ -92,8 +92,11 @@
 						</span>
 					</a>
 				</div>
-				<div style="float: right">@common.likeButton(username, project)</div>
-				<div style="float: right; margin-right:24px">@common.followButton(username, project)</div>
+				@if(canFollow) {
+					<div style="float: right;">@common.followButton(username, project)</div>				
+				}
+
+				<div style="float: right; margin-right:24px">@common.likeButton(username, project)</div>
 			</span>
 	</div>
 </div>

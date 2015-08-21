@@ -1,4 +1,4 @@
-@(user : model.User, filterStr : String, canJoin : Boolean)
+@(user : model.User, filterStr : String, canJoin : Boolean, canFollow : Boolean)
 
 @main("Student Government Project Portal")( Some(user)) {
 	<script>
@@ -43,7 +43,7 @@
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
 		   	@for(project <- model.Project.allSorted) {
-		   		@common.projectView(project, user.username, canJoin)
+		   		@common.projectView(project, user.username, canJoin, canFollow)
 		   	}
 	   	</div>
    	</div>

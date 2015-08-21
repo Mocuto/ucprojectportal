@@ -2,7 +2,6 @@ package controllers
 
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
-import com.typesafe.plugin._
 
 import java.util.Date
 

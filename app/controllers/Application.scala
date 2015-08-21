@@ -2,7 +2,6 @@ package controllers
 
 import com.codahale.metrics.{Counter, Meter}
 import com.kenshoo.play.metrics.MetricsRegistry
-import com.typesafe.plugin._
 
 import java.util.Date
 
@@ -22,8 +21,8 @@ import utils._
 
 object Application extends Controller with SessionHandler {
 
-	val loginMeter = MetricsRegistry.default.meter("logins")
-	val feedbackCounter = MetricsRegistry.default.counter("feedback");
+	val loginMeter = MetricsRegistry.defaultRegistry.meter("logins")
+	val feedbackCounter = MetricsRegistry.defaultRegistry.counter("feedback");
 
 	implicit val loginForm : Form[(String, String)] = Form(
 		tuple(
@@ -55,10 +54,12 @@ object Application extends Controller with SessionHandler {
 	def javascriptRoutes = Action { implicit request =>
 		import routes.javascript._
 		Ok(
-			Routes.javascriptRouter("jsRoutes")
+			play.api.routing.JavaScriptReverseRouter("jsRoutes")
 			(
 			 routes.javascript.Application.search,
 			 routes.javascript.UserController.profilePic,
+			 routes.javascript.UserController.follow,
+			 routes.javascript.UserController.unfollow,
 			 routes.javascript.ProjectController.edit,
 			 routes.javascript.ProjectController.leave,
 			 routes.javascript.ProjectController.like,
@@ -70,6 +71,8 @@ object Application extends Controller with SessionHandler {
 			 routes.javascript.ProjectUpdateController.submit,
 			 routes.javascript.ProjectUpdateController.edit,
 			 routes.javascript.ProjectUpdateController.delete,
+			 routes.javascript.ProjectUpdateController.like,
+			 routes.javascript.ProjectUpdateController.unlike,
 			 routes.javascript.RequestController.join,
 			 routes.javascript.RequestController.accept,
 			 routes.javascript.RequestController.ignore,
@@ -102,8 +105,10 @@ object Application extends Controller with SessionHandler {
 		whenAuthorized(username => {
 			val authenticatedUser = User.get(username);
 			val editPrivileges = UserPrivilegesEdit.getUninterruptibly(username).getOrElse {UserPrivilegesEdit.undefined(username)}
+			val followPrivileges = UserPrivilegesFollow.getUninterruptibly(username).getOrElse {UserPrivilegesFollow.undefined(username)}
 			val canJoin = editPrivileges.joinProjects
-			Ok(views.html.filter(authenticatedUser, filterStr, canJoin))
+			val canFollow = followPrivileges.projectsAll
+			Ok(views.html.filter(authenticatedUser, filterStr, canJoin, canFollow))
 		})
 	}
 
@@ -189,8 +194,10 @@ object Application extends Controller with SessionHandler {
 			}
 			val editPrivileges = UserPrivilegesEdit.getUninterruptibly(username).getOrElse {UserPrivilegesEdit.undefined(username)}
 			val canJoin = editPrivileges.joinProjects
+			val followPrivileges = UserPrivilegesFollow.getUninterruptibly(username).getOrElse {UserPrivilegesFollow.undefined(username)}
+			val canFollow = followPrivileges.projectsAll
 
-			Ok(views.html.search(user, canJoin)(projects, query))
+			Ok(views.html.search(user, canJoin, canFollow)(projects, query))
 		})
 	}
 

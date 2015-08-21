@@ -1,7 +1,8 @@
-@(update : model.ProjectUpdate, canEdit : Boolean, canDelete : Boolean)
+@(update : model.ProjectUpdate, username : String, canEdit : Boolean, canDelete : Boolean)
 @import java.lang.String; val timeSubmitted = utils.Conversions.dateToStr(update.timeSubmitted);
 
 <div class="roundbox update" project-id="@update.projectId" author="@update.author" time-submitted="@timeSubmitted">
+	<a name='@{update.projectId + ";" + update.author + ";" + timeSubmitted}'></a>
 	<span class="content-header">@links.userLink(model.User.get(update.author))</span>
 	@if(update.files.length > 0) {
 		<span class="hint">uploaded a file</span>
@@ -23,14 +24,19 @@
 	
 	<span class="hint" style="float : right">@utils.Conversions.dateToDisplayedStr(update.timeSubmitted).toLowerCase()</span>
 
-
 	@if(canEdit) {
+		<div>
+		<div style="float: right">@common.likeUpdateButton(username, update)</div>
 		<p class="content editable">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
 		<textarea class="edit-field roundbox-textinput textarea-update" placeholder="write a status update" style="display:none;">@Html(update.content)</textarea>
-		<span class="blue-button edit-field edit-update-button"  value="Edit Update" style="display: none;">ok</span>
+		<span class="blue-button edit-field edit-update-button"  value="Edit Update" style="display: none; position: relative; left: 16px">ok</span>
+		</div>
 
 	} else {
-	<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
+	<div>
+		<div style="float: right">@common.likeUpdateButton(username, update)</div>
+		<p class="content">@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))</p>
+	</div>
 	}
 	@if(update.files.length > 0) {
 		<span class="hint">attachments:

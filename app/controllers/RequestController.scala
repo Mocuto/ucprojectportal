@@ -4,7 +4,6 @@ import actors.masters.{ActivityMaster, IndexerMaster}
 
 import com.codahale.metrics.Meter
 import com.kenshoo.play.metrics.MetricsRegistry
-import com.typesafe.plugin._
 
 import enums.ActivityType
 import enums.ActivityType._
@@ -27,9 +26,9 @@ import utils._
 
 object RequestController extends Controller with SessionHandler {
 
-	val joinMeter = MetricsRegistry.default.meter("request.join");
-	val acceptMeter = MetricsRegistry.default.meter("request.accept");
-	val ignoreMeter = MetricsRegistry.default.meter("request.ignore");
+	val joinMeter = MetricsRegistry.defaultRegistry.meter("request.join");
+	val acceptMeter = MetricsRegistry.defaultRegistry.meter("request.accept");
+	val ignoreMeter = MetricsRegistry.defaultRegistry.meter("request.ignore");
 
 	def join(projectId : Int) = Action { implicit request =>
 		authenticated match {

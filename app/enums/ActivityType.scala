@@ -9,8 +9,9 @@ object ActivityType extends Enumeration {
 	val ViewProject, SubmitProject, RequestJoin, JoinProject, LeaveProject, EditProject, LikeProject, UnlikeProject, FollowProject, UnfollowProject = Value
 	val AcceptRequest, IgnoreRequest = Value
 	val SubmitUpdate, EditUpdate, DeleteUpdate, LikeUpdate, UnlikeUpdate = Value
+	val FollowUser, UnfollowUser = Value
 
-	val Toggleables = List(LikeProject, UnlikeProject, FollowProject, UnfollowProject, LikeUpdate, UnlikeUpdate)
+	val Toggleables = List(LikeProject, UnlikeProject, FollowProject, UnfollowProject, LikeUpdate, UnlikeUpdate, FollowUser, UnfollowUser)
 
 	def fromString(str : String) : ActivityType = str.toLowerCase match {
 		case "view-user" => ViewUser
@@ -31,6 +32,8 @@ object ActivityType extends Enumeration {
 		case "delete-update" => DeleteUpdate
 		case "like-update" => LikeUpdate
 		case "unlike-update" => UnlikeUpdate
+		case "follow-user" => FollowUser
+		case "unfollow-user" => UnfollowUser
 	}
 
 	def toString(a : ActivityType) : String = a match {
@@ -52,6 +55,8 @@ object ActivityType extends Enumeration {
 		case DeleteUpdate => "delete-update"
 		case LikeUpdate	=> "like-update"
 		case UnlikeUpdate => "unlike-update"
+		case FollowUser => "follow-user"
+		case UnfollowUser => "unfollow-user"
 	}
 
 	def invert(a : ActivityType) : ActivityType = a match {
@@ -61,5 +66,8 @@ object ActivityType extends Enumeration {
 		case UnlikeProject => LikeProject
 		case FollowProject => UnfollowProject
 		case UnfollowProject => FollowProject
+		case FollowUser => UnfollowUser
+		case UnfollowUser => FollowUser
+		case _ => a
 	}
 }

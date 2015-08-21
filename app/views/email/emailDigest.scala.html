@@ -108,7 +108,7 @@ userPercentagesForFollowingStatus : Map[enums.ProjectActivityStatus.ProjectActiv
 	}
 }
 
-@email(Html("your project portal weekly digest")) {
+@email.email(Html("your project portal weekly digest")) {
 	@sectionHeader("hot projects")
 	@for((project, count) <- hotProjectsWithCount) {
 		@hotProject(project, count)

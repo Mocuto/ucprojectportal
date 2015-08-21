@@ -31,7 +31,7 @@ $.ajax({
 });				
 }
 
-function verifyUser(username, firstName, lastName, preferredPronouns, position, callback) {
+function verifyUser(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, callback) {
 	var route = jsRoutes.controllers.ModerationController.verify(username)
 
 	var formData = new FormData()
@@ -39,6 +39,7 @@ function verifyUser(username, firstName, lastName, preferredPronouns, position, 
 	formData.append("last_name", lastName)
 	formData.append("preferred_pronouns", preferredPronouns)
 	formData.append("position", position)
+	formData.append("office_hour_requirement", officeHourRequirement)
 
 	ajaxSendFormData(formData, route, callback)
 }
@@ -104,6 +105,37 @@ function leaveProject(projectId) {
 	}, function() {
 
 	})
+}
+
+function setUsersFollowing(usersFollowing, follower, callback) {
+	var formData = new FormData();
+
+	for(var i = 0; i < usersFollowing.length; i++) {
+		formData.append("users-following", usersFollowing[i]);
+	}
+
+	var route = jsRoutes.controllers.ModerationController.editUserFollowing(follower)
+	ajaxSendFormData(formData, route, callback)
+}
+
+function followUser(follower, toFollow, callback) {
+	var route = jsRoutes.controllers.UserController.follow(follower, toFollow)
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function unfollowUser(follower, toFollow, callback) {
+	var route = jsRoutes.controllers.UserController.unfollow(follower, toFollow)
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function likeUpdate(projectId, author, timeSubmittedStr, callback) {
+	var route = jsRoutes.controllers.ProjectUpdateController.like(projectId, author, timeSubmittedStr);
+	ajaxSendFormData(new FormData(), route, callback)
+}
+
+function unlikeUpdate(projectId, author, timeSubmittedStr, callback) {
+	var route = jsRoutes.controllers.ProjectUpdateController.unlike(projectId, author, timeSubmittedStr);
+	ajaxSendFormData(new FormData(), route, callback)
 }
 
 function likeProject(projectId, callback) {

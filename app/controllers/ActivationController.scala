@@ -1,7 +1,5 @@
 package controllers
 
-import com.typesafe.plugin._
-
 import java.util.Date
 
 import model._
@@ -95,7 +93,8 @@ object ActivationController extends Controller with SessionHandler {
 			"first_name" -> nonEmptyText,
 			"last_name" -> nonEmptyText,
 			"preferred_pronouns" -> nonEmptyText,
-			"position" -> nonEmptyText
+			"position" -> nonEmptyText,
+			"office_hour_requirement" -> ignored(0.0)
 		) (UserForm.apply) (UserForm.unapply)
 	)
 
@@ -240,9 +239,8 @@ object ActivationController extends Controller with SessionHandler {
 				Future { BadRequest(views.html.activateNEW()(formWithErrors)) }
 			},
 			userForm => (request.session.get("authenticated"), userForm) match {
-				case (Some(username : String), UserForm(firstName, lastName, pronouns, position)) => {
-					User.setupSG(username, firstName, lastName, pronouns, position).map( x => { 
-						println(username);
+				case (Some(username : String), UserForm(firstName, lastName, pronouns, position, officeHourRequirement)) => {
+					User.setupSG(username, firstName, lastName, pronouns, position, officeHourRequirement).map( x => { 
 						SMTPCommunicator.sendAllVerifyUserEmail(username);
 						Redirect(routes.Application.gettingStarted)
 					})

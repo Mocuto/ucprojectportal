@@ -9,7 +9,7 @@
 	</div>
 }
 
-@email(Html(title)) {
+@email.email(Html(title)) {
 
 	@if(projects.contains(enums.ProjectActivityStatus.Freezing)) {
 		@sectionHeader("the following projects must be updated or they will be automatically frozen!!")

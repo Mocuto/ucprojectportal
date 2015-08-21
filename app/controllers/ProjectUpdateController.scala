@@ -4,7 +4,6 @@ import actors.masters.ActivityMaster
 
 import com.codahale.metrics.Counter
 import com.kenshoo.play.metrics.MetricsRegistry
-import com.typesafe.plugin._
 
 import java.util.Date
 
@@ -34,7 +33,7 @@ object ProjectUpdateController extends Controller with SessionHandler {
 		) (ProjectUpdate.applyIncomplete)(ProjectUpdate.unapplyIncomplete)
 	)
 
-	val updatesCreatedCounter = MetricsRegistry.default.counter("projects.created")
+	val updatesCreatedCounter = MetricsRegistry.defaultRegistry.counter("projects.created")
 
 	def submit(projectId : Int) = Action { implicit request =>
 		whenAuthorized(username => {
@@ -80,7 +79,7 @@ object ProjectUpdateController extends Controller with SessionHandler {
 
 				    val response = JsObject(
 				    	Seq(
-			    			"html" -> JsString(views.html.common.updateView(completeUpdate, canEdit, canDelete).toString),
+			    			"html" -> JsString(views.html.common.updateView(completeUpdate, username, canEdit, canDelete).toString),
 			    			"fileHtml" -> JsString(
 			    				completeUpdate.files.map(x => views.html.common.fileUpdateView(ProjectFile.get(projectId, completeUpdate.timeSubmitted, x)).toString).mkString
 		    				)
@@ -104,15 +103,20 @@ object ProjectUpdateController extends Controller with SessionHandler {
 
 			val canEdit = editPermissions.updatesAll || editPermissions.updatesOwn && author == username;
 
+			val timeSubmitted = utils.Conversions.strToDate(timeSubmittedStr)
+			
+
 			if(canEdit == false) {
 				Status(401)("You cannot edit updates you did not create")
+			}
+			else if(!ProjectUpdate.getLatest(projectId, author, timeSubmitted).isDefined) {
+				NotFound("This update does not exist")
 			}
 			else {
 				val dataParts = request.body.asMultipartFormData.get.dataParts
 
-				val timeSubmitted = utils.Conversions.strToDate(timeSubmittedStr)
-
 				val newContent : String = dataParts.getOrElse("content", List(""))(0)
+
 				val update = ProjectUpdate.edit(projectId, author, timeSubmitted, newContent);
 
 				val response = JsObject( 
@@ -134,8 +138,13 @@ object ProjectUpdateController extends Controller with SessionHandler {
 			val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)}
 			val canDelete = deletePermissions.updatesAll || (deletePermissions.updatesOwn && author == username)
 
+			val timeSubmitted = utils.Conversions.strToDate(timeSubmittedStr)
+
 			if(canDelete == false) {
 				Status(462)("You cannot delete updates you did not create.")
+			}
+			else if(!ProjectUpdate.getLatest(projectId, author, timeSubmitted).isDefined) {
+				NotFound("This update does not exist")
 			}
 			else {
 				ProjectUpdate.get(projectId, author, timeSubmittedStr).foreach(_.delete())
@@ -145,6 +154,57 @@ object ProjectUpdateController extends Controller with SessionHandler {
 				ActivityMaster.logDeleteUpdate(username, projectId, author, utils.Conversions.strToDate(timeSubmittedStr))
 
 				Ok(response)
+			}
+		})
+	}
+
+	def like(projectId : Int, author : String, timeSubmittedStr : String) = Action { implicit request =>
+		whenAuthorized(username => {
+			val timeSubmitted = utils.Conversions.strToDate(timeSubmittedStr)
+
+			if(!ProjectUpdate.getLatest(projectId, author, timeSubmitted).isDefined) {
+				NotFound("This update does not exist")
+			}
+			else {
+
+				ProjectUpdate.addLike(username, projectId, author, timeSubmitted);
+
+				val response = JsObject( 
+					Seq(
+						"response" -> JsString("liked update")
+					)
+				)
+
+				ActivityMaster.logLikeUpdate(username, projectId, author, timeSubmitted);
+
+				Notification.createUpdateLiked(User.get(username), ProjectUpdate.getLatest(projectId, author, timeSubmitted))
+
+				Ok(response);
+			}
+
+		})
+	}
+
+	def unlike(projectId : Int, author : String, timeSubmittedStr : String) = Action { implicit request =>
+		whenAuthorized(username => {
+			val timeSubmitted = utils.Conversions.strToDate(timeSubmittedStr)
+			
+			if(!ProjectUpdate.getLatest(projectId, author, timeSubmitted).isDefined) {
+				NotFound("This update does not exist")
+			}
+			else {
+
+				ProjectUpdate.removeLike(username, projectId, author, timeSubmitted);
+
+				val response = JsObject( 
+					Seq(
+						"response" -> JsString("unliked update")
+					)
+				)
+
+				ActivityMaster.logUnlikeUpdate(username, projectId, author, timeSubmitted);
+
+				Ok(response);
 			}
 		})
 	}

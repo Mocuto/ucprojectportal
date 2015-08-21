@@ -52,12 +52,12 @@ class ActivityWarner extends Actor with Worker[User, Option[play.twirl.api.Html]
 				case _ if a == ProjectActivityStatus.Freezing || b == ProjectActivityStatus.Freezing => ProjectActivityStatus.Freezing
 				case _ => ProjectActivityStatus.Cold
 			}) match {
-				case ProjectActivityStatus.Freezing => "your projects are freezing!"
-				case ProjectActivityStatus.Cold => "your projects are getting cold!"
+				case ProjectActivityStatus.Freezing => s"${u.firstName}, your projects are freezing!"
+				case ProjectActivityStatus.Cold => s"${u.firstName}, your projects are getting cold!"
 			}
 
 			val warningEmail = views.html.email.emailProjectWarning(u, title, endangeredProjects)
-			SMTPCommunicator sendEmail(u.username, (title split(" ")) map(_.capitalize) mkString(" "), warningEmail.toString)
+			(u.username :: u.followers.toList).toSet map((username : String) => SMTPCommunicator sendEmail(username, (title split(" ")) map(_.capitalize) mkString(" "), warningEmail.toString))
 			ActorResult(u, Some(warningEmail))
 		}
 		else {

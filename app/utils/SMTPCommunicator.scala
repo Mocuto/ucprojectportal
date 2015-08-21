@@ -1,9 +1,11 @@
 package utils
 
-import com.typesafe.plugin._
+import play.api.libs.mailer._
 
 import enums._
 import enums.ProjectActivityStatus._
+
+import javax.inject._
 
 import model._
 
@@ -14,22 +16,23 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
+import play.api.Logger
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import views._
 
+
 object SMTPCommunicator {
 
-	private val host = constants.ServerSettings.ChosenHost;
-	private val mail = use[MailerPlugin].email
-	private val MAX_TRIES = 5;
 
-	private val logger = Logger(this.getClass())
+	private val host = constants.ServerSettings.ChosenHost;
+	//private val mail = use[MailerPlugin].email
+
+	private val MAX_TRIES = 5;
 
 	def sendEmail(recipient : String, subject : String, content : String) {
 
-		println("User emritus" + User.get(recipient))
 		if(User.get(recipient).emeritus == true) {
 			println("Stopped emeritus user from receiving email")
 			return;
@@ -47,35 +50,51 @@ object SMTPCommunicator {
 			
 		
 
-		logger.debug(s"recipient: $recipientEmail")
-		logger.debug(s"subject: $subject")
-		logger.debug(s"content: $content");
+		Logger.info(s"recipient: $recipientEmail")
+		Logger.info(s"subject: $subject")
+		Logger.info(s"content: $content");
 
 		while(tries < MAX_TRIES && wasSent == false) {
 			try {
 				tries += 1;
-				mail.setSubject(subject)
-				mail.setRecipient(s"${User.getFullName(recipient)} <$recipientEmail>", s"$recipientEmail")
+				val email = Email(
+			      subject,
+			      s"Project Portal <noreply@${constants.ServerSettings.ProductionUrl}>",
+			      Seq(s"${User.getFullName(recipient)} <$recipientEmail>"),
+			      // adds attachment
+			      //attachments = Seq(
+			        //AttachmentFile("attachment.pdf", new File("/some/path/attachment.pdf")),
+			        // adds inline attachment from byte array
+			        //AttachmentData("data.txt", "data".getBytes, "text/plain", Some("Simple data"), Some(EmailAttachment.INLINE))
+			      //),
+			      // sends text, HTML or both...
+			      bodyHtml = Some(content)
+			    )
+
+			    MailerPlugin.send(email)
+
+				//mail.setSubject(subject)
+				//mail.setRecipient(s"${User.getFullName(recipient)} <$recipientEmail>", s"$recipientEmail")
 				//or use a list
-				mail.setFrom(s"Project Portal <noreply@ucprojectportal.com>")
+				//mail.setFrom(s"Project Portal <noreply@ucprojectportal.com>")
 				//sends html
-				mail.sendHtml(content);
+				//mail.sendHtml(content);
 				wasSent = true;
 			}
 			catch {
 				case e : Exception => {
 					println(e)
-					logger.error(s"Exception with sendEmail", e);
+					Logger.error(s"Exception with sendEmail", e);
 					Thread.sleep(1000)
 				}
 			}
 		}
 
 		if(wasSent == false) {
-			println("The email coud not be sent:")
-			println(recipient)
-			println(subject)
-			println(content);
+			Logger.error("The email coud not be sent:")
+			Logger.error(recipient)
+			Logger.error(subject)
+			Logger.error(content);
 		}
 	}
 
@@ -89,7 +108,7 @@ object SMTPCommunicator {
 	def sendVerifyUserEmail(to : String, about : String) : Unit = {
 		val subject = "Verify New User Account"
 		val content = views.html.email.emailPrivileges(User.get(about)).toString
-		println(s"to is $to, about is $about")
+		Logger.info(s"Verify email sent to $to, about $about")
 		sendEmail(to, subject, content);
 	}
 
@@ -184,10 +203,6 @@ object SMTPCommunicator {
 		val userPercentagesForStatus = percentagize(userProjectsForTemperature)
 		val userPercentagesForFollowingStats = percentagize(userProjectsFollowingForTemperature)
 
-
-		println(s"Number of projects: $numberOfProjects")
-		println(percentagesForStatus);
-
 		val content = views.html.email.emailDigest(
 			User.get(recipient),
 			numberOfProjects,
@@ -224,6 +239,30 @@ object SMTPCommunicator {
 		project.teamMembers.foreach(recipient => sendEmail(recipient, subject, content))
 
 	}
+
+	def sendUpdateLikedEmail(projectId : Int, author : String, timeSubmitted : java.util.Date) : Unit = {
+
+		val update = ProjectUpdate.getLatest(projectId, author, timeSubmitted)
+
+		if(update.likes.length == 0) {
+			return;
+		}
+
+		def convertUsername(username : String) = play.twirl.api.Html(views.html.links.userLinkEmail(User.get(username)).toString).toString
+
+		val phrase = if(update.likes.length == 1) convertUsername(update.likes(0)) else {
+			(update.likes.take(update.likes.length - 1).map(convertUsername(_)).mkString(", ")) +
+			(" and" + (update.likes.drop(update.likes.length - 1).map(convertUsername(_)).mkString("")))
+		} 
+
+		val subject = constants.Messages.capitalize(constants.Messages.UpdateLiked)
+		val content = views.html.email.emailLikeUpdate(update, Project.get(projectId), phrase).toString;
+
+		sendEmail(update.author, subject, content)
+		println(content)
+
+	}
+
 
 	def sendNotificationEmail(notification : Notification) : Unit = {
 		val recipient = notification.username;

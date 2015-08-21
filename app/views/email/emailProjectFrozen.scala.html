@@ -2,7 +2,7 @@
 
 @defining(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id)) { url =>
 
-@email(Html(s"the project, ${views.html.links.projectLinkEmail(project.id).toString}, was automatically frozen due to inactivity")) {
+@email.email(Html(s"the project, ${views.html.links.projectLinkEmail(project.id).toString}, was automatically frozen due to inactivity")) {
 	<span>you may want to update the project with its current status</span>
 	<br>
 	<br>

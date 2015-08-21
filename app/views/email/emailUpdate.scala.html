@@ -2,8 +2,8 @@
 
 @defining(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id)) { url =>
 
-@email(Html(s"${links.userLinkEmail(updater)} posted in the project ${project.name}")) {
-	<span>&quot;@updateContent&quot;</span>
+@email.email(Html(s"${links.userLinkEmail(updater)} posted in the project ${project.name}")) {
+	<span>&quot;@Html(updateContent.replace("\r\n", "<br>").replace("\n", "<br>"))&quot;</span>
 	<br>
 	<br>
 	<span style="border-radius: 30px;

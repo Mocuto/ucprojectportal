@@ -292,7 +292,7 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                }
                <div class="update-group">
                	@for(update <- updates) {
-                     @common.updateView(update, canEditAllUpdates || canEditOwnUpdates && update.author == username, canDeleteAllUpdates || canDeleteOwnUpdates && update.author == username)
+                     @common.updateView(update, username, canEditAllUpdates || canEditOwnUpdates && update.author == username, canDeleteAllUpdates || canDeleteOwnUpdates && update.author == username)
                	}
             	</div>
             </div>

@@ -1,7 +1,5 @@
 package controllers
 
-import com.typesafe.plugin._
-
 import java.util.Date
 
 import model._
@@ -11,6 +9,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.data.format.Formats._
 import play.api.data.validation.Constraints._
 import play.api.libs.json._
 
@@ -27,8 +26,9 @@ object ModerationController extends Controller with SessionHandler {
 			"first_name" -> nonEmptyText,
 			"last_name" -> nonEmptyText,
 			"preferred_pronouns" -> nonEmptyText,
-			"position" -> nonEmptyText
-		)(UserForm.apply)(UserForm.unapply)
+			"position" -> nonEmptyText,
+			"office_hour_requirement" -> of(doubleFormat)
+		)(UserForm.apply)(UserForm.unapply) verifying("Cannot have negative office hour requirement", _.officeHourRequirement >= 0)
 	)
 
 	def moderation = Action { implicit request =>
@@ -51,12 +51,17 @@ object ModerationController extends Controller with SessionHandler {
 			else {
 				val dataParts = request.body.asMultipartFormData.get.dataParts
 
-				val users : Set[String] = dataParts.getOrElse("users", List("false")).toSet
+				val users : Set[String] = dataParts.getOrElse("users-following", List()).toSet
 
 				val followPrivileges = UserPrivilegesFollow.getUninterruptibly(username).getOrElse { UserPrivilegesFollow.undefined(username) }
-				val follow = UserPrivileges.Follow(username, usersSome = users, usersAll = followPrivileges.usersAll, projectsAll = followPrivileges.projectsAll)
+
+				User.get(username).usersFollowing.foreach(User.removeFollower(_, username))
+
+				val follow = UserPrivileges.Follow(username, usersAll = followPrivileges.usersAll, projectsAll = followPrivileges.projectsAll)
 
 				UserPrivilegesFollow.replace(username, follow)
+
+				users.foreach(User.addFollower(_, username))
 
 				val response = JsObject( 
 					Seq(
@@ -178,13 +183,13 @@ object ModerationController extends Controller with SessionHandler {
 						BadRequest(errorMessage);
 					},
 					{
-						case UserForm(firstName, lastName, preferredPronouns, position) => {
+						case UserForm(firstName, lastName, preferredPronouns, position, officeHourRequirement) => {
 							val canEdit = (UserPrivilegesEdit.getUninterruptibly(authUsername).getOrElse { UserPrivilegesEdit.undefined(authUsername) }).userPermissions
 							if(!canEdit) {
 								Status(404)("You do not have permission to edit user permissions");
 							}
 							else {
-								User.setupSG(username, firstName, lastName, preferredPronouns, position)
+								User.setupSG(username, firstName, lastName, preferredPronouns, position, officeHourRequirement)
 									.onSuccess({case _ => User.verifyWithPosition(username, position)})
 
 								val response = JsObject( 

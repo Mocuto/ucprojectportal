@@ -179,28 +179,24 @@ object UserPrivileges {
 
 	case class Follow (
 		username : String,
-		usersSome : Set[String] = Set[String](),
 		usersAll : Boolean = false,
 		projectsAll : Boolean = false) extends UserPrivileges[Follow] {
-		def isEmpty = !(usersSome.size > 0 || usersAll || projectsAll)
+		def isEmpty = !(usersAll || projectsAll)
 
 		def union (that : Follow) : Follow = Follow(
 			s"$username,${that.username}",
-			usersSome | that.usersSome,
 			usersAll | that.usersAll,
 			projectsAll | that.projectsAll
 		)
 
 		def intersect (that : Follow) : Follow = Follow(
 			s"$username,${that.username}",
-			usersSome & that.usersSome,
 			usersAll & that.usersAll,
 			projectsAll & that.projectsAll
 		)
 
 		def not = Follow(
 			username,
-			User.all.toSet[User].map(_.username) -- usersSome,
 			!usersAll,
 			!projectsAll
 		)
@@ -261,7 +257,7 @@ object UserPrivileges {
 		View(username, true, true, false, false, false),
 		Create(username, true, true, false, false),
 		Edit(username, true, true, false, false),
-		Follow(username, Set[String](), false, false),
+		Follow(username, false, false),
 		Delete(username, true, false, false, false)
 	)
 
@@ -409,24 +405,22 @@ sealed class UserPrivilegesFollow extends CassandraTable[UserPrivilegesFollow, U
 	object username extends StringColumn(this) with PartitionKey[String]
 	object follow_projects_all extends BooleanColumn(this)
 	object follow_users_all extends BooleanColumn(this)
-	object follow_users_some extends SetColumn[UserPrivilegesFollow, UserPrivileges.Follow, String](this)
 
-	override def fromRow(r : Row) = UserPrivileges.Follow(username(r), follow_users_some(r), follow_users_all(r), follow_projects_all(r));
+	override def fromRow(r : Row) = UserPrivileges.Follow(username(r), follow_users_all(r), follow_projects_all(r));
 }
 
 object UserPrivilegesFollow extends UserPrivilegesFollow with UserPrivilegesModel[UserPrivileges.Follow] {
 	val T = this;
 	override val tableName = "user_privileges_follow"
 
-	def undefined(implicit username : String) = UserPrivileges.Follow(username, Set[String](), false, false);
+	def undefined(implicit username : String) = UserPrivileges.Follow(username, false, false);
 
-	def default(implicit username : String) = UserPrivileges.Follow(username, Set[String](), false, false);
+	def default(implicit username : String) = UserPrivileges.Follow(username, false, false);
 
     def add(item : UserPrivileges.Follow) = {
     	insert.value(_.username, item.username)
     		.value(_.follow_projects_all, item.projectsAll)
     		.value(_.follow_users_all, item.usersAll)
-    		.value(_.follow_users_some, item.usersSome)
     		.future();
     }
 
@@ -434,7 +428,6 @@ object UserPrivilegesFollow extends UserPrivilegesFollow with UserPrivilegesMode
     	insert.value(_.username, username)
     		.value(_.follow_projects_all, item.projectsAll)
     		.value(_.follow_users_all, item.usersAll)
-    		.value(_.follow_users_some, item.usersSome)
     		.future();
     }
 }

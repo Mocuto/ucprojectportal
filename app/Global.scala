@@ -55,7 +55,7 @@ class AccessFilter(requiredViewPrivilegeFunc : (String => UserPrivileges.View), 
 	}
 
 	private def authorizationRequired(request: RequestHeader) : Boolean = {
-		val actionInvoked: String = request.tags.getOrElse(play.api.Routes.ROUTE_ACTION_METHOD, "")
+		val actionInvoked: String = request.tags.getOrElse(play.api.routing.Router.Tags.RouteActionMethod, "")
 		return actionNames.contains(actionInvoked)
 	}
 }
@@ -97,7 +97,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 	}
 
 	private def authorizationRequired(request: RequestHeader) : Boolean = {
-		val actionInvoked: String = request.tags.getOrElse(play.api.Routes.ROUTE_ACTION_METHOD, "")
+		val actionInvoked: String = request.tags.getOrElse(play.api.routing.Router.Tags.RouteActionMethod, "")
 
 		return !actionNames.contains(actionInvoked)
 	}

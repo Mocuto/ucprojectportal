@@ -1,0 +1,56 @@
+@(user : model.User)
+
+@displayAmount(amount : Double) = {
+  @if(amount.toInt == amount) {
+    @amount.toInt
+  } else {
+    @amount
+  }
+}
+
+<div class="popane" id="office-hours-window">
+  <span class="close-button">close</span>
+  <div class="large-header" style="color:black; margin-bottom:16px;"><div class="office-hour-title-image"></div><span style="position: relative; top: -12px;margin-left: 12px;">office hours</span></div>
+  <div class="office-hour-mark-container">
+    <span class="office-hour-mark">
+      <div class="office-hour-mark-header">today</div>
+      <div class="office-hour-mark-value"><span class="office-hour-odometer" id="office-hour-today">@displayAmount(model.UserOfficeHour.getAmount(model.UserOfficeHour.getToday(user.username)))</span> h</div>
+    </span>
+    <span class="office-hour-mark">
+      <div class="office-hour-mark-header">this week</div>
+      @defining(model.UserOfficeHour.getAmount(model.UserOfficeHour.getThisWeek(user.username))) { amountThisWeek =>
+        @if(user.officeHourRequirement > 0) {
+          <div class="office-hour-mark-value" warning="@(amountThisWeek < user.officeHourRequirement)" style="font-weight:normal"><span class="office-hour-odometer" id="office-hour-this-week" target-value="@user.officeHourRequirement">@displayAmount(amountThisWeek)</span> h / @displayAmount(user.officeHourRequirement) h</div>
+        } else {
+          <div class="office-hour-mark-value"><span class="office-hour-odometer" id="office-hour-this-week">@displayAmount(amountThisWeek)</span> h</div>
+        }
+      }
+      
+    </span>
+    <span class="office-hour-mark" style="margin-right:0px;">
+      <div class="office-hour-mark-header">all time</div>
+      <div class="office-hour-mark-value "><span class="office-hour-odometer" id="office-hour-all-time">@displayAmount(model.UserOfficeHour.getAmount(model.UserOfficeHour.get(user.username)))</span> h</div>
+    </span>
+  </div>
+  <div style="font-size:16pt; margin-bottom:16px">log hours</div>
+  <div id="logTimeError"></div>
+  <div id="logTimeSuccess"></div>
+  <div class="verify-header">date</div>
+  <input type="text" id="mDate" class="roundbox-textinput" placeholder="ex: 12/25/2015" /><br />
+  <div class="verify-header">hours</div>
+  <input type="text" id="mHours" class="roundbox-textinput" placeholder="ex: 1.5" /><br />
+  <div class="verify-header">project</div>
+  <select name="project" id="office-hour-project-select" style="margin-bottom:12px;">
+    <option value="-1" selected="selected">None</option>
+    @for(p <- user.projects.map(model.Project.get(_))) {
+      <option value="@p.id">@p.name</option>
+    }
+  </select>
+  <div class="verify-header">description</div>
+  <textarea id="mComments" class="roundbox-textinput textarea-description" placeholder="enter a description of work done"></textarea><br />
+  <div style="margin-bottom:12px;">
+    <input type="checkbox" id="mPostUpdate" name="mPostUpdate">
+    <span>post this as a project update</span>
+  </div>
+  <span class="blue-button" id="submitHours">submit hours</span>
+</div>

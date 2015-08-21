@@ -1,0 +1,26 @@
+@(update : model.ProjectUpdate, project : model.Project, subPhrase : String)
+
+@defining(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id) + s"#${update.projectId};${update.author};${utils.Conversions.dateToStr(update.timeSubmitted)}") { url =>
+
+@email.email(Html(s"people like your update!")) {
+	<span style="font-size:20pt;">@Html(subPhrase) @(if (update.likes.length > 1) "like" else "likes") your update in the project, @{project.name},</span>
+	<div style="
+		text-align: center;
+	    width: 100%;
+	    margin-top: 16px;
+	    font-size: 16pt;">&quot;@Html(update.content.replace("\r\n", "<br>").replace("\n", "<br>"))&quot;</div>
+	<br>
+	<br>
+	<span style="border-radius: 4px;
+	background-color:#ddd;
+	padding:4px 12px 4px 12px;
+	font-size:12pt;
+	text-decoration: none;
+	color:black;
+	text-align:center;
+	vertical-align: middle;
+	cursor:pointer;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;"><a href="@url" style="text-decoration:none; color:black">go to the update</a></span>
+}}

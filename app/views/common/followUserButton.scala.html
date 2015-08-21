@@ -1,0 +1,5 @@
+@(user : model.User, toFollow : String)
+
+<span class="follow-button-container" title="watch this user">
+	<span class="follow-user-button" follower="@user.username" to-follow="@toFollow" active="@if(user.usersFollowing.contains(toFollow)) {true} else {false}"></span>
+</span>

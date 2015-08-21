@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery-ui/jquery-ui.min.css")" media="screen">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery-ui/jquery-ui.structure.min.css")" media="screen">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery-ui/jquery-ui.theme.min.css")" media="screen">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/odometer-theme-default.css")" media="screen">
 
 
         <!-- Libraries -->
@@ -28,6 +29,7 @@
         <script src="@routes.Assets.at("javascripts/libraries/jquery-ui.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/libraries/typeahead.bundle.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/libraries/moment.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/libraries/odometer.min.js")" type="text/javascript"></script>
 
         <!-- Project Portal JS -->
         <script src="@routes.Assets.at("javascripts/ajax-calls.js")" type="text/javascript"></script>
@@ -41,6 +43,7 @@
         <script src="@routes.Assets.at("javascripts/search.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/moderator.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/user-profile.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/office-hour-callbacks.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/helpers.js")" type="text/javascript"></script>
 
         <script type="text/javascript" src="@routes.Application.javascriptRoutes"></script>
@@ -65,8 +68,6 @@
     		}
     		case user : Some[User] => {
     			@common.header(user.get)
-          @common.timeLog(user.get)
-
     		}
     	}
         @content

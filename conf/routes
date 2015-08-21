@@ -29,6 +29,8 @@ GET 	/project/json/all 						controllers.ProjectController.jsonForAll
 POST	/project/:id/update/submit				controllers.ProjectUpdateController.submit(id : Int)
 POST 	/project/:id/update/:author/:ts/edit 	controllers.ProjectUpdateController.edit(id : Int, author : String, ts : String)
 POST 	/project/:id/update/:author/:ts/delete 	controllers.ProjectUpdateController.delete(id : Int, author : String, ts : String)
+POST 	/project/:id/update/:author/:ts/like 	controllers.ProjectUpdateController.like(id : Int, author : String, ts : String)
+POST 	/project/:id/update/:author/:ts/unlike 	controllers.ProjectUpdateController.unlike(id : Int, author : String, ts : String)
 
 #Login routes
 GET		/login 									controllers.Application.login(path : String = "")
@@ -103,3 +105,5 @@ GET 	/secure/*path 							controllers.ShibbolethController.secure(path : String)
 
 GET		/:username								controllers.UserController.user(username)
 POST 	/:username/profile/upload 				controllers.UserController.profilePic(username)
+POST	/:follower/follow/:toFollow 			controllers.UserController.follow(follower : String, toFollow : String)
+POST 	/:follower/unfollow/:toFollow 			controllers.UserController.unfollow(follower : String, toFollow : String)

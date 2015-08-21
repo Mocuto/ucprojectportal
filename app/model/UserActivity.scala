@@ -80,14 +80,21 @@ object UserActivity {
 
 	def neutralize(arr : Seq[UserActivity]) : Seq[UserActivity] = {
 
-		type FoldType = ((ActivityType, Int), UserActivity)
+		def createKey(x : UserActivity) = (x.activityType, x match {
+			case x if x.activityType == ActivityType.LikeProject || x.activityType == ActivityType.UnlikeProject => x.detail("project-id")
+			case x if x.activityType == ActivityType.LikeUpdate || x.activityType == ActivityType.UnlikeUpdate=> x.detail("project-id") + ";" + x.detail("author") + ";" + x.detail("time-submitted")
+			case x if x.activityType == ActivityType.FollowProject || x.activityType == ActivityType.UnfollowProject => x.detail("project-id")
+			case x if x.activityType == ActivityType.FollowUser || x.activityType == ActivityType.UnfollowUser => x.detail("to-follow")
+		})
 
-		val startVal = ((ActivityType.LikeProject, -1), UserActivity(username = "", activityType = ActivityType.LikeProject, timeSubmitted = new Date(Long.MinValue)))
+		type FoldType = ((ActivityType, String), UserActivity)
+
+		val startVal = ((ActivityType.LikeProject, ""), UserActivity(username = "", activityType = ActivityType.LikeProject, timeSubmitted = new Date(Long.MinValue)))
 
 		val removals = scala.collection.mutable.MutableList[UserActivity]();
 		val likeMap = arr
 			.filter( (x : UserActivity) => ActivityType.Toggleables contains(x.activityType))
-			.groupBy ( (x : UserActivity) => (x.activityType, Predef.augmentString(x.detail("project-id")) toInt))
+			.groupBy (createKey)
 			.map( { case (key, seq) => seq.foldLeft(startVal)({ (z : FoldType, a : UserActivity) =>
 					if(a.timeSubmitted.after(z._2.timeSubmitted)) {
 						(key, a)
@@ -101,11 +108,11 @@ object UserActivity {
 
 		println(likeMap)
 
-		for( ((activityType, projectId), activity) <- likeMap if activityType == ActivityType.LikeProject || activityType == ActivityType.LikeUpdate || activityType == ActivityType.FollowProject ) {
+		for( ((activityType, key), activity) <- likeMap if activityType == ActivityType.LikeProject || activityType == ActivityType.LikeUpdate || activityType == ActivityType.FollowProject ) {
 			val antiType = ActivityType.invert(activityType)
 
-			if(likeMap contains (antiType, projectId) ) {
-				if( likeMap(antiType, projectId).timeSubmitted after(activity.timeSubmitted) ) {
+			if(likeMap contains (antiType, key) ) {
+				if( likeMap(antiType, key).timeSubmitted after(activity.timeSubmitted) ) {
 					removals += activity
 				}
 			}

@@ -1,3 +1,53 @@
+function onLikeUpdateButtonClicked() {
+	var active = $(this).attr("active")
+	var projectId = $(this).attr("project-id")
+	var author = $(this).attr("author")
+	var timeSubmitted = $(this).attr("time-submitted")
+
+	var likeCountSelector = $(this).parent().find(".like-count");
+	var likeCount = (+likeCountSelector.text() || 0);
+	var seeMoreMenuContainer = $(this).parent().children(".see-more-menu-container");
+	var obj = this;
+
+	if(active !== "true")
+	{
+		likeUpdate(projectId, author, timeSubmitted, function() {
+			likeCountSelector.text(likeCount + 1)
+			seeMoreMenuContainer.css({"display" : ""})
+			var html = '<div class="see-more-menu-item" for="' + user.username + '"><a href="/' + user.username + '">' + user.firstName + '</a></div>'
+			seeMoreMenuContainer.children(".see-more-menu").prepend(html);
+		})
+		$(this).attr("active", true)
+
+	}
+	else
+	{
+		unlikeUpdate(projectId, author, timeSubmitted, function() {
+			if(likeCount == 1)
+			{
+				likeCountSelector.text("")
+				seeMoreMenuContainer.css({"display" : "none"})
+			}
+			else
+			{
+				likeCountSelector.text(likeCount - 1);
+			}
+
+			var sel = ".see-more-menu-item[for='" + user.username + "']";
+			var find = seeMoreMenuContainer.children(".see-more-menu").find(sel);
+			find.remove();
+			
+			$(obj).css({"background-image" : "url('/assets/images/icons/heart-unselected.png')"});
+
+			$(obj).bind("mouseleave", function() {
+				$(obj).unbind("mouseleave");
+				$(obj).css({"background-image" : ""});
+			})
+		})
+		$(this).attr("active", false);
+	}
+}
+
 function onDeleteUpdateClicked() {
 	var projectId = $(this).attr("project-id")
 	var author = $(this).attr("author")
@@ -14,20 +64,20 @@ function onEditUpdateClicked() {
 	var timeSubmitted = $(this).attr("time-submitted")
 
 	$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-		.children(".edit-field").css("display", "initial")
+		.find(".edit-field").css("display", "initial")
 
 	$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-		.children(".content").css("display", "none")
+		.find(".content").css("display", "none")
 
 	$(".textarea-update").autosize();
 
 	$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-		.children(".edit-update-button").unbind("click")
+		.find(".edit-update-button").unbind("click")
 
 	$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-		.children(".edit-update-button").bind("click", function() {
+		.find(".edit-update-button").bind("click", function() {
 			var content = $('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-				.children(".textarea-update").val();
+				.find(".textarea-update").val();
 
 			editUpdate(projectId, author, timeSubmitted, content);
 	})
@@ -60,4 +110,5 @@ function setupUpdateMenuCallbacks() {
 	$(".update-arrow").on("click", onUpdateArrowClicked)
 	$(".delete-update").on("click", onDeleteUpdateClicked)
 	$(".edit-update").on("click", onEditUpdateClicked)
+	$(".like-update-button").on("click", onLikeUpdateButtonClicked)
 }

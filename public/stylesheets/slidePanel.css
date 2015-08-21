@@ -64,11 +64,5 @@
 }
 
 #logTimeError {
-  color: red;
-  font-weight: bold;
-}
-
-#logTimeSuccess {
-  color: green;
-  font-weight: bold;
+  color: #D80707;
 }

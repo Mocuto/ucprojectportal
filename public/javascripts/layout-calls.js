@@ -75,6 +75,7 @@ function setupLayout() {
 	})
 
 	$(".edit-field").css("display", "none");
+	$(".user-edit-field").css("display", "none");
 
 	$(".popane").popane();
 

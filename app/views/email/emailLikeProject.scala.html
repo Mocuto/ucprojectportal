@@ -2,7 +2,7 @@
 
 @defining(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id)) { url =>
 
-@email(Html(s"people like your project!")) {
+@email.email(Html(s"people like your project!")) {
 	<span style="font-size:20pt;">@Html(subPhrase) @(if (project.likes.length > 1) "like" else "likes") your project, @{project.name}!</span>
 	<br>
 	<br>

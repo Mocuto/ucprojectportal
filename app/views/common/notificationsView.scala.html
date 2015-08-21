@@ -95,6 +95,23 @@
 	</table>
 	}
 
+	case enums.NotificationType.UpdateLiked => {
+	<table >
+		<tr>
+			<td class="notification-td">
+				@{project = Project.get(notification.content("project_id").toInt)}
+				@{user = User.get(notification.content.getOrElse(model.Notification.Sender, { "someone"} )  )}
+				<span class="hint">@links.userLink(user, Some(user.firstName.toLowerCase())) likes your @links.updateLink(project.id, notification.content("author"), notification.content("time_submitted"), "update") in the project @links.projectLink(project.id)!</span>
+				
+				
+			</td>
+			<td>
+				<span class="button ignore-notification" time-created="@utils.Conversions.dateToStr(notification.timeCreated)">dismiss</span>
+			</td>
+		</tr>
+	</table>
+	}
+
 	case _ => {}
 }
 

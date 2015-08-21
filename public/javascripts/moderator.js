@@ -47,9 +47,10 @@ function onFinishVerifyClicked() {
 	var firstName = $(".verify-first-name").val();
 	var lastName = $(".verify-last-name").val();
 	var preferredPronouns = $(".verify-preferred-pronouns").val();
+	var officeHourRequirement = +$(".verify-office-hour-requirement").val()
 	var position = $(".verify-position").val();
 
-	verifyUser(username, firstName, lastName, preferredPronouns, position, function() {
+	verifyUser(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, function() {
 		$("#activate-inputs").popane({
 			show : "false"
 		})
