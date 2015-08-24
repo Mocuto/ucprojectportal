@@ -812,7 +812,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 	max-width: none;
 	text-align: center;
 	border-radius: 4px;
-	width: 96px;
+	min-width: 96px;
 }
 
 .profile-menu:hover {
@@ -895,6 +895,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 #notification-text {
 	cursor: pointer;
 	white-space: nowrap;
+	max-width: none;
 }
 
 #notification-text:hover {
