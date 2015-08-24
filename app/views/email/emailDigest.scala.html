@@ -7,7 +7,60 @@ percentagesForStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, In
 newProjects : Seq[model.Project],
 completedProjects : Seq[model.Project],
 userPercentagesForStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int],
-userPercentagesForFollowingStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int])
+userPercentagesForFollowingStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Int],
+userFollowingProjectsForStatus : Map[enums.ProjectActivityStatus.ProjectActivityStatus, Seq[model.Project]])
+
+@shortenContentUser(user : model.User) = @{
+	val maxLength = 100;
+	if(user.fullName.length > maxLength) {
+		user.fullName.substring(0, maxLength - 3) + "..."
+	}
+	else {
+		user.fullName
+	}
+}
+
+@calculateFontSizeUser(user : model.User) = @{
+	val maxLength = 100;
+	val minLength = 80;
+	val smallestSize = 15.0;
+	val largestSize = 24.0;
+	if(user.fullName.length >= maxLength) {
+		smallestSize.toInt
+	}
+	else if(user.fullName.length <= minLength) {
+		largestSize.toInt
+	}
+	else {
+		math.floor(( (user.fullName.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+	}
+}
+
+@shortenContentProject(project : model.Project) = @{
+	val maxLength = 100;
+	if(project.name.length > maxLength) {
+		project.name.substring(0, maxLength - 3) + "..."
+	}
+	else {
+		project.name
+	}
+}
+
+@calculateFontSizeProject(project : model.Project) = @{
+	val maxLength = 100;
+	val minLength = 80;
+	val smallestSize = 15.0;
+	val largestSize = 24.0;
+	if(project.name.length >= maxLength) {
+		smallestSize.toInt
+	}
+	else if(project.name.length <= minLength) {
+		largestSize.toInt
+	}
+	else {
+		math.floor(( (project.name.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+	}
+}
 
 @sectionHeader(text : String) = {
 	<div style="
@@ -18,84 +71,310 @@ userPercentagesForFollowingStatus : Map[enums.ProjectActivityStatus.ProjectActiv
 	</div>
 }
 
-@hotProject(project : model.Project, count : Int) = {
-	<div style="
-		background-color:white;
-		padding:4px 16px 4px 16px;
-		border-radius:8px;
-		margin-bottom:16px;
-		">
-		<div style="
-		font-size:16pt;
-		color:black;
-		margin-bottom:4px;
-		">@project.name</div>
-		<div style="
-		font-size:12pt;
-		color:black;
-		font-weight:100;
-		margin-bottom:8px;
-		">number of updates: <span style="
-			color: #C51834;
-			margin-left: 12px;
-			font-size: 24pt;
-			vertical-align: middle;
-			">@count</div>
-		<div style="margin-bottom:8px;">
-			@for(username <- project.teamMembers.take(7)) {
-				@common.userProfileIconViewEmail(model.User.get(username))
-			}
+@completedProject(project : model.Project) = {
+<div class="hero-card" style="
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid white;
+    width: 240px;
+    margin-bottom: 16px;
+">
+    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
+    @if(model.User.get(project.primaryContact).profile == None) {
+    	<div class="hero-profile empty" style="
+    		height: 159px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
+    } else {
+    	<div class="hero-profile" style="
+    		height: 159px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + model.User.get(project.primaryContact).profile.get)');">
+    }
+        <div class="hero-profile-overlay" style="
+		    position: absolute;
+		    width: 240px;
+		    height: 159px;
+		    background-color: #00DC75;
+		    border-radius: 4px;
+		    opacity: 0.4;
+		    z-index: 0;
+        "></div>
+        <div class="hero-title" style="
+			padding-left: 16px;
+		    padding-right: 16px;
+		    font-size: 13pt;
+		    color: white;
+		    z-index: 2;
+		    position: relative;
+		    text-shadow: 2px 2px #000;
+		    padding-top: 32px;
+		    margin-bottom: 16px;
+		    font-weight: lighter;
+
+        ">new project</div>
+        <div class="hero-content" style="
+	    padding-left: 16px;
+	    padding-right: 16px;
+	    font-size: 24pt;
+	    color: white;
+	    z-index: 2;
+	    position: relative;
+	    text-shadow: 2px 2px #000;
+	    font-weight: lighter;
+        font-size:@calculateFontSizeProject(project)pt">@project.name</div>
+    </div></a>
+    <div class="hero-controls-large" style="
+	padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: lighter;
+
+    ">
+		<div>
+		@for(username <- project.teamMembers.take(4)) {
+			@common.userProfileIconViewEmail(model.User.get(username))
+		}
 		</div>
 		<div style="
-		border-radius: 4px;
-		background-color:#ddd;
-		padding:4px 12px 4px 12px;
-		font-size:12pt;
-		text-decoration: none;
-		color:black;
-		text-align:center;
-		vertical-align: middle;
-		cursor:pointer;
-		margin-left:auto;
-		margin-right:auto;"><a href="@(constants.ServerSettings.HostUrl + routes.ProjectController.project(project.id))" style="text-decoration:none; color:black">go to the project</a></div>
-	</div>
+			height: 24px;
+    		margin-top: 12px;">
+    		@links.projectLinkEmail(project.id, "view project")</a>
+    	</div>
+    </div>
+
+</div>
+}
+
+@newProject(project : model.Project) = {
+<div class="hero-card" style="
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid white;
+    width: 240px;
+    margin-bottom: 16px;
+">
+    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
+    @if(model.User.get(project.primaryContact).profile == None) {
+    	<div class="hero-profile empty" style="
+    		height: 159px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
+    } else {
+    	<div class="hero-profile" style="
+    		height: 159px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + model.User.get(project.primaryContact).profile.get)');">
+    }
+        <div class="hero-profile-overlay" style="
+		    position: absolute;
+		    width: 240px;
+		    height: 159px;
+		    background-color: #C51834;
+		    border-radius: 4px;
+		    opacity: 0.4;
+		    z-index: 0;
+        "></div>
+        <div class="hero-title" style="
+			padding-left: 16px;
+		    padding-right: 16px;
+		    font-size: 13pt;
+		    color: white;
+		    z-index: 2;
+		    position: relative;
+		    text-shadow: 2px 2px #000;
+		    padding-top: 32px;
+		    margin-bottom: 16px;
+		    font-weight: lighter;
+
+        ">new project</div>
+        <div class="hero-content" style="
+	    padding-left: 16px;
+	    padding-right: 16px;
+	    font-size: 24pt;
+	    color: white;
+	    z-index: 2;
+	    position: relative;
+	    text-shadow: 2px 2px #000;
+	    font-weight: lighter;
+        font-size:@calculateFontSizeProject(project)pt">@project.name</div>
+    </div></a>
+    <div class="hero-controls-large" style="
+	padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: lighter;
+
+    ">
+		<div>
+		@for(username <- project.teamMembers.take(4)) {
+			@common.userProfileIconViewEmail(model.User.get(username))
+		}
+		</div>
+		<div style="
+			height: 24px;
+    		margin-top: 12px;">
+    		@links.projectLinkEmail(project.id, "view project")</a>
+    	</div>
+    </div>
+
+</div>
+}
+
+@hotProject(project : model.Project, count : Int) = {
+<div class="hero-card" style="
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid white;
+    width: 240px;
+    margin-bottom: 16px;
+">
+    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
+    @if(model.User.get(project.primaryContact).profile == None) {
+    	<div class="hero-profile empty" style="
+    		height: 159px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
+    } else {
+    	<div class="hero-profile" style="
+    		height: 159px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + model.User.get(project.primaryContact).profile.get)');">
+    }
+        <div class="hero-profile-overlay" style="
+		    position: absolute;
+		    width: 240px;
+		    height: 159px;
+		    background-color: #C51834;
+		    border-radius: 4px;
+		    opacity: 0.4;
+		    z-index: 0;
+        "></div>
+        <div class="hero-title" style="
+			padding-left: 16px;
+		    padding-right: 16px;
+		    font-size: 13pt;
+		    color: white;
+		    z-index: 2;
+		    position: relative;
+		    text-shadow: 2px 2px #000;
+		    padding-top: 32px;
+		    margin-bottom: 16px;
+		    font-weight: lighter;
+
+        ">@count @(if(count > 1) "updates" else "update")</div>
+        <div class="hero-content" style="
+	    padding-left: 16px;
+	    padding-right: 16px;
+	    font-size: 24pt;
+	    color: white;
+	    z-index: 2;
+	    position: relative;
+	    text-shadow: 2px 2px #000;
+	    font-weight: lighter;
+        font-size:@calculateFontSizeProject(project)pt">@project.name</div>
+    </div></a>
+    <div class="hero-controls-large" style="
+	padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: lighter;
+
+    ">
+		<div>
+		@for(username <- project.teamMembers.take(4)) {
+			@common.userProfileIconViewEmail(model.User.get(username))
+		}
+		</div>
+		<div style="
+			height: 24px;
+    		margin-top: 12px;">
+    		@links.projectLinkEmail(project.id, "view project")</a>
+    	</div>
+    </div>
+
+</div>
 }
 
 @hotContributor(user : model.User, count : Int) = {
-	<div style="
-		background-color:white;
-		padding:4px 16px 4px 16px;
-		border-radius:8px;
-		">
-		<span style="
-		display: inline-block;
-		position: relative;
-		top:8px;
-		">
-		@common.userProfileViewEmail(user)
-		</span>
-		<span style="
-		display: inline-block;
-		top: -8px;
- 		position: relative;
-		">
-			<div style="
-			font-size:16pt;
-			color:black;
-			">@user.fullName</div>
-			<div style="
-			font-size:12pt;
-			color:black;
-			font-weight:100;
-			">number of updates: <span style="
-				color:#C51834;
-				margin-left:12px;
-				font-size: 24pt;
-				vertical-align:middle;
-				">@count</span>
-			</div>
-		</span>
-	</div>
+<div class="hero-card" style="
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid white;
+    width: 240px;
+    margin-bottom: 16px;
+">
+    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
+    @if(user.profile == None) {
+    	<div class="hero-profile empty" style="
+    		height: 240px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
+    } else {
+    	<div class="hero-profile" style="
+    		height: 240px;
+		    background-size: cover;
+		    border-radius: 4px;
+		    cursor: pointer;
+    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + user.profile.get)');">
+    }
+        <div class="hero-profile-overlay" style="
+		    position: absolute;
+		    width: 240px;
+		    height: 240px;
+		    background-color: #C51834;
+		    border-radius: 4px;
+		    opacity: 0.4;
+		    z-index: 0;
+        "></div>
+        <div class="hero-title" style="
+			padding-left: 16px;
+		    padding-right: 16px;
+		    font-size: 13pt;
+		    color: white;
+		    z-index: 2;
+		    position: relative;
+		    text-shadow: 2px 2px #000;
+		    padding-top: 32px;
+		    margin-bottom: 16px;
+		    font-weight: lighter;
+
+        ">@count @(if(count > 1) "updates" else "update")</div>
+        <div class="hero-content" style="
+	    padding-left: 16px;
+	    padding-right: 16px;
+	    font-size: 24pt;
+	    color: white;
+	    z-index: 2;
+	    position: relative;
+	    text-shadow: 2px 2px #000;
+	    font-weight: lighter;
+        font-size:@calculateFontSizeUser(user)pt">@user.fullName.toLowerCase()</div>
+    </div></a>
+    <div class="hero-controls" style="
+		height: 24px;
+	    padding-top: 8px;
+	    padding-left: 16px;
+	    padding-right: 16px;
+	    font-weight: lighter;
+    ">
+    	@links.userLinkEmail(user, "view user")</a>
+    </div>
+</div>
 }
 
 @percentageStatus(
@@ -117,22 +396,29 @@ userPercentagesForFollowingStatus : Map[enums.ProjectActivityStatus.ProjectActiv
 	@for((user, count) <- hotContributorsWithCount) {
 		@hotContributor(user, count)
 	}
+	@if(newProjects.length > 0) {
+		@sectionHeader("fresh new projects")
+		@for(project <- newProjects) {
+			@newProject(project)
+		}
+	}
+	@if(completedProjects.length > 0) {
+		@sectionHeader("recently completed projects")
+		@for(project <- completedProjects) {
+			@completedProject(project)
+		}
+	}
 	@sectionHeader("stats for all projects")
 	@percentageStatus(enums.ProjectActivityStatus.Hot, percentagesForStatus, projectsForStatus)
 	@percentageStatus(enums.ProjectActivityStatus.Warm, percentagesForStatus, projectsForStatus)
 	@percentageStatus(enums.ProjectActivityStatus.Cold, percentagesForStatus, projectsForStatus)
 	@percentageStatus(enums.ProjectActivityStatus.Freezing, percentagesForStatus, projectsForStatus)
 	@percentageStatus(enums.ProjectActivityStatus.Frozen, percentagesForStatus, projectsForStatus)
-	@if(newProjects.length > 0) {
-		@sectionHeader("fresh new projects")
-		@for(project <- newProjects) {
-			<span>@project.name</span><br />
-		}
-	}
-	@if(completedProjects.length > 0) {
-		@sectionHeader("recently completed projects")
-		@for(project <- completedProjects) {
-			<span>@project.name</span><br />
-		}
-	}
+	<br />
+	@sectionHeader("stats for projects you follow")
+	@percentageStatus(enums.ProjectActivityStatus.Hot, userPercentagesForFollowingStatus, userFollowingProjectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Warm, userPercentagesForFollowingStatus, userFollowingProjectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Cold, userPercentagesForFollowingStatus, userFollowingProjectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Freezing, userPercentagesForFollowingStatus, userFollowingProjectsForStatus)
+	@percentageStatus(enums.ProjectActivityStatus.Frozen, userPercentagesForFollowingStatus, userFollowingProjectsForStatus)
 }

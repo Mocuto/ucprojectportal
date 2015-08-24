@@ -1,7 +1,7 @@
 @(user : model.User)
 
 @user.profile match {
-	case Some(path) => {<span title="Click to sign out or see notifications" class="title-nav-item user-profile user-profile-header" style="background-image:url('/@path')">}
+	case Some(path) => {<span title="Click to sign out or see notifications" class="title-nav-item user-profile user-profile-header" style="background-image:url('@path')">}
 	case None => {<span title="Click to sign out or see notifications" class="title-nav-item user-profile user-profile-header empty"><span class="user-profile-text">@user.initials</span>}
 }
 
@@ -20,6 +20,17 @@
 		<div class="profile-menu-arrow"></div>
 		<div class="profile-menu hint noselect">
 			<div class="menu-item" id="notification-text">notifications</div>
+			@defining(model.UserPrivilegesView.getUninterruptibly(user.username).getOrElse {model.UserPrivilegesView.undefined(user.username)}) { viewPrivileges =>
+				@if(viewPrivileges.accountability) {
+					<div class="menu-item"><a href="@routes.ModerationController.accountability">accountability</a></div>
+				}
+				@if(viewPrivileges.moderator) {
+					<div class="menu-item"><a href="@routes.ModerationController.moderation">moderation</a></div>
+				}
+				@if(viewPrivileges.admin) {
+					<div class="menu-item"><a href="@routes.AdminController.admin">admin</a></div>
+				}
+			}
 			<div class="menu-item"><a href="@routes.Application.signout">sign out</a></div>
 		</div>
 	</span>

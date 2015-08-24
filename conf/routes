@@ -66,6 +66,9 @@ POST 	/moderation/verify/:username 			controllers.ModerationController.verify(us
 POST 	/moderation/edit/:username 				controllers.ModerationController.editUserPrivileges(username : String)
 POST 	/moderaiton/edit/:username/following 	controllers.ModerationController.editUserFollowing(username : String)
 
+#Accountabilty routes
+GET 	/accountability 							controllers.ModerationController.accountability
+
 #Request routes
 POST	/request/join/:projectId 				controllers.RequestController.join(projectId : Int)
 POST	/request/accept/:projectId/:requester 	controllers.RequestController.accept(projectId : Int, requester : String)
@@ -103,7 +106,10 @@ GET     /assets/*file               			controllers.Assets.at(path="/public", fil
 GET 	/secure/ 								controllers.ShibbolethController.secure(path : String = "")
 GET 	/secure/*path 							controllers.ShibbolethController.secure(path : String)
 
+GET 	/positions 								controllers.UserController.positionJson
+
 GET		/:username								controllers.UserController.user(username)
 POST 	/:username/profile/upload 				controllers.UserController.profilePic(username)
 POST	/:follower/follow/:toFollow 			controllers.UserController.follow(follower : String, toFollow : String)
 POST 	/:follower/unfollow/:toFollow 			controllers.UserController.unfollow(follower : String, toFollow : String)
+

@@ -16,7 +16,7 @@ import java.util.Date
 
 import model._
 
-import org.joda.time.{Days, Weeks, Interval}
+import org.joda.time.{Days, Hours, Weeks, Interval}
 
 import play.api.Logger
 
@@ -98,8 +98,24 @@ trait ActivityLogger {
 		log(follower, ActivityType.UnfollowUser, Map("to-follow" -> toFollow))
 	}
 
+	def logOfficeHour(username : String, projectId : Int, date : Date, amount : Double) : Unit = {
+		val detail = Map("project-id" -> projectId.toString, "date" -> utils.Conversions.dateToStr(date), "amount" -> amount.toString)
+		log(username, ActivityType.LogOfficeHour, detail);
+	}
+
 	def log(username : String, activityType : ActivityType, detail : Map[String, String]) : Unit = {
 		val activity = UserActivity.add(username, activityType, detail);
+
+		if(activityType == ActivityType.SubmitUpdate || activityType == ActivityType.CompletedProject || activityType == ActivityType.SubmitUpdate) {
+			if(activityType == ActivityType.SubmitUpdate) {
+				Activity.add(activityType, username, detail, utils.Conversions.strToDate(detail("time-submitted")))
+			}
+			else {
+				Activity.add(activityType, username, detail)
+			}
+			
+		}
+
 		User.updateLastActivity(username, activity.timeSubmitted)
 	}
 }
@@ -138,14 +154,50 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	val ProjectDigest = "project digest weekly  routine"
 	val ProjectLikedEmail = (u : User, projectId : Int) => s"${u.username} liked project-$projectId"
 	val UpdateLikedEmail = (u : User, projectId : Int, author : String, timeSubmittedStr : String) => s"${u.username} liked update-$projectId-$author-$timeSubmittedStr"
+	val OfficeHourDigest = "office hour digest"
+	val RankingActivity = "ranking activity"
 
 	val LikedEmailDelayInHours = 3;
+
+	var topActivities : Seq[Activity] = List[Activity]()
 
 	def masterProps = Props[ActivityMaster]
 
 	def start() : Unit = {
 		scheduleWarnings();
+		//scheduleDigest();
 		startDigest();
+		//startOfficeHourDigest();
+		startRankingActivity();
+		scheduleRankingActivity();
+	}
+
+	def scheduleRankingActivity() : Unit = scheduleAt(DateTime.now.plusMinutes(15), RankingActivity) {
+		import scala.concurrent.ExecutionContext.Implicits.global
+		val f = Future {
+			startRankingActivity()
+		}
+
+		f onComplete {
+			case _ => {
+				Logger.info("scheduling next ranking activity")
+				scheduleRankingActivity()
+			}
+		}
+	}
+
+	def scheduleOfficeHourDigest() : Unit = scheduleAtNext(constants.ServerSettings.OfficeHourDay, constants.ServerSettings.OfficeHourHour, OfficeHourDigest) {
+		import scala.concurrent.ExecutionContext.Implicits.global
+		val f = Future {
+			startOfficeHourDigest()
+		}
+
+		f onComplete {
+			case _ => {
+				Logger.info("scheduling next office digest")
+				scheduleOfficeHourDigest()
+			}
+		}
 	}
 
 	def scheduleWarnings() : Unit = scheduleAtNext(constants.ServerSettings.ProjectWarningHour, ProjectWarnings) {
@@ -177,6 +229,115 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 				Logger.info("scheduling next digest")
 				scheduleDigest()
 			}
+		}
+	}
+
+	def startRankingActivity() : Unit = {
+		val activities = Activity.get(100);
+
+		val personalRankingCache = scala.collection.mutable.Map.empty[String, Seq[(Activity, Double)]]
+
+		def rankFunction(x : Double, l : Double, p : Double, k : Double) = (100.0*(math.pow(p, 6)) + math.pow(0.15 * (l + 1) * k, 1.71)) / math.sqrt(x + 1)
+
+		def getX(activity : Activity) : Double = {
+			val now = DateTime.now
+			
+			val hoursBetween = Hours.hoursIn(new Interval(activity.timeSubmitted.getTime, now.toDate().getTime)).getHours
+
+			(hoursBetween / 4).toDouble;
+		}
+
+		def getL(activity : Activity) : Double = {
+			val projectId = activity.detail("project-id").toInt
+
+			if(activity.activityType == ActivityType.SubmitUpdate) {
+				val author = activity.username
+				val timeSubmitted = utils.Conversions.strToDate(activity.detail("time-submitted"))
+
+				val update = ProjectUpdate.getLatest(projectId, author, timeSubmitted)
+				update.likes.length.toDouble
+			}
+			else {
+				Project.get(projectId).likes.length.toDouble
+			}
+		}
+
+		def getK(activity : Activity) : Double = {
+			activity.activityType match {
+				case ActivityType.SubmitUpdate => 1.0
+				case ActivityType.SubmitProject => 2.0
+				case ActivityType.CompletedProject => 18.0
+			}
+		}
+
+		def getPersonalRanking(activity : Activity, activities : Seq[Activity]) = {
+			val username = activity.username;
+
+			val activitiesForUser = activities.filter(_.username == username)
+
+			if(personalRankingCache.contains(username) == false) {
+				val mappings = for(a <- activitiesForUser) yield {
+
+					if(a.detail.contains("project-id") == false) {
+						(a, 0)
+					}
+
+					val x = getX(a)
+
+					val l = getL(a)
+
+					val p = 1.0;
+
+					val k = getK(a)
+
+					(a, rankFunction(x, l, p, k))
+				}
+				val sorted = mappings.sortBy(x => -x._2)
+
+				personalRankingCache.put(username, sorted)		
+			}
+			val s = personalRankingCache(username)
+			(s.length - s.map(_._1).indexOf(activity)).toDouble / (s.length.toDouble)
+		}
+
+		val sorted = (for(activity <- activities) yield {
+			if(activity.detail.contains("project-id") == false) {
+				(activity, 0)
+			}
+			else {
+
+				val x = getX(activity)
+				
+				val l = getL(activity)
+
+				val p = getPersonalRanking(activity, activities)
+
+				val k = getK(activity)
+
+				(activity, rankFunction(x, l, p, k))
+			}
+		}).sortBy({case (activity : Activity, value : Double) => -value})
+
+		topActivities = sorted.map(_._1)
+	}
+
+	def startOfficeHourDigest() : Unit = {
+		var underAcheivers = 0;
+
+		val map = for(user <- User.all if user.hasConfirmed && user.position != User.PositionNonSG) yield {
+			val amount = UserOfficeHour.getAmount(UserOfficeHour.getThisWeek(user.username))
+
+			if(amount < user.officeHourRequirement) {
+				underAcheivers = underAcheivers + 1;
+				Notification.createFailedOfficeHour(user)
+			}
+
+			(user, amount)
+		}
+
+		import scala.concurrent.ExecutionContext.Implicits.global
+		Future {
+			SMTPCommunicator.sendOfficeHourDigestEmail(map, underAcheivers)
 		}
 	}
 
@@ -218,7 +379,7 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 		//Completed Projects
 		val completedProjects = projects.filter(p => {
 			(p.state == ProjectState.COMPLETED) && 
-			((Weeks.weeksBetween(new DateTime(p.timeFinished), DateTime.now).getWeeks) <= 1)})
+			((Weeks.weeksBetween(new DateTime(p.timeFinished.get), DateTime.now).getWeeks) <= 1)})
 
 		//Then compile personlized digest for:
 		User.all.filter(_.verified).foreach(u => {

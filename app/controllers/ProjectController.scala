@@ -52,6 +52,7 @@ object ProjectController extends Controller with SessionHandler {
 			val editPermissions = UserPrivilegesEdit.getUninterruptibly(username).getOrElse { UserPrivilegesEdit.undefined(username)};
 			val createPermissions = UserPrivilegesCreate.getUninterruptibly(username).getOrElse { UserPrivilegesCreate.undefined(username)};
 			val deletePermissions = UserPrivilegesDelete.getUninterruptibly(username).getOrElse { UserPrivilegesDelete.undefined(username)};
+			val followPermissions = UserPrivilegesFollow.getUninterruptibly(username).getOrElse { UserPrivilegesFollow.undefined(username)}
 		
 			val project = Project.get(id);
 
@@ -87,6 +88,8 @@ object ProjectController extends Controller with SessionHandler {
 				val canDeleteAllUpdates = deletePermissions.updatesAll
 				val canDeleteOwnUpdates = deletePermissions.updatesOwn
 
+				val canFollow = followPermissions.projectsAll;
+
 				ActivityMaster.logProjectActivity(username, id, ActivityType.ViewProject);
 
 				Ok(views.html.project(
@@ -99,7 +102,8 @@ object ProjectController extends Controller with SessionHandler {
 					canEditAllUpdates,
 					canEditOwnUpdates,
 					canDeleteAllUpdates,
-					canDeleteOwnUpdates)(None)(ProjectUpdateController.projectUpdateForm))
+					canDeleteOwnUpdates,
+					canFollow)(None)(ProjectUpdateController.projectUpdateForm))
 			}
 		})
 	}
@@ -157,6 +161,10 @@ object ProjectController extends Controller with SessionHandler {
 
 						ActivityMaster.logProjectActivity(username, completeProject.id, ActivityType.SubmitProject);
 
+						Future {
+							ActivityMaster.startRankingActivity();
+						}
+
 						Redirect(routes.ProjectController.project(completeProject.id));							
 					}
 			})
@@ -192,6 +200,14 @@ object ProjectController extends Controller with SessionHandler {
 					val state = dataParts.getOrElse("state", List(project.state))(0)
 
 					val isFinished = (state == ProjectState.COMPLETED || state == ProjectState.CLOSED);
+
+					if(state == ProjectState.COMPLETED && project.state != ProjectState.COMPLETED) {
+						ActivityMaster.logProjectActivity(username, id, ActivityType.CompletedProject)
+
+						Future {
+							ActivityMaster.startRankingActivity();
+						}
+					}
 
 					val updatedProject = Project(
 						id = project.id,

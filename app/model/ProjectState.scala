@@ -31,11 +31,11 @@ object ProjectState {
 		}
 	}
 
-	def COMPLETED = "completed"
-	def IDEA = "idea"
-	def IN_PROGRESS = "in progress"
+	final val COMPLETED = "completed"
+	final val IDEA = "idea"
+	final val IN_PROGRESS = "in progress"
 	final val IN_PROGRESS_NEEDS_HELP = "in progress (needs help)"
-	def CLOSED = "frozen"
+	final val CLOSED = "frozen"
 
 	def DEFAULT = IDEA
 }

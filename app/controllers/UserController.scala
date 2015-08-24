@@ -46,7 +46,7 @@ object UserController extends Controller with SessionHandler {
 
 				ActivityMaster.logViewUser(viewer = authenticatedUsername, viewee = username)
 
-				val filledForm = ModerationController.verifyUserForm.fill(model.form.Forms.UserForm(user.firstName, user.lastName, user.preferredPronouns, user.position, user.officeHourRequirement))
+				val filledForm = ModerationController.verifyUserForm.fill(model.form.Forms.UserForm(user.firstName, user.lastName, user.preferredPronouns, user.cellNumber.getOrElse {""}, user.position, user.officeHourRequirement))
 
 				Ok(views.html.user(user, loggedInUser)(username == authenticatedUsername, canEdit)(userPrivilegeSet, authenticatedPrivilegeSet)(filledForm));
 			}
@@ -148,6 +148,18 @@ object UserController extends Controller with SessionHandler {
 
 				Ok(response);
 			}
+		})
+	}
+
+	def positionJson = Action { implicit request =>
+		whenAuthorized(username => {
+			val positionNames = UserPosition.all.map(_.name).toSet;
+
+			val response = Json.toJson(positionNames.toList)
+
+			println("position")
+
+			Ok(response)
 		})
 	}
 }

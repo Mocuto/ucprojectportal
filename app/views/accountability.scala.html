@@ -1,0 +1,95 @@
+@(accounter : model.User)
+
+@projectRow(project : model.Project) = {
+	<tr class="accountability-project-row">
+		<td>@links.projectLink(project.id)</td>
+		<td>@utils.Conversions.dateToDisplayedStr(project.timeStarted).toLowerCase()</td>
+		<td>
+			@utils.Conversions.getTimeAgo(project.lastActivity)<br />
+			@utils.Conversions.dateToDisplayedStr(project.lastActivity).toLowerCase()
+		</td>
+		<td>
+			@defining(model.User.get(project.primaryContact)) {primaryContact =>
+				@common.userProfileIconView(primaryContact, false, false)<br />
+				@links.userLink(primaryContact, Some(primaryContact.lastName))
+			}
+
+		</td>
+		<td>@project.officeHoursLogged</td>
+		<td>@project.state</td>
+	</td>
+}
+
+@userRow(user : model.User) = {
+	<tr class="accountability-user-row">
+		<td>@links.userLink(user, Some(user.username))</td>
+		<td>
+			@common.userProfileIconView(user, false, false)<br />
+			@links.userLink(user, Some(user.lastName))
+		</td>
+		<td>
+			@utils.Conversions.getTimeAgo(user.lastActivity)<br />
+			@utils.Conversions.dateToDisplayedStr(user.lastActivity).toLowerCase()
+		</td>
+		<td>@model.ProjectUpdate.get(user).length</td>
+		<td>@user.primaryContactProjects.length</td>
+		<td>@(user.projects.length - user.primaryContactProjects.length)</td>
+		<td>@model.UserOfficeHour.getAmount(model.UserOfficeHour.getThisWeek(user.username)) h / @user.officeHourRequirement h</td>
+		<td>@model.UserOfficeHour.getAmount(model.UserOfficeHour.get(user.username)) h</td>
+	</tr>
+}
+
+@main("Accountability | Student Government Project Portal")(Some(accounter)) {
+	<div class="main-container">
+
+		<div class="huge-header project-name-container">accountability</div>
+
+		<div class="large-header">projects</div>
+		
+		<div class="roundbox">
+			<table class="accountability-table">
+				<tr>
+					<td>name</td>
+					<td>time started</td>
+					<td>last active</td>
+					<td>primary contact</td>
+					<td>hours logged</td>
+					<td>state</td>
+				</tr>
+				@for(project <- model.Project.allSorted) {
+					@projectRow(project)
+				}
+			</table>
+		</div>
+
+		<div class="large-header">users</div>
+
+		<div class="roundbox">
+			<table class="accountability-table">
+				<tr>
+					<td>username</td>
+					<td>name</td>
+					<td>last active</td>
+					<td>number of updates</td>
+					<td>number of projects owned</td>
+					<td>number of projects working on</td>
+					<td>office hours logged this week</td>
+					<td>total office hours logged</td>
+				</tr>
+				<tr>
+				@for(user <- model.User.all if user.position != model.User.PositionNonSG && user.hasConfirmed) {
+					@userRow(user)
+				}
+			</table>
+		</div>
+		<!-- Unactivated Accounts -->
+		<div class="large-header">unactivated accounts</div>
+		<div class="roundbox">
+			@for(user <- model.User.all) {
+				@if(user.hasConfirmed == false) {
+					<span class="content">@user.username</span><br />
+				}
+			}
+		</div>
+	</div>
+}

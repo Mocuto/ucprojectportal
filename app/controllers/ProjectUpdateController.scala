@@ -88,7 +88,11 @@ object ProjectUpdateController extends Controller with SessionHandler {
 
 				    updatesCreatedCounter.inc();
 
-				    ActivityMaster.logSubmitUpdate(username, projectId, update.timeSubmitted, update.content)
+				    ActivityMaster.logSubmitUpdate(username, projectId, completeUpdate.timeSubmitted, update.content)
+
+					Future {
+						ActivityMaster.startRankingActivity();
+					}
 
 				    Ok(response);
 			    }

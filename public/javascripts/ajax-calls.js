@@ -31,7 +31,7 @@ $.ajax({
 });				
 }
 
-function verifyUser(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, callback) {
+function verifyUser(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, cellPhone, callback) {
 	var route = jsRoutes.controllers.ModerationController.verify(username)
 
 	var formData = new FormData()
@@ -40,6 +40,7 @@ function verifyUser(username, firstName, lastName, preferredPronouns, position, 
 	formData.append("preferred_pronouns", preferredPronouns)
 	formData.append("position", position)
 	formData.append("office_hour_requirement", officeHourRequirement)
+	formData.append("cell_number", cellPhone)
 
 	ajaxSendFormData(formData, route, callback)
 }

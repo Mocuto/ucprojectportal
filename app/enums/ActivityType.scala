@@ -6,10 +6,11 @@ object ActivityType extends Enumeration {
 	type ActivityType = Value
 
 	val ViewUser = Value
-	val ViewProject, SubmitProject, RequestJoin, JoinProject, LeaveProject, EditProject, LikeProject, UnlikeProject, FollowProject, UnfollowProject = Value
+	val ViewProject, SubmitProject, RequestJoin, JoinProject, LeaveProject, EditProject, LikeProject, UnlikeProject, FollowProject, UnfollowProject, CompletedProject = Value
 	val AcceptRequest, IgnoreRequest = Value
 	val SubmitUpdate, EditUpdate, DeleteUpdate, LikeUpdate, UnlikeUpdate = Value
 	val FollowUser, UnfollowUser = Value
+	val LogOfficeHour = Value
 
 	val Toggleables = List(LikeProject, UnlikeProject, FollowProject, UnfollowProject, LikeUpdate, UnlikeUpdate, FollowUser, UnfollowUser)
 
@@ -25,6 +26,7 @@ object ActivityType extends Enumeration {
 		case "unlike-project" => UnlikeProject
 		case "follow-project" => FollowProject
 		case "unfollow-project" => UnfollowProject
+		case "completed-project" => CompletedProject
 		case "accept-request" => AcceptRequest
 		case "ignore-request" => IgnoreRequest
 		case "submit-update" => SubmitUpdate
@@ -34,6 +36,7 @@ object ActivityType extends Enumeration {
 		case "unlike-update" => UnlikeUpdate
 		case "follow-user" => FollowUser
 		case "unfollow-user" => UnfollowUser
+		case "log-office-hour" => LogOfficeHour
 	}
 
 	def toString(a : ActivityType) : String = a match {
@@ -48,6 +51,7 @@ object ActivityType extends Enumeration {
 		case UnlikeProject => "unlike-project"
 		case FollowProject => "follow-project"
 		case UnfollowProject => "unfollow-project"
+		case CompletedProject => "completed-project"
 		case AcceptRequest => "accept-request"
 		case IgnoreRequest => "ignore-request"
 		case SubmitUpdate => "submit-update"
@@ -57,6 +61,7 @@ object ActivityType extends Enumeration {
 		case UnlikeUpdate => "unlike-update"
 		case FollowUser => "follow-user"
 		case UnfollowUser => "unfollow-user"
+		case LogOfficeHour => "log-office-hour"
 	}
 
 	def invert(a : ActivityType) : ActivityType = a match {

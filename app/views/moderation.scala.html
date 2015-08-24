@@ -1,5 +1,13 @@
 @(moderator : model.User)
 
+@displayAmount(amount : Double) = {
+  @if(amount.toInt == amount) {
+    @amount.toInt
+  } else {
+    @amount
+  }
+}
+
 @main("Moderation | Student Government Project Portal")(Some(moderator)) {
 	<div class="main-container">
 
@@ -7,37 +15,52 @@
 		moderation
 		</div>
 
-		<div class="roundbox">
-			<!-- Actiavted Accounts -->
-			<span class="content-header">activated accounts</span>
-			<div class="content-description">
-				@for(user <- model.User.all) {
-					@if(user.hasConfirmed == true) {
-						@links.userLink(user)<br />
-						<div class="user-info">last login - @utils.Conversions.dateToDisplayedStr(user.lastLogin)</div>
-						<div class="user-info">projects owned - @user.primaryContactProjects.length</div>
-						<div class="user-info">projects working on (not owned) - @(user.projects.length - user.primaryContactProjects.length)</div>
-						<div class="user-info">number of updates - @model.ProjectUpdate.get(user).length</div>
+		@for(user <- moderator.usersFollowing.map(model.User.get(_))) {
+			<div class="large-header">
+				<div title="@user.fullName" class="user-profile-icon-wrapper noselect large moderation">
+				<a href="@routes.UserController.user(user.username)">
+				@user.profile match {
+					case Some(path) => {<span class='user-profile user-profile-icon' style="top:20px;" style="background-image:url('@path')"></span></a>}
+					case None => {<span class='user-profile user-profile-icon' style="top:20px;"><span class="user-profile-text">@user.initials</span></span></a>}
+				}
+				</div>
+				<span>@links.userLink(user)</span>
+			</div>
+			<div class="roundbox">
+				@defining(model.ProjectUpdate.getLatestForUser(user.username)) { latestUpdate =>
+					@if(latestUpdate != None) {
+						<div class="content-header" style="font-weight:lighter; margin-bottom:8px;">latest update, posted in @links.projectLink(latestUpdate.get.projectId)</div>
+						<div class="hint" style="float:right">@utils.Conversions.dateToDisplayedStr(latestUpdate.get.timeSubmitted).toLowerCase()</div>
+						<div class="description" style="margin-bottom:32px; font-style:italic;">@links.updateLink(latestUpdate.get.projectId, latestUpdate.get.author, utils.Conversions.dateToStr(latestUpdate.get.timeSubmitted),utils.Conversions.toMultiLineHtml(latestUpdate.get.content))</div>
 					}
 				}
+
+
+
+				<!-- Office Hours -->
+				<div class="content-header" style="font-weight:lighter">office hours</div>
+				<div class="office-hour-mark-container">
+				    <span class="office-hour-mark">
+				      <div class="office-hour-mark-header">today</div>
+				      <div class="office-hour-mark-value"><span class="office-hour-odometer" id="office-hour-today">@displayAmount(model.UserOfficeHour.getAmount(model.UserOfficeHour.getToday(user.username)))</span> h</div>
+				    </span>
+				    <span class="office-hour-mark">
+				      <div class="office-hour-mark-header">this week</div>
+				      @defining(model.UserOfficeHour.getAmount(model.UserOfficeHour.getThisWeek(user.username))) { amountThisWeek =>
+				        @if(user.officeHourRequirement > 0) {
+				          <div class="office-hour-mark-value" warning="@(amountThisWeek < user.officeHourRequirement)" style="font-weight:normal"><span class="office-hour-odometer" id="office-hour-this-week" target-value="@user.officeHourRequirement">@displayAmount(amountThisWeek)</span> h / @displayAmount(user.officeHourRequirement) h</div>
+				        } else {
+				          <div class="office-hour-mark-value"><span class="office-hour-odometer" id="office-hour-this-week">@displayAmount(amountThisWeek)</span> h</div>
+				        }
+				      }
+				      
+				    </span>
+				    <span class="office-hour-mark" style="margin-right:0px;">
+				      <div class="office-hour-mark-header">all time</div>
+				      <div class="office-hour-mark-value "><span class="office-hour-odometer" id="office-hour-all-time">@displayAmount(model.UserOfficeHour.getAmount(model.UserOfficeHour.get(user.username)))</span> h</div>
+				    </span>
+			  	</div>
 			</div>
-			<!-- Unactivated Accounts -->
-			<span class="content-header">unactivated accounts</span>
-			<div class="content-description">
-				@for(user <- model.User.all) {
-					@if(user.hasConfirmed == false) {
-						@user.username<br />
-					}
-				}
-			</div>
-			<!-- Projects -->
-			<span class='content-header'>projects</span>
-			<div class="conent-descriptions">
-				@for(project <- model.Project.all) {
-					@links.projectLink(project.id)<br />
-					<div class="user-info">primary contact - @links.userLink(model.User.get(project.primaryContact))</div>
-				}
-			</div>
-		</div>
+		}
 	</div>	
 }

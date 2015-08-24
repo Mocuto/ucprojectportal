@@ -3,46 +3,91 @@
 @import model.Project
 @import java.lang.Boolean; var isLastCell = false
 
+@numToDay(num : Int) = @{
+    num match {
+        case 1 => "monday"
+        case 2 => "tuesday"
+        case 3 => "wednesday"
+        case 4 => "thursday"
+        case 5 => "friday"
+        case 6 => "saturday"
+        case 7 => "sunday"
+    }
+}
+
 @main("Student Government Project Portal")(Some(user)) {
     <div class="main-container">
-        <div class="welcome">welcome. <img src="/assets/images/select-a-category.png"/> </div>
-        <div id="dashboard-item-container">
-        	<!-- Academics -->
+        <div class="welcome">welcome.</div>
+        <div class="hero-card-container">
+        <div class="grid-sizer"></div>
+        @for(activity <- actors.masters.ActivityMaster.topActivities.take(8)) {
+            @activity.activityType match {
+                case enums.ActivityType.SubmitUpdate => {
+                    @((activity.detail("project-id").toInt, utils.Conversions.strToDate(activity.detail("time-submitted")))) match {
+                        case (projectId, timeSubmitted) => {
+                            @common.heroCardUpdate(user, model.User.get(activity.username), model.Project.get(projectId), model.ProjectUpdate.getLatest(projectId, activity.username, timeSubmitted))
+                        }
+                    }
+                }
+                case enums.ActivityType.SubmitProject => {
+                    @(activity.detail("project-id").toInt, model.UserPrivileges.get(user.username)) match {
+                        case (projectId, privileges) => {
+                            @common.heroCardNewProject(user, model.User.get(activity.username), model.Project.get(projectId), privileges.follow.projectsAll, privileges.edit.joinProjects)
+                        }
+                    }
+                }
+
+                case enums.ActivityType.CompletedProject => {
+                    @activity.detail("project-id").toInt match {
+                        case projectId => {
+                            @common.heroCardCompletedProject(user, model.User.get(activity.username), model.Project.get(projectId))
+                        }
+                    }
+                }
+            }
+        }
+        </div>
+        <div class="welcome">office hour tracker</div>
+        <div class="roundbox">
+            <div id="office-hour-chart" style="width: 100%; height: 500px"></div>
+        </div>
+        <!--<div id="dashboard-item-container">
+        	 Academics 
             <div class="dashboard-item">
             	<a href="/filter/category-academics">
 	                <img src="/assets/images/logos/dashboard-academics.png" />
 	                <span class="dashboard-item-text">academics</span>
                 </a>
             </div>
-            <!-- Safety -->
+            <!-- Safety ->
             <div class="dashboard-item">
             	<a href="/filter/category-safety">
 	                <img src="/assets/images/logos/dashboard-safety.png" />
 	                <span class="dashboard-item-text">safety</span>
                 </a>
             </div>
-            <!-- Athletics and Spirit -->
+            <!-- Athletics and Spirit ->
             <div class="dashboard-item">
             	<a href="/filter/category-athletics-and-spirit">
 	                <img src="/assets/images/logos/dashboard-athletics-and-spirit.png" />
 	                <span class="dashboard-item-text">athletics and spirit</span>
                 </a>
             </div>
-            <!-- Community Affairs -->
+            <!-- Community Affairs ->
             <div class="dashboard-item">
             	<a href="/filter/category-community-affairs">
 	                <img src="/assets/images/logos/dashboard-community-affairs.png" />
 	                <span class="dashboard-item-text">community affairs</span>
                 </a>
             </div>
-            <!-- Diversity -->
+            <!-- Diversity ->
             <div class="dashboard-item">
             	<a href="/filter/category-diversity">
 	                <img src="/assets/images/logos/dashboard-diversity.png" />
 	                <span class="dashboard-item-text">diversity</span>
                 </a>
             </div>
-            <!-- Student Experience -->
+            <!-- Student Experience ->
             <div class="dashboard-item">
             	<a href="/filter/category-academics">
 	                <img src="/assets/images/logos/dashboard-student-experience.png" />
@@ -50,7 +95,7 @@
                 </a>
             </div>
 
-        	<!-- Seeking Help -->
+        	<!-- Seeking Help ->
             <div class="dashboard-item">
             	<a href="/filter/state-in-progress--needs-help-">
 	                <img src="/assets/images/logos/dashboard-seeking-help.png" />
@@ -58,7 +103,7 @@
                 </a>
             </div>
 
-         	<!-- Sustainability -->
+         	<!-- Sustainability ->
             <div class="dashboard-item">
             	<a href="/filter/category-sustainability">
 	                <img src="/assets/images/logos/dashboard-sustainability.png" />
@@ -66,7 +111,7 @@
                 </a>
             </div>
 
-        	<!-- Make a project -->
+        	<!-- Make a project ->
             <div class="dashboard-item">
             	<a href="/project/new">
 	                <img src="/assets/images/logos/dashboard-make-project.png" />
@@ -75,6 +120,52 @@
             </div>
 
         </div>
+        -->
    	</div>
+<script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
 
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Day', "organization's total hours logged"],
+          @for( ((dayNum, personalVal), (dayNum2, globalVal)) <- model.UserOfficeHour.getThisWeekFriendly(user.username).zip(model.UserOfficeHour.getThisWeekFriendlyAllLoggers)) {
+            ["@numToDay(dayNum)", @globalVal],
+          }
+        ]);
+
+        var options = {
+          title: '',
+          curveType: 'linear',
+          legend: { position: 'bottom' },
+          fontName: "Helvetica",
+          hAxis: {
+            title : "day",
+            baseLine : 0
+          },
+          vAxis: {
+            title : "hours",
+            gridLines: 7,
+          },
+          chartArea: {
+            stroke : "#eee",
+            strokeWidth : 2
+          },
+          lineWidth : 4,
+          pointSize : 5
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('office-hour-chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
 }

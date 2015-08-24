@@ -15,6 +15,8 @@ function onLikeButtonClicked() {
 			seeMoreMenuContainer.children(".see-more-menu").prepend(html);
 		})
 		$(this).attr("active", true)
+		$(".like-button-caption").text("unlike this project")
+		$(".like-button-caption").attr("active", true)
 
 	}
 	else
@@ -42,6 +44,8 @@ function onLikeButtonClicked() {
 			})
 		})
 		$(this).attr("active", false);
+		$(".like-button-caption").text("like this project")
+		$(".like-button-caption").attr("active", false)
 	}
 }
 
@@ -56,6 +60,8 @@ function onFollowButtonClicked() {
 
 		})
 		$(this).attr("active", true)
+		$(".follow-button-caption").text("unwatch this project")
+		$(".follow-button-caption").attr("active", true)
 
 	}
 	else
@@ -71,6 +77,8 @@ function onFollowButtonClicked() {
 			})
 		})
 		$(this).attr("active", false);
+		$(".follow-button-caption").text("watch this project")
+		$(".follow-button-caption").attr("active", false)
 	}
 }
 

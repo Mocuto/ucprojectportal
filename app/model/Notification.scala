@@ -100,6 +100,13 @@ object Notification {
 		ActivityMaster.scheduleUpdateLikedEmail(user, update)
 	}
 
+	def createFailedOfficeHour(failure : User) : Unit = {
+		val content = Map(Sender -> failure.username)
+		for(follower <- failure.followers) {
+			Notification.create(User.get(follower), content, NotificationType.OfficeHourFailed)
+		}
+	}
+
 	def create(user : User, content : Map[String, String], notificationType : NotificationType.Value) : Notification = {
 		val notification = Notification(user.username, new Date(), content, notificationType);
 

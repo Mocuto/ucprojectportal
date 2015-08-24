@@ -26,6 +26,7 @@ object ModerationController extends Controller with SessionHandler {
 			"first_name" -> nonEmptyText,
 			"last_name" -> nonEmptyText,
 			"preferred_pronouns" -> nonEmptyText,
+			"cell_number" -> nonEmptyText,
 			"position" -> nonEmptyText,
 			"office_hour_requirement" -> of(doubleFormat)
 		)(UserForm.apply)(UserForm.unapply) verifying("Cannot have negative office hour requirement", _.officeHourRequirement >= 0)
@@ -36,7 +37,33 @@ object ModerationController extends Controller with SessionHandler {
 			case Some(username) => {
 				val authenticatedUser = User.get(username);
 
-				Ok(views.html.moderation(authenticatedUser));
+				val viewingPrivileges = UserPrivilegesView.getUninterruptibly(username).getOrElse {UserPrivilegesView.undefined(username)}
+
+				if(!viewingPrivileges.moderator) {
+					NotFound("this page does not exist")
+				}
+				else {
+					Ok(views.html.moderation(authenticatedUser));
+				}
+				
+			}
+		}
+	}
+
+	def accountability = Action { implicit request =>
+		authenticated match {
+			case Some(username) => {
+				val authenticatedUser = User.get(username);
+
+				val viewingPrivileges = UserPrivilegesView.getUninterruptibly(username).getOrElse {UserPrivilegesView.undefined(username)}
+
+				if(!viewingPrivileges.accountability) {
+					NotFound(views.html.messages.notFound("this page does not exist"))
+				}
+				else {
+					Ok(views.html.accountability(authenticatedUser));
+				}
+				
 			}
 		}
 	}
@@ -183,13 +210,13 @@ object ModerationController extends Controller with SessionHandler {
 						BadRequest(errorMessage);
 					},
 					{
-						case UserForm(firstName, lastName, preferredPronouns, position, officeHourRequirement) => {
+						case UserForm(firstName, lastName, preferredPronouns, cellNumber, position, officeHourRequirement) => {
 							val canEdit = (UserPrivilegesEdit.getUninterruptibly(authUsername).getOrElse { UserPrivilegesEdit.undefined(authUsername) }).userPermissions
 							if(!canEdit) {
 								Status(404)("You do not have permission to edit user permissions");
 							}
 							else {
-								User.setupSG(username, firstName, lastName, preferredPronouns, position, officeHourRequirement)
+								User.setupSG(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, cellNumber)
 									.onSuccess({case _ => User.verifyWithPosition(username, position)})
 
 								val response = JsObject( 

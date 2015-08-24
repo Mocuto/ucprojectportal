@@ -1,4 +1,4 @@
-@(path : String = "")(form : Form[model.form.Forms.UserForm])
+@(username : String, path : String = "")(form : Form[model.form.Forms.UserForm])
 
 @main("Activate Your Account")(None) {
 
@@ -16,18 +16,18 @@
     </style>
 
 	<div class="activate-container">
-        <div class="huge-header" style="color: #fa544f; font-weight:800">project portal</div>
+        <div class="huge-header" style="color: #C51834; font-weight:800">project portal</div>
         <div class="large-header" style="color: black; font-weight:200; margin-bottom:20px">creating your account</div>
         <div class="activate-button" id="activate-sg-button" style="float:left">
           <div class="large-header">i am a member of student government</div>
           <img src="/assets/images/logos/sg-logo-without.png" />
-          <div class="hint">tribunals, boards, committees, senate, cabinet, executive taff, etc.</div>
+          <div class="hint" style="color:white;">tribunals, boards, committees, senate, cabinet, executive taff, etc.</div>
         </div>
         <a href="@routes.ActivationController.activateNonSG.url" style="text-decoration:none; color : black">
           <div class="activate-button" id="activate-non-sg-button">
             <div class="large-header">i am not a member of student government</div>
             <img src="/assets/images/logos/uc-logo.png" />
-            <div class="hint">don't worry, you're still cool</div>
+            <div class="hint" style="color:white;">don't worry, you're still cool</div>
           </div>
         </a>
         @helper.form(action = routes.ActivationController.tryActivateNEW) {
@@ -35,14 +35,37 @@
             <div class="form-error-login">*@error.message</div>  
           }
         	<span id="activate-inputs">
-    				<input class="login-input" name="first_name" type="text" placeholder="first name">
+            <span style="color:white;">@common.userProfileMainView(model.User.get(username), true)</span>
+    				<input class="login-input" name="first_name" type="text" placeholder="first name" style="margin-top:16px;">
     				<input class="login-input" name="last_name" type="text" placeholder="last name">
     				<input class="login-input" name="preferred_pronouns" type="text" placeholder="preferred pronouns">
-    				<input class="login-input" name="position" type="text" placeholder="position">
+            <input class="login-input" name="cell_number" type="text" placeholder="cell phone number">
+    				<input class="login-input position-typeahead" name="position" type="text" placeholder="position">
 		        <input type="submit" style="display:none"/>
-		        <span id="login-button">finish</span><br>
+		        <span id="login-button" style="margin-top:24px; width:204px;">finish</span><br>
 	        </span>
         }
 	</div>
+  <script type="text/javascript">
 
+      $(".user-profile-main").children(".user-profile-upload").animate({
+        height: 164,
+        bottom: 100
+      }, {
+        duration : 300,
+        easing : "linear"
+      })
+        
+      $(".user-profile-main").children(".user-profile-upload").children(".camera-icon").animate({
+        opacity: 0
+      }, {
+        duration: 300,
+        easing: "linear"
+      })
+
+      $(".user-profile-main").ready(function (){
+        $(".user-profile-main").off("mouseenter")
+        $(".user-profile-main").off("mouseleave")
+      })
+  </script>
 }

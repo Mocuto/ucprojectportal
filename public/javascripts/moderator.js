@@ -43,15 +43,16 @@ function onPrivilegeClicked() {
 }
 
 function onFinishVerifyClicked() {
-	var username = $("#activate-inputs").attr("username")
+	var username = $("#verify-window").attr("username")
 	var firstName = $(".verify-first-name").val();
 	var lastName = $(".verify-last-name").val();
 	var preferredPronouns = $(".verify-preferred-pronouns").val();
 	var officeHourRequirement = +$(".verify-office-hour-requirement").val()
 	var position = $(".verify-position").val();
+	var cellPhone = $(".verify-cell-number").val()
 
-	verifyUser(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, function() {
-		$("#activate-inputs").popane({
+	verifyUser(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, cellPhone, function() {
+		$("#verify-window").popane({
 			show : "false"
 		})
 		$(".verify-button").hide();
@@ -59,7 +60,7 @@ function onFinishVerifyClicked() {
 }
 
 function onVerifyClicked() {
-	$("#activate-inputs").popane({
+	$("#verify-window").popane({
 		show : "true"
 	})
 	$("#popane-overlay").css("backgroundColor", "black");

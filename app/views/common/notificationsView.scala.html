@@ -112,6 +112,17 @@
 	</table>
 	}
 
+	case enums.NotificationType.OfficeHourFailed => {
+	<table>
+		<tr>
+			<td class="notification-td">
+				@{user = User.get(notification.content.getOrElse(model.Notification.Sender, { "someone"} )  )}
+				<span class="hint">@links.userLink(user, Some(user.firstName.toLowerCase())) failed to log their required office hours!</span>
+			</td>
+		</tr>
+	</table>
+	}
+
 	case _ => {}
 }
 

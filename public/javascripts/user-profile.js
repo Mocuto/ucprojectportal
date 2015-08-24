@@ -18,6 +18,8 @@ function onFollowUserButtonClicked() {
 
 		})
 		$(this).attr("active", true)
+		$(".follow-user-button-caption").text("unwatch this user")
+		$(".follow-user-button-caption").attr("active", true)
 
 	}
 	else
@@ -33,6 +35,8 @@ function onFollowUserButtonClicked() {
 			})
 		})
 		$(this).attr("active", false);
+		$(".follow-user-button-caption").text("watch this user")
+		$(".follow-user-button-caption").attr("active", false)
 	}
 }
 

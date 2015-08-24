@@ -93,6 +93,7 @@ object ActivationController extends Controller with SessionHandler {
 			"first_name" -> nonEmptyText,
 			"last_name" -> nonEmptyText,
 			"preferred_pronouns" -> nonEmptyText,
+			"cell_number" -> nonEmptyText,
 			"position" -> nonEmptyText,
 			"office_hour_requirement" -> ignored(0.0)
 		) (UserForm.apply) (UserForm.unapply)
@@ -151,9 +152,7 @@ object ActivationController extends Controller with SessionHandler {
 		}
 	}}
 
-	def activateNEW(path : String) = Action { implicit request => authenticated match {
-		case Some(username) => Ok(views.html.activateNEW(path)(sgAccountForm))
-	}}
+	def activateNEW(path : String) = Action { implicit request => whenAuthorized(username => Ok(views.html.activateNEW(username, path)(sgAccountForm))) }
 
 	def resetPassword(username: String, uuid : String) = Action {implicit request => {
 		User.getActivationCode(username) match {
@@ -236,13 +235,16 @@ object ActivationController extends Controller with SessionHandler {
 	def tryActivateNEW = Action.async { implicit request =>
 		sgAccountForm.bindFromRequest.fold(
 			formWithErrors => {
-				Future { BadRequest(views.html.activateNEW()(formWithErrors)) }
+				Future {
+					whenAuthorized(username => BadRequest(views.html.activateNEW(username)(formWithErrors)))
+					
+				}
 			},
 			userForm => (request.session.get("authenticated"), userForm) match {
-				case (Some(username : String), UserForm(firstName, lastName, pronouns, position, officeHourRequirement)) => {
-					User.setupSG(username, firstName, lastName, pronouns, position, officeHourRequirement).map( x => { 
+				case (Some(username : String), UserForm(firstName, lastName, pronouns, cellNumber, position, officeHourRequirement)) => {
+					User.setupSG(username, firstName, lastName, pronouns, position, officeHourRequirement, cellNumber).map( x => { 
 						SMTPCommunicator.sendAllVerifyUserEmail(username);
-						Redirect(routes.Application.gettingStarted)
+						Redirect(routes.Application.index)
 					})
 				}
 				case (None, _) => Future { Redirect(routes.ShibbolethController.secure("")) }
@@ -253,7 +255,7 @@ object ActivationController extends Controller with SessionHandler {
 	def activateNonSG = Action { implicit request =>
 		whenAuthorized(username => {
 				User.setupNonSG(username);
-				Redirect(routes.Application.gettingStarted)
+				Redirect(routes.Application.index)
 			})(request = implicitly, orElse = Redirect(routes.ShibbolethController.secure("")))
 		
 	}

@@ -107,6 +107,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 object Global extends WithFilters(AuthorizedFilter("login", "tryLogin",
 													"secure", "at", 
+													"javascriptRoutes", "profilePic", "uploads", "positionJson",
 													"activate", "resendActivation", "tryResendActivation", "tryActivate", "activateNEW", "tryActivateNEW",
 													"forgotPassword", "tryForgotPassword", "resetPassword", "tryResetPassword"),
 

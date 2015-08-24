@@ -31,6 +31,27 @@ function setupSearch() {
 		    $(this).trigger("enter");
 		}
 	});
+
+	var positionDataSet = new Bloodhound({
+		datumTokenizer: Bloodhound.tokenizers.whitespace,
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		prefetch: {
+			url: jsRoutes.controllers.UserController.positionJson().url,
+			cache : false
+		},
+		remote: {
+			url: jsRoutes.controllers.UserController.positionJson().url
+		}
+	})
+
+	$('.position-typeahead').typeahead({
+	  minLength: 3,
+	  highlight: true
+	},
+	{
+	  name: 'positions',
+	  source: positionDataSet
+	});
 }
 
 

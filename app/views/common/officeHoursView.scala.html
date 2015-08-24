@@ -32,7 +32,7 @@
       <div class="office-hour-mark-value "><span class="office-hour-odometer" id="office-hour-all-time">@displayAmount(model.UserOfficeHour.getAmount(model.UserOfficeHour.get(user.username)))</span> h</div>
     </span>
   </div>
-  <div style="font-size:16pt; margin-bottom:16px">log hours</div>
+  <div style="font-size:16pt; margin-bottom:16px; font-weight:lighter">log hours</div>
   <div id="logTimeError"></div>
   <div id="logTimeSuccess"></div>
   <div class="verify-header">date</div>
@@ -40,17 +40,17 @@
   <div class="verify-header">hours</div>
   <input type="text" id="mHours" class="roundbox-textinput" placeholder="ex: 1.5" /><br />
   <div class="verify-header">project</div>
-  <select name="project" id="office-hour-project-select" style="margin-bottom:12px;">
+  <select name="project" id="office-hour-project-select" style="margin-bottom:12px; width:0px;">
     <option value="-1" selected="selected">None</option>
     @for(p <- user.projects.map(model.Project.get(_))) {
       <option value="@p.id">@p.name</option>
     }
   </select>
-  <div class="verify-header">description</div>
+  <div class="verify-header" style="margin-top:12px;">description</div>
   <textarea id="mComments" class="roundbox-textinput textarea-description" placeholder="enter a description of work done"></textarea><br />
-  <div style="margin-bottom:12px;">
+  <div style="margin-bottom:32px;">
     <input type="checkbox" id="mPostUpdate" name="mPostUpdate">
-    <span>post this as a project update</span>
+    <span style="font-weight:lighter;">post this as a project update</span>
   </div>
   <span class="blue-button" id="submitHours">submit hours</span>
 </div>

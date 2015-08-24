@@ -1,0 +1,15 @@
+@(officeHourTuples : Seq[(model.User, Double)], amountOfFailures : Int)
+
+@email.email(Html("Office Hour Digest")) {
+	<div>No. of users that didn't meet office hour requirement: @amountOfFailures / officeHourTuples.length</div>
+	<div>Failures</div>
+	@for((user, amount) <- officeHourTuples if amount < user.officeHourRequirement) {
+		<div>@user.fullName: @amount / @user.officeHourRequirement
+	}
+	<div>Successes</div>
+	@for((user, amount) <- officeHourTuples if amount >= user.officeHourRequirement) {
+		<div>@user.fullName: @amount / @user.officeHourRequirement
+	}
+	<br>
+	<br>
+}

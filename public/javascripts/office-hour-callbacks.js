@@ -65,21 +65,28 @@ function onSubmitHoursClicked() {
 	    $("#mHours").val("");
 	    $("#mComments").val("");
 
-	    var todayVal = +$("#office-hour-today").attr("value")
-	    $("#office-hour-today").html((+todayVal) + (+reqBody.hours))
-	    $("#office-hour-today").attr("value", (+todayVal) + (+reqBody.hours))
+	    var hourDate = moment(reqBody.date, "MM/DD/YYYY")
+	    var today = moment(moment().format("MM/DD/YYYY"), "MM/DD/YYYY")
 
-	    var thisWeekVal = +$("#office-hour-this-week").attr("value")
-	    var targetVal = +($("#office-hour-this-week").attr("target-value"))
+	    if(today.diff(hourDate) == 0) {
+		    var todayVal = +$("#office-hour-today").attr("value")
+		    $("#office-hour-today").html((+todayVal) + (+reqBody.hours))
+		    $("#office-hour-today").attr("value", (+todayVal) + (+reqBody.hours))
+	    }
 
-	    $("#office-hour-this-week").html((+thisWeekVal) + (+reqBody.hours))
-	    $("#office-hour-this-week").attr("value", (+thisWeekVal) + (+reqBody.hours))
+	    if(moment().week() == hourDate.week()) {
+		    var thisWeekVal = +$("#office-hour-this-week").attr("value")
+		    var targetVal = +($("#office-hour-this-week").attr("target-value"))
 
-	    if((+thisWeekVal) + (+reqBody.hours) >= targetVal)
-	    {
-	    	$('.office-hour-mark-value[warning="true"]').animate({
-	    		color : "#00DC75"
-	    	})
+		    $("#office-hour-this-week").html((+thisWeekVal) + (+reqBody.hours))
+		    $("#office-hour-this-week").attr("value", (+thisWeekVal) + (+reqBody.hours))
+
+		    if((+thisWeekVal) + (+reqBody.hours) >= targetVal)
+		    {
+		    	$('.office-hour-mark-value[warning="true"]').animate({
+		    		color : "#00DC75"
+		    	})
+		    }	    	
 	    }
 
 	    var allTimeVal = +$("#office-hour-all-time").attr("value")

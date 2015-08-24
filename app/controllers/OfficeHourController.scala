@@ -89,7 +89,14 @@ object OfficeHourController extends Controller with SessionHandler {
                 updatesCreatedCounter.inc();
 
                 ActivityMaster.logSubmitUpdate(completeUpdate.author, completeUpdate.projectId, completeUpdate.timeSubmitted, completeUpdate.content)
+
+                Future {
+                  ActivityMaster.startRankingActivity();
+                }
               }
+
+              ActivityMaster.logOfficeHour(officeHour.username, officeHour.projectId, officeHour.date, officeHour.log.head._2)
+              
               Ok("Success")
             }
 

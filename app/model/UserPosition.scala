@@ -21,14 +21,21 @@ private object UserPositionTable extends UserPositionTable {
 	override val tableName = "user_positions";
 	implicit val session = CassieCommunicator.session
 
+	def all = select.fetch();
+
+	def allUninterruptibly = scala.concurrent.Await.result(all, constants.Cassandra.defaultTimeout)
+
 	def add(a : UserPosition) = insert
 		.value(_.name, a.name)
 		.value(_.username, a.username)
 		.value(_.time_created, a.timeCreated)
+		.future();
 }
 
 object UserPosition {
 	def add(username : String, position : String) = UserPositionTable.add(UserPosition(position, username, new Date())) 
+
+	def all = UserPositionTable.allUninterruptibly
 }
 
 case class UserPosition(name : String, username : String, timeCreated : Date)

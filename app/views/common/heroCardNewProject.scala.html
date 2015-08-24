@@ -1,0 +1,96 @@
+@(loggedInUser: model.User, user : model.User, project : model.Project, canFollow : Boolean, canJoin : Boolean)
+@import java.lang.Integer; val UsersPerCard = 2;
+
+@shortenContent(project : model.Project) = @{
+	val maxLength = 140;
+	if(project.name.length > maxLength) {
+		project.name.substring(0, maxLength - 3) + "..."
+	}
+	else {
+		project.name
+	}
+}
+
+@calculateFontSize(project : model.Project) = @{
+	val maxLength = 140;
+	val minLength = 80;
+	val smallestSize = 17.0;
+	val largestSize = 24.0;
+	if(project.name.length >= maxLength) {
+		smallestSize.toInt
+	}
+	else if(project.name.length <= minLength) {
+		largestSize.toInt
+	}
+	else {
+		math.floor(( (project.name.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+	}
+}
+<div class="hero-card-isotope-item">
+<div class="hero-card">
+    <a style="text-decoration:none; color: white;" href='@routes.ProjectController.project(project.id)'>
+    @if(user.profile == None) {
+    	<div class="hero-profile short empty">
+    } else {
+    	<div class="hero-profile short" style="background-image:url('@user.profile.get');">
+    }
+        <div class="hero-profile-overlay"></div>
+        <div class="hero-title">@user.firstName.toLowerCase() started a new project<br /></div>
+        <div class="hero-content" style="font-size:@calculateFontSize(project)pt">@links.projectLink(project.id, shortenContent(project))</div>
+    </div></a>
+    <div class="hero-controls-large">
+
+		@if(project.teamMembers.contains(loggedInUser.username) && project.primaryContact != loggedInUser.username)  {
+			@common.userProfileIconView(model.User.get(loggedInUser.username), true, false)
+		}
+
+		@defining(project.teamMembers.filter(m => m != loggedInUser.username && m != project.primaryContact)) { remainingMembers =>
+			@for(member <- remainingMembers.take(UsersPerCard - {if(project.teamMembers.contains(loggedInUser.username)) 1 else 0})) {
+				@common.userProfileIconView(model.User.get(member), false, false)
+			}
+			@if(remainingMembers.length > UsersPerCard) {
+				@common.seeMoreView(remainingMembers.length - UsersPerCard, remainingMembers.drop(UsersPerCard - {if(project.teamMembers.contains(loggedInUser.username)) 1 else 0}))
+			}
+		}
+		@project match {
+          	case project if project.primaryContact == loggedInUser.username => {
+          		
+          	}
+          	case project if project.teamMembers.contains(loggedInUser.username) => {
+          		
+          	}
+          	case project if model.ProjectRequest.get(project.id, project.primaryContact, loggedInUser.username).isDefined == true => {
+				<!--<div class="hint">request sent</div>-->
+			<div class="join-button noselect">
+				<span class='user-profile user-profile-icon'>
+					<span class="user-profile-text">√</span>
+				</span>
+					<div class="user-profile-icon-caption" style="font-size:10pt">request sent</div>
+					<span class="join-button-positioner">&nbsp;</span>
+			</div>	
+          	}
+          	case project if project.state == model.ProjectState.COMPLETED => {
+          		<!--this project is completed-->
+          	}
+          	case _ if canJoin => {
+			<div class="join-button request-join noselect" project-id="@project.id">
+				<span class='user-profile user-profile-icon'>
+					<span class="user-profile-text">+</span>
+				</span>
+					<div class="user-profile-icon-caption">join</div>
+					<span class="join-button-positioner">&nbsp;</span>
+			</div>	
+          	}
+          	case _ => {}
+          }
+    <div style="height:24px; margin-top:12px;">
+    	@links.projectLink(project.id, "view project")
+		@if(canFollow) {
+			<span style="float: right;">@common.followButton(loggedInUser.username, project)</span>				
+		}
+	    <span style="float:right; margin-right:24px">
+	        @common.likeButton(loggedInUser.username, project)
+	    </span>
+    </div>
+    </div>
+</div></div>

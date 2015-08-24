@@ -161,6 +161,27 @@ object ProjectUpdate {
 
 	}
 
+	def getLatestForUser(author : String) : Option[ProjectUpdate] = {
+		ProjectUpdate.all.foldLeft[Option[ProjectUpdate]](None)((op : Option[ProjectUpdate], p : ProjectUpdate) => {
+			if(p.author == author) {
+				if(op == None) {
+					Some(p)
+				}
+				else {
+					if(p.timeSubmitted.after(op.get.timeSubmitted)) {
+						Some(p)
+					}
+					else {
+						op
+					}
+				}
+			}
+			else {
+				op
+			}
+		})
+	}
+
 	def create (content: String, author: String, projectId : Int, files : Seq[(String, TemporaryFile)]) : ProjectUpdate = {
 		val timeSubmitted = new Date();
 

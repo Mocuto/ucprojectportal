@@ -87,4 +87,6 @@ object Conversions {
 	  }
 	  inner(xs, 0)
 	}
+
+	def toMultiLineHtml(str : String) = str.replace("\r\n", "<br>").replace("\n", "<br>")
 }

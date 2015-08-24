@@ -8,11 +8,21 @@ canJoin : Boolean,
 canEditAllUpdates : Boolean,
 canEditOwnUpdates : Boolean,
 canDeleteAllUpdates : Boolean,
-canDeleteOwnUpdates : Boolean)(
+canDeleteOwnUpdates : Boolean,
+canFollowAllProjects : Boolean)(
 message : Option[String])(
 implicit form: Form[model.ProjectUpdate])
 
 @import model.User; val authenticatedUser = model.User.get(username)
+
+@displayAmount(amount : Double) = {
+  @if(amount.toInt == amount) {
+    @amount.toInt
+  } else {
+    @amount
+  }
+}
+
 @main(s"${project.name} | Student Government Project Portal")( Some(authenticatedUser)) {
 
 <script>
@@ -49,10 +59,10 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                   <div class="roundbox" style="margin-right:64px">
 
                   @project match {
-                     case project if authenticatedUser.primaryContactProjects.contains(project) => {
+                     case project if authenticatedUser.primaryContactProjects.contains(project.id) => {
                         you own this project  
                      } 
-                     case project if authenticatedUser.projects.contains(project) => {
+                     case project if authenticatedUser.projects.contains(project.id) => {
                         you are on this project team
                      }
                      case project if project.state == model.ProjectState.COMPLETED => {
@@ -80,8 +90,21 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
 
                      }
                   }
+                  <div style="margin-top:18px">
+                    <span style="float: left; margin-right: 8px; width: 44px; padding-left: 4px;">@common.likeButton(username, project)</span>
+                    <span class="like-button-caption" active="@project.likes.contains(username)">@(if(project.likes.contains(username)) "unlike this project" else "like this project")</span>
    
                   </div>
+                    @if(canFollowAllProjects) {
+                      <div style="margin-top:8px;">
+                        <span style="float:left; margin-right: 8px; width: 48px;">@common.followButton(username, project)</span>
+                        <span class="follow-button-caption" active="@project.followers.contains(username)">@(if(project.followers.contains(username)) "unwatch this project" else "watch this project")</span>
+                      </div>
+                    
+                    }
+
+                  </div>
+
                   <div class="roundbox" style="margin-right:64px">
                   	<table>
                   		<tr>
@@ -261,6 +284,12 @@ var teamMembers = [ @Html(project.teamMembers.map(x => s"'$x'").mkString(",")) ]
                  	} else {
                  	}
                   </div>
+                  @if(project.officeHoursLogged > 0) {
+                  <div class="roundbox" style="margin-right:64px">
+                     <span class="content-header">office hours</span>
+                     <p class="content">this project has <span style="font-weight:bold;">@displayAmount(project.officeHoursLogged) @(if(project.officeHoursLogged > 1) "hours" else "hour")</span> logged to it.</p></p> 
+                  </div>
+                  }
                </td>
             </tr>
          </table>

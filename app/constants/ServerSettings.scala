@@ -31,5 +31,8 @@ object ServerSettings {
 
 	val HotProjectsCount = Play.application.configuration.getInt("project.digest.project.count")
 	val HotContributorsCount = Play.application.configuration.getInt("project.digest.contributor.count")
+
+	val OfficeHourDay = Play.application.configuration.getInt("project.office.hour.day")
+	val OfficeHourHour = Play.application.configuration.getInt("project.office.hour.hour")
 }
 

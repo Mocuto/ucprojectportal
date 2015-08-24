@@ -11,23 +11,47 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 	verifyForm(name).value.getOrElse("")
 }
 
-@main("Student Government Project Portal")(Some(loggedInUser)) {
+@officeHourRow(officeHour : model.UserOfficeHour) = {
+	<tr>
+		<td>@utils.Conversions.dateToDisplayedStr(officeHour.date).toLowerCase()</td>
+		<td>@(if(officeHour.projectId == -1) "none" else links.projectLink(officeHour.projectId))</td>
+		<td>
+			@for(line <- officeHour.log.keys) {
+				<div class="office-hour-description-line">@line</div>
+			}
+		</td>
+		<td>@model.UserOfficeHour.getAmount(List(officeHour))</td>
+	</tr>
+}
+
+@main(s"${user.fullName} | Student Government Project Portal")(Some(loggedInUser)) {
 	@if(canEdit && !isAuthenticatedUser) {
-		<div id="activate-inputs" class="popane verify-inputs" username="@user.username">
+		<div id="verify-window" class="popane" username="@user.username">
 			<span class="close-button">close</span>
-			<div class="header" style="font-size: 16pt; margin-bottom: 16px;">validate their profile</div>
+			<div class="header" style="font-size: 16pt; margin-bottom: 16px; font-weight:lighter;">verify @user.firstName.toLowerCase()</div>
+			
 			<div class="verify-header">first name</div>
-			<input class="login-input verify-first-name" name="first_name" type="text" placeholder="enter first name" value='@getFormValue("first_name")'>
+			<input class="roundbox-textinput verify-first-name" name="first_name" type="text" placeholder="enter first name" value='@getFormValue("first_name")'>
+			
 			<div class="verify-header ">last name</div>
-			<input class="login-input verify-last-name" name="last_name" type="text" placeholder="enter last name" value='@getFormValue("last_name")'>
+			<input class="roundbox-textinput verify-last-name" name="last_name" type="text" placeholder="enter last name" value='@getFormValue("last_name")'>
+
 			<div class="verify-header">preferred pronouns</div>
-			<input class="login-input verify-preferred-pronouns" name="preferred_pronouns" type="text" placeholder="enter preferred pronouns" value='@getFormValue("preferred_pronouns")'>
-			<input class="login-input verify-office-hour-requirement" name="office_hour_requirement" type="text" placeholder="enter required weekly office hours" value="0">
+			<input class="roundbox-textinput verify-preferred-pronouns" name="preferred_pronouns" type="text" placeholder="enter preferred pronouns" value='@getFormValue("preferred_pronouns")'>
+			
+			<div class="verify-header">cell phone number</div>
+			<input class="roundbox-textinput verify-cell-number" name="cell_number" type="text" placeholder="enter cell phone number" value='@getFormValue("cell_number")'>
+			
 			<div class="verify-header" style="margin-top:24px">position <span class="button non-sg-button">mark as non-sg</span></div>
 
-			<input class="login-input verify-position" id="position-button" name="position" type="text" placeholder="enter position" value='@getFormValue("position")' style="display:inline-block">
+			<input class="roundbox-textinput verify-position" id="position-button" name="position" type="text" placeholder="enter position" value='@getFormValue("position")' style="display:inline-block">
 
-		    <span class="finish-verify-button">verify</span><br>
+			<div class="verify-header">office hour requirement</div>
+			<input class="roundbox-textinput verify-office-hour-requirement" name="office_hour_requirement" type="text" placeholder="enter required weekly office hours" value="0">
+			<br>
+			<div class="hint" style="margin-bottom:16px;">*make sure they have the right privileges!</div>
+			<br>
+		    <span class="finish-verify-button" style="width: 216px; height: 32px; padding-top: 8px;">verify</span><br>
 		</div>
 	}
 	<div class="main-container">
@@ -36,9 +60,9 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 			@common.userProfileMainView(user, isAuthenticatedUser || canEdit)
 			<span style="position: relative; top:-40px">
 			@if(isAuthenticatedUser == true) {
-				my projects
+				me
 			} else {
-				@Html(s"${links.userLink(user)}'s projects")
+				@Html(s"${links.userLink(user)}")
 			}
 	      	@if(isAuthenticatedUser == true) {
 	   	  		<a href="project/new" class="blue-button" style="float:right; text-decoration:none">
@@ -49,18 +73,8 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 	   	  		
 	      	}
 	      	</span>
-	      	@if(isAuthenticatedUser == false) {
-	      		@common.followUserButton(loggedInUser, user.username)
-	      	}
+
 		</div>
-
-    	<div class="large-header">@{if(isAuthenticatedUser == true) "my activity" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + "'s activity")}</div>
-
-    	<div class="roundbox user-activity-feed" style="margin-right:48px">
-    		@for(activity <- model.UserActivity.getNeutralized(user.username, 10, List(enums.ActivityType.SubmitProject, enums.ActivityType.SubmitUpdate, enums.ActivityType.LikeProject))) {
-    			@common.userActivityFeedView(activity)
-    		}
-    	</div>
 
 		<div class="large-header">projects @{if(isAuthenticatedUser == true) "i own" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + " owns")}</div>
 
@@ -84,6 +98,29 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 	   	</div>
 
 	   	<br>
+
+    	<div class="large-header">about @{if(isAuthenticatedUser == true) "me" else links.userLink(user, Some(user.firstName.toLowerCase()))}</div>
+    	<div class="roundbox">
+    		<div class="hint">email: <a href='mailto:@(user.username + "@mail.uc.edu")' style="color:#C51834;">@(user.username + "@mail.uc.edu")</a></div>
+    		<div class="hint">preferred pronouns: @user.preferredPronouns</div>
+    		<div class="hint">position: @user.position</div>
+    		<div class="hint">cell number: @user.cellNumber</div>
+	      	@if(isAuthenticatedUser == false && loggedInPrivileges.follow.usersAll) {
+	      		<div style="margin-top:16px;">
+	      		<span style="float:left; margin-right: 8px">@common.followUserButton(loggedInUser, user.username)</span>
+	      		<span class="follow-user-button-caption hint" title="watch this user to get notifications on their updates" active="@loggedInUser.usersFollowing.contains(user.username)">@(if(loggedInUser.usersFollowing.contains(user.username)) "unwatch this user" else "watch this user")</span>
+	      		</div>
+	      	}
+    	</div>
+
+    	<div class="large-header">@{if(isAuthenticatedUser == true) "my activity" else Html(links.userLink(user, Some(user.firstName.toLowerCase())) + "'s activity")}</div>
+
+    	<div class="roundbox user-activity-feed" style="margin-right:48px">
+
+    		@for(activity <- model.UserActivity.getNeutralized(user.username, 10, List(enums.ActivityType.SubmitProject, enums.ActivityType.SubmitUpdate, enums.ActivityType.LikeProject))) {
+    			@common.userActivityFeedView(activity)
+    		}
+    	</div>
 
 	   	@defining(user.projects.map(model.Project.get(_)).filter(_.state == model.ProjectState.COMPLETED)) { completedProjects =>
 	   		@if(completedProjects.length > 0) {
@@ -127,6 +164,22 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 			</div>
 		   	<div class="large-header">privileges and moderation</div>
 	   		@common.userPrivilegeEditView(user, userPrivileges, loggedInPrivileges)
+	   	}
+
+	   	@if(loggedInPrivileges.view.accountability || isAuthenticatedUser) {
+			<div class="large-header">@(if(!isAuthenticatedUser) user.firstName.toLowerCase + "'s" else "my") office hours</div>
+			<div class="roundbox">
+				<table class="office-hours-table">
+					<tr>
+						<td class="office-hours-table-header">date</td>
+						<td class="office-hours-table-header">project</td>
+						<td class="office-hours-table-header" style="width:50%">description</td>
+						<td class="office-hours-table-header">amount</td>
+					</tr>
+					@for(o <- model.UserOfficeHour.get(user.username).reverse) {
+						@officeHourRow(o)
+					}
+				</table>
 	   	}
    	</div>
 }

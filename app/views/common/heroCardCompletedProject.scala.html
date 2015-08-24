@@ -1,0 +1,61 @@
+@(loggedInUser: model.User, user : model.User, project : model.Project)
+@import java.lang.Integer; val UsersPerCard = 3;
+
+@shortenContent(project : model.Project) = @{
+	val maxLength = 30;
+	if(project.name.length > maxLength) {
+		project.name.substring(0, maxLength - 3) + "..."
+	}
+	else {
+		project.name
+	}
+}
+
+@calculateFontSize(project : model.Project) = @{
+	val maxLength = 60;
+	val minLength = 26;
+	val smallestSize = 15.0;
+	val largestSize = 24.0;
+	val content = s"the project, ${shortenContent(project)}, is complete!"
+	if(content.length >= maxLength) {
+		smallestSize.toInt
+	}
+	else if(content.length <= minLength) {
+		largestSize.toInt
+	}
+	else {
+		math.floor(( (content.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+	}
+}
+
+<div class="hero-card-isotope-item" style="margin-left:20px; margin-right:20px;">
+<div class="hero-card">
+    <a style="text-decoration:none; color: white;" href='@routes.ProjectController.project(project.id)'>
+
+    @if(user.profile == None) {
+    	<div class="hero-profile short empty">
+    } else {
+    	<div class="hero-profile short" style="background-image:url('@user.profile.get');">
+    }
+    
+        <div class="hero-profile-overlay" style="background-color:#00DC75"></div>
+        <div class="hero-content" style="padding-top:16px; font-size:@calculateFontSize(project)pt">the project,<br /> <span>@links.projectLink(project.id, shortenContent(project))</span>,<br /> is complete!</div>
+    </div></a>
+    <div class="hero-controls-ribbon">
+    	<span class="hero-controls-ribbon-content">
+		@if(project.teamMembers.contains(loggedInUser.username) && project.primaryContact != loggedInUser.username)  {
+			@common.userProfileIconView(model.User.get(loggedInUser.username), true, false)
+		}
+
+		@defining(project.teamMembers.filter(m => m != loggedInUser.username && m != project.primaryContact)) { remainingMembers =>
+			@for(member <- remainingMembers.take(UsersPerCard - {if(project.teamMembers.contains(loggedInUser.username)) 1 else 0})) {
+				@common.userProfileIconView(model.User.get(member), false, false)
+			}
+			@if(remainingMembers.length > UsersPerCard) {
+				@common.seeMoreView(remainingMembers.length - UsersPerCard, remainingMembers.drop(UsersPerCard - {if(project.teamMembers.contains(loggedInUser.username)) 1 else 0}))
+			}
+		}
+		</span>
+    </div>
+</div>
+</div>

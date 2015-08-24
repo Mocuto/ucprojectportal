@@ -42,9 +42,15 @@
 		<div class="instruction">click a project to view more details</div>
 	   	<div class="projectbox-container">
 	   		<div class="grid-sizer"></div>
-		   	@for(project <- model.Project.allSorted) {
-		   		@common.projectView(project, user.username, canJoin, canFollow)
-		   	}
+	   		@defining(model.Project.allSorted) { projects =>
+		   		@for(project <-projects.take(1)) {
+		   			@common.projectView(project, user.username, canJoin, canFollow, true)
+		   		}
+			   	@for(project <- projects.drop(1)) {
+			   		@common.projectView(project, user.username, canJoin, canFollow, false)
+			   	}
+	   		}
+
 	   	</div>
    	</div>
 }

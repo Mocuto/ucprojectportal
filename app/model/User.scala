@@ -100,8 +100,8 @@ object User {
 		return User.get(username);
 	}
 
-	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String, officeHourRequirement : Double) = {
-		UserTable.setupSG(username, firstName, lastName, preferredPronouns, position, officeHourRequirement);
+	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String, officeHourRequirement : Double, cellNumber : String) = {
+		UserTable.setupSG(username, firstName, lastName, preferredPronouns, position, officeHourRequirement, cellNumber);
 	}
 
 	def setupNonSG(username : String) = UserTable.setupNonSG(username);
@@ -171,9 +171,9 @@ object User {
 		
 	    temporaryFile._2.moveTo(file, true);
 
-	    UserTable.setProfilePic(username, path)
+	    UserTable.setProfilePic(username, "/" + path)
 
-	    return path;
+	    return "/" + path;
 	}
 
 	def updateLastActivity(username : String, date : Date) = UserTable.updateLastActivity(username, date)
@@ -226,6 +226,7 @@ sealed class UserTable extends CassandraTable[UserTable, User] {
 	object last_activity extends DateColumn(this)
 	object last_login extends DateColumn(this)
 	object last_name extends StringColumn(this)
+	object cell_number extends OptionalStringColumn(this)
 	object office_hour_requirement extends DoubleColumn(this)
 	object position extends StringColumn(this)
 	object preferred_pronouns extends StringColumn(this)
@@ -244,6 +245,7 @@ sealed class UserTable extends CassandraTable[UserTable, User] {
 			username(r),
 			firstName = first_name(r),
 			lastName = last_name(r),
+			cellNumber = cell_number(r),
 			officeHourRequirement = office_hour_requirement(r),
 			position = position(r),
 			preferredPronouns = preferred_pronouns(r),
@@ -285,6 +287,7 @@ object UserTable extends UserTable {
 			.value(_.users_following, user.usersFollowing.toSet)
 			.value(_.verified, user.verified)
 			.value(_.office_hour_requirement, user.officeHourRequirement)
+			.value(_.cell_number, user.cellNumber)
 			.future()
 	}
 
@@ -298,7 +301,15 @@ object UserTable extends UserTable {
 
 	def getUninterruptibly(username : String) = scala.concurrent.Await.result(get(username), constants.Cassandra.defaultTimeout)
 
-	def setupSG(username : String, firstName : String, lastName : String, preferredPronouns : String, position : String, officeHourRequirement : Double) = {
+	def setupSG(
+		username : String,
+		firstName : String,
+		lastName : String,
+		preferredPronouns : String,
+		position : String,
+		officeHourRequirement : Double,
+		cellNumber : String) = {
+
 		update
 			.where(_.username eqs username)
 			.modify(_.first_name setTo firstName)
@@ -307,6 +318,7 @@ object UserTable extends UserTable {
 			.and(_.position setTo position)
 			.and(_.verified setTo false)
 			.and(_.office_hour_requirement setTo officeHourRequirement)
+			.and(_.cell_number setTo Some(cellNumber))
 			.onlyIf(_.position eqs "")
 			.future();
 	}
@@ -362,6 +374,7 @@ case class User (
 		usersFollowing : Seq[String] = List[String](),
 		followers : Seq[String] = List[String](),
 		officeHourRequirement : Double = 0.0,
+		cellNumber : Option[String] = None,
 		isDefined : Boolean = true) {
 
 	implicit def toJson : JsObject = {

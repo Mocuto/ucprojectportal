@@ -60,6 +60,7 @@ object Application extends Controller with SessionHandler {
 			 routes.javascript.UserController.profilePic,
 			 routes.javascript.UserController.follow,
 			 routes.javascript.UserController.unfollow,
+			 routes.javascript.UserController.positionJson,
 			 routes.javascript.ProjectController.edit,
 			 routes.javascript.ProjectController.leave,
 			 routes.javascript.ProjectController.like,

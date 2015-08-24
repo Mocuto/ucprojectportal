@@ -82,5 +82,7 @@ $(document).ready(function() {
 
 	setupOfficeHoursCallbacks();
 
+	setupHeroCardCallbacks();
+
 	pulse();
 })

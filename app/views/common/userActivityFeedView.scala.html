@@ -7,7 +7,7 @@
 	@if(content.length > updateLength) {
 		<a href="@routes.ProjectController.project(projectId)"><span class="update-link">"@{content.take(updateLength -3)}..."</span></a>
 	} else {
-		<a href="@routes.ProjectController.project(projectId)"><span class="update-link">"content"</span></a>
+		<a href="@routes.ProjectController.project(projectId)"><span class="update-link">"@{content.take(updateLength -3)}..."</span></a>
 	}
 	
 }

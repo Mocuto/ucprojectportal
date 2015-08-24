@@ -38,6 +38,9 @@ trait UserPrivilegesModel[A <: UserPrivileges[A]] {
 
 	def default(implicit username : String) : A
 
+	def all = select.fetch()
+	def allUninterruptibly = scala.concurrent.Await.result(all, constants.Cassandra.defaultTimeout)
+
 	def get (username : String) : scala.concurrent.Future[Option[A]] = select.where (_.username eqs username).one()
 	def getUninterruptibly (username: String) : Option[A] = scala.concurrent.Await.result(get(username), constants.Cassandra.defaultTimeout)
 

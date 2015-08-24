@@ -68,6 +68,26 @@
 
 		var this_ = this;
 		$( window ).resize(function(){
+			var width = $(this_).width();
+
+			var xPos = (window.innerWidth / 2) - (width / 2);
+			if(options["x"] != null) {
+				xPos = options["x"];
+			}
+			
+			var yPos = (window.innerHeight / 2) - (height / 2);
+			if(options["y"] != null) {
+				yPos = options["y"];
+			}
+
+			$(this_).css("left", String(xPos) + "px");
+			$(this_).css("top", String(yPos) + "px");
+		})
+
+		$(this).resize(function() {
+			var width = $(this).width();
+
+			var xPos = (window.innerWidth / 2) - (width / 2);
 			if(options["x"] != null) {
 				xPos = options["x"];
 			}

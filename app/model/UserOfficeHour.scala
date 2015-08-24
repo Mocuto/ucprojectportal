@@ -173,6 +173,30 @@ object UserOfficeHour {
 
   }
 
+  def getThisWeekFriendly(username : String) = {
+    val startDate = new Date(dateFormatter.format(DateTime.now.withDayOfWeek(1).toDate))
+    
+    for(num <- List(1,2,3,4,5,6,7)) yield {
+
+      if(num == 1) {
+        (1, getAmount(get(username, startDate)))
+      }
+      else {
+        val endDate = new Date(dateFormatter.format(DateTime.now.withDayOfWeek(num).toDate))
+        (num, getAmount(getInRange(username, startDate, endDate)))
+      }
+    }
+  }
+
+  def getThisWeekFriendlyAllLoggers = {
+    val startVal = for(num <- List(1,2,3,4,5,6,7)) yield (num, 0.0)
+    User.all.filter(_.officeHourRequirement > 0).map((x : User) => getThisWeekFriendly(x.username)).foldLeft[Seq[(Int, Double)]](startVal)((item, accum) => {
+      for((a, b) <- item.zip(accum)) yield {
+        (a._1, a._2 + b._2)
+      }
+    })
+  }
+
   def getAmount(officeHours : Seq[UserOfficeHour]) : Double = {
       officeHours.foldLeft(0.0)((accum : Double, officeHour : UserOfficeHour) => {
         accum + officeHour.log.values.foldLeft(0.0)((a : Double, b : Double) => a + b)

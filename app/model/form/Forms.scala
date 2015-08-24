@@ -3,7 +3,7 @@ package model.form
 import java.util.Date
 
 object Forms {
-	case class UserForm(firstName : String, lastName : String, preferredPronouns : String, position : String, officeHourRequirement : Double);
+	case class UserForm(firstName : String, lastName : String, preferredPronouns : String, cellNumber : String, position : String, officeHourRequirement : Double);
 
 	object OfficeHour {
 	  def apply(date: Date, projectId: Int, hours: Double, comment: String, markAsUpdate: Boolean) : OfficeHour = {

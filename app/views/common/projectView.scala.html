@@ -1,23 +1,42 @@
-@(project : model.Project, username : String, canJoin : Boolean, canFollow : Boolean)
+@(project : model.Project, username : String, canJoin : Boolean, canFollow : Boolean, expanded : Boolean = false)
 @import java.lang.String; val filterStr = project.categories.map(x => s"category-${x.replace(' ', '-')}").mkString(" ") + " state-" + project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
 @import java.lang.String; val stateStr = project.state.replace(" ", "-").replace("(", "-").replace(")", "-");
 @import java.lang.Integer; val UsersPerCard = 7;
+
+@colorCodeState(state : String) = @{
+	state match {
+		case model.ProjectState.IN_PROGRESS => ""
+
+		case model.ProjectState.IN_PROGRESS_NEEDS_HELP => {
+			"background-color:#6ABEF7"
+		}
+		case model.ProjectState.COMPLETED => {
+			"background-color:#00DC75"
+		}
+		case model.ProjectState.IDEA => {
+			"background-color:#F76ABE"
+		}
+		case model.ProjectState.CLOSED => {
+			"background-color:#F76A6A"
+		}
+	}
+}
 
 @if(project.isNew == true) {
 <div class="isotope-item @filterStr category-new">
 } else {
 <div class="isotope-item @filterStr">
 }
-<div class="projectbox projectbox-@project.id" expanded="false" >
+<div class="projectbox projectbox-@project.id" expanded="@expanded" >
 	<div style="height:81px">
 		<div class="project-category-state">
 			<span class="leave-project-button" for="@project.id" style="display : none"></span>
 			@if(model.ProjectCategory.get(project.categories(0)).icon == null) {
-				<img src="/assets/images/icons/project-@stateStr-student-experience.png" class="projectbox-icon"/>
+				<img src="/assets/images/icons/project-frozen-student-experience.png" class="projectbox-icon"/>
 			} else {
-				<img src="/assets/images/icons/project-@stateStr-@{model.ProjectCategory.get(project.categories(0)).icon}.png" class="projectbox-icon"/>
+				<img src="/assets/images/icons/project-frozen-@{model.ProjectCategory.get(project.categories(0)).icon}.png" class="projectbox-icon"/>
 			}
-			<span class="project-state">@project.state</span>
+			<span class="project-state" style="@colorCodeState(project.state)">@(if(project.state == model.ProjectState.IN_PROGRESS_NEEDS_HELP) "needs help!" else project.state)</span>
 			
 		</div>
 		<div class="projectbox-title">@project.name</div>
@@ -92,6 +111,7 @@
 						</span>
 					</a>
 				</div>
+				<div class="projectbox-arrow"></div>
 				@if(canFollow) {
 					<div style="float: right;">@common.followButton(username, project)</div>				
 				}

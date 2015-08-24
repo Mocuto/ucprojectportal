@@ -171,6 +171,19 @@ object SMTPCommunicator {
 		sendEmail(recipient, subject, content)
 	}
 
+	def sendNotificationOfficeHourFailed(recipient : String, failure : String) {
+
+		val subject = s"${User.get(failure).fullName} failed to do their office hours on time!"
+
+		val content = views.html.email.emailMessage(
+			play.twirl.api.Html(subject),
+			"this user did not do their required amount of office hours",
+			"view user profile",
+			controllers.routes.UserController.user(failure).toString).toString
+
+		sendEmail(recipient, subject, content)
+	}
+
 	def sendDigestEmail(
 		recipient : String,
 		numberOfProjects : Int,
@@ -213,7 +226,8 @@ object SMTPCommunicator {
 			newProjects,
 			completedProjects,
 			userPercentagesForStatus,
-			userPercentagesForFollowingStats).toString
+			userPercentagesForFollowingStats,
+			userProjectsFollowingForTemperature).toString
 
 		sendEmail(recipient, subject, content);
 	}
@@ -263,6 +277,15 @@ object SMTPCommunicator {
 
 	}
 
+	def sendOfficeHourDigestEmail(officeHourTuples : Seq[(User, Double)], amountOfFailures : Int) : Unit = {
+		val subject = constants.Messages.capitalize(constants.Messages.OfficeHourDigest)
+		val content = views.html.email.emailOfficeHourDigest(officeHourTuples, amountOfFailures).toString;
+
+
+		UserPrivilegesView.allUninterruptibly.filter(_.admin).foreach((v : UserPrivileges.View) => sendEmail( v.username, subject, content))
+
+	}
+
 
 	def sendNotificationEmail(notification : Notification) : Unit = {
 		val recipient = notification.username;
@@ -282,6 +305,8 @@ object SMTPCommunicator {
 			}
 
 			case NotificationType.ProjectFrozen => sendNotificationFrozenProject(recipient, notification.content("project_id").toInt)
+
+			case NotificationType.OfficeHourFailed => sendNotificationOfficeHourFailed(recipient, notification.content("sender"))
 
 			case _ => {}
 		}
