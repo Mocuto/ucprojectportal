@@ -80,10 +80,13 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		  	}
 		  	case Some(username) => {
 		  		val user = User.get(username);
+		  		val actionInvoked: String = request.tags.getOrElse(play.api.routing.Router.Tags.RouteActionMethod, "")
+		  		println(s"Some user $user " + actionInvoked)
 		  		if (user.hasConfirmed) {
 		  			next(request)
 		  		}
 		  		else {
+		  			println("REDIRECT")
 		  			Future {
 	  					Results.Redirect(routes.ActivationController.activateNEW(request.path))
 		  			}
@@ -105,10 +108,10 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 
 }
 
-object Global extends WithFilters(AuthorizedFilter("login", "tryLogin",
+object Global extends WithFilters(AuthorizedFilter("login", "tryLogin", "signout", "getUnreadCount",
 													"secure", "at", 
 													"javascriptRoutes", "profilePic", "uploads", "positionJson",
-													"activate", "resendActivation", "tryResendActivation", "tryActivate", "activateNEW", "tryActivateNEW",
+													"activate", "resendActivation", "tryResendActivation", "tryActivate", "activateNEW", "tryActivateNEW", "activateNonSG",
 													"forgotPassword", "tryForgotPassword", "resetPassword", "tryResetPassword"),
 
 /*object Global extends WithFilters(AuthorizedFilter("index", "project", "newProject", "filter", "user",

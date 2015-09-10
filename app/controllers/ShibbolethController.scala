@@ -28,8 +28,10 @@ object ShibbolethController extends Controller with SessionHandler {
 			Redirect(routes.Application.login(path))
 		}
 
-		request.headers.get("eppn") match {
-			case Some(eppn) => {
+		println(request.headers)
+
+		(request.headers.get("eppn"), request.headers.get("givenName"), request.headers.get("sn"))  match {
+			case (Some(eppn), Some(firstName), Some(lastName)) => {
 				val username = utils.Conversions.eppnToUsername(eppn);
 				println(username);
 
@@ -38,13 +40,13 @@ object ShibbolethController extends Controller with SessionHandler {
 						//Create the user in the Project Portal's database
 						println(x);
 						println("Creating user");
-						User.createFromShibboleth(username);
+						User.createFromShibboleth(username, firstName, lastName);
 						Redirect(routes.ActivationController.activateNEW(path)).withSession("authenticated" -> username)
 					}
 					case user : User => Redirect(routes.Application.index).withSession("authenticated" -> username)
 				}
 			}
-			case None => NotFound(views.html.messages.notFound("There was some kind of issue retrieving your information from the Central Login System. "))
+			case _ => NotFound(views.html.messages.notFound("There was some kind of issue retrieving your information from the Central Login System. "))
 		}
 
 

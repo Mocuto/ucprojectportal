@@ -18,6 +18,8 @@ object ServerSettings {
 
 	val AuthenticationMode = enums.AuthenticationMode.fromString(Play.application.configuration.getString("authentication"))
 
+	val ClusterName = Play.application.configuration.getString("cassandra.cluster")
+
 	object ActivityStatus {
 		val Hot = Days.days(Play.application.configuration.getInt("project.activity.hot"))
 		val Warm = Days.days(Play.application.configuration.getInt("project.activity.warm"))

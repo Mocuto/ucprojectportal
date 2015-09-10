@@ -152,7 +152,13 @@ object ActivationController extends Controller with SessionHandler {
 		}
 	}}
 
-	def activateNEW(path : String) = Action { implicit request => whenAuthorized(username => Ok(views.html.activateNEW(username, path)(sgAccountForm))) }
+	def activateNEW(path : String) = Action { implicit request => whenAuthorized(username => {
+			val user = User.get(username)
+			val filledForm = sgAccountForm.fill(UserForm(user.firstName, user.lastName, "", "", "", 0.0))
+			Ok(views.html.activateNEW(username, path)(filledForm))
+		})
+
+	}
 
 	def resetPassword(username: String, uuid : String) = Action {implicit request => {
 		User.getActivationCode(username) match {

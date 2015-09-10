@@ -86,7 +86,7 @@ object User {
 		return user;
 	}
 
-	def createFromShibboleth(username : String) : User = {
+	def createFromShibboleth(username : String, firstName : String, lastName : String) : User = {
 
 		val user = User.get(username);
 		if(User.get(username).isDefined == true) {
@@ -94,7 +94,7 @@ object User {
 		}
 
 		//TODO: Probably generate the office hour row for this user as well
-		UserTable.create(username);
+		UserTable.create(username, firstName, lastName);
 		UserPrivileges.create(username);
 
 		return User.get(username);
@@ -274,8 +274,8 @@ object UserTable extends UserTable {
 			.value(_.last_name, user.lastName)
 			.value(_.last_login, user.lastLogin)
 			.value(_.last_activity, user.lastActivity)
-			.value(_.primary_contact_projects, user.primaryContactProjects.toSet)
-			.value(_.projects, user.projects.toSet)
+			//.value(_.primary_contact_projects, user.primaryContactProjects.toSet)
+			//.value(_.projects, user.projects.toSet)
 			.value(_.emeritus_, user.emeritus)
 			.value(_.position, user.position)
 			.value(_.preferred_pronouns, user.preferredPronouns)
@@ -291,7 +291,7 @@ object UserTable extends UserTable {
 			.future()
 	}
 
-	def create(username : String) = add(User(username))
+	def create(username : String, firstName : String, lastName : String) = add(User(username, firstName = firstName, lastName = lastName))
 
 	def all = select.fetch()
 

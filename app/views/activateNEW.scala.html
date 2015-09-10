@@ -1,5 +1,9 @@
 @(username : String, path : String = "")(form : Form[model.form.Forms.UserForm])
 
+@getFormValue(name : String) = @{
+  form(name).value.getOrElse("")
+}
+
 @main("Activate Your Account")(None) {
 
    	<style>
@@ -36,8 +40,8 @@
           }
         	<span id="activate-inputs">
             <span style="color:white;">@common.userProfileMainView(model.User.get(username), true)</span>
-    				<input class="login-input" name="first_name" type="text" placeholder="first name" style="margin-top:16px;">
-    				<input class="login-input" name="last_name" type="text" placeholder="last name">
+    				<input class="login-input" name="first_name" type="text" placeholder="first name" style="margin-top:16px;" value='@getFormValue("first_name")'>
+    				<input class="login-input" name="last_name" type="text" placeholder="last name" value='@getFormValue("last_name")'>
     				<input class="login-input" name="preferred_pronouns" type="text" placeholder="preferred pronouns">
             <input class="login-input" name="cell_number" type="text" placeholder="cell phone number">
     				<input class="login-input position-typeahead" name="position" type="text" placeholder="position">

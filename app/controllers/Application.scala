@@ -113,16 +113,22 @@ object Application extends Controller with SessionHandler {
 		})
 	}
 
-	def login(path : String) = Action {
-		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
-			Redirect(routes.ShibbolethController.secure(path))
-		}
-		else {
-			path match {
-				case "/" => Redirect(routes.Application.login(""))
-				case _ => Ok(views.html.login(path)(loginForm));
-			}
-		}
+	def login(path : String) = Action { implicit request =>
+		whenAuthorized(username => {
+				Redirect(routes.Application.index)
+
+		})(request,
+		{
+				if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
+					Redirect(routes.ShibbolethController.secure(path))
+				}
+				else {
+					path match {
+						case "/" => Redirect(routes.Application.login(""))
+						case _ => Ok(views.html.login(path)(loginForm));
+					}
+				}
+		})
 		
 	}
 
@@ -166,9 +172,18 @@ object Application extends Controller with SessionHandler {
 
 
 	def signout = Action { implicit request =>
-		Redirect(routes.Application.login("")).withSession(
-			request.session - "authenticated"
-		)
+
+		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
+			Redirect("/Shibboleth.sso/Logout?return=" + routes.Application.login("").toString).withSession(
+				request.session - "authenticated"
+			)
+		}
+		else {
+			Redirect(routes.Application.login("")).withSession(
+				request.session - "authenticated"
+			)
+		}
+
 
 	}
 
