@@ -165,10 +165,8 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 
 	def start() : Unit = {
 		scheduleWarnings();
-		//scheduleDigest();
-		startDigest();
-		//startOfficeHourDigest();
-		startRankingActivity();
+		scheduleDigest();
+		scheduleOfficeHourDigest();
 		scheduleRankingActivity();
 	}
 
@@ -234,6 +232,10 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 
 	def startRankingActivity() : Unit = {
 		val activities = Activity.get(100);
+
+		if(activities.length == 0) {
+			return;
+		}
 
 		val personalRankingCache = scala.collection.mutable.Map.empty[String, Seq[(Activity, Double)]]
 
@@ -379,7 +381,7 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 		//Completed Projects
 		val completedProjects = projects.filter(p => {
 			(p.state == ProjectState.COMPLETED) && 
-			((Weeks.weeksBetween(new DateTime(p.timeFinished.get), DateTime.now).getWeeks) <= 1)})
+			((Weeks.weeksBetween(new DateTime(p.timeFinished.getOrElse {new Date()}), DateTime.now).getWeeks) <= 1)})
 
 		//Then compile personlized digest for:
 		User.all.filter(_.verified).foreach(u => {
