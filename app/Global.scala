@@ -81,7 +81,6 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		  	case Some(username) => {
 		  		val user = User.get(username);
 		  		val actionInvoked: String = request.tags.getOrElse(play.api.routing.Router.Tags.RouteActionMethod, "")
-		  		println(s"Some user $user " + actionInvoked)
 		  		if (user.hasConfirmed) {
 		  			next(request)
 		  		}

@@ -109,7 +109,7 @@ function setupProjectCallbacks() {
 		$(this).parents(".projectbox").attr("expanded", (expanded == "true") ? "false" : "true");
 	}
 
-	$(".projectbox img, .projectbox .projectbox-title").click(toggleProjectBox);
+	$(".projectbox img, .projectbox .projectbox-title, .projectbox-arrow").click(toggleProjectBox);
 
 	$(document).on("click", ".close-button",  function() {
 		$(this).parents(".popane").popane({

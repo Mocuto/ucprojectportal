@@ -429,7 +429,6 @@ body {
 	font-weight: 100;
 	border-spacing: 0px;
 	overflow: hidden;
-	cursor: pointer;
 	padding: 4px;
 }
 
@@ -461,6 +460,7 @@ body {
 .projectbox-title {
 	/*width: 100%;*/
 	padding:20px 0px 50px 20px !important;
+	cursor: pointer;
 }
 
 .projectbox-needshelp-description {
@@ -494,6 +494,7 @@ body {
 	position: relative;
 	margin-right: auto;
 	margin-left: auto;
+	cursor: pointer;
 }
 
 .projectbox-description {
@@ -535,6 +536,7 @@ body {
 	-ms-transform: rotate(180deg); /* IE 9 */
     -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
     transform: rotate(180deg);
+	cursor: pointer;
 }
 
 .projectbox[expanded="true"] .projectbox-arrow {
@@ -543,7 +545,7 @@ body {
     transform: rotate(0deg);
 }
 
-.projectbox:hover .projectbox-arrow {
+.projectbox-arrow:hover {
     margin-left: auto;
     margin-right: auto;
     background-image: url("/assets/images/icons/project-arrow-active.png");
@@ -1437,6 +1439,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
   width: 33px;
   height: 20px;
   background-size: cover;
+cursor: pointer;
 }
 
 .follow-user-button-caption[active="true"], .like-button-caption[active="true"], .follow-button-caption[active="true"] {
