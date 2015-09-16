@@ -157,6 +157,10 @@ object ProjectUpdateController extends Controller with SessionHandler {
 
 				ActivityMaster.logDeleteUpdate(username, projectId, author, utils.Conversions.strToDate(timeSubmittedStr))
 
+				Future {
+					ActivityMaster.startRankingActivity();
+				}
+
 				Ok(response)
 			}
 		})

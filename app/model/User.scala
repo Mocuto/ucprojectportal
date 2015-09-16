@@ -162,20 +162,20 @@ object User {
 		val originalName = temporaryFile._1
 		val filename = uuid + "--" + temporaryFile._1
 
-		if(Files.exists(Paths.get(constants.Directories.Uploads)) == false) {
-			val uploadsDir = new File(constants.Directories.Uploads);
+		if(Files.exists(Paths.get(constants.Directories.Root, constants.Directories.Uploads)) == false) {
+			val uploadsDir = new File(Paths.get(constants.Directories.Root, constants.Directories.Uploads).toString);
 			uploadsDir.mkdir();
 		} 
 
-		val path = Paths.get(constants.Directories.Uploads, filename).toString;
+		val path = Paths.get(constants.Directories.Root, constants.Directories.Uploads, filename).toString;
 
 		val file = new File(path);
 		
 	    temporaryFile._2.moveTo(file, true);
 
-	    UserTable.setProfilePic(username, "/" + path)
+	    UserTable.setProfilePic(username, "/" + Paths.get(constants.Directories.Uploads, filename).toString)
 
-	    return "/" + path;
+	    return "/" + Paths.get(constants.Directories.Uploads, filename).toString;
 	}
 
 	def updateLastActivity(username : String, date : Date) = UserTable.updateLastActivity(username, date)
@@ -321,7 +321,6 @@ object UserTable extends UserTable {
 			.and(_.verified setTo false)
 			.and(_.office_hour_requirement setTo officeHourRequirement)
 			.and(_.cell_number setTo Some(cellNumber))
-			.onlyIf(_.position eqs "")
 			.future();
 	}
 

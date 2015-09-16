@@ -2,7 +2,7 @@
 @import java.lang.Integer; val UsersPerCard = 3;
 
 @shortenContent(project : model.Project) = @{
-	val maxLength = 30;
+	val maxLength = 45;
 	if(project.name.length > maxLength) {
 		project.name.substring(0, maxLength - 3) + "..."
 	}
@@ -12,7 +12,7 @@
 }
 
 @calculateFontSize(project : model.Project) = @{
-	val maxLength = 60;
+	val maxLength = 45;
 	val minLength = 26;
 	val smallestSize = 15.0;
 	val largestSize = 24.0;
@@ -24,7 +24,7 @@
 		largestSize.toInt
 	}
 	else {
-		math.floor(( (content.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+		math.floor(( ((maxLength.toDouble - minLength) - (content.length.toDouble - minLength)) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
 	}
 }
 

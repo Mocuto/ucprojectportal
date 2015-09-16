@@ -36,13 +36,14 @@ object ProjectFile {
 		val originalName = temporaryFile._1
 		val filename = uuid + "--" + temporaryFile._1
 
-		if(Files.exists(Paths.get("uploads")) == false) {
-			val uploadsDir = new File("uploads");
+		if(Files.exists(Paths.get(constants.Directories.Root, constants.Directories.Uploads)) == false) {
+			val uploadsDir = new File(Paths.get(constants.Directories.Root, constants.Directories.Uploads).toString);
 			uploadsDir.mkdir();
 		} 
 
-		val file = new File(s"uploads/$filename");
-		
+		//val file = new File(s"uploads/$filename");
+		val file = new File(Paths.get(constants.Directories.Root, constants.Directories.Uploads, filename).toString)
+
 	    temporaryFile._2.moveTo(file, true);
 
 	    return createProjectFile(filename, originalName, author, projectId, timeSubmitted);

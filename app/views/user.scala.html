@@ -13,7 +13,7 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
 
 @officeHourRow(officeHour : model.UserOfficeHour) = {
 	<tr>
-		<td>@utils.Conversions.dateToDisplayedStr(officeHour.date).toLowerCase()</td>
+		<td>@utils.Conversions.dateToDisplayedStr(officeHour.date).toLowerCase().replace(" - 12:00 am", "")</td>
 		<td>@(if(officeHour.projectId == -1) "none" else links.projectLink(officeHour.projectId))</td>
 		<td>
 			@for(line <- officeHour.log.keys) {
