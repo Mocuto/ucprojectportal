@@ -12,7 +12,7 @@
 
 @calculateFontSize(update : model.ProjectUpdate) = @{
 	val maxLength = 100;
-	val minLength = 80;
+	val minLength = 10;
 	val smallestSize = 15.0;
 	val largestSize = 24.0;
 	if(update.content.length >= maxLength) {
@@ -22,7 +22,7 @@
 		largestSize.toInt
 	}
 	else {
-		math.floor(( (update.content.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+		math.floor(( (update.content.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt - 1
 	}
 }
 

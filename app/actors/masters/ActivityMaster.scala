@@ -167,6 +167,7 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 		scheduleWarnings();
 		scheduleDigest();
 		scheduleOfficeHourDigest();
+		startRankingActivity();
 		scheduleRankingActivity();
 	}
 

@@ -12,8 +12,8 @@
 }
 
 @calculateFontSize(project : model.Project) = @{
-	val maxLength = 140;
-	val minLength = 80;
+	val maxLength = 100;
+	val minLength = 10;
 	val smallestSize = 17.0;
 	val largestSize = 24.0;
 	if(project.name.length >= maxLength) {
@@ -23,7 +23,7 @@
 		largestSize.toInt
 	}
 	else {
-		math.floor(( (project.name.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt
+		math.floor(( (project.name.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt - 1
 	}
 }
 <div class="hero-card-isotope-item">
