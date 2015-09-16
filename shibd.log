@@ -1,0 +1,1535 @@
+2015-08-31 18:21:23 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-08-31 18:21:23 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-08-31 18:21:23 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-08-31 18:21:23 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-08-31 18:21:23 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-08-31 18:21:23 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-08-31 18:21:23 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-08-31 18:21:23 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-08-31 18:21:23 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-08-31 18:21:23 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-08-31 18:21:23 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-08-31 18:21:23 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-08-31 18:21:23 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-08-31 18:21:23 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-08-31 18:21:23 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-08-31 18:21:23 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:21:23 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-08-31 18:21:23 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-08-31 18:21:23 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-08-31 18:21:23 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:21:23 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:21:23 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:21:23 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:21:23 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:21:23 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-08-31 18:21:23 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-08-31 18:21:23 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-08-31 18:21:23 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-08-31 18:21:23 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-08-31 18:21:23 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
+2015-08-31 18:21:23 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:21:23 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-08-31 18:21:23 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-08-31 18:21:23 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:21:23 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-08-31 18:21:23 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-08-31 18:21:24 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/home/akomolot/qaloginucedumetadata)
+2015-08-31 18:21:24 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-08-31 18:21:24 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-08-31 18:21:24 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-08-31 18:21:24 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-08-31 18:21:24 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-08-31 18:21:24 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-08-31 18:21:24 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-08-31 18:21:24 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-08-31 18:21:24 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-08-31 18:21:24 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-08-31 18:21:24 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-08-31 18:21:24 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:21:24 INFO Shibboleth.Listener : listener service starting
+2015-08-31 18:23:33 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-08-31 18:23:33 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-08-31 18:23:33 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-08-31 18:23:33 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-08-31 18:23:33 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-08-31 18:23:33 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-08-31 18:23:33 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-08-31 18:23:33 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-08-31 18:23:33 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-08-31 18:23:33 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-08-31 18:23:33 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-08-31 18:23:33 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-08-31 18:23:33 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-08-31 18:23:33 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-08-31 18:23:33 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-08-31 18:23:33 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:23:33 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-08-31 18:23:33 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-08-31 18:23:33 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-08-31 18:23:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:23:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:23:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:23:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:23:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:23:33 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-08-31 18:23:33 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-08-31 18:23:33 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-08-31 18:23:33 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-08-31 18:23:33 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-08-31 18:23:33 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
+2015-08-31 18:23:33 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:23:33 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-08-31 18:23:33 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:23:33 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-08-31 18:23:33 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-08-31 18:23:33 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/home/akomolot/qaloginucedumetadata)
+2015-08-31 18:23:33 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-08-31 18:23:33 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-08-31 18:23:33 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-08-31 18:23:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-08-31 18:23:33 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-08-31 18:23:33 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-08-31 18:23:33 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-08-31 18:23:33 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-08-31 18:23:33 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-08-31 18:23:33 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-08-31 18:23:33 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:23:33 INFO Shibboleth.Listener : listener service starting
+2015-08-31 18:41:40 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-08-31 18:41:40 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-08-31 18:41:40 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-08-31 18:41:40 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-08-31 18:41:40 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-08-31 18:41:40 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-08-31 18:41:40 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-08-31 18:41:40 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-08-31 18:41:40 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-08-31 18:41:40 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-08-31 18:41:40 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-08-31 18:41:40 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-08-31 18:41:40 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-08-31 18:41:40 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-08-31 18:41:40 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-08-31 18:41:40 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:41:40 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-08-31 18:41:40 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-08-31 18:41:40 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-08-31 18:41:40 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:41:40 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:41:40 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:41:40 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:41:40 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:41:40 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-08-31 18:41:40 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-08-31 18:41:40 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-08-31 18:41:40 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-08-31 18:41:40 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-08-31 18:41:40 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
+2015-08-31 18:41:40 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:41:40 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-08-31 18:41:40 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:41:40 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-08-31 18:41:40 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-08-31 18:41:40 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/home/akomolot/qaloginucedumetadata)
+2015-08-31 18:41:40 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-08-31 18:41:40 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-08-31 18:41:40 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-08-31 18:41:40 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-08-31 18:41:40 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-08-31 18:41:40 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-08-31 18:41:40 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-08-31 18:41:40 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-08-31 18:41:40 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-08-31 18:41:40 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-08-31 18:41:40 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:41:40 INFO Shibboleth.Listener : listener service starting
+2015-08-31 18:44:03 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-08-31 18:44:03 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-08-31 18:44:03 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-08-31 18:44:03 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-08-31 18:44:03 FATAL Shibboleth.Config : caught exception while loading configuration: Unable to access local file (/etc/shibboleth/heck)
+2015-08-31 18:44:03 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-08-31 18:44:03 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-08-31 18:44:03 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-08-31 18:44:03 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-08-31 18:44:29 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-08-31 18:44:29 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-08-31 18:44:29 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-08-31 18:44:29 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-08-31 18:44:29 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-08-31 18:44:29 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-08-31 18:44:29 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-08-31 18:44:29 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-08-31 18:44:29 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-08-31 18:44:29 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-08-31 18:44:29 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-08-31 18:44:29 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-08-31 18:44:29 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-08-31 18:44:29 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-08-31 18:44:29 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-08-31 18:44:29 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:44:29 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-08-31 18:44:29 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-08-31 18:44:29 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-08-31 18:44:29 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:44:29 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:44:29 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:44:29 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:44:29 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:44:29 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-08-31 18:44:29 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-08-31 18:44:29 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-08-31 18:44:29 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-08-31 18:44:29 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-08-31 18:44:29 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
+2015-08-31 18:44:29 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-08-31 18:44:29 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:44:29 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-08-31 18:44:29 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-08-31 18:44:29 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/home/akomolot/qaloginucedumetadata)
+2015-08-31 18:44:29 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-08-31 18:44:29 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-08-31 18:44:29 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-08-31 18:44:29 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-08-31 18:44:29 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-08-31 18:44:29 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-08-31 18:44:29 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-08-31 18:44:29 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-08-31 18:44:29 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-08-31 18:44:29 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-08-31 18:44:29 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : listener service starting
+2015-08-31 18:44:29 ERROR Shibboleth.Listener : socket call (bind) resulted in error (98): no message
+2015-08-31 18:44:29 CRIT Shibboleth.Listener : failed to bind to socket.
+2015-08-31 18:44:29 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-08-31 18:44:29 INFO Shibboleth.Config : reload thread finished
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:44:29 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-08-31 18:44:29 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-08-31 18:44:29 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:44:29 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:44:29 INFO XMLTooling.StorageService : cleanup thread finished
+2015-08-31 18:44:29 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-08-31 18:44:29 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-08-31 18:44:29 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-08-31 18:44:32 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-08-31 18:44:32 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-08-31 18:44:32 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-08-31 18:44:32 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-08-31 18:44:32 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-08-31 18:44:33 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-08-31 18:44:33 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-08-31 18:44:33 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-08-31 18:44:33 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-08-31 18:44:33 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-08-31 18:44:33 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-08-31 18:44:33 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-08-31 18:44:33 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-08-31 18:44:33 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-08-31 18:44:33 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-08-31 18:44:33 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:44:33 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-08-31 18:44:33 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-08-31 18:44:33 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-08-31 18:44:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:44:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-08-31 18:44:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:44:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:44:33 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-08-31 18:44:33 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-08-31 18:44:33 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-08-31 18:44:33 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-08-31 18:44:33 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-08-31 18:44:33 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-08-31 18:44:33 WARN Shibboleth.Application : insecure cookieProps setting, set to "https" for SSL/TLS-only usage
+2015-08-31 18:44:33 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:44:33 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-08-31 18:44:33 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:44:33 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-08-31 18:44:33 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-08-31 18:44:33 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/home/akomolot/qaloginucedumetadata)
+2015-08-31 18:44:33 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-08-31 18:44:33 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-08-31 18:44:33 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-08-31 18:44:33 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-08-31 18:44:33 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-08-31 18:44:33 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-08-31 18:44:33 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-08-31 18:44:33 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-08-31 18:44:33 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-08-31 18:44:33 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-08-31 18:44:33 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:44:33 INFO Shibboleth.Listener : listener service starting
+2015-08-31 18:48:47 INFO Shibboleth.Listener : listener service shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Listener : listener service shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Config : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Config : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:48:47 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : listener service shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Listener : listener service shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-08-31 18:48:47 INFO Shibboleth.Config : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:48:47 INFO Shibboleth.Config : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:48:47 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:48:47 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-08-31 18:48:47 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-08-31 18:48:47 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO XMLTooling.StorageService : cleanup thread finished
+2015-08-31 18:48:47 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO XMLTooling.StorageService : cleanup thread finished
+2015-08-31 18:48:47 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-08-31 18:48:47 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-08-31 18:48:47 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO XMLTooling.StorageService : cleanup thread finished
+2015-08-31 18:48:47 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-08-31 18:48:47 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-08-31 18:48:47 INFO XMLTooling.StorageService : cleanup thread finished
+2015-08-31 18:48:47 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-08-31 18:48:47 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-08-31 18:48:47 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-09-15 17:01:07 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-09-15 17:01:07 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-09-15 17:01:07 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-09-15 17:01:07 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-09-15 17:01:07 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-09-15 17:01:08 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-09-15 17:01:08 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-09-15 17:01:08 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-09-15 17:01:08 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-09-15 17:01:08 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-09-15 17:01:08 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-09-15 17:01:08 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-09-15 17:01:08 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-09-15 17:01:08 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-09-15 17:01:08 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-09-15 17:01:08 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-09-15 17:01:08 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-09-15 17:01:08 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-09-15 17:01:08 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-09-15 17:01:08 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-09-15 17:01:08 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-09-15 17:01:08 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-09-15 17:01:08 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-09-15 17:01:08 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-09-15 17:01:08 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-09-15 17:01:08 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-09-15 17:01:08 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-09-15 17:01:08 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-09-15 17:01:08 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-09-15 17:01:08 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-09-15 17:01:08 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-09-15 17:01:08 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-09-15 17:01:08 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-09-15 17:01:08 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-09-15 17:01:08 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/etc/shibboleth/ucmetadata.xml)
+2015-09-15 17:01:08 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-09-15 17:01:08 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-09-15 17:01:08 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-09-15 17:01:08 WARN Shibboleth.AttributeExtractor.XML : attribute mappings are reloadable; be sure to restart web server when adding new attribute IDs
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : reload thread started...running when signaled
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:2.5.4.4
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:2.5.4.42
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-09-15 17:01:08 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-09-15 17:01:08 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-09-15 17:01:08 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-09-15 17:01:08 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-09-15 17:01:08 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-09-15 17:01:08 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-09-15 17:01:08 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-09-15 17:01:08 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-09-15 17:01:08 INFO Shibboleth.Listener : listener service starting
+2015-09-15 17:06:49 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:06:49 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:06:49 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:06:49 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:06:49 INFO Shibboleth.SessionCache [3]: new session created: ID (_be41bb56aa42f71846e37ee12794b714) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:13:19 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:13:19 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:13:19 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:13:19 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:13:19 INFO Shibboleth.SessionCache [1]: new session created: ID (_f589e423ca6325c7ec5fb1748940a4c6) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:14:10 INFO Shibboleth.AttributeExtractor.XML [10]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:14:10 INFO Shibboleth.AttributeExtractor.XML [10]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:14:10 INFO Shibboleth.AttributeExtractor.XML [10]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:14:10 INFO Shibboleth.AttributeExtractor.XML [10]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:14:10 INFO Shibboleth.SessionCache [10]: new session created: ID (_b4d2755e3c37350309370c8905ca4d12) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:16:08 INFO XMLTooling.StorageService : purged 3 expired record(s) from storage
+2015-09-15 17:17:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:17:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:17:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:17:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:17:00 INFO Shibboleth.SessionCache [11]: new session created: ID (_9f48fd903b458a9744b31efe14322ed0) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:18:38 INFO Shibboleth.Listener [1]: detected socket closure, shutting down worker thread
+2015-09-15 17:19:45 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:19:45 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:19:45 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:19:45 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:19:45 INFO Shibboleth.SessionCache [11]: new session created: ID (_4c6eaae9d67e5f5459b53732d9d141f4) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:21:36 INFO Shibboleth.AttributeExtractor.XML [9]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:21:36 INFO Shibboleth.AttributeExtractor.XML [9]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:21:36 INFO Shibboleth.AttributeExtractor.XML [9]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:21:36 INFO Shibboleth.AttributeExtractor.XML [9]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:21:36 INFO Shibboleth.SessionCache [9]: new session created: ID (_90488be1ab8b1cfffbb4848a8ac35089) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:21:42 INFO Shibboleth.AttributeExtractor.XML [6]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:21:42 INFO Shibboleth.AttributeExtractor.XML [6]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:21:42 INFO Shibboleth.AttributeExtractor.XML [6]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:21:42 INFO Shibboleth.AttributeExtractor.XML [6]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:21:42 INFO Shibboleth.SessionCache [6]: new session created: ID (_9ca98b327922afc6233d4a890b63c998) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:21:52 INFO Shibboleth.Listener [9]: detected socket closure, shutting down worker thread
+2015-09-15 17:21:55 INFO Shibboleth.Listener [6]: detected socket closure, shutting down worker thread
+2015-09-15 17:27:29 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:27:29 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:27:29 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:27:29 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:27:29 INFO Shibboleth.SessionCache [11]: new session created: ID (_5c057fedb0281523f185dbc6deff88a6) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:29:05 INFO Shibboleth.AttributeExtractor.XML [7]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:29:05 INFO Shibboleth.AttributeExtractor.XML [7]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:29:05 INFO Shibboleth.AttributeExtractor.XML [7]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:29:05 INFO Shibboleth.AttributeExtractor.XML [7]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:29:05 INFO Shibboleth.SessionCache [7]: new session created: ID (_12c092ef46b7f3b7aea402687ea1a2c7) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:29:15 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:29:15 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:29:15 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:29:15 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:29:15 INFO Shibboleth.SessionCache [12]: new session created: ID (_d2aaa096f0c9e3ec043173f1485aca93) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:31:07 INFO XMLTooling.StorageService : purged 30 expired record(s) from storage
+2015-09-15 17:31:20 INFO Shibboleth.LogoutInitiator.SAML2 [12]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:31:20 INFO Shibboleth.SessionCache [12]: removed session (_f589e423ca6325c7ec5fb1748940a4c6)
+2015-09-15 17:31:24 INFO Shibboleth.AttributeExtractor.XML [13]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:31:24 INFO Shibboleth.AttributeExtractor.XML [13]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:31:24 INFO Shibboleth.AttributeExtractor.XML [13]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:31:24 INFO Shibboleth.AttributeExtractor.XML [13]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:31:24 INFO Shibboleth.SessionCache [13]: new session created: ID (_91dbcc80cb930f9bfe99ee54484afd27) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:31:32 INFO Shibboleth.Listener [7]: detected socket closure, shutting down worker thread
+2015-09-15 17:32:08 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:32:08 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:32:08 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:32:08 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:32:08 INFO Shibboleth.SessionCache [2]: new session created: ID (_419a6b1e5a34a461d6b7456cd22d3624) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:32:21 INFO Shibboleth.LogoutInitiator.SAML2 [8]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:32:21 INFO Shibboleth.SessionCache [8]: removed session (_419a6b1e5a34a461d6b7456cd22d3624)
+2015-09-15 17:32:27 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:32:27 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:32:27 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:32:27 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:32:27 INFO Shibboleth.SessionCache [12]: new session created: ID (_7081e9ddb757be3d82cb1c2dad085a9a) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:32:32 INFO Shibboleth.Listener [13]: detected socket closure, shutting down worker thread
+2015-09-15 17:32:35 INFO Shibboleth.Listener [2]: detected socket closure, shutting down worker thread
+2015-09-15 17:36:38 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:36:38 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:36:38 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:36:38 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:36:38 INFO Shibboleth.SessionCache [14]: new session created: ID (_9ec2a169e03ecad0181357a0176518ff) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:36:42 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:36:42 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:36:42 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:36:42 INFO Shibboleth.AttributeExtractor.XML [14]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:36:42 INFO Shibboleth.SessionCache [14]: new session created: ID (_c15848dc907744d91b6e4b58152b3895) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:36:54 INFO Shibboleth.LogoutInitiator.SAML2 [16]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:36:54 INFO Shibboleth.SessionCache [16]: removed session (_c15848dc907744d91b6e4b58152b3895)
+2015-09-15 17:36:57 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:36:57 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:36:57 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:36:57 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:36:57 INFO Shibboleth.SessionCache [11]: new session created: ID (_b2943c12d08029c9f9a48ecaaa6c5b72) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:37:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:37:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:37:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:37:00 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:37:00 INFO Shibboleth.SessionCache [11]: new session created: ID (_7cbf28785d5b88397417791fe4f76ae3) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:37:10 INFO Shibboleth.Listener [5]: detected socket closure, shutting down worker thread
+2015-09-15 17:37:15 INFO Shibboleth.LogoutInitiator.SAML2 [14]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:37:15 INFO Shibboleth.SessionCache [14]: removed session (_7cbf28785d5b88397417791fe4f76ae3)
+2015-09-15 17:37:22 INFO Shibboleth.Listener [15]: detected socket closure, shutting down worker thread
+2015-09-15 17:39:09 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:39:09 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:39:09 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:39:09 INFO Shibboleth.AttributeExtractor.XML [11]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:39:09 INFO Shibboleth.SessionCache [11]: new session created: ID (_8bbde317ed486a7ee7edd3833e8ed020) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:39:52 INFO Shibboleth.LogoutInitiator.SAML2 [14]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:39:52 INFO Shibboleth.SessionCache [14]: removed session (_8bbde317ed486a7ee7edd3833e8ed020)
+2015-09-15 17:40:00 INFO Shibboleth.AttributeExtractor.XML [17]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:40:00 INFO Shibboleth.AttributeExtractor.XML [17]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:40:00 INFO Shibboleth.AttributeExtractor.XML [17]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:40:00 INFO Shibboleth.AttributeExtractor.XML [17]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:40:00 INFO Shibboleth.SessionCache [17]: new session created: ID (_e52fdf36d7ea94d11ec73e5ec054713f) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:40:00 INFO Shibboleth.Listener [11]: detected socket closure, shutting down worker thread
+2015-09-15 17:40:08 INFO Shibboleth.Listener [10]: detected socket closure, shutting down worker thread
+2015-09-15 17:40:43 INFO Shibboleth.LogoutInitiator.SAML2 [8]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:40:43 INFO Shibboleth.SessionCache [8]: removed session (_e52fdf36d7ea94d11ec73e5ec054713f)
+2015-09-15 17:40:45 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:40:45 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:40:45 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:40:45 INFO Shibboleth.AttributeExtractor.XML [3]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:40:45 INFO Shibboleth.SessionCache [3]: new session created: ID (_e0db83cae21bb4714deda2652f80dac5) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:40:50 INFO Shibboleth.Listener [14]: detected socket closure, shutting down worker thread
+2015-09-15 17:40:52 INFO Shibboleth.Listener [16]: detected socket closure, shutting down worker thread
+2015-09-15 17:46:06 INFO XMLTooling.StorageService : purged 31 expired record(s) from storage
+2015-09-15 17:56:51 INFO Shibboleth.LogoutInitiator.SAML2 [21]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:56:51 INFO Shibboleth.SessionCache [21]: removed session (_e0db83cae21bb4714deda2652f80dac5)
+2015-09-15 17:56:58 INFO Shibboleth.Listener [3]: detected socket closure, shutting down worker thread
+2015-09-15 17:57:14 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:57:14 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:57:14 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:57:14 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:57:14 INFO Shibboleth.SessionCache [18]: new session created: ID (_4fcf24d618f1c3431721ba17f9a56282) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:57:16 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:57:16 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:57:16 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:57:16 INFO Shibboleth.AttributeExtractor.XML [18]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:57:16 INFO Shibboleth.SessionCache [18]: new session created: ID (_d20351ffd2483b27067cda9e6042119f) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:57:27 INFO Shibboleth.Listener [17]: detected socket closure, shutting down worker thread
+2015-09-15 17:57:28 INFO Shibboleth.Listener [22]: detected socket closure, shutting down worker thread
+2015-09-15 17:57:37 INFO Shibboleth.LogoutInitiator.SAML2 [21]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:57:37 INFO Shibboleth.SessionCache [21]: removed session (_d20351ffd2483b27067cda9e6042119f)
+2015-09-15 17:57:46 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:57:46 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:57:46 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:57:46 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:57:46 INFO Shibboleth.SessionCache [24]: new session created: ID (_63cb9c07deb0b165236df4dbd4df1a96) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:57:47 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:57:47 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:57:47 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:57:47 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:57:47 INFO Shibboleth.SessionCache [24]: new session created: ID (_8cf3c8795afae62c4d18df759cc98076) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:57:50 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 17:57:50 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 17:57:50 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 17:57:50 INFO Shibboleth.AttributeExtractor.XML [24]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 17:57:50 INFO Shibboleth.SessionCache [24]: new session created: ID (_b4c1c2468023e713d87fff5fbe2e0089) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 17:58:04 INFO Shibboleth.Listener [20]: detected socket closure, shutting down worker thread
+2015-09-15 17:58:17 INFO Shibboleth.LogoutInitiator.SAML2 [4]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 17:58:17 INFO Shibboleth.SessionCache [4]: removed session (_b4c1c2468023e713d87fff5fbe2e0089)
+2015-09-15 18:01:05 INFO XMLTooling.StorageService : purged 9 expired record(s) from storage
+2015-09-15 18:03:25 INFO Shibboleth.AttributeExtractor.XML [25]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:03:25 INFO Shibboleth.AttributeExtractor.XML [25]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:03:25 INFO Shibboleth.AttributeExtractor.XML [25]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:03:25 INFO Shibboleth.AttributeExtractor.XML [25]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:03:25 INFO Shibboleth.SessionCache [25]: new session created: ID (_6615d19812a1bd6ab659c46992091b4f) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:04:30 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:04:30 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:04:30 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:04:30 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:04:30 INFO Shibboleth.SessionCache [12]: new session created: ID (_ee09279c2f9e4336ea118ccca2c27b5d) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:04:44 INFO Shibboleth.Listener [26]: detected socket closure, shutting down worker thread
+2015-09-15 18:04:47 INFO Shibboleth.Listener [25]: detected socket closure, shutting down worker thread
+2015-09-15 18:09:19 INFO Shibboleth.LogoutInitiator.SAML2 [21]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:09:19 INFO Shibboleth.SessionCache [21]: removed session (_ee09279c2f9e4336ea118ccca2c27b5d)
+2015-09-15 18:09:24 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:09:24 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:09:24 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:09:24 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:09:24 INFO Shibboleth.SessionCache [12]: new session created: ID (_ce090dba7e6f103bfc5ac317b82e9426) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:09:25 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:09:25 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:09:25 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:09:25 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:09:25 INFO Shibboleth.SessionCache [12]: new session created: ID (_2ef72c6edb2ca83b364018d92cce3228) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:09:27 INFO Shibboleth.Listener [23]: detected socket closure, shutting down worker thread
+2015-09-15 18:09:28 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:09:28 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:09:28 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:09:28 INFO Shibboleth.AttributeExtractor.XML [12]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:09:28 INFO Shibboleth.SessionCache [12]: new session created: ID (_30d68654b7f9de20e1a956ac114349c0) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:09:49 INFO Shibboleth.LogoutInitiator.SAML2 [4]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:09:49 INFO Shibboleth.SessionCache [4]: removed session (_30d68654b7f9de20e1a956ac114349c0)
+2015-09-15 18:09:51 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:09:51 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:09:51 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:09:51 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:09:51 INFO Shibboleth.SessionCache [27]: new session created: ID (_9818a07665b40abeb7f0d8f673c0c729) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:09:56 INFO Shibboleth.Listener [21]: detected socket closure, shutting down worker thread
+2015-09-15 18:09:59 INFO Shibboleth.Listener [12]: detected socket closure, shutting down worker thread
+2015-09-15 18:10:49 INFO Shibboleth.LogoutInitiator.SAML2 [29]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:10:49 INFO Shibboleth.SessionCache [29]: removed session (_9818a07665b40abeb7f0d8f673c0c729)
+2015-09-15 18:10:51 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:10:51 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:10:51 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:10:51 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:10:51 INFO Shibboleth.SessionCache [28]: new session created: ID (_fec6fb4f387c04756615206a0e4c62e4) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:10:53 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:10:53 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:10:53 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:10:53 INFO Shibboleth.AttributeExtractor.XML [28]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:10:53 INFO Shibboleth.SessionCache [28]: new session created: ID (_41d8ffdafac246fd6d401709a65c8572) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:12:43 INFO Shibboleth.Listener [29]: detected socket closure, shutting down worker thread
+2015-09-15 18:13:28 INFO Shibboleth.Listener [18]: detected socket closure, shutting down worker thread
+2015-09-15 18:13:51 INFO Shibboleth.LogoutInitiator.SAML2 [30]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:13:51 INFO Shibboleth.SessionCache [30]: removed session (_41d8ffdafac246fd6d401709a65c8572)
+2015-09-15 18:13:53 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:13:53 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:13:53 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:13:53 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:13:53 INFO Shibboleth.SessionCache [31]: new session created: ID (_caa1ce7951efd03ae894852b8bfa9749) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:13:55 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:13:55 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:13:55 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:13:55 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:13:55 INFO Shibboleth.SessionCache [31]: new session created: ID (_658ec80707129eaf04055e8fa3aac7cf) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:13:57 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:13:57 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:13:57 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:13:57 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:13:57 INFO Shibboleth.SessionCache [31]: new session created: ID (_d8750eabcf5f54c1cce5dac8b17ed4ef) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:13:59 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:13:59 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:13:59 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:13:59 INFO Shibboleth.AttributeExtractor.XML [31]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:13:59 INFO Shibboleth.SessionCache [31]: new session created: ID (_41ce39016f231da9dab0f566bc51c577) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:14:19 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:14:19 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:14:19 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:14:19 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:14:19 INFO Shibboleth.SessionCache [27]: new session created: ID (_156af13f117fea8fd1906ee5a6274810) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:14:21 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:14:21 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:14:21 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:14:21 INFO Shibboleth.AttributeExtractor.XML [27]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:14:21 INFO Shibboleth.SessionCache [27]: new session created: ID (_e562aa1f2999a59ec13ea924d013445d) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:14:40 INFO Shibboleth.LogoutInitiator.SAML2 [4]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:14:40 INFO Shibboleth.SessionCache [4]: removed session (_e562aa1f2999a59ec13ea924d013445d)
+2015-09-15 18:14:44 INFO Shibboleth.AttributeExtractor.XML [30]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:14:44 INFO Shibboleth.AttributeExtractor.XML [30]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:14:44 INFO Shibboleth.AttributeExtractor.XML [30]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:14:44 INFO Shibboleth.AttributeExtractor.XML [30]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:14:44 INFO Shibboleth.SessionCache [30]: new session created: ID (_a4485b33f04b8c60b4757bc3c142e428) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:14:46 INFO Shibboleth.Listener [31]: detected socket closure, shutting down worker thread
+2015-09-15 18:14:57 INFO Shibboleth.LogoutInitiator.SAML2 [32]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:14:57 INFO Shibboleth.SessionCache [32]: removed session (_a4485b33f04b8c60b4757bc3c142e428)
+2015-09-15 18:15:02 INFO Shibboleth.AttributeExtractor.XML [33]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:15:02 INFO Shibboleth.AttributeExtractor.XML [33]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:15:02 INFO Shibboleth.AttributeExtractor.XML [33]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:15:02 INFO Shibboleth.AttributeExtractor.XML [33]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:15:02 INFO Shibboleth.SessionCache [33]: new session created: ID (_4a90088e6052c392d003ef5b47e6114e) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:15:04 INFO Shibboleth.Listener [30]: detected socket closure, shutting down worker thread
+2015-09-15 18:15:09 INFO Shibboleth.Listener [24]: detected socket closure, shutting down worker thread
+2015-09-15 18:15:13 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:15:13 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:15:13 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:15:13 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:15:13 INFO Shibboleth.SessionCache [34]: new session created: ID (_35a7b0f6ae5e854f9a0289f2457f2707) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:15:15 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:15:15 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:15:15 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:15:15 INFO Shibboleth.AttributeExtractor.XML [34]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:15:15 INFO Shibboleth.SessionCache [34]: new session created: ID (_93c0524edf5c8bd5697a9cb23373d4af) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:15:27 INFO Shibboleth.AttributeExtractor.XML [4]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:15:27 INFO Shibboleth.AttributeExtractor.XML [4]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:15:27 INFO Shibboleth.AttributeExtractor.XML [4]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:15:27 INFO Shibboleth.AttributeExtractor.XML [4]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:15:27 INFO Shibboleth.SessionCache [4]: new session created: ID (_60f9a2326033f4857211f248aa31d97d) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.53.244.24)
+2015-09-15 18:16:04 INFO XMLTooling.StorageService : purged 45 expired record(s) from storage
+2015-09-15 18:30:36 INFO Shibboleth.SessionCache [27]: removed session (_93c0524edf5c8bd5697a9cb23373d4af)
+2015-09-15 18:30:40 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:30:40 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:30:40 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:30:40 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:30:40 INFO Shibboleth.SessionCache [8]: new session created: ID (_4cc92689dcf6dd3b1d32ea803291ae47) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:31:03 INFO XMLTooling.StorageService : purged 43 expired record(s) from storage
+2015-09-15 18:33:26 INFO Shibboleth.LogoutInitiator.SAML2 [32]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:33:26 INFO Shibboleth.SessionCache [32]: removed session (_4cc92689dcf6dd3b1d32ea803291ae47)
+2015-09-15 18:33:28 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:33:28 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:33:28 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:33:28 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:33:28 INFO Shibboleth.SessionCache [36]: new session created: ID (_0ef059e4e0ef6c10f60fb09a85d8e0f5) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:33:30 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:33:30 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:33:30 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:33:30 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:33:30 INFO Shibboleth.SessionCache [36]: new session created: ID (_2562149038d51ab6eb0221289e5acc27) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:33:33 INFO Shibboleth.Listener [19]: detected socket closure, shutting down worker thread
+2015-09-15 18:33:38 INFO Shibboleth.Listener [27]: detected socket closure, shutting down worker thread
+2015-09-15 18:33:41 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:33:41 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:33:41 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:33:41 INFO Shibboleth.AttributeExtractor.XML [8]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:33:41 INFO Shibboleth.SessionCache [8]: new session created: ID (_a7a3e1357f33a491244048e68df33a5a) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:34:17 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:34:17 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:34:17 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:34:17 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:34:17 INFO Shibboleth.SessionCache [37]: new session created: ID (_bc271a49fae13e698e4034cd90f6dd8d) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:34:19 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:34:19 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:34:19 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:34:19 INFO Shibboleth.AttributeExtractor.XML [37]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:34:19 INFO Shibboleth.SessionCache [37]: new session created: ID (_0c98de1d16862ed60d26cb4d94125c1e) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:34:32 INFO Shibboleth.LogoutInitiator.SAML2 [34]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:34:32 INFO Shibboleth.SessionCache [34]: removed session (_0c98de1d16862ed60d26cb4d94125c1e)
+2015-09-15 18:34:38 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:34:38 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:34:38 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:34:38 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:34:38 INFO Shibboleth.SessionCache [36]: new session created: ID (_0365d3b501a09e1cb2067cf2d62bf333) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:34:40 INFO Shibboleth.Listener [8]: detected socket closure, shutting down worker thread
+2015-09-15 18:34:47 INFO Shibboleth.LogoutInitiator.SAML2 [28]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:34:47 INFO Shibboleth.SessionCache [28]: removed session (_0365d3b501a09e1cb2067cf2d62bf333)
+2015-09-15 18:34:51 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:34:51 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:34:51 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:34:51 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:34:51 INFO Shibboleth.SessionCache [38]: new session created: ID (_6af9f37aa5a70401bfab77969d65a467) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:35:01 INFO Shibboleth.Listener [37]: detected socket closure, shutting down worker thread
+2015-09-15 18:35:01 INFO Shibboleth.LogoutInitiator.SAML2 [32]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:35:01 INFO Shibboleth.SessionCache [32]: removed session (_6af9f37aa5a70401bfab77969d65a467)
+2015-09-15 18:35:03 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:35:03 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:35:03 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:35:03 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:35:03 INFO Shibboleth.SessionCache [39]: new session created: ID (_777704c8c4b2f450cb83a7342615e67e) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:35:09 INFO Shibboleth.LogoutInitiator.SAML2 [4]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:35:09 INFO Shibboleth.SessionCache [4]: removed session (_777704c8c4b2f450cb83a7342615e67e)
+2015-09-15 18:35:18 INFO Shibboleth.Listener [33]: detected socket closure, shutting down worker thread
+2015-09-15 18:36:46 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:36:46 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:36:46 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:36:46 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:36:46 INFO Shibboleth.SessionCache [36]: new session created: ID (_194d9549ef7d308f71726d9625e20ca1) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:36:50 INFO Shibboleth.LogoutInitiator.SAML2 [34]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:36:50 INFO Shibboleth.SessionCache [34]: removed session (_194d9549ef7d308f71726d9625e20ca1)
+2015-09-15 18:36:56 INFO Shibboleth.Listener [28]: detected socket closure, shutting down worker thread
+2015-09-15 18:36:57 INFO Shibboleth.Listener [4]: detected socket closure, shutting down worker thread
+2015-09-15 18:36:58 INFO Shibboleth.Listener [35]: detected socket closure, shutting down worker thread
+2015-09-15 18:37:02 INFO Shibboleth.AttributeExtractor.XML [42]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:37:02 INFO Shibboleth.AttributeExtractor.XML [42]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:37:02 INFO Shibboleth.AttributeExtractor.XML [42]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:37:02 INFO Shibboleth.AttributeExtractor.XML [42]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:37:02 INFO Shibboleth.SessionCache [42]: new session created: ID (_03c0e98ab95b10e3dc05916c9585ea51) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:37:14 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:37:14 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:37:14 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:37:14 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:37:14 INFO Shibboleth.SessionCache [43]: new session created: ID (_954d25c8c68ed7ffb92f5f67f21e83dd) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:46:02 INFO XMLTooling.StorageService : purged 37 expired record(s) from storage
+2015-09-15 18:46:19 INFO Shibboleth.LogoutInitiator.SAML2 [36]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:46:19 INFO Shibboleth.SessionCache [36]: removed session (_954d25c8c68ed7ffb92f5f67f21e83dd)
+2015-09-15 18:46:31 INFO Shibboleth.Listener [42]: detected socket closure, shutting down worker thread
+2015-09-15 18:46:44 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:46:44 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:46:44 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:46:44 INFO Shibboleth.AttributeExtractor.XML [43]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:46:44 INFO Shibboleth.SessionCache [43]: new session created: ID (_b6024b0c9f1fa27797bff730d7466da4) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:47:01 INFO Shibboleth.LogoutInitiator.SAML2 [40]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:47:01 INFO Shibboleth.SessionCache [40]: removed session (_b6024b0c9f1fa27797bff730d7466da4)
+2015-09-15 18:47:08 INFO Shibboleth.Listener [34]: detected socket closure, shutting down worker thread
+2015-09-15 18:47:09 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:47:09 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:47:09 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:47:09 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:47:09 INFO Shibboleth.SessionCache [41]: new session created: ID (_09dfc2a1a5ab5352d990730f1a2d9afd) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:47:16 INFO Shibboleth.Listener [43]: detected socket closure, shutting down worker thread
+2015-09-15 18:49:10 INFO Shibboleth.LogoutInitiator.SAML2 [44]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:49:10 INFO Shibboleth.SessionCache [44]: removed session (_09dfc2a1a5ab5352d990730f1a2d9afd)
+2015-09-15 18:49:13 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:49:13 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:49:13 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:49:13 INFO Shibboleth.AttributeExtractor.XML [38]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:49:13 INFO Shibboleth.SessionCache [38]: new session created: ID (_06fb538b69b79c1729e03933ab15b625) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:49:21 INFO Shibboleth.Listener [40]: detected socket closure, shutting down worker thread
+2015-09-15 18:51:57 INFO Shibboleth.LogoutInitiator.SAML2 [46]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 18:51:57 INFO Shibboleth.SessionCache [46]: removed session (_06fb538b69b79c1729e03933ab15b625)
+2015-09-15 18:52:44 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:52:44 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:52:44 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:52:44 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:52:44 INFO Shibboleth.SessionCache [41]: new session created: ID (_a5bc4f79103c16620ff2e9a908a04a55) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 18:52:47 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 18:52:47 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 18:52:47 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 18:52:47 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 18:52:47 INFO Shibboleth.SessionCache [41]: new session created: ID (_c3d913da067ac0bfca316751fc569e4b) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:01:01 INFO XMLTooling.StorageService : purged 23 expired record(s) from storage
+2015-09-15 19:07:43 INFO Shibboleth.LogoutInitiator.SAML2 [38]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:07:43 INFO Shibboleth.SessionCache [38]: removed session (_c3d913da067ac0bfca316751fc569e4b)
+2015-09-15 19:07:50 INFO Shibboleth.Listener [32]: detected socket closure, shutting down worker thread
+2015-09-15 19:07:50 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:07:50 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:07:50 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:07:50 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:07:50 INFO Shibboleth.SessionCache [39]: new session created: ID (_3022809ee58c109a3403603fcdfc335d) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:07:52 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:07:52 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:07:52 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:07:52 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:07:52 INFO Shibboleth.SessionCache [39]: new session created: ID (_851f28dc92c383ca3577c659fa2b00de) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:07:54 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:07:54 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:07:54 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:07:54 INFO Shibboleth.AttributeExtractor.XML [39]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:07:54 INFO Shibboleth.SessionCache [39]: new session created: ID (_b0d3eeeec2fde3723a58184c90e74084) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:08:00 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:08:00 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:08:00 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:08:00 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:08:00 INFO Shibboleth.SessionCache [41]: new session created: ID (_a4df6be5a54137ebf8f303ae19112040) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:08:01 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:08:01 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:08:01 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:08:01 INFO Shibboleth.AttributeExtractor.XML [41]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:08:01 INFO Shibboleth.SessionCache [41]: new session created: ID (_e7fe8ee524b98339922e5d56bb1004cd) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:08:23 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:08:23 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:08:23 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:08:23 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:08:23 INFO Shibboleth.SessionCache [47]: new session created: ID (_41acbec0cb83c7f40413ce7354adaa7d) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:08:29 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:08:29 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:08:29 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:08:29 INFO Shibboleth.AttributeExtractor.XML [36]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:08:29 INFO Shibboleth.SessionCache [36]: new session created: ID (_789293f53f6066ccb166c622cdb3bc03) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:12:00 INFO Shibboleth.LogoutInitiator.SAML2 [49]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:12:00 INFO Shibboleth.SessionCache [49]: removed session (_789293f53f6066ccb166c622cdb3bc03)
+2015-09-15 19:12:17 INFO Shibboleth.AttributeExtractor.XML [44]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:12:17 INFO Shibboleth.AttributeExtractor.XML [44]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:12:17 INFO Shibboleth.AttributeExtractor.XML [44]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:12:17 INFO Shibboleth.AttributeExtractor.XML [44]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:12:17 INFO Shibboleth.SessionCache [44]: new session created: ID (_60f509b0e86c7aaaf8c974fe78f9384f) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:13:14 INFO Shibboleth.LogoutInitiator.SAML2 [38]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:13:14 INFO Shibboleth.SessionCache [38]: removed session (_60f509b0e86c7aaaf8c974fe78f9384f)
+2015-09-15 19:13:22 INFO Shibboleth.Listener [36]: detected socket closure, shutting down worker thread
+2015-09-15 19:13:30 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:13:30 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:13:30 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:13:30 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:13:30 INFO Shibboleth.SessionCache [45]: new session created: ID (_e56c1889dcc4c5edd45b0816b4fa64a7) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:14:57 INFO Shibboleth.LogoutInitiator.SAML2 [48]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:14:57 INFO Shibboleth.SessionCache [48]: removed session (_e56c1889dcc4c5edd45b0816b4fa64a7)
+2015-09-15 19:15:04 INFO Shibboleth.Listener [38]: detected socket closure, shutting down worker thread
+2015-09-15 19:15:27 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:15:27 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:15:27 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:15:27 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:15:27 INFO Shibboleth.SessionCache [49]: new session created: ID (_47a6c70e7d26455e2f02b7c40c42a880) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:16:00 INFO XMLTooling.StorageService : purged 41 expired record(s) from storage
+2015-09-15 19:22:54 INFO Shibboleth.LogoutInitiator.SAML2 [50]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:22:54 INFO Shibboleth.SessionCache [50]: removed session (_47a6c70e7d26455e2f02b7c40c42a880)
+2015-09-15 19:23:02 INFO Shibboleth.Listener [41]: detected socket closure, shutting down worker thread
+2015-09-15 19:23:02 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:23:02 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:23:02 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:23:02 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:23:02 INFO Shibboleth.SessionCache [49]: new session created: ID (_b55002d6ceda4a77bb110c9d9fdaeff9) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:23:07 INFO Shibboleth.LogoutInitiator.SAML2 [39]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:23:07 INFO Shibboleth.SessionCache [39]: removed session (_b55002d6ceda4a77bb110c9d9fdaeff9)
+2015-09-15 19:23:15 INFO Shibboleth.Listener [50]: detected socket closure, shutting down worker thread
+2015-09-15 19:23:17 INFO Shibboleth.AttributeExtractor.XML [48]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:23:17 INFO Shibboleth.AttributeExtractor.XML [48]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:23:17 INFO Shibboleth.AttributeExtractor.XML [48]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:23:17 INFO Shibboleth.AttributeExtractor.XML [48]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:23:17 INFO Shibboleth.SessionCache [48]: new session created: ID (_4af68dbb6e79bb49c1c31036a89e3e68) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:27:14 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:27:14 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:27:14 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:27:14 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:27:14 INFO Shibboleth.SessionCache [49]: new session created: ID (_ce99c6ced153d046a7f6fbcf2bdc65d7) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:30:59 INFO XMLTooling.StorageService : purged 14 expired record(s) from storage
+2015-09-15 19:31:35 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:31:35 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:31:35 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:31:35 INFO Shibboleth.AttributeExtractor.XML [45]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:31:35 INFO Shibboleth.SessionCache [45]: new session created: ID (_7fca55f98e0b444d042a8c9f91a4bbc0) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:33:43 INFO Shibboleth.LogoutInitiator.SAML2 [48]: unable to issue SAML 2.0 logout request: No SingleLogoutService endpoints in metadata for identity provider (https://login.uc.edu/idp/shibboleth).
+2015-09-15 19:33:43 INFO Shibboleth.SessionCache [48]: removed session (_7fca55f98e0b444d042a8c9f91a4bbc0)
+2015-09-15 19:33:46 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:33:46 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:33:46 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:33:46 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:33:46 INFO Shibboleth.SessionCache [49]: new session created: ID (_1f3a057a2a5c82d78c102b853456c90c) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:33:59 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:33:59 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:33:59 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:33:59 INFO Shibboleth.AttributeExtractor.XML [47]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:33:59 INFO Shibboleth.SessionCache [47]: new session created: ID (_a0c1d04cd43cad4a19bb4fd18bb87cb2) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:36:08 INFO Shibboleth.AttributeExtractor.XML [46]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:36:08 INFO Shibboleth.AttributeExtractor.XML [46]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:36:08 INFO Shibboleth.AttributeExtractor.XML [46]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:36:08 INFO Shibboleth.AttributeExtractor.XML [46]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:36:08 INFO Shibboleth.SessionCache [46]: new session created: ID (_df298c7dd2fc8ba778b3892dad0897ce) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:36:36 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 19:36:36 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 19:36:36 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 19:36:36 INFO Shibboleth.AttributeExtractor.XML [49]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 19:36:36 INFO Shibboleth.SessionCache [49]: new session created: ID (_af031897f23117f2da9682ec0c315706) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.130.241.138)
+2015-09-15 19:42:48 INFO Shibboleth.Listener [51]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [46]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [44]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [39]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [45]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [48]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [49]: detected socket closure, shutting down worker thread
+2015-09-15 19:42:48 INFO Shibboleth.Listener [47]: detected socket closure, shutting down worker thread
+2015-09-15 19:45:58 INFO XMLTooling.StorageService : purged 25 expired record(s) from storage
+2015-09-15 20:00:57 INFO XMLTooling.StorageService : purged 3 expired record(s) from storage
+2015-09-15 20:15:56 INFO XMLTooling.StorageService : purged 12 expired record(s) from storage
+2015-09-15 20:21:05 INFO Shibboleth.Listener : listener service shutting down
+2015-09-15 20:21:05 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-09-15 20:21:05 INFO Shibboleth.Config : reload thread finished
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-09-15 20:21:05 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-09-15 20:21:05 INFO Shibboleth.AttributeExtractor.XML : reload thread finished
+2015-09-15 20:21:05 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-09-15 20:21:05 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-09-15 20:21:05 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-09-15 20:21:05 INFO XMLTooling.StorageService : cleanup thread finished
+2015-09-15 20:21:05 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-09-15 20:21:05 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-09-15 20:21:05 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete
+2015-09-15 20:27:12 CRIT XMLTooling.Config : libcurl lacks OpenSSL-specific options, this will greatly limit functionality
+2015-09-15 20:27:12 INFO XMLTooling.Config : xmltooling 1.5.6 library initialization complete
+2015-09-15 20:27:12 INFO OpenSAML.Config : opensaml 2.5.5 library initialization complete
+2015-09-15 20:27:12 INFO Shibboleth.Config : shibboleth 2.5.5 library initialization complete
+2015-09-15 20:27:12 INFO Shibboleth.Config : reload thread started...running when signaled
+2015-09-15 20:27:12 INFO Shibboleth.Config : loaded XML resource (/etc/shibboleth/shibboleth2.xml)
+2015-09-15 20:27:12 INFO Shibboleth.Config : Shibboleth SP Version 2.5.5
+2015-09-15 20:27:12 INFO Shibboleth.Config : Library versions: log4shib 1.0.9, Xerces-C 3.1.1, XML-Security-C 1.7.3, XMLTooling-C 1.5.6, OpenSAML-C 2.5.5, Shibboleth 1.5.5
+2015-09-15 20:27:12 INFO Shibboleth.Config : building ListenerService of type UnixListener...
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (set::RelayState)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (get::RelayState)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (set::PostData)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (get::PostData)
+2015-09-15 20:27:12 INFO Shibboleth.Config : no StorageService plugin(s) installed, using (mem) in-memory instance
+2015-09-15 20:27:12 INFO Shibboleth.Config : no ReplayCache specified, using arbitrary StorageService instance
+2015-09-15 20:27:12 INFO XMLTooling.StorageService : cleanup thread started...running every 900 seconds
+2015-09-15 20:27:12 INFO Shibboleth.Config : no ArtifactMap specified, building in-memory ArtifactMap...
+2015-09-15 20:27:12 INFO Shibboleth.Config : no SessionCache specified, using StorageService-backed instance
+2015-09-15 20:27:12 INFO Shibboleth.SessionCache : bound to arbitrary StorageService
+2015-09-15 20:27:12 INFO Shibboleth.SessionCache : StorageService for 'lite' use not set, using standard StorageService
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (find::StorageService::SessionCache)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (remove::StorageService::SessionCache)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (touch::StorageService::SessionCache)
+2015-09-15 20:27:12 INFO Shibboleth.Config : building SecurityPolicyProvider of type XML...
+2015-09-15 20:27:12 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread started...running when signaled
+2015-09-15 20:27:12 INFO Shibboleth.SecurityPolicyProvider.XML : loaded XML resource (/etc/shibboleth/security-policy.xml)
+2015-09-15 20:27:12 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-09-15 20:27:12 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Audience
+2015-09-15 20:27:12 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-09-15 20:27:12 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-09-15 20:27:12 INFO OpenSAML.SecurityPolicyRule.Conditions : building SecurityPolicyRule of type Ignore
+2015-09-15 20:27:12 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#rsa-md5)
+2015-09-15 20:27:12 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmldsig-more#md5)
+2015-09-15 20:27:12 INFO Shibboleth.Config : automatically blacklisting security algorithm (http://www.w3.org/2001/04/xmlenc#rsa-1_5)
+2015-09-15 20:27:12 INFO Shibboleth.Config : building ProtocolProvider of type XML...
+2015-09-15 20:27:12 INFO Shibboleth.ProtocolProvider.XML : loaded XML resource (/etc/shibboleth/protocols.xml)
+2015-09-15 20:27:12 WARN Shibboleth.Application : empty/missing cookieProps setting, set to "https" for SSL/TLS-only usage
+2015-09-15 20:27:12 WARN Shibboleth.Application : handlerSSL should be enabled for SSL/TLS-enabled web sites
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML2)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding SessionInitiator of type (SAML2) to chain (/Login)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring ArtifactResolution endpoints for protocol (SAML2)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding ArtifactResolutionService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/Artifact/SOAP)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML2)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SAML2/POST)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign) at (/SAML2/POST-SimpleSign)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SAML2/Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:PAOS) at (/SAML2/ECP)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML2/ECP)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring SSO initiation for protocol (SAML1)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding SessionInitiator of type (Shib1) to chain (/Login)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring SSO endpoints for protocol (SAML1)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:browser-post) at (/SAML/POST)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/POST)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding AssertionConsumerService for Binding (urn:oasis:names:tc:SAML:1.0:profiles:artifact-01) at (/SAML/Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SAML/Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::SAML2SI)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Login::run::Shib1SI)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (SAML2)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding LogoutInitiator of type (SAML2) to chain (/Logout)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring Logout endpoints for protocol (SAML2)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:SOAP) at (/SLO/SOAP)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/SOAP)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect) at (/SLO/Redirect)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Redirect)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST) at (/SLO/POST)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/POST)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding SingleLogoutService for Binding (urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact) at (/SLO/Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/SLO/Artifact)
+2015-09-15 20:27:12 INFO Shibboleth.Application : auto-configuring Logout initiation for protocol (Local)
+2015-09-15 20:27:12 INFO Shibboleth.Application : adding LogoutInitiator of type (Local) to chain (/Logout)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Logout::run::LocalLI)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Metadata)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/Status)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default/DiscoFeed)
+2015-09-15 20:27:12 INFO Shibboleth.DiscoveryFeed : feed files will be cached in /var/cache/shibboleth/
+2015-09-15 20:27:12 INFO Shibboleth.Application : building MetadataProvider of type XML...
+2015-09-15 20:27:12 INFO OpenSAML.MetadataProvider.XML : loaded XML resource (/etc/shibboleth/ucmetadata.xml)
+2015-09-15 20:27:12 INFO Shibboleth.Application : no TrustEngine specified or installed, using default chain {ExplicitKey, PKIX}
+2015-09-15 20:27:12 INFO OpenSAML.MetadataProvider.XML : reload thread started...running when signaled
+2015-09-15 20:27:12 INFO Shibboleth.Application : building AttributeExtractor of type XML...
+2015-09-15 20:27:12 WARN Shibboleth.AttributeExtractor.XML : attribute mappings are reloadable; be sure to restart web server when adding new attribute IDs
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : reload thread started...running when signaled
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : loaded XML resource (/etc/shibboleth/attribute-map.xml)
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonPrincipalName
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:sn
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:givenName
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:2.5.4.4
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:2.5.4.42
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonScopedAffiliation
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonAffiliation
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonEntitlement
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:mace:dir:attribute-def:eduPersonTargetedID
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+2015-09-15 20:27:12 INFO Shibboleth.AttributeExtractor.XML : creating mapping for Attribute urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+2015-09-15 20:27:12 INFO Shibboleth.Application : building AttributeFilter of type XML...
+2015-09-15 20:27:12 INFO Shibboleth.AttributeFilter : reload thread started...running when signaled
+2015-09-15 20:27:12 INFO Shibboleth.AttributeFilter : loaded XML resource (/etc/shibboleth/attribute-policy.xml)
+2015-09-15 20:27:12 INFO Shibboleth.Application : building AttributeResolver of type Query...
+2015-09-15 20:27:12 INFO Shibboleth.Application : building CredentialResolver of type File...
+2015-09-15 20:27:12 INFO XMLTooling.SecurityHelper : loading private key from file (/etc/shibboleth/sp-key.pem)
+2015-09-15 20:27:12 INFO XMLTooling.SecurityHelper : loading certificate(s) from file (/etc/shibboleth/sp-cert.pem)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : registered remoted message endpoint (default::getHeaders::Application)
+2015-09-15 20:27:12 INFO Shibboleth.Listener : listener service starting
+2015-09-15 20:28:54 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 20:28:54 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 20:28:54 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 20:28:54 INFO Shibboleth.AttributeExtractor.XML [1]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 20:28:54 INFO Shibboleth.SessionCache [1]: new session created: ID (_0dc8a2da07f2d91a6ce1bbdf6d5805b9) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.132.246.177)
+2015-09-15 20:29:45 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.5.4.3
+2015-09-15 20:29:45 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:1.3.6.1.4.1.19629.2.3.11
+2015-09-15 20:29:45 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:0.9.2342.19200300.100.1.3
+2015-09-15 20:29:45 INFO Shibboleth.AttributeExtractor.XML [2]: skipping unmapped SAML 2.0 Attribute with Name: urn:oid:2.16.840.1.113730.3.1.241
+2015-09-15 20:29:45 INFO Shibboleth.SessionCache [2]: new session created: ID (_ead8f301eed2d485affdcb5935984540) IdP (https://login.uc.edu/idp/shibboleth) Protocol(urn:oasis:names:tc:SAML:2.0:protocol) Address (10.132.253.119)
+2015-09-15 20:42:12 INFO XMLTooling.StorageService : purged 4 expired record(s) from storage
+2015-09-15 20:50:26 INFO Shibboleth.Listener : listener service shutting down
+2015-09-15 20:50:26 INFO Shibboleth.Listener [1]: detected socket closure, shutting down worker thread
+2015-09-15 20:50:26 INFO Shibboleth.Config : shibboleth 2.5.5 library shutting down
+2015-09-15 20:50:26 INFO Shibboleth.Config : reload thread finished
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default::getHeaders::Application)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Artifact/SOAP::run::SAML2Artifact)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/POST-SimpleSign)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/Artifact)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML2/ECP)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/POST)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SAML/Artifact)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::SAML2SI)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Login::run::Shib1SI)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/SOAP)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Redirect)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/POST)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/SLO/Artifact)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::SAML2LI)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Logout::run::LocalLI)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Metadata)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/Status)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (default/DiscoFeed)
+2015-09-15 20:50:26 INFO Shibboleth.AttributeFilter : reload thread finished
+2015-09-15 20:50:26 INFO Shibboleth.AttributeExtractor.XML : reload thread finished
+2015-09-15 20:50:26 INFO OpenSAML.MetadataProvider.XML : reload thread finished
+2015-09-15 20:50:26 INFO Shibboleth.SecurityPolicyProvider.XML : reload thread finished
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (find::StorageService::SessionCache)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (remove::StorageService::SessionCache)
+2015-09-15 20:50:26 INFO Shibboleth.Listener : unregistered remoted message endpoint (touch::StorageService::SessionCache)
+2015-09-15 20:50:26 INFO XMLTooling.StorageService : cleanup thread finished
+2015-09-15 20:50:26 INFO XMLTooling.Config : xmltooling 1.5.6 library shutdown complete
+2015-09-15 20:50:26 INFO OpenSAML.Config : opensaml 2.5.5 library shutdown complete
+2015-09-15 20:50:26 INFO Shibboleth.Config : shibboleth 2.5.5 library shutdown complete

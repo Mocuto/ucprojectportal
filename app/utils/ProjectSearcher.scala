@@ -24,6 +24,10 @@ object ProjectSearcher {
 
 	def search(queryString : String) : Seq[Project] = {
 
+		if(model.Project.all.length == 0) {
+			return List[Project]();
+		}
+
 		val fields = List(
 			"project-id", 
 			"project-name", 

@@ -32,7 +32,7 @@ class AccessFilter(requiredViewPrivilegeFunc : (String => UserPrivileges.View), 
 
 		if(authorizationRequired(request)) {
 			request.session.get("authenticated") match {
-				case None => Future { Results.Redirect("/login/" + request.path) }
+				case None => Future { println("AccessFilter"); Results.Redirect("/login/" + request.path) }
 				case Some(username) => {
 					lazy val requiredViewPrivilege = requiredViewPrivilegeFunc(username)
 					(UserPrivilegesView.get(username) zip next(request)).map {
@@ -74,7 +74,7 @@ class AuthorizedFilter(actionNames: Seq[String]) extends Filter {
 		  			Results.Redirect(routes.Application.login(request.path))		  			
 		  		}
 		  		else {
-		  			Results.Redirect(routes.ShibbolethController.secure(request.path))
+		  			Results.Redirect(routes.ShibbolethController.secure(""))
 		  		}
 
 		  	}

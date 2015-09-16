@@ -1,0 +1,761 @@
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: New session (ID: _be41bb56aa42f71846e37ee12794b714) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _d4800bdf56ed53298ae9cf92d8ed962b)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: Cached the following attributes with session (ID: _be41bb56aa42f71846e37ee12794b714) for (applicationId: default) {
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: 	eppn (1 values)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: 	sn (1 values)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: 	affiliation (2 values)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: 	givenName (1 values)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: 	entitlement (1 values)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: 	persistent-id (1 values)
+2015-09-15 17:06:49 INFO Shibboleth-TRANSACTION [3]: }
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: New session (ID: _f589e423ca6325c7ec5fb1748940a4c6) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _bfdbdef608833cf0b071a13d46432781)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: Cached the following attributes with session (ID: _f589e423ca6325c7ec5fb1748940a4c6) for (applicationId: default) {
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: 	eppn (1 values)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: 	sn (1 values)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: 	affiliation (2 values)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: 	givenName (1 values)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: 	entitlement (1 values)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: 	persistent-id (1 values)
+2015-09-15 17:13:19 INFO Shibboleth-TRANSACTION [1]: }
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: New session (ID: _b4d2755e3c37350309370c8905ca4d12) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _a44e17adde2d85ac2077f8c2f6bc0c1b)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: Cached the following attributes with session (ID: _b4d2755e3c37350309370c8905ca4d12) for (applicationId: default) {
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: 	eppn (1 values)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: 	sn (1 values)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: 	affiliation (2 values)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: 	givenName (1 values)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: 	entitlement (1 values)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: 	persistent-id (1 values)
+2015-09-15 17:14:10 INFO Shibboleth-TRANSACTION [10]: }
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: New session (ID: _9f48fd903b458a9744b31efe14322ed0) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _77a8d8d0856ac2d650f6570f7e28c211)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: Cached the following attributes with session (ID: _9f48fd903b458a9744b31efe14322ed0) for (applicationId: default) {
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: 	eppn (1 values)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: 	sn (1 values)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: 	affiliation (2 values)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: 	givenName (1 values)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: 	entitlement (1 values)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: 	persistent-id (1 values)
+2015-09-15 17:17:00 INFO Shibboleth-TRANSACTION [11]: }
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: New session (ID: _4c6eaae9d67e5f5459b53732d9d141f4) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c1bfaa2f9ef304cb05d8f25777cdc74c)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: Cached the following attributes with session (ID: _4c6eaae9d67e5f5459b53732d9d141f4) for (applicationId: default) {
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: 	eppn (1 values)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: 	sn (1 values)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: 	affiliation (2 values)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: 	givenName (1 values)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: 	entitlement (1 values)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: 	persistent-id (1 values)
+2015-09-15 17:19:45 INFO Shibboleth-TRANSACTION [11]: }
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: New session (ID: _90488be1ab8b1cfffbb4848a8ac35089) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c580e6e393fe012934c526783ce1ae50)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: Cached the following attributes with session (ID: _90488be1ab8b1cfffbb4848a8ac35089) for (applicationId: default) {
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: 	eppn (1 values)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: 	sn (1 values)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: 	affiliation (2 values)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: 	givenName (1 values)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: 	entitlement (1 values)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: 	persistent-id (1 values)
+2015-09-15 17:21:36 INFO Shibboleth-TRANSACTION [9]: }
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: New session (ID: _9ca98b327922afc6233d4a890b63c998) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _df1f7c9613e6423540305109c18e78ce)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: Cached the following attributes with session (ID: _9ca98b327922afc6233d4a890b63c998) for (applicationId: default) {
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: 	eppn (1 values)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: 	sn (1 values)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: 	affiliation (2 values)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: 	givenName (1 values)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: 	entitlement (1 values)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: 	persistent-id (1 values)
+2015-09-15 17:21:42 INFO Shibboleth-TRANSACTION [6]: }
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: New session (ID: _5c057fedb0281523f185dbc6deff88a6) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _4e0d4e0702f3111b2bc653d4cb61012e)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: Cached the following attributes with session (ID: _5c057fedb0281523f185dbc6deff88a6) for (applicationId: default) {
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: 	eppn (1 values)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: 	sn (1 values)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: 	affiliation (2 values)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: 	givenName (1 values)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: 	entitlement (1 values)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: 	persistent-id (1 values)
+2015-09-15 17:27:29 INFO Shibboleth-TRANSACTION [11]: }
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: New session (ID: _12c092ef46b7f3b7aea402687ea1a2c7) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c82139d51ddc4fa712d6fdaafa4f3229)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: Cached the following attributes with session (ID: _12c092ef46b7f3b7aea402687ea1a2c7) for (applicationId: default) {
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: 	eppn (1 values)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: 	sn (1 values)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: 	affiliation (2 values)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: 	givenName (1 values)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: 	entitlement (1 values)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: 	persistent-id (1 values)
+2015-09-15 17:29:05 INFO Shibboleth-TRANSACTION [7]: }
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: New session (ID: _d2aaa096f0c9e3ec043173f1485aca93) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c1637a52987159bd1c36e762c2371952)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: Cached the following attributes with session (ID: _d2aaa096f0c9e3ec043173f1485aca93) for (applicationId: default) {
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: 	eppn (1 values)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: 	sn (1 values)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: 	affiliation (2 values)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: 	givenName (1 values)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: 	entitlement (1 values)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: 	persistent-id (1 values)
+2015-09-15 17:29:15 INFO Shibboleth-TRANSACTION [12]: }
+2015-09-15 17:31:20 INFO Shibboleth-TRANSACTION [12]: Destroyed session (applicationId: default) (ID: _f589e423ca6325c7ec5fb1748940a4c6)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: New session (ID: _91dbcc80cb930f9bfe99ee54484afd27) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _d7c5245e3f8ca53317fc40f47fc5bc70)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: Cached the following attributes with session (ID: _91dbcc80cb930f9bfe99ee54484afd27) for (applicationId: default) {
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: 	eppn (1 values)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: 	sn (1 values)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: 	affiliation (2 values)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: 	givenName (1 values)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: 	entitlement (1 values)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: 	persistent-id (1 values)
+2015-09-15 17:31:24 INFO Shibboleth-TRANSACTION [13]: }
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: New session (ID: _419a6b1e5a34a461d6b7456cd22d3624) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _bd510eb2ecccdf07fd224dda6db63542)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: Cached the following attributes with session (ID: _419a6b1e5a34a461d6b7456cd22d3624) for (applicationId: default) {
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: 	eppn (1 values)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: 	sn (1 values)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: 	affiliation (2 values)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: 	givenName (1 values)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: 	entitlement (1 values)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: 	persistent-id (1 values)
+2015-09-15 17:32:08 INFO Shibboleth-TRANSACTION [2]: }
+2015-09-15 17:32:21 INFO Shibboleth-TRANSACTION [8]: Destroyed session (applicationId: default) (ID: _419a6b1e5a34a461d6b7456cd22d3624)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: New session (ID: _7081e9ddb757be3d82cb1c2dad085a9a) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _d0514997f579186df98652a8d4a1b191)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: Cached the following attributes with session (ID: _7081e9ddb757be3d82cb1c2dad085a9a) for (applicationId: default) {
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: 	eppn (1 values)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: 	sn (1 values)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: 	affiliation (2 values)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: 	givenName (1 values)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: 	entitlement (1 values)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: 	persistent-id (1 values)
+2015-09-15 17:32:27 INFO Shibboleth-TRANSACTION [12]: }
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: New session (ID: _9ec2a169e03ecad0181357a0176518ff) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c22c4ce945faadb9cffe2796f6a855aa)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: Cached the following attributes with session (ID: _9ec2a169e03ecad0181357a0176518ff) for (applicationId: default) {
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: 	eppn (1 values)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: 	sn (1 values)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: 	affiliation (2 values)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: 	givenName (1 values)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: 	entitlement (1 values)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: 	persistent-id (1 values)
+2015-09-15 17:36:38 INFO Shibboleth-TRANSACTION [14]: }
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: New session (ID: _c15848dc907744d91b6e4b58152b3895) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _effd99d62af00eaabb9d1ab2d1ea7cf6)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: Cached the following attributes with session (ID: _c15848dc907744d91b6e4b58152b3895) for (applicationId: default) {
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: 	eppn (1 values)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: 	sn (1 values)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: 	affiliation (2 values)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: 	givenName (1 values)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: 	entitlement (1 values)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: 	persistent-id (1 values)
+2015-09-15 17:36:42 INFO Shibboleth-TRANSACTION [14]: }
+2015-09-15 17:36:54 INFO Shibboleth-TRANSACTION [16]: Destroyed session (applicationId: default) (ID: _c15848dc907744d91b6e4b58152b3895)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: New session (ID: _b2943c12d08029c9f9a48ecaaa6c5b72) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _3cec22ca30e8d338768d76eb8ab5348d)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: Cached the following attributes with session (ID: _b2943c12d08029c9f9a48ecaaa6c5b72) for (applicationId: default) {
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: 	eppn (1 values)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: 	sn (1 values)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: 	affiliation (2 values)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: 	givenName (1 values)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: 	entitlement (1 values)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: 	persistent-id (1 values)
+2015-09-15 17:36:57 INFO Shibboleth-TRANSACTION [11]: }
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: New session (ID: _7cbf28785d5b88397417791fe4f76ae3) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _06b42cc30cc1763cfbefb797c3c633c1)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: Cached the following attributes with session (ID: _7cbf28785d5b88397417791fe4f76ae3) for (applicationId: default) {
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: 	eppn (1 values)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: 	sn (1 values)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: 	affiliation (2 values)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: 	givenName (1 values)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: 	entitlement (1 values)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: 	persistent-id (1 values)
+2015-09-15 17:37:00 INFO Shibboleth-TRANSACTION [11]: }
+2015-09-15 17:37:15 INFO Shibboleth-TRANSACTION [14]: Destroyed session (applicationId: default) (ID: _7cbf28785d5b88397417791fe4f76ae3)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: New session (ID: _8bbde317ed486a7ee7edd3833e8ed020) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _68c6336c0887140a6aa9642daa984746)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: Cached the following attributes with session (ID: _8bbde317ed486a7ee7edd3833e8ed020) for (applicationId: default) {
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: 	eppn (1 values)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: 	sn (1 values)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: 	affiliation (2 values)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: 	givenName (1 values)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: 	entitlement (1 values)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: 	persistent-id (1 values)
+2015-09-15 17:39:09 INFO Shibboleth-TRANSACTION [11]: }
+2015-09-15 17:39:52 INFO Shibboleth-TRANSACTION [14]: Destroyed session (applicationId: default) (ID: _8bbde317ed486a7ee7edd3833e8ed020)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: New session (ID: _e52fdf36d7ea94d11ec73e5ec054713f) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _27b0796b3b053ce87947fce959052d9e)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: Cached the following attributes with session (ID: _e52fdf36d7ea94d11ec73e5ec054713f) for (applicationId: default) {
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: 	eppn (1 values)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: 	sn (1 values)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: 	affiliation (2 values)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: 	givenName (1 values)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: 	entitlement (1 values)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: 	persistent-id (1 values)
+2015-09-15 17:40:00 INFO Shibboleth-TRANSACTION [17]: }
+2015-09-15 17:40:43 INFO Shibboleth-TRANSACTION [8]: Destroyed session (applicationId: default) (ID: _e52fdf36d7ea94d11ec73e5ec054713f)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: New session (ID: _e0db83cae21bb4714deda2652f80dac5) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _198389ff6bdb473a6c105560cdc95c14)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: Cached the following attributes with session (ID: _e0db83cae21bb4714deda2652f80dac5) for (applicationId: default) {
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: 	eppn (1 values)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: 	sn (1 values)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: 	affiliation (2 values)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: 	givenName (1 values)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: 	entitlement (1 values)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: 	persistent-id (1 values)
+2015-09-15 17:40:45 INFO Shibboleth-TRANSACTION [3]: }
+2015-09-15 17:56:51 INFO Shibboleth-TRANSACTION [21]: Destroyed session (applicationId: default) (ID: _e0db83cae21bb4714deda2652f80dac5)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: New session (ID: _4fcf24d618f1c3431721ba17f9a56282) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _9eabf93c678e3ba48e90850869750c51)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: Cached the following attributes with session (ID: _4fcf24d618f1c3431721ba17f9a56282) for (applicationId: default) {
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: 	eppn (1 values)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: 	sn (1 values)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: 	affiliation (2 values)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: 	givenName (1 values)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: 	entitlement (1 values)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: 	persistent-id (1 values)
+2015-09-15 17:57:14 INFO Shibboleth-TRANSACTION [18]: }
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: New session (ID: _d20351ffd2483b27067cda9e6042119f) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _cdb1bea000903324337e4942b9d845ed)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: Cached the following attributes with session (ID: _d20351ffd2483b27067cda9e6042119f) for (applicationId: default) {
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: 	eppn (1 values)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: 	sn (1 values)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: 	affiliation (2 values)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: 	givenName (1 values)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: 	entitlement (1 values)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: 	persistent-id (1 values)
+2015-09-15 17:57:16 INFO Shibboleth-TRANSACTION [18]: }
+2015-09-15 17:57:37 INFO Shibboleth-TRANSACTION [21]: Destroyed session (applicationId: default) (ID: _d20351ffd2483b27067cda9e6042119f)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: New session (ID: _63cb9c07deb0b165236df4dbd4df1a96) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _2189d6d09a9dfe76a277a99cc2b03c8b)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: Cached the following attributes with session (ID: _63cb9c07deb0b165236df4dbd4df1a96) for (applicationId: default) {
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: 	eppn (1 values)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: 	sn (1 values)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: 	affiliation (2 values)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: 	givenName (1 values)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: 	entitlement (1 values)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: 	persistent-id (1 values)
+2015-09-15 17:57:46 INFO Shibboleth-TRANSACTION [24]: }
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: New session (ID: _8cf3c8795afae62c4d18df759cc98076) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _67219d4b90963105b2c64b3da80e6d8e)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: Cached the following attributes with session (ID: _8cf3c8795afae62c4d18df759cc98076) for (applicationId: default) {
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: 	eppn (1 values)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: 	sn (1 values)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: 	affiliation (2 values)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: 	givenName (1 values)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: 	entitlement (1 values)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: 	persistent-id (1 values)
+2015-09-15 17:57:47 INFO Shibboleth-TRANSACTION [24]: }
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: New session (ID: _b4c1c2468023e713d87fff5fbe2e0089) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _a2d9155ab06e46bb22fc5ee79e0fe12c)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: Cached the following attributes with session (ID: _b4c1c2468023e713d87fff5fbe2e0089) for (applicationId: default) {
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: 	eppn (1 values)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: 	sn (1 values)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: 	affiliation (2 values)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: 	givenName (1 values)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: 	entitlement (1 values)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: 	persistent-id (1 values)
+2015-09-15 17:57:50 INFO Shibboleth-TRANSACTION [24]: }
+2015-09-15 17:58:17 INFO Shibboleth-TRANSACTION [4]: Destroyed session (applicationId: default) (ID: _b4c1c2468023e713d87fff5fbe2e0089)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: New session (ID: _6615d19812a1bd6ab659c46992091b4f) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _e5fa3701f5f99410d8715aa41fa42bb6)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: Cached the following attributes with session (ID: _6615d19812a1bd6ab659c46992091b4f) for (applicationId: default) {
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: 	eppn (1 values)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: 	sn (1 values)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: 	affiliation (2 values)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: 	givenName (1 values)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: 	entitlement (1 values)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: 	persistent-id (1 values)
+2015-09-15 18:03:25 INFO Shibboleth-TRANSACTION [25]: }
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: New session (ID: _ee09279c2f9e4336ea118ccca2c27b5d) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _95814161e1511ec2764dfe50596f7fd3)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: Cached the following attributes with session (ID: _ee09279c2f9e4336ea118ccca2c27b5d) for (applicationId: default) {
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: 	eppn (1 values)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: 	sn (1 values)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: 	affiliation (2 values)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: 	givenName (1 values)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: 	entitlement (1 values)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: 	persistent-id (1 values)
+2015-09-15 18:04:30 INFO Shibboleth-TRANSACTION [12]: }
+2015-09-15 18:09:19 INFO Shibboleth-TRANSACTION [21]: Destroyed session (applicationId: default) (ID: _ee09279c2f9e4336ea118ccca2c27b5d)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: New session (ID: _ce090dba7e6f103bfc5ac317b82e9426) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _e40782c2ac181719a9570787b9093faf)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: Cached the following attributes with session (ID: _ce090dba7e6f103bfc5ac317b82e9426) for (applicationId: default) {
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: 	eppn (1 values)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: 	sn (1 values)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: 	affiliation (2 values)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: 	givenName (1 values)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: 	entitlement (1 values)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: 	persistent-id (1 values)
+2015-09-15 18:09:24 INFO Shibboleth-TRANSACTION [12]: }
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: New session (ID: _2ef72c6edb2ca83b364018d92cce3228) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _e76ee6c61c6839b8bcf73febce0482d3)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: Cached the following attributes with session (ID: _2ef72c6edb2ca83b364018d92cce3228) for (applicationId: default) {
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: 	eppn (1 values)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: 	sn (1 values)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: 	affiliation (2 values)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: 	givenName (1 values)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: 	entitlement (1 values)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: 	persistent-id (1 values)
+2015-09-15 18:09:25 INFO Shibboleth-TRANSACTION [12]: }
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: New session (ID: _30d68654b7f9de20e1a956ac114349c0) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _b871445ee6372fec86771268db29f67f)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: Cached the following attributes with session (ID: _30d68654b7f9de20e1a956ac114349c0) for (applicationId: default) {
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: 	eppn (1 values)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: 	sn (1 values)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: 	affiliation (2 values)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: 	givenName (1 values)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: 	entitlement (1 values)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: 	persistent-id (1 values)
+2015-09-15 18:09:28 INFO Shibboleth-TRANSACTION [12]: }
+2015-09-15 18:09:49 INFO Shibboleth-TRANSACTION [4]: Destroyed session (applicationId: default) (ID: _30d68654b7f9de20e1a956ac114349c0)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: New session (ID: _9818a07665b40abeb7f0d8f673c0c729) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _67e78cb90c9ba12f13b6e787913d1072)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: Cached the following attributes with session (ID: _9818a07665b40abeb7f0d8f673c0c729) for (applicationId: default) {
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: 	eppn (1 values)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: 	sn (1 values)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: 	affiliation (2 values)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: 	givenName (1 values)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: 	entitlement (1 values)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: 	persistent-id (1 values)
+2015-09-15 18:09:51 INFO Shibboleth-TRANSACTION [27]: }
+2015-09-15 18:10:49 INFO Shibboleth-TRANSACTION [29]: Destroyed session (applicationId: default) (ID: _9818a07665b40abeb7f0d8f673c0c729)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: New session (ID: _fec6fb4f387c04756615206a0e4c62e4) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _bafa6e017d6e93990762fb153ab6b39e)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: Cached the following attributes with session (ID: _fec6fb4f387c04756615206a0e4c62e4) for (applicationId: default) {
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: 	eppn (1 values)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: 	sn (1 values)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: 	affiliation (2 values)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: 	givenName (1 values)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: 	entitlement (1 values)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: 	persistent-id (1 values)
+2015-09-15 18:10:51 INFO Shibboleth-TRANSACTION [28]: }
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: New session (ID: _41d8ffdafac246fd6d401709a65c8572) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _3a17997373bb7a1aff5ff7fad3a33430)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: Cached the following attributes with session (ID: _41d8ffdafac246fd6d401709a65c8572) for (applicationId: default) {
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: 	eppn (1 values)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: 	sn (1 values)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: 	affiliation (2 values)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: 	givenName (1 values)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: 	entitlement (1 values)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: 	persistent-id (1 values)
+2015-09-15 18:10:53 INFO Shibboleth-TRANSACTION [28]: }
+2015-09-15 18:13:51 INFO Shibboleth-TRANSACTION [30]: Destroyed session (applicationId: default) (ID: _41d8ffdafac246fd6d401709a65c8572)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: New session (ID: _caa1ce7951efd03ae894852b8bfa9749) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _16982cb45f04cbc06444e77b84920cf9)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: Cached the following attributes with session (ID: _caa1ce7951efd03ae894852b8bfa9749) for (applicationId: default) {
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: 	eppn (1 values)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: 	sn (1 values)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: 	affiliation (2 values)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: 	givenName (1 values)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: 	entitlement (1 values)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: 	persistent-id (1 values)
+2015-09-15 18:13:53 INFO Shibboleth-TRANSACTION [31]: }
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: New session (ID: _658ec80707129eaf04055e8fa3aac7cf) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c78291a096c30c111a038f609ce3ff0d)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: Cached the following attributes with session (ID: _658ec80707129eaf04055e8fa3aac7cf) for (applicationId: default) {
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: 	eppn (1 values)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: 	sn (1 values)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: 	affiliation (2 values)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: 	givenName (1 values)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: 	entitlement (1 values)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: 	persistent-id (1 values)
+2015-09-15 18:13:55 INFO Shibboleth-TRANSACTION [31]: }
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: New session (ID: _d8750eabcf5f54c1cce5dac8b17ed4ef) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _a7f1254ba35800df5f20608095545b00)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: Cached the following attributes with session (ID: _d8750eabcf5f54c1cce5dac8b17ed4ef) for (applicationId: default) {
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: 	eppn (1 values)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: 	sn (1 values)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: 	affiliation (2 values)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: 	givenName (1 values)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: 	entitlement (1 values)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: 	persistent-id (1 values)
+2015-09-15 18:13:57 INFO Shibboleth-TRANSACTION [31]: }
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: New session (ID: _41ce39016f231da9dab0f566bc51c577) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _58c5dd2ce4b657625d59eca4d4b77e9b)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: Cached the following attributes with session (ID: _41ce39016f231da9dab0f566bc51c577) for (applicationId: default) {
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: 	eppn (1 values)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: 	sn (1 values)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: 	affiliation (2 values)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: 	givenName (1 values)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: 	entitlement (1 values)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: 	persistent-id (1 values)
+2015-09-15 18:13:59 INFO Shibboleth-TRANSACTION [31]: }
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: New session (ID: _156af13f117fea8fd1906ee5a6274810) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _a6adb8e54eb09eb55ab57063e0b6d08a)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: Cached the following attributes with session (ID: _156af13f117fea8fd1906ee5a6274810) for (applicationId: default) {
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: 	eppn (1 values)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: 	sn (1 values)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: 	affiliation (2 values)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: 	givenName (1 values)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: 	entitlement (1 values)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: 	persistent-id (1 values)
+2015-09-15 18:14:19 INFO Shibboleth-TRANSACTION [27]: }
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: New session (ID: _e562aa1f2999a59ec13ea924d013445d) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _7d69fe772d4944442caec68d31f8f643)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: Cached the following attributes with session (ID: _e562aa1f2999a59ec13ea924d013445d) for (applicationId: default) {
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: 	eppn (1 values)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: 	sn (1 values)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: 	affiliation (2 values)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: 	givenName (1 values)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: 	entitlement (1 values)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: 	persistent-id (1 values)
+2015-09-15 18:14:21 INFO Shibboleth-TRANSACTION [27]: }
+2015-09-15 18:14:40 INFO Shibboleth-TRANSACTION [4]: Destroyed session (applicationId: default) (ID: _e562aa1f2999a59ec13ea924d013445d)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: New session (ID: _a4485b33f04b8c60b4757bc3c142e428) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _e72a9444a5bdb3e0e81068c20bc70061)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: Cached the following attributes with session (ID: _a4485b33f04b8c60b4757bc3c142e428) for (applicationId: default) {
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: 	eppn (1 values)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: 	sn (1 values)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: 	affiliation (2 values)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: 	givenName (1 values)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: 	entitlement (1 values)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: 	persistent-id (1 values)
+2015-09-15 18:14:44 INFO Shibboleth-TRANSACTION [30]: }
+2015-09-15 18:14:57 INFO Shibboleth-TRANSACTION [32]: Destroyed session (applicationId: default) (ID: _a4485b33f04b8c60b4757bc3c142e428)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: New session (ID: _4a90088e6052c392d003ef5b47e6114e) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _1a945d8855b37bdf8e1ff3bb8ab411ad)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: Cached the following attributes with session (ID: _4a90088e6052c392d003ef5b47e6114e) for (applicationId: default) {
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: 	eppn (1 values)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: 	sn (1 values)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: 	affiliation (2 values)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: 	givenName (1 values)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: 	entitlement (1 values)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: 	persistent-id (1 values)
+2015-09-15 18:15:02 INFO Shibboleth-TRANSACTION [33]: }
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: New session (ID: _35a7b0f6ae5e854f9a0289f2457f2707) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _d532db2df1d2f25ad4e6df8c009d225b)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: Cached the following attributes with session (ID: _35a7b0f6ae5e854f9a0289f2457f2707) for (applicationId: default) {
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: 	eppn (1 values)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: 	sn (1 values)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: 	affiliation (2 values)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: 	givenName (1 values)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: 	entitlement (1 values)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: 	persistent-id (1 values)
+2015-09-15 18:15:13 INFO Shibboleth-TRANSACTION [34]: }
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: New session (ID: _93c0524edf5c8bd5697a9cb23373d4af) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _1d0d5a31989ec646df56bc81828e5242)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: Cached the following attributes with session (ID: _93c0524edf5c8bd5697a9cb23373d4af) for (applicationId: default) {
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: 	eppn (1 values)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: 	sn (1 values)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: 	affiliation (2 values)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: 	givenName (1 values)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: 	entitlement (1 values)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: 	persistent-id (1 values)
+2015-09-15 18:15:15 INFO Shibboleth-TRANSACTION [34]: }
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: New session (ID: _60f9a2326033f4857211f248aa31d97d) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.53.244.24) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _5058c4e603ede16e3c1894554cb5fe91)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: Cached the following attributes with session (ID: _60f9a2326033f4857211f248aa31d97d) for (applicationId: default) {
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: 	eppn (1 values)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: 	sn (1 values)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: 	affiliation (2 values)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: 	givenName (1 values)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: 	entitlement (1 values)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: 	persistent-id (1 values)
+2015-09-15 18:15:27 INFO Shibboleth-TRANSACTION [4]: }
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: New session (ID: _4cc92689dcf6dd3b1d32ea803291ae47) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _d59a6e098162051f852a19aad0d537ff)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: Cached the following attributes with session (ID: _4cc92689dcf6dd3b1d32ea803291ae47) for (applicationId: default) {
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: 	eppn (1 values)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: 	sn (1 values)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: 	affiliation (2 values)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: 	givenName (1 values)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: 	entitlement (1 values)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: 	persistent-id (1 values)
+2015-09-15 18:30:40 INFO Shibboleth-TRANSACTION [8]: }
+2015-09-15 18:33:26 INFO Shibboleth-TRANSACTION [32]: Destroyed session (applicationId: default) (ID: _4cc92689dcf6dd3b1d32ea803291ae47)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: New session (ID: _0ef059e4e0ef6c10f60fb09a85d8e0f5) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _700e881c009d3079629c60cc359e1952)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: Cached the following attributes with session (ID: _0ef059e4e0ef6c10f60fb09a85d8e0f5) for (applicationId: default) {
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: 	eppn (1 values)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: 	sn (1 values)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: 	affiliation (2 values)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: 	givenName (1 values)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: 	entitlement (1 values)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: 	persistent-id (1 values)
+2015-09-15 18:33:28 INFO Shibboleth-TRANSACTION [36]: }
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: New session (ID: _2562149038d51ab6eb0221289e5acc27) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _618a7a1031f2bdf1346274739dca16c9)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: Cached the following attributes with session (ID: _2562149038d51ab6eb0221289e5acc27) for (applicationId: default) {
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: 	eppn (1 values)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: 	sn (1 values)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: 	affiliation (2 values)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: 	givenName (1 values)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: 	entitlement (1 values)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: 	persistent-id (1 values)
+2015-09-15 18:33:30 INFO Shibboleth-TRANSACTION [36]: }
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: New session (ID: _a7a3e1357f33a491244048e68df33a5a) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _603f7f5273360e0b9d2cb30c6a59c3d2)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: Cached the following attributes with session (ID: _a7a3e1357f33a491244048e68df33a5a) for (applicationId: default) {
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: 	eppn (1 values)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: 	sn (1 values)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: 	affiliation (2 values)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: 	givenName (1 values)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: 	entitlement (1 values)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: 	persistent-id (1 values)
+2015-09-15 18:33:41 INFO Shibboleth-TRANSACTION [8]: }
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: New session (ID: _bc271a49fae13e698e4034cd90f6dd8d) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _adb22664758bde1c348892180d630835)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: Cached the following attributes with session (ID: _bc271a49fae13e698e4034cd90f6dd8d) for (applicationId: default) {
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: 	eppn (1 values)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: 	sn (1 values)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: 	affiliation (2 values)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: 	givenName (1 values)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: 	entitlement (1 values)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: 	persistent-id (1 values)
+2015-09-15 18:34:17 INFO Shibboleth-TRANSACTION [37]: }
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: New session (ID: _0c98de1d16862ed60d26cb4d94125c1e) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _3c6284b5e8ee453d40d8b99ac41cfa09)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: Cached the following attributes with session (ID: _0c98de1d16862ed60d26cb4d94125c1e) for (applicationId: default) {
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: 	eppn (1 values)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: 	sn (1 values)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: 	affiliation (2 values)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: 	givenName (1 values)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: 	entitlement (1 values)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: 	persistent-id (1 values)
+2015-09-15 18:34:19 INFO Shibboleth-TRANSACTION [37]: }
+2015-09-15 18:34:32 INFO Shibboleth-TRANSACTION [34]: Destroyed session (applicationId: default) (ID: _0c98de1d16862ed60d26cb4d94125c1e)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: New session (ID: _0365d3b501a09e1cb2067cf2d62bf333) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _ac07ed1a058738c005f8b1ffdcedeca6)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: Cached the following attributes with session (ID: _0365d3b501a09e1cb2067cf2d62bf333) for (applicationId: default) {
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: 	eppn (1 values)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: 	sn (1 values)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: 	affiliation (2 values)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: 	givenName (1 values)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: 	entitlement (1 values)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: 	persistent-id (1 values)
+2015-09-15 18:34:38 INFO Shibboleth-TRANSACTION [36]: }
+2015-09-15 18:34:47 INFO Shibboleth-TRANSACTION [28]: Destroyed session (applicationId: default) (ID: _0365d3b501a09e1cb2067cf2d62bf333)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: New session (ID: _6af9f37aa5a70401bfab77969d65a467) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _141e9be153838b873404de0905af4c93)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: Cached the following attributes with session (ID: _6af9f37aa5a70401bfab77969d65a467) for (applicationId: default) {
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: 	eppn (1 values)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: 	sn (1 values)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: 	affiliation (2 values)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: 	givenName (1 values)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: 	entitlement (1 values)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: 	persistent-id (1 values)
+2015-09-15 18:34:51 INFO Shibboleth-TRANSACTION [38]: }
+2015-09-15 18:35:01 INFO Shibboleth-TRANSACTION [32]: Destroyed session (applicationId: default) (ID: _6af9f37aa5a70401bfab77969d65a467)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: New session (ID: _777704c8c4b2f450cb83a7342615e67e) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _6ddc3d136411751c0a37d589700488d2)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: Cached the following attributes with session (ID: _777704c8c4b2f450cb83a7342615e67e) for (applicationId: default) {
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: 	eppn (1 values)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: 	sn (1 values)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: 	affiliation (2 values)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: 	givenName (1 values)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: 	entitlement (1 values)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: 	persistent-id (1 values)
+2015-09-15 18:35:03 INFO Shibboleth-TRANSACTION [39]: }
+2015-09-15 18:35:09 INFO Shibboleth-TRANSACTION [4]: Destroyed session (applicationId: default) (ID: _777704c8c4b2f450cb83a7342615e67e)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: New session (ID: _194d9549ef7d308f71726d9625e20ca1) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _633a41975bc4f2101f6b8dea6194f2f4)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: Cached the following attributes with session (ID: _194d9549ef7d308f71726d9625e20ca1) for (applicationId: default) {
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: 	eppn (1 values)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: 	sn (1 values)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: 	affiliation (2 values)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: 	givenName (1 values)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: 	entitlement (1 values)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: 	persistent-id (1 values)
+2015-09-15 18:36:46 INFO Shibboleth-TRANSACTION [36]: }
+2015-09-15 18:36:50 INFO Shibboleth-TRANSACTION [34]: Destroyed session (applicationId: default) (ID: _194d9549ef7d308f71726d9625e20ca1)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: New session (ID: _03c0e98ab95b10e3dc05916c9585ea51) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _220d1e15abd78bf5e060bc53fc562f53)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: Cached the following attributes with session (ID: _03c0e98ab95b10e3dc05916c9585ea51) for (applicationId: default) {
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: 	eppn (1 values)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: 	sn (1 values)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: 	affiliation (2 values)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: 	givenName (1 values)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: 	entitlement (1 values)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: 	persistent-id (1 values)
+2015-09-15 18:37:02 INFO Shibboleth-TRANSACTION [42]: }
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: New session (ID: _954d25c8c68ed7ffb92f5f67f21e83dd) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _9818988dc8ba571052461331402625e9)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: Cached the following attributes with session (ID: _954d25c8c68ed7ffb92f5f67f21e83dd) for (applicationId: default) {
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: 	eppn (1 values)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: 	sn (1 values)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: 	affiliation (2 values)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: 	givenName (1 values)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: 	entitlement (1 values)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: 	persistent-id (1 values)
+2015-09-15 18:37:14 INFO Shibboleth-TRANSACTION [43]: }
+2015-09-15 18:46:19 INFO Shibboleth-TRANSACTION [36]: Destroyed session (applicationId: default) (ID: _954d25c8c68ed7ffb92f5f67f21e83dd)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: New session (ID: _b6024b0c9f1fa27797bff730d7466da4) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _1422a2a16958b2f318e59554868046c1)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: Cached the following attributes with session (ID: _b6024b0c9f1fa27797bff730d7466da4) for (applicationId: default) {
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: 	eppn (1 values)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: 	sn (1 values)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: 	affiliation (2 values)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: 	givenName (1 values)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: 	entitlement (1 values)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: 	persistent-id (1 values)
+2015-09-15 18:46:44 INFO Shibboleth-TRANSACTION [43]: }
+2015-09-15 18:47:01 INFO Shibboleth-TRANSACTION [40]: Destroyed session (applicationId: default) (ID: _b6024b0c9f1fa27797bff730d7466da4)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: New session (ID: _09dfc2a1a5ab5352d990730f1a2d9afd) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _19a0e15aca4f48e2768566887222558b)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: Cached the following attributes with session (ID: _09dfc2a1a5ab5352d990730f1a2d9afd) for (applicationId: default) {
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: 	eppn (1 values)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: 	sn (1 values)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: 	affiliation (2 values)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: 	givenName (1 values)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: 	entitlement (1 values)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: 	persistent-id (1 values)
+2015-09-15 18:47:09 INFO Shibboleth-TRANSACTION [41]: }
+2015-09-15 18:49:10 INFO Shibboleth-TRANSACTION [44]: Destroyed session (applicationId: default) (ID: _09dfc2a1a5ab5352d990730f1a2d9afd)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: New session (ID: _06fb538b69b79c1729e03933ab15b625) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _8045b52cf084337ccbe16449e0d5e16c)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: Cached the following attributes with session (ID: _06fb538b69b79c1729e03933ab15b625) for (applicationId: default) {
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: 	eppn (1 values)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: 	sn (1 values)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: 	affiliation (2 values)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: 	givenName (1 values)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: 	entitlement (1 values)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: 	persistent-id (1 values)
+2015-09-15 18:49:13 INFO Shibboleth-TRANSACTION [38]: }
+2015-09-15 18:51:57 INFO Shibboleth-TRANSACTION [46]: Destroyed session (applicationId: default) (ID: _06fb538b69b79c1729e03933ab15b625)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: New session (ID: _a5bc4f79103c16620ff2e9a908a04a55) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _e68b0c065bb70ad789d6488d8ec09940)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: Cached the following attributes with session (ID: _a5bc4f79103c16620ff2e9a908a04a55) for (applicationId: default) {
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: 	eppn (1 values)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: 	sn (1 values)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: 	affiliation (2 values)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: 	givenName (1 values)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: 	entitlement (1 values)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: 	persistent-id (1 values)
+2015-09-15 18:52:44 INFO Shibboleth-TRANSACTION [41]: }
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: New session (ID: _c3d913da067ac0bfca316751fc569e4b) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _7e960ffcf0d42833a48f4927f8014367)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: Cached the following attributes with session (ID: _c3d913da067ac0bfca316751fc569e4b) for (applicationId: default) {
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: 	eppn (1 values)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: 	sn (1 values)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: 	affiliation (2 values)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: 	givenName (1 values)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: 	entitlement (1 values)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: 	persistent-id (1 values)
+2015-09-15 18:52:47 INFO Shibboleth-TRANSACTION [41]: }
+2015-09-15 19:07:43 INFO Shibboleth-TRANSACTION [38]: Destroyed session (applicationId: default) (ID: _c3d913da067ac0bfca316751fc569e4b)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: New session (ID: _3022809ee58c109a3403603fcdfc335d) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _be6832617c697d2e8822f0520de94bcf)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: Cached the following attributes with session (ID: _3022809ee58c109a3403603fcdfc335d) for (applicationId: default) {
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: 	eppn (1 values)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: 	sn (1 values)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: 	affiliation (2 values)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: 	givenName (1 values)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: 	entitlement (1 values)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: 	persistent-id (1 values)
+2015-09-15 19:07:50 INFO Shibboleth-TRANSACTION [39]: }
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: New session (ID: _851f28dc92c383ca3577c659fa2b00de) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _07806b125e8ab9ac95bafb22b937bd00)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: Cached the following attributes with session (ID: _851f28dc92c383ca3577c659fa2b00de) for (applicationId: default) {
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: 	eppn (1 values)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: 	sn (1 values)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: 	affiliation (2 values)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: 	givenName (1 values)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: 	entitlement (1 values)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: 	persistent-id (1 values)
+2015-09-15 19:07:52 INFO Shibboleth-TRANSACTION [39]: }
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: New session (ID: _b0d3eeeec2fde3723a58184c90e74084) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _ed994900c6d65dc742d546ef3b9a6303)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: Cached the following attributes with session (ID: _b0d3eeeec2fde3723a58184c90e74084) for (applicationId: default) {
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: 	eppn (1 values)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: 	sn (1 values)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: 	affiliation (2 values)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: 	givenName (1 values)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: 	entitlement (1 values)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: 	persistent-id (1 values)
+2015-09-15 19:07:54 INFO Shibboleth-TRANSACTION [39]: }
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: New session (ID: _a4df6be5a54137ebf8f303ae19112040) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _2f71b823411c73e7a7a89219a4df6f6a)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: Cached the following attributes with session (ID: _a4df6be5a54137ebf8f303ae19112040) for (applicationId: default) {
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: 	eppn (1 values)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: 	sn (1 values)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: 	affiliation (2 values)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: 	givenName (1 values)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: 	entitlement (1 values)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: 	persistent-id (1 values)
+2015-09-15 19:08:00 INFO Shibboleth-TRANSACTION [41]: }
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: New session (ID: _e7fe8ee524b98339922e5d56bb1004cd) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _8a53cf4f75ce5c6cd07b1d01a4613f83)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: Cached the following attributes with session (ID: _e7fe8ee524b98339922e5d56bb1004cd) for (applicationId: default) {
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: 	eppn (1 values)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: 	sn (1 values)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: 	affiliation (2 values)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: 	givenName (1 values)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: 	entitlement (1 values)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: 	persistent-id (1 values)
+2015-09-15 19:08:01 INFO Shibboleth-TRANSACTION [41]: }
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: New session (ID: _41acbec0cb83c7f40413ce7354adaa7d) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _75980dcf56f71186516694fde3f9b2bb)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: Cached the following attributes with session (ID: _41acbec0cb83c7f40413ce7354adaa7d) for (applicationId: default) {
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: 	eppn (1 values)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: 	sn (1 values)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: 	affiliation (2 values)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: 	givenName (1 values)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: 	entitlement (1 values)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: 	persistent-id (1 values)
+2015-09-15 19:08:23 INFO Shibboleth-TRANSACTION [47]: }
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: New session (ID: _789293f53f6066ccb166c622cdb3bc03) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _061ee25ebf61f851c18e903b1ba73578)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: Cached the following attributes with session (ID: _789293f53f6066ccb166c622cdb3bc03) for (applicationId: default) {
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: 	eppn (1 values)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: 	sn (1 values)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: 	affiliation (2 values)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: 	givenName (1 values)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: 	entitlement (1 values)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: 	persistent-id (1 values)
+2015-09-15 19:08:29 INFO Shibboleth-TRANSACTION [36]: }
+2015-09-15 19:12:00 INFO Shibboleth-TRANSACTION [49]: Destroyed session (applicationId: default) (ID: _789293f53f6066ccb166c622cdb3bc03)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: New session (ID: _60f509b0e86c7aaaf8c974fe78f9384f) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _feddf3b92a9f1dc8d8186826a87a4908)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: Cached the following attributes with session (ID: _60f509b0e86c7aaaf8c974fe78f9384f) for (applicationId: default) {
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: 	eppn (1 values)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: 	sn (1 values)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: 	affiliation (2 values)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: 	givenName (1 values)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: 	entitlement (1 values)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: 	persistent-id (1 values)
+2015-09-15 19:12:17 INFO Shibboleth-TRANSACTION [44]: }
+2015-09-15 19:13:14 INFO Shibboleth-TRANSACTION [38]: Destroyed session (applicationId: default) (ID: _60f509b0e86c7aaaf8c974fe78f9384f)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: New session (ID: _e56c1889dcc4c5edd45b0816b4fa64a7) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _4772dbe383df1f2be59262fd210ab6f3)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: Cached the following attributes with session (ID: _e56c1889dcc4c5edd45b0816b4fa64a7) for (applicationId: default) {
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: 	eppn (1 values)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: 	sn (1 values)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: 	affiliation (2 values)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: 	givenName (1 values)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: 	entitlement (1 values)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: 	persistent-id (1 values)
+2015-09-15 19:13:30 INFO Shibboleth-TRANSACTION [45]: }
+2015-09-15 19:14:57 INFO Shibboleth-TRANSACTION [48]: Destroyed session (applicationId: default) (ID: _e56c1889dcc4c5edd45b0816b4fa64a7)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: New session (ID: _47a6c70e7d26455e2f02b7c40c42a880) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _f606e80a2beb253dabd403cfea0ba3f2)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: Cached the following attributes with session (ID: _47a6c70e7d26455e2f02b7c40c42a880) for (applicationId: default) {
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: 	eppn (1 values)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: 	sn (1 values)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: 	affiliation (2 values)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: 	givenName (1 values)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: 	entitlement (1 values)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: 	persistent-id (1 values)
+2015-09-15 19:15:27 INFO Shibboleth-TRANSACTION [49]: }
+2015-09-15 19:22:54 INFO Shibboleth-TRANSACTION [50]: Destroyed session (applicationId: default) (ID: _47a6c70e7d26455e2f02b7c40c42a880)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: New session (ID: _b55002d6ceda4a77bb110c9d9fdaeff9) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _2c758fdd4173a76b09ecf8a2a34b6e76)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: Cached the following attributes with session (ID: _b55002d6ceda4a77bb110c9d9fdaeff9) for (applicationId: default) {
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: 	eppn (1 values)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: 	sn (1 values)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: 	affiliation (2 values)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: 	givenName (1 values)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: 	entitlement (1 values)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: 	persistent-id (1 values)
+2015-09-15 19:23:02 INFO Shibboleth-TRANSACTION [49]: }
+2015-09-15 19:23:07 INFO Shibboleth-TRANSACTION [39]: Destroyed session (applicationId: default) (ID: _b55002d6ceda4a77bb110c9d9fdaeff9)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: New session (ID: _4af68dbb6e79bb49c1c31036a89e3e68) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _859c793e5320d85803dc8a5db7f76924)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: Cached the following attributes with session (ID: _4af68dbb6e79bb49c1c31036a89e3e68) for (applicationId: default) {
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: 	eppn (1 values)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: 	sn (1 values)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: 	affiliation (2 values)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: 	givenName (1 values)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: 	entitlement (1 values)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: 	persistent-id (1 values)
+2015-09-15 19:23:17 INFO Shibboleth-TRANSACTION [48]: }
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: New session (ID: _ce99c6ced153d046a7f6fbcf2bdc65d7) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _c08955269ea07226b56bd7c5b40082c5)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: Cached the following attributes with session (ID: _ce99c6ced153d046a7f6fbcf2bdc65d7) for (applicationId: default) {
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: 	eppn (1 values)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: 	sn (1 values)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: 	affiliation (2 values)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: 	givenName (1 values)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: 	entitlement (1 values)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: 	persistent-id (1 values)
+2015-09-15 19:27:14 INFO Shibboleth-TRANSACTION [49]: }
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: New session (ID: _7fca55f98e0b444d042a8c9f91a4bbc0) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _5a439db5177624bb86ecb8d40cbc52eb)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: Cached the following attributes with session (ID: _7fca55f98e0b444d042a8c9f91a4bbc0) for (applicationId: default) {
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: 	eppn (1 values)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: 	sn (1 values)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: 	affiliation (2 values)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: 	givenName (1 values)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: 	entitlement (1 values)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: 	persistent-id (1 values)
+2015-09-15 19:31:35 INFO Shibboleth-TRANSACTION [45]: }
+2015-09-15 19:33:43 INFO Shibboleth-TRANSACTION [48]: Destroyed session (applicationId: default) (ID: _7fca55f98e0b444d042a8c9f91a4bbc0)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: New session (ID: _1f3a057a2a5c82d78c102b853456c90c) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _a7e27ebd7ed75b33f1c07de07011acbf)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: Cached the following attributes with session (ID: _1f3a057a2a5c82d78c102b853456c90c) for (applicationId: default) {
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: 	eppn (1 values)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: 	sn (1 values)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: 	affiliation (2 values)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: 	givenName (1 values)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: 	entitlement (1 values)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: 	persistent-id (1 values)
+2015-09-15 19:33:46 INFO Shibboleth-TRANSACTION [49]: }
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: New session (ID: _a0c1d04cd43cad4a19bb4fd18bb87cb2) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _ccc33eba7cc1034e2a850a189e039a20)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: Cached the following attributes with session (ID: _a0c1d04cd43cad4a19bb4fd18bb87cb2) for (applicationId: default) {
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: 	eppn (1 values)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: 	sn (1 values)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: 	affiliation (2 values)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: 	givenName (1 values)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: 	entitlement (1 values)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: 	persistent-id (1 values)
+2015-09-15 19:33:59 INFO Shibboleth-TRANSACTION [47]: }
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: New session (ID: _df298c7dd2fc8ba778b3892dad0897ce) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _d1fe3463db00bdf89d5d27e12191a86c)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: Cached the following attributes with session (ID: _df298c7dd2fc8ba778b3892dad0897ce) for (applicationId: default) {
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: 	eppn (1 values)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: 	sn (1 values)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: 	affiliation (2 values)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: 	givenName (1 values)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: 	entitlement (1 values)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: 	persistent-id (1 values)
+2015-09-15 19:36:08 INFO Shibboleth-TRANSACTION [46]: }
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: New session (ID: _af031897f23117f2da9682ec0c315706) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.130.241.138) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _805bfeca9f76b15c0121e3be80605f66)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: Cached the following attributes with session (ID: _af031897f23117f2da9682ec0c315706) for (applicationId: default) {
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: 	eppn (1 values)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: 	sn (1 values)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: 	affiliation (2 values)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: 	givenName (1 values)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: 	entitlement (1 values)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: 	persistent-id (1 values)
+2015-09-15 19:36:36 INFO Shibboleth-TRANSACTION [49]: }
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: New session (ID: _0dc8a2da07f2d91a6ce1bbdf6d5805b9) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.132.246.177) with (NameIdentifier: _ae34f126825f6e20bffe6b1cbb298890) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _78f7d983b2f5c5c14eb65a693773d12a)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: Cached the following attributes with session (ID: _0dc8a2da07f2d91a6ce1bbdf6d5805b9) for (applicationId: default) {
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: 	eppn (1 values)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: 	sn (1 values)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: 	affiliation (2 values)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: 	givenName (1 values)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: 	entitlement (1 values)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: 	persistent-id (1 values)
+2015-09-15 20:28:54 INFO Shibboleth-TRANSACTION [1]: }
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: New session (ID: _ead8f301eed2d485affdcb5935984540) with (applicationId: default) for principal from (IdP: https://login.uc.edu/idp/shibboleth) at (ClientAddress: 10.132.253.119) with (NameIdentifier: _b0c0fbbcccfd0591377a8ba2d281b3ad) using (Protocol: urn:oasis:names:tc:SAML:2.0:protocol) from (AssertionID: _18a0bdb37698d87cfba6af3cba75eccd)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: Cached the following attributes with session (ID: _ead8f301eed2d485affdcb5935984540) for (applicationId: default) {
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: 	eppn (1 values)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: 	sn (1 values)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: 	affiliation (3 values)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: 	givenName (1 values)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: 	entitlement (1 values)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: 	persistent-id (1 values)
+2015-09-15 20:29:45 INFO Shibboleth-TRANSACTION [2]: }

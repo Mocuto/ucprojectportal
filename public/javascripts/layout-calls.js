@@ -195,10 +195,12 @@ function setupLayout() {
 		var notificationTextWidth = $("#notification-text").width();
 		if(width < 1024 + notificationTextWidth) {
 			$("#uc-sg").hide()
+			$($(".title-project-portal").children()[0]).text("pp")
 
 		}
 		else {
 			$("#uc-sg").show()
+			$($(".title-project-portal").children()[0]).text("project portal")
 			$('.title-nav').css("width", "auto");
 		}
 

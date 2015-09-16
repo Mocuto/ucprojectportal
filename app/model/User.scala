@@ -157,6 +157,8 @@ object User {
 	def setProfilePic(username : String, temporaryFile : (String, TemporaryFile)) : String = {
 		val uuid = java.util.UUID.randomUUID.toString;
 
+		println(temporaryFile)
+
 		val originalName = temporaryFile._1
 		val filename = uuid + "--" + temporaryFile._1
 

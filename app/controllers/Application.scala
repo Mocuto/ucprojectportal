@@ -120,6 +120,7 @@ object Application extends Controller with SessionHandler {
 		})(request,
 		{
 				if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
+					println("R")
 					Redirect(routes.ShibbolethController.secure(path))
 				}
 				else {
@@ -174,7 +175,7 @@ object Application extends Controller with SessionHandler {
 	def signout = Action { implicit request =>
 
 		if(constants.ServerSettings.AuthenticationMode == enums.AuthenticationMode.Shibboleth) {
-			Redirect("/Shibboleth.sso/Logout?return=" + routes.Application.login("").toString).withSession(
+			Redirect("/Shibboleth.sso/Logout?return=" + routes.Application.index.toString).withSession(
 				request.session - "authenticated"
 			)
 		}

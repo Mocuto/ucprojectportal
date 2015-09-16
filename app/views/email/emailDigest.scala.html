@@ -72,309 +72,42 @@ userFollowingProjectsForStatus : Map[enums.ProjectActivityStatus.ProjectActivity
 }
 
 @completedProject(project : model.Project) = {
-<div class="hero-card" style="
-    background-color: white;
-    border-radius: 4px;
-    border: 1px solid white;
-    width: 240px;
-    margin-bottom: 16px;
-">
-    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
-    @if(model.User.get(project.primaryContact).profile == None) {
-    	<div class="hero-profile empty" style="
-    		height: 159px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
-    } else {
-    	<div class="hero-profile" style="
-    		height: 159px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + model.User.get(project.primaryContact).profile.get)');">
-    }
-        <div class="hero-profile-overlay" style="
-		    position: absolute;
-		    width: 240px;
-		    height: 159px;
-		    background-color: #00DC75;
-		    border-radius: 4px;
-		    opacity: 0.4;
-		    z-index: 0;
-        "></div>
-        <div class="hero-title" style="
-			padding-left: 16px;
-		    padding-right: 16px;
-		    font-size: 13pt;
-		    color: white;
-		    z-index: 2;
-		    position: relative;
-		    text-shadow: 2px 2px #000;
-		    padding-top: 32px;
-		    margin-bottom: 16px;
-		    font-weight: lighter;
-
-        ">new project</div>
-        <div class="hero-content" style="
-	    padding-left: 16px;
-	    padding-right: 16px;
-	    font-size: 24pt;
-	    color: white;
-	    z-index: 2;
-	    position: relative;
-	    text-shadow: 2px 2px #000;
-	    font-weight: lighter;
-        font-size:@calculateFontSizeProject(project)pt">@project.name</div>
-    </div></a>
-    <div class="hero-controls-large" style="
-	padding-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-weight: lighter;
-
-    ">
-		<div>
-		@for(username <- project.teamMembers.take(4)) {
-			@common.userProfileIconViewEmail(model.User.get(username))
-		}
-		</div>
 		<div style="
-			height: 24px;
+			color: white;
+			font-weight: lighter;
     		margin-top: 12px;">
-    		@links.projectLinkEmail(project.id, "view project")</a>
+    		@links.projectLinkEmail(project.id, project.name)</a>
     	</div>
-    </div>
 
-</div>
 }
 
 @newProject(project : model.Project) = {
-<div class="hero-card" style="
-    background-color: white;
-    border-radius: 4px;
-    border: 1px solid white;
-    width: 240px;
-    margin-bottom: 16px;
-">
-    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
-    @if(model.User.get(project.primaryContact).profile == None) {
-    	<div class="hero-profile empty" style="
-    		height: 159px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
-    } else {
-    	<div class="hero-profile" style="
-    		height: 159px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + model.User.get(project.primaryContact).profile.get)');">
-    }
-        <div class="hero-profile-overlay" style="
-		    position: absolute;
-		    width: 240px;
-		    height: 159px;
-		    background-color: #C51834;
-		    border-radius: 4px;
-		    opacity: 0.4;
-		    z-index: 0;
-        "></div>
-        <div class="hero-title" style="
-			padding-left: 16px;
-		    padding-right: 16px;
-		    font-size: 13pt;
-		    color: white;
-		    z-index: 2;
-		    position: relative;
-		    text-shadow: 2px 2px #000;
-		    padding-top: 32px;
-		    margin-bottom: 16px;
-		    font-weight: lighter;
-
-        ">new project</div>
-        <div class="hero-content" style="
-	    padding-left: 16px;
-	    padding-right: 16px;
-	    font-size: 24pt;
-	    color: white;
-	    z-index: 2;
-	    position: relative;
-	    text-shadow: 2px 2px #000;
-	    font-weight: lighter;
-        font-size:@calculateFontSizeProject(project)pt">@project.name</div>
-    </div></a>
-    <div class="hero-controls-large" style="
-	padding-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-weight: lighter;
-
-    ">
-		<div>
-		@for(username <- project.teamMembers.take(4)) {
-			@common.userProfileIconViewEmail(model.User.get(username))
-		}
-		</div>
 		<div style="
-			height: 24px;
+			color: white;
+			font-weight: lighter;
     		margin-top: 12px;">
-    		@links.projectLinkEmail(project.id, "view project")</a>
+    		@links.projectLinkEmail(project.id, project.name)</a>
     	</div>
-    </div>
 
-</div>
 }
 
 @hotProject(project : model.Project, count : Int) = {
-<div class="hero-card" style="
-    background-color: white;
-    border-radius: 4px;
-    border: 1px solid white;
-    width: 240px;
-    margin-bottom: 16px;
-">
-    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
-    @if(model.User.get(project.primaryContact).profile == None) {
-    	<div class="hero-profile empty" style="
-    		height: 159px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
-    } else {
-    	<div class="hero-profile" style="
-    		height: 159px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + model.User.get(project.primaryContact).profile.get)');">
-    }
-        <div class="hero-profile-overlay" style="
-		    position: absolute;
-		    width: 240px;
-		    height: 159px;
-		    background-color: #C51834;
-		    border-radius: 4px;
-		    opacity: 0.4;
-		    z-index: 0;
-        "></div>
-        <div class="hero-title" style="
-			padding-left: 16px;
-		    padding-right: 16px;
-		    font-size: 13pt;
-		    color: white;
-		    z-index: 2;
-		    position: relative;
-		    text-shadow: 2px 2px #000;
-		    padding-top: 32px;
-		    margin-bottom: 16px;
-		    font-weight: lighter;
-
-        ">@count @(if(count > 1) "updates" else "update")</div>
-        <div class="hero-content" style="
-	    padding-left: 16px;
-	    padding-right: 16px;
-	    font-size: 24pt;
-	    color: white;
-	    z-index: 2;
-	    position: relative;
-	    text-shadow: 2px 2px #000;
-	    font-weight: lighter;
-        font-size:@calculateFontSizeProject(project)pt">@project.name</div>
-    </div></a>
-    <div class="hero-controls-large" style="
-	padding-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-weight: lighter;
-
-    ">
-		<div>
-		@for(username <- project.teamMembers.take(4)) {
-			@common.userProfileIconViewEmail(model.User.get(username))
-		}
-		</div>
 		<div style="
-			height: 24px;
+			color: white;
+			font-weight: lighter;
     		margin-top: 12px;">
-    		@links.projectLinkEmail(project.id, "view project")</a>
+    		@links.projectLinkEmail(project.id, s"${project.name}, # of updates: $count")</a>
     	</div>
-    </div>
-
-</div>
 }
 
 @hotContributor(user : model.User, count : Int) = {
-<div class="hero-card" style="
-    background-color: white;
-    border-radius: 4px;
-    border: 1px solid white;
-    width: 240px;
-    margin-bottom: 16px;
-">
-    <a style="text-decoration:none; color: white;" href='@(constants.ServerSettings.HostUrl + routes.UserController.user(user.username))'>
-    @if(user.profile == None) {
-    	<div class="hero-profile empty" style="
-    		height: 240px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-		    background-image:url('@(constants.ServerSettings.HostUrl + "/assets/images/login-bg.jpg")');">
-    } else {
-    	<div class="hero-profile" style="
-    		height: 240px;
-		    background-size: cover;
-		    border-radius: 4px;
-		    cursor: pointer;
-    		background-image:url('@(constants.ServerSettings.HostUrl + "/" + user.profile.get)');">
-    }
-        <div class="hero-profile-overlay" style="
-		    position: absolute;
-		    width: 240px;
-		    height: 240px;
-		    background-color: #C51834;
-		    border-radius: 4px;
-		    opacity: 0.4;
-		    z-index: 0;
-        "></div>
-        <div class="hero-title" style="
-			padding-left: 16px;
-		    padding-right: 16px;
-		    font-size: 13pt;
-		    color: white;
-		    z-index: 2;
-		    position: relative;
-		    text-shadow: 2px 2px #000;
-		    padding-top: 32px;
-		    margin-bottom: 16px;
-		    font-weight: lighter;
-
-        ">@count @(if(count > 1) "updates" else "update")</div>
-        <div class="hero-content" style="
-	    padding-left: 16px;
-	    padding-right: 16px;
-	    font-size: 24pt;
-	    color: white;
-	    z-index: 2;
-	    position: relative;
-	    text-shadow: 2px 2px #000;
-	    font-weight: lighter;
-        font-size:@calculateFontSizeUser(user)pt">@user.fullName.toLowerCase()</div>
-    </div></a>
-    <div class="hero-controls" style="
-		height: 24px;
-	    padding-top: 8px;
-	    padding-left: 16px;
-	    padding-right: 16px;
+    <div  style="
+    	color: white;
 	    font-weight: lighter;
     ">
     	@links.userLinkEmail(user, "view user")</a>
     </div>
-</div>
+
 }
 
 @percentageStatus(
