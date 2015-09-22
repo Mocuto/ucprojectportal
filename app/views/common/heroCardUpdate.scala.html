@@ -36,7 +36,7 @@
     }
         <div class="hero-profile-overlay"></div>
         <div class="hero-title">@user.firstName.toLowerCase() updated the project,<br /> @links.projectLink(project.id),</div>
-        <div class="hero-content" style="font-size:@calculateFontSize(update)pt">&ldquo;@shortenContent(update)&rdquo;</div>
+        <div class="hero-content" style="font-size:@calculateFontSize(update)pt"><a href='@(routes.ProjectController.project(project.id) + s"#${update.projectId};${update.author};${utils.Conversions.dateToStr(update.timeSubmitted)}")' style="color: white" class="no-underline">&ldquo;@shortenContent(update)&rdquo;</a></div>
     </div></a>
     <div class="hero-controls">
     	@links.updateLink(update.projectId, update.author, utils.Conversions.dateToStr(update.timeSubmitted), "view update")
