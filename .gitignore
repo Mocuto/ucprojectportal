@@ -15,3 +15,8 @@ dist
 /.project
 /RUNNING_PID
 /.settings
+nohup.out
+shibd.log
+signature.log
+shibd_warn.log
+transaction.log
