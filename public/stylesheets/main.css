@@ -393,6 +393,10 @@ body {
 	margin-right:24px;
 }
 
+.roundbox.update {
+	width: 1160px;
+}
+
 .roundbox-textinput {
 	border:solid 0px transparent;
 	padding:8px;
