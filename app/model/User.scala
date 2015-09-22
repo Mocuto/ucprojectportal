@@ -199,6 +199,12 @@ object User {
 
 	def removeUserToFollow(username : String, toFollow : String) = UserTable.removeUserToFollow(username, toFollow)
 
+	def addToProject(username : String, projectId : Int) = UserTable.addToProject(username, projectId)
+	def removeFromProject(username : String, projectId : Int) = UserTable.removeFromProject(username, projectId)
+
+	def addPrimaryContactProject(username : String, projectId : Int) = UserTable.addPrimaryContactProject(username, projectId)
+	def removePrimaryContactProject(username : String, projectId : Int) = UserTable.removePrimaryContactProject(username, projectId)
+
 	implicit def fromRow(row : Row) : User = {
 		row match {
 			case null => return User.undefined
@@ -276,8 +282,6 @@ object UserTable extends UserTable {
 			.value(_.last_name, user.lastName)
 			.value(_.last_login, user.lastLogin)
 			.value(_.last_activity, user.lastActivity)
-			//.value(_.primary_contact_projects, user.primaryContactProjects.toSet)
-			//.value(_.projects, user.projects.toSet)
 			.value(_.emeritus_, user.emeritus)
 			.value(_.position, user.position)
 			.value(_.preferred_pronouns, user.preferredPronouns)
@@ -355,6 +359,12 @@ object UserTable extends UserTable {
 
 	def addUserToFollow(username : String, toFollow : String) = update.where(_.username eqs username).modify(_.users_following add toFollow).future();
 	def removeUserToFollow(username : String, toFollow : String) = update.where(_.username eqs username).modify(_.users_following remove toFollow).future();
+
+	def addToProject(username : String, projectId : Int) = update.where(_.username eqs username).modify(_.projects add projectId).future();
+	def removeFromProject(username : String, projectId : Int) = update.where(_.username eqs username).modify(_.projects remove projectId).future();
+
+	def addPrimaryContactProject(username : String, projectId : Int) = update.where(_.username eqs username).modify(_.primary_contact_projects add projectId).future();
+	def removePrimaryContactProject(username : String, projectId : Int) = update.where(_.username eqs username).modify(_.primary_contact_projects remove projectId).future();
 }
 
 case class User (

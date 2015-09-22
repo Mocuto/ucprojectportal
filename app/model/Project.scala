@@ -185,6 +185,8 @@ object Project {
 
 		val newProject = ProjectTable.add(name, description, primaryContact, categories, state, stateMessage, primaryContact :: teamMembers.toList)
 
+		Project.changePrimaryContact(newProject.id, User.undefined, User.get(primaryContact))
+
 		for (username <- teamMembers) {
 			if(username != primaryContact) {
 				Project.addUser(newProject.id, User.get(username))
@@ -366,6 +368,8 @@ object Project {
 
 		CassieCommunicator.changePrimaryContactForProject(oldUser, newUser, oldProject);
 		ProjectRequest.swapOwner(id, oldUser.username, newUser.username)
+
+		User.addToProject(newUser.username, id);
 
 		return Project.get(id);
 	}
