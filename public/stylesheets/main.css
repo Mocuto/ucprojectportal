@@ -882,7 +882,7 @@ background-image:url("/assets/images/buttons/project-edit-active.png");
 
 #office-hours-window, #verify-window {
 	width:initial;
-    max-height: 657px;
+    max-height: 675px;
     height: 100%;
     overflow-y: auto;
 }
