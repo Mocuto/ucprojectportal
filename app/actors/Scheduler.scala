@@ -44,7 +44,7 @@ trait Scheduler {
 		val dayNow = now.getDayOfWeek()
 		val hourNow = now.getHourOfDay()
 
-		val date = if(dayNow > day || dayNow == day && hourNow > hour) {
+		val date = if(dayNow > day || dayNow == day && hourNow >= hour) {
 			now.plusWeeks(1).withDayOfWeek(day).withHourOfDay(hour)
 		}
 		else {

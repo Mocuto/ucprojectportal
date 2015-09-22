@@ -1,7 +1,7 @@
 @(loggedInUser: model.User, user : model.User, project : model.Project, update : model.ProjectUpdate)
 
 @shortenContent(update : model.ProjectUpdate) = @{
-	val maxLength = 100;
+	val maxLength = 90;
 	if(update.content.length > maxLength) {
 		update.content.substring(0, maxLength - 3) + "..."
 	}
@@ -11,7 +11,7 @@
 }
 
 @calculateFontSize(update : model.ProjectUpdate) = @{
-	val maxLength = 100;
+	val maxLength = 90;
 	val minLength = 10;
 	val smallestSize = 15.0;
 	val largestSize = 24.0;
@@ -22,7 +22,7 @@
 		largestSize.toInt
 	}
 	else {
-		math.floor(( (update.content.length.toDouble - minLength) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt - 1
+		math.floor(( ((maxLength.toDouble - minLength) - (update.content.length.toDouble - minLength)) / (maxLength.toDouble - minLength)) * (largestSize - smallestSize)).toInt + smallestSize.toInt - 1
 	}
 }
 

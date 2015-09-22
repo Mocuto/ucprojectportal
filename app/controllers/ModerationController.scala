@@ -211,6 +211,7 @@ object ModerationController extends Controller with SessionHandler {
 					},
 					{
 						case UserForm(firstName, lastName, preferredPronouns, cellNumber, position, officeHourRequirement) => {
+							println(s"officeHourRequirement $officeHourRequirement")
 							val canEdit = (UserPrivilegesEdit.getUninterruptibly(authUsername).getOrElse { UserPrivilegesEdit.undefined(authUsername) }).userPermissions
 							if(!canEdit) {
 								Status(404)("You do not have permission to edit user permissions");
