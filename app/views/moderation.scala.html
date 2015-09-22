@@ -31,7 +31,7 @@
 					@if(latestUpdate != None) {
 						<div class="content-header" style="font-weight:lighter; margin-bottom:8px;">latest update, posted in @links.projectLink(latestUpdate.get.projectId)</div>
 						<div class="hint" style="float:right">@utils.Conversions.dateToDisplayedStr(latestUpdate.get.timeSubmitted).toLowerCase()</div>
-						<div class="description" style="margin-bottom:32px; font-style:italic;">@links.updateLink(latestUpdate.get.projectId, latestUpdate.get.author, utils.Conversions.dateToStr(latestUpdate.get.timeSubmitted),utils.Conversions.toMultiLineHtml(latestUpdate.get.content))</div>
+						<div class="description no-underline" style="margin-bottom:32px; font-style:italic;">@links.updateLink(latestUpdate.get.projectId, latestUpdate.get.author, utils.Conversions.dateToStr(latestUpdate.get.timeSubmitted),utils.Conversions.toMultiLineHtml(latestUpdate.get.content))</div>
 					}
 				}
 

@@ -106,7 +106,7 @@ trait ActivityLogger {
 	def log(username : String, activityType : ActivityType, detail : Map[String, String]) : Unit = {
 		val activity = UserActivity.add(username, activityType, detail);
 
-		if(activityType == ActivityType.SubmitUpdate || activityType == ActivityType.CompletedProject || activityType == ActivityType.SubmitUpdate) {
+		if(activityType == ActivityType.SubmitProject || activityType == ActivityType.CompletedProject || activityType == ActivityType.SubmitUpdate) {
 			if(activityType == ActivityType.SubmitUpdate) {
 				Activity.add(activityType, username, detail, utils.Conversions.strToDate(detail("time-submitted")))
 			}
