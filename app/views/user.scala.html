@@ -104,7 +104,10 @@ loggedInPrivileges : model.UserPrivileges.PrivilegeSet)(verifyForm : Form[model.
     		<div class="hint">email: <a href='mailto:@(user.username + "@mail.uc.edu")' style="color:#C51834;">@(user.username + "@mail.uc.edu")</a></div>
     		<div class="hint">preferred pronouns: @user.preferredPronouns</div>
     		<div class="hint">position: @user.position</div>
-    		<div class="hint">cell number: @user.cellNumber</div>
+    		@if(loggedInUser.position != model.User.PositionNonSG && loggedInUser.verified == true) {
+    			<div class="hint">cell number: @user.cellNumber</div>
+    		}
+    		
 	      	@if(isAuthenticatedUser == false && loggedInPrivileges.follow.usersAll) {
 	      		<div style="margin-top:16px;">
 	      		<span style="float:left; margin-right: 8px">@common.followUserButton(loggedInUser, user.username)</span>
