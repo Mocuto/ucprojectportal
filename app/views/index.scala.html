@@ -20,7 +20,7 @@
         <div class="welcome">welcome.</div>
         <div class="hero-card-container">
         <div class="grid-sizer"></div>
-        @for(activity <- actors.masters.ActivityMaster.topActivities.take(8)) {
+        @for(activity <- actors.masters.ActivityMaster.topActivities.take(  if(user.position == model.User.PositionNonSG) 12 else 8 )) {
             @activity.activityType match {
                 case enums.ActivityType.SubmitUpdate => {
                     @((activity.detail("project-id").toInt, utils.Conversions.strToDate(activity.detail("time-submitted")))) match {

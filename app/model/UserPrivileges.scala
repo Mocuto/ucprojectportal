@@ -286,7 +286,7 @@ object UserPrivilegesView extends UserPrivilegesView with UserPrivilegesModel[Us
 
     def undefined(implicit username : String) = UserPrivileges.View(username, false, false, false, false, false)
 
-    def default(implicit username : String) = UserPrivileges.View(username, false, false, false, false, false)
+    def default(implicit username : String) = UserPrivileges.View(username, true, true, false, false, false)
 
 	def accountability(username : String) = UserPrivileges.View(username, false, false, true, false, false)
     def moderator(username : String) = UserPrivileges.View(username, false, false, false, true, false)
@@ -418,7 +418,7 @@ object UserPrivilegesFollow extends UserPrivilegesFollow with UserPrivilegesMode
 
 	def undefined(implicit username : String) = UserPrivileges.Follow(username, false, false);
 
-	def default(implicit username : String) = UserPrivileges.Follow(username, false, false);
+	def default(implicit username : String) = UserPrivileges.Follow(username, false, true);
 
     def add(item : UserPrivileges.Follow) = {
     	insert.value(_.username, item.username)
