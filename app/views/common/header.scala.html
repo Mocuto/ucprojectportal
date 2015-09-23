@@ -8,21 +8,29 @@
 	<span style="display: inline-block; padding-top:4px">
 		<span class="title-project-portal"><a href="/">project portal</a></span><span id="uc-sg">university of cincinnati undergraduate student government</span>
 	</span>
-	@common.userProfileHeaderView(user)
+	@if(user.position != model.User.PositionNonSG) {
+		@common.userProfileHeaderView(user)
+	} else {
+		<div class="title-nav-item"><a href="@routes.Application.signout">sign out</a></div>
+	}
 	<span class="title-nav-item">
 		<a href="/filter">
 			all projects
 		</a>
 	</span>
-	<span class="title-nav-item">
-		<a href="/@user.username">my projects</a>
-	</span>
+	@if(user.position != model.User.PositionNonSG) {
+		<span class="title-nav-item">
+			<a href="/@user.username">my projects</a>
+		</span>
+	}
 
+	@if(user.position != model.User.PositionNonSG) {
 	<span class="title-nav-item" style="padding-top:1px; max-height:32px;" title="log office hours">
 		<span style="max-height:32px">
 			<span class="office-hour-button"></span>
 		</span>
 	</span>
+	}
 
 	<span class="title-nav-item search-nav-item" title="search">
 		<span style="max-height:32px">
