@@ -232,7 +232,21 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	}
 
 	def startRankingActivity() : Unit = {
-		val activities = Activity.get(100);
+		val baseActivities = Activity.get(100);
+
+		val duplicateCompletedProject = baseActivities
+			.filter(_.activityType == ActivityType.CompletedProject)
+			.groupBy(_.detail("project-id").toInt)
+			.map({case (projectId : Int, list : Seq[Activity]) => list.sortWith((a : Activity, b : Activity) => a.timeSubmitted.after(b.timeSubmitted)).drop(1) } )
+
+
+		val activities = if(duplicateCompletedProject.toList.length == 0) {
+			baseActivities
+		} else {
+			baseActivities diff (duplicateCompletedProject.reduce(_ ++ _))
+		}
+
+
 
 		if(activities.length == 0) {
 			return;
