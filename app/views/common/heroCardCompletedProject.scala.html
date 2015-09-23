@@ -43,6 +43,7 @@
     </div></a>
     <div class="hero-controls-ribbon">
     	<span class="hero-controls-ribbon-content">
+
 		@if(project.teamMembers.contains(loggedInUser.username) && project.primaryContact != loggedInUser.username)  {
 			@common.userProfileIconView(model.User.get(loggedInUser.username), true, false)
 		}

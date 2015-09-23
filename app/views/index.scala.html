@@ -40,7 +40,7 @@
                 case enums.ActivityType.CompletedProject => {
                     @activity.detail("project-id").toInt match {
                         case projectId => {
-                            @common.heroCardCompletedProject(user, model.User.get(activity.username), model.Project.get(projectId))
+                            @common.heroCardCompletedProject(user, model.User.get(model.Project.get(projectId).primaryContact), model.Project.get(projectId))
                         }
                     }
                 }
