@@ -89,7 +89,7 @@ object Notification {
 
 		project.teamMembers.foreach(receiver => Notification.create(User.get(receiver), content, NotificationType.ProjectLiked))
 
-		ActivityMaster.scheduleProjectLikedEmail(user, project)
+		//ActivityMaster.scheduleProjectLikedEmail(user, project)
 	}
 
 	def createUpdateLiked(user : User, update : ProjectUpdate) : Unit = {
@@ -97,7 +97,7 @@ object Notification {
 
 		Notification.create(User.get(update.author), content, NotificationType.UpdateLiked)
 
-		ActivityMaster.scheduleUpdateLikedEmail(user, update)
+		//ActivityMaster.scheduleUpdateLikedEmail(user, update)
 	}
 
 	def createFailedOfficeHour(failure : User) : Unit = {

@@ -232,7 +232,8 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	}
 
 	def startRankingActivity() : Unit = {
-		val baseActivities = Activity.get(100);
+		val baseActivities = Activity.get(100).filter((a : Activity) => !(a.activityType == ActivityType.SubmitUpdate && 
+			ProjectUpdate.getLatest(a.detail("project-id").toInt, a.username, utils.Conversions.strToDate(a.detail("time-submitted"))).isDefined == false));
 
 		val duplicateCompletedProject = baseActivities
 			.filter(_.activityType == ActivityType.CompletedProject)

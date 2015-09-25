@@ -300,7 +300,7 @@ object Project {
 	def freezeWithNotification(project : Project) {
 		freeze(project)
 
-		project.involvedMembers foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
+		project.involvedMembers(User.get(project.primaryContact)) foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
 	}
 
 	def allTags : Seq[String] = return CassieCommunicator.getTagsWithType("project").getOrElse { return List[String]() };
@@ -456,15 +456,16 @@ case class Project (
 			teamMembers = List[String]())
 
 	def notifyFollowersAndMembersExcluding(excludingUsername : String, updateContent : String) : Unit = {
-		involvedMembers foreach(username => {
+		val updater = User.get(excludingUsername)
+		involvedMembers(updater) foreach(username => {
 			if(excludingUsername != username)
 			{
-				Notification.createUpdate(User.get(username), User.get(excludingUsername), this, updateContent)
+				Notification.createUpdate(User.get(username), updater, this, updateContent)
 			}
 		});
 	}
 
-	def involvedMembers : Set[String] = (teamMembers ++ followers ++ teamMembers.flatMap(User.get(_).followers)).toSet[String]
+	def involvedMembers(updater : User) : Set[String] = (teamMembers ++ followers ++ updater.followers).toSet[String]
 
 	def isNew : Boolean = Weeks.weeksBetween(new DateTime(timeStarted), DateTime.now).getWeeks <= 1;
 
