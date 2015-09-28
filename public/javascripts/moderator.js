@@ -24,7 +24,7 @@ function onPrivilegeClicked() {
 
 	var obj = this;
 
-	setUserPrivilege(username, name, !value, function() {
+	setUserPrivilege(username, name, !value, function(response) {
 		var text = $(obj).text();
 		var prefix = text.substr(0, text.indexOf(":") + 1)
 

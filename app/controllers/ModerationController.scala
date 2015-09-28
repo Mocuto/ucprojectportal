@@ -117,6 +117,10 @@ object ModerationController extends Controller with SessionHandler {
 
 			def editPrivilege[A <: UserPrivileges[A]](privilege : A, property : A, on : Boolean)(implicit editorPrivilege : A) : A = {
 				if( !((editorPrivilege & property).isEmpty)) { //The editor should have the privilege that they're trying to edit on other users
+					println("editPrivilege")
+					println(property)
+					println(on)
+					println ((privilege & !property) | (if (on) property else (property & !property)))
 					return (privilege & !property) | (if (on) property else (property & !property))
 				}
 				else {

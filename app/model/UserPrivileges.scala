@@ -155,8 +155,8 @@ object UserPrivileges {
 			joinProjects & that.joinProjects,
 			projectsOwn & that.projectsOwn,
 			projectsAll & that.projectsAll,
-			updatesOwn | that.updatesOwn,
-			updatesAll | that.updatesAll,
+			updatesOwn & that.updatesOwn,
+			updatesAll & that.updatesAll,
 			userPermissions & that.userPermissions)
 
 		def >= (that : Edit) = !(
@@ -389,6 +389,8 @@ object UserPrivilegesEdit extends UserPrivilegesEdit with UserPrivilegesModel[Us
     }
 
     def replace(username : String, item : UserPrivileges.Edit) = {
+    	println("replace")
+    	println(item)
     	insert.value(_.username, username)
     		.value(_.edit_projects_all, item.projectsAll)
     		.value(_.edit_projects_self, item.projectsOwn)

@@ -136,8 +136,8 @@ object ProjectTable extends ProjectTable {
 			.and(_.description setTo description)
 			.and(_.state setTo state)
 			.and(_.state_message setTo stateMessage)
-			.and(_.categories setTo categories)
-			.and(_.primaryContact setTo primaryContact)
+			.and(_.categories setTo categories.toSet)
+			.and(_.primary_contact setTo primaryContact)
 			.and(_.time_finished setTo timeFinished)
 			.future();
 	}
@@ -216,6 +216,17 @@ object Project {
 
 		return newProject
 	}
+
+	def edit(
+		id : Int,
+		name : String,
+		description : String,
+		state : String,
+		stateMessage : String,
+		categories : Seq[String],
+		primaryContact : String,
+		timeFinished : Option[Date]) : Unit = ProjectTable.edit(id, name, description, state, stateMessage, categories, primaryContact, timeFinished)
+	
 
 	def all : Seq[Project] = ProjectTable.allUninterruptibly//CassieCommunicator.getProjects;
 	

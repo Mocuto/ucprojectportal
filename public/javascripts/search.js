@@ -4,8 +4,8 @@ function setupSearch() {
 		datumTokenizer: Bloodhound.tokenizers.whitespace,
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
 		prefetch: {
-			url: jsRoutes.controllers.ProjectController.jsonForUser().url,
-			cache : false
+			url: jsRoutes.controllers.ProjectController.jsonForAll().url,
+			cache : true
 		},
 		remote: {
 			url: jsRoutes.controllers.ProjectController.jsonForAll().url

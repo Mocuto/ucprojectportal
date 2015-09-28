@@ -27,7 +27,7 @@ class ActivityWarner extends Actor with Worker[User, Option[play.twirl.api.Html]
 
 	def shouldWarn(p : Project) : Boolean = {
 		val now = new Date()
-		return ((Days daysIn(new Interval(p.lastWarning.getOrElse(now).getTime, now.getTime))).getDays >= -1 &&
+		return ((Days daysIn(new Interval(p.lastWarning.getOrElse(new Date(0)).getTime, now.getTime))).getDays >= 7 &&
 				(Days daysIn(new Interval(p.lastActivity.getTime, now.getTime))).getDays > constants.ServerSettings.ActivityStatus.Warm.getDays() &&
 				(p.state == ProjectState.IN_PROGRESS || p.state == ProjectState.IN_PROGRESS_NEEDS_HELP))
 	}

@@ -221,7 +221,7 @@ object ProjectController extends Controller with SessionHandler {
 						timeFinished = if(isFinished) Some(new Date()) else None
 					)
 
-					Project.update(updatedProject)
+					Project.edit(updatedProject.id, updatedProject.name, updatedProject.description, updatedProject.state, updatedProject.stateMessage, updatedProject.categories, updatedProject.primaryContact, updatedProject.timeFinished)
 
 					for(otherUsername <- updatedProject.teamMembers ++ project.teamMembers) {
 						val user = User.get(otherUsername);
