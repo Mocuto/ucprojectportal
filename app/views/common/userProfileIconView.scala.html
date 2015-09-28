@@ -6,6 +6,6 @@
 	case None => {<span class='user-profile user-profile-icon'><span class="user-profile-text">@user.initials</span></span></a>}
 }
 @defining(if(isLoggedInUser) "you" else user.firstName) { name =>
-<span class="user-profile-icon-caption">@name</span>
+<a href="@routes.UserController.user(user.username)" class="no-underline"><span class="user-profile-icon-caption">@name</span></a>
 }
 </div>

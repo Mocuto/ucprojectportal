@@ -16,7 +16,7 @@ function showOfficeHoursWindow(event) {
 
 	od = new Odometer({
 	  el: todayEl,
-	  value: +todayEl.innerText,
+	  value: +todayEl.innerHTML,
 
 	  // Any option (other than auto and selector) can be passed in here
 	  format: '(,ddd).dd'
@@ -27,7 +27,7 @@ function showOfficeHoursWindow(event) {
 
 	od = new Odometer({
 	  el: thisWeekEl,
-	  value: +thisWeekEl.innerText,
+	  value: +thisWeekEl.innerHTML,
 
 	  // Any option (other than auto and selector) can be passed in here
 	  format: '(,ddd).dd'
@@ -38,7 +38,7 @@ function showOfficeHoursWindow(event) {
 
 	od = new Odometer({
 	  el: allTimeEl,
-	  value: +allTimeEl.innerText,
+	  value: +allTimeEl.innerHTML,
 
 	  // Any option (other than auto and selector) can be passed in here
 	  format: '(,ddd).dd'

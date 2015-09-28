@@ -52,7 +52,7 @@ object OfficeHourController extends Controller with SessionHandler {
 				    	}
 				    }
             formWithErrors("hours").value match {
-              case Some(x) if x.toInt < 0 => BadRequest("office hours cannot be negative")
+              case Some(x) if x.toDouble < 0 => BadRequest("office hours cannot be negative")
               case _ => BadRequest(errorMessage);
             }
 					  

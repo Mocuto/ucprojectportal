@@ -121,6 +121,27 @@ object ProjectTable extends ProjectTable {
 		project
 	}
 
+	def edit(
+		id : Int,
+		name : String,
+		description : String,
+		state : String,
+		stateMessage : String,
+		categories : Seq[String],
+		primaryContact : String,
+		timeFinished : Option[Date]) : Unit = {
+		
+		update.where(_.id eqs id)
+			.modify(_.name setTo name)
+			.and(_.description setTo description)
+			.and(_.state setTo state)
+			.and(_.state_message setTo stateMessage)
+			.and(_.categories setTo categories)
+			.and(_.primaryContact setTo primaryContact)
+			.and(_.time_finished setTo timeFinished)
+			.future();
+	}
+
 	def get(id : Int) : Future[Option[Project]] = select.where(_.id eqs id).one();
 	def getUninterruptibly (id: Int) : Option[Project] = scala.concurrent.Await.result(get(id), constants.Cassandra.defaultTimeout)
 
