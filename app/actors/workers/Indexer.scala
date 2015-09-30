@@ -17,7 +17,9 @@ trait ProjectIndexer {
 	val DESCRIPTION : String;
 	val CATEGORIES : String;
 	val PRIMARY_CONTACT : String;
+	val PRIMARY_CONTACT_FULL : String;
 	val TEAM_MEMBERS : String;
+	val TEAM_MEMBERS_FULL : String;
 	val STATE : String;
 	val STATE_MESSAGE : String;
 
@@ -31,6 +33,8 @@ trait ProjectIndexer {
 			doc.add(new TextField(DESCRIPTION, p.description, Field.Store.NO));
 			doc.add(new TextField(CATEGORIES, p.categories.mkString(" "), Field.Store.NO));
 			doc.add(new StringField(PRIMARY_CONTACT, p.primaryContact, Field.Store.NO));
+			doc.add(new TextField(PRIMARY_CONTACT_FULL, User.get(p.primaryContact).fullName, Field.Store.NO))
+			doc.add(new TextField(TEAM_MEMBERS_FULL, p.teamMembers.map(User.get(_).fullName).mkString(" "), Field.Store.NO));
 			doc.add(new TextField(TEAM_MEMBERS, p.teamMembers.mkString(" "), Field.Store.NO));
 			doc.add(new TextField(STATE, p.state, Field.Store.NO))
 			doc.add(new TextField(STATE_MESSAGE, p.stateMessage, Field.Store.NO));
@@ -54,7 +58,9 @@ class Indexer extends Actor with ProjectIndexer with Worker[Project, Option[Docu
  	val DESCRIPTION = "project-description"
  	val CATEGORIES = "project-categories"
  	val PRIMARY_CONTACT ="project-primary-contact"
+ 	val PRIMARY_CONTACT_FULL ="project-primary-contact-full"
  	val TEAM_MEMBERS = "project-team-members"
+ 	val TEAM_MEMBERS_FULL = "project-team-members-full"
  	val STATE = "project-state"
  	val STATE_MESSAGE = "project-state-message"
  
