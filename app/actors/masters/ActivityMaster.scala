@@ -237,7 +237,7 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 
 		def filterFunc(a : Activity) = {
 			!(a.activityType == ActivityType.SubmitUpdate && 
-				ProjectUpdate.getLatest(a.detail("project-id").toInt, a.username, utils.Conversions.strToDate(a.detail("time-submitted"))).isDefined == false) ||
+				ProjectUpdate.getLatest(a.detail("project-id").toInt, a.username, utils.Conversions.strToDate(a.detail("time-submitted"))).isDefined == false) &&
 			!(a.activityType == ActivityType.SubmitProject && Project.get(a.detail("project-id").toInt).isDefined == false)
 		}
 

@@ -46,6 +46,8 @@ class ActivityWarner extends Actor with Worker[User, Option[play.twirl.api.Html]
 			projectsToFreeze map (Project.freezeWithNotification _)
 		}
 
+		endangeredProjects.values.flatten.foreach((x : Project) => Project.updateLastWarning(x.id))
+
 		if (endangeredProjects.size > 0) {
 
 			val title = (endangeredProjects keySet) reduce((a,b) => (a : ProjectActivityStatus, b : ProjectActivityStatus) match {

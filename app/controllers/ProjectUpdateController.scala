@@ -161,6 +161,7 @@ object ProjectUpdateController extends Controller with SessionHandler {
 					ActivityMaster.startRankingActivity();
 				}
 
+
 				Ok(response)
 			}
 		})
