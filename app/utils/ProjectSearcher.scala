@@ -33,8 +33,10 @@ object ProjectSearcher {
 			"project-name", 
 			"project-description", 
 			"project-categories", 
-			"project-primary-contact", 
+			"project-primary-contact",
+			"project-primary-contact-full",
 			"project-team-members", 
+			"project-team-members-full",
 			"project-state",
 			"project-state-message")
 
