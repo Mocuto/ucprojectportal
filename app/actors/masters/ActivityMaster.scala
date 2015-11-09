@@ -241,7 +241,7 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 			!(a.activityType == ActivityType.SubmitProject && Project.get(a.detail("project-id").toInt).isDefined == false)
 		}
 
-		val baseActivities = Activity.get(100).filter(filterFunc(_));
+		val baseActivities = Activity.all.filter(filterFunc(_));
 
 		val duplicateCompletedProject = baseActivities
 			.filter(_.activityType == ActivityType.CompletedProject)

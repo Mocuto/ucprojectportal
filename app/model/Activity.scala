@@ -36,10 +36,13 @@ object ActivityTable extends ActivityTable {
 	override val tableName = "activity";
 	implicit val session = CassieCommunicator.session
 
+	def all = select.fetch();
+
 	def allLimited(limit : Int) = select.limit(limit).fetch()
 
 	def allUninterruptibly(limit : Int) = scala.concurrent.Await.result(allLimited(limit), constants.Cassandra.defaultTimeout)
 
+	def allUninterruptibly = scala.concurrent.Await.result(select.fetch(), constants.Cassandra.defaultTimeout)
 
 	def add(id : java.util.UUID, timeSubmitted : Date, activityType : ActivityType, username : String, detail : Map[String, String]) = {
 		insert
@@ -56,6 +59,8 @@ object ActivityTable extends ActivityTable {
 }
 
 object Activity {
+
+	def all : Seq[Activity] = ActivityTable.allUninterruptibly.sortWith((a, b) => b.timeSubmitted.after(a.timeSubmitted))
 
 	def get(limit : Int) : Seq[Activity] = {
 		ActivityTable.allUninterruptibly(limit)

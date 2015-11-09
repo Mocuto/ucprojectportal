@@ -167,13 +167,13 @@ function editUpdate(projectId, author, timeSubmitted, content) {
 	var route = jsRoutes.controllers.ProjectUpdateController.edit(projectId, author, timeSubmitted)
 	ajaxSendFormData(formData, route, function(data) {
 		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-			.children(".edit-field").css("display", "none")
+			.find(".edit-field").css("display", "none")
 
 		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-			.children(".content").css("display", "block")
+			.find(".content").css("display", "block")
 
 		$('.roundbox.update[project-id="' + projectId + '"][author="' + author + '"][time-submitted="' + timeSubmitted + '"]')
-			.children(".content").html(content.brTagify());
+			.find(".content").html(content.brTagify());
 	})
 }
 
