@@ -332,7 +332,7 @@ object Project {
 	def freezeWithNotification(project : Project) {
 		freeze(project)
 
-		project.involvedMembers(User.get(project.primaryContact)) foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
+		project.involvedMembers(User.get(project.primaryContact)).toSet foreach((x : String) => Notification.createProjectFrozen(User.get(x), project))
 	}
 
 	def allTags : Seq[String] = return CassieCommunicator.getTagsWithType("project").getOrElse { return List[String]() };

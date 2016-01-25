@@ -164,7 +164,8 @@ object ActivityMaster extends Master with actors.Scheduler with ActivityLogger {
 	def masterProps = Props[ActivityMaster]
 
 	def start() : Unit = {
-		scheduleWarnings();
+		//scheduleWarnings();
+		startWarnings();
 		scheduleDigest();
 		scheduleOfficeHourDigest();
 		startRankingActivity();
