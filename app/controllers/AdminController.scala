@@ -1,5 +1,7 @@
 package controllers
 
+import actors.masters.ActivityMaster
+
 import java.util.Date
 
 import model._
@@ -68,6 +70,11 @@ object AdminController extends Controller with SessionHandler {
 		authenticated match {
 			case Some(username) => {
 				Project.delete(id);
+
+				Future {
+					ActivityMaster.startRankingActivity();
+				}
+				
 				Redirect(routes.AdminController.admin);
 			}
 		}

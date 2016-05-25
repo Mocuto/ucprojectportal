@@ -40,7 +40,7 @@ class ActivityWarner extends Actor with Worker[User, Option[play.twirl.api.Html]
 
 		val projectsToFreeze = u.projects
 			.map(Project.get(_))
-			.filter ((x : Project) => x.activityStatus == ProjectActivityStatus.Frozen && x.state != ProjectState.CLOSED)
+			.filter ((x : Project) => x.activityStatus == ProjectActivityStatus.Frozen && x.state != ProjectState.CLOSED && x.state != ProjectState.IDEA && x.state != ProjectState.COMPLETED)
 
 		if (projectsToFreeze.length > 0) {
 			projectsToFreeze map (Project.freezeWithNotification _)
